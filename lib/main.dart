@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/ui/auth/login.dart';
+import 'package:intranet_movil/views/auth/login.dart';
 
 void main() {
   runApp(const MyApp());

@@ -1,38 +1,34 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/ui/home/home.dart';
+import 'package:intranet_movil/widgets/drawer.dart';
 
-void main() => runApp(const Login());
-
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Iniciar sesion';
-
-    return const MaterialApp(
-      title: appTitle,
+    return MaterialApp(
+      title: 'Home',
       home: Scaffold(
-        /* appBar: AppBar(
-          title: const Text(appTitle),
-          
-        ), */
-        body: LoginForm(),    
+        appBar: AppBar(
+          title: const Text('Home'),
+        ),
+        body: const HomeLayout(), 
+        drawer: const DrawerNavigation(),
       ),
     );
   }
 }
 
-class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
+class HomeLayout extends StatefulWidget {
+  const HomeLayout({Key? key}) : super(key: key);
 
   @override
-  LoginFormView createState() {
-    return LoginFormView();
+  HomeLayoutView createState() {
+    return HomeLayoutView();
   }
 }
 
-class LoginFormView extends State<LoginForm> {
+class HomeLayoutView extends State<HomeLayout> {
  
   final _formKey = GlobalKey<FormState>();
 
@@ -45,19 +41,6 @@ class LoginFormView extends State<LoginForm> {
         crossAxisAlignment: CrossAxisAlignment.center,
         
         children: [
-
-          const SizedBox(height: 100,),
-
-           const SizedBox(
-            width: 200,
-            height: 200, 
-            child: Image(
-              image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-            )
-            
-          ),
-          
-
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
             child: TextFormField(
@@ -115,10 +98,9 @@ class LoginFormView extends State<LoginForm> {
 
             ),
           ),
-
-          
         ],
       ),
     );
   }
 }
+

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/widgets/drawer.dart';
 
 class AboutPromolife extends StatelessWidget {
   const AboutPromolife({Key? key}) : super(key: key);
@@ -24,6 +25,7 @@ class AboutPromolife extends StatelessWidget {
             )
           ],
         ),
+        drawer: const DrawerNavigation(),
       ),
     );
   }
