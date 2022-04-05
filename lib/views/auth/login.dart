@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/views/home/home.dart';
+import 'package:intranet_movil/home.dart';
 
 void main() => runApp(const Login());
 
@@ -13,10 +13,6 @@ class Login extends StatelessWidget {
     return const MaterialApp(
       title: appTitle,
       home: Scaffold(
-        /* appBar: AppBar(
-          title: const Text(appTitle),
-          
-        ), */
         body: LoginForm(),    
       ),
     );
@@ -109,7 +105,7 @@ class LoginFormView extends State<LoginForm> {
             height: 50, 
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>const HomePage()));   
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  Home()));   
               },
                 child: const Text('INICIAR SESION'),
 
