@@ -24,13 +24,9 @@ class PromolifeView extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
-      /* appBar: AppBar(
-        title: const Text('Title'),
-      ), */
       appBar: AppBar(
-        title: const Text("BH"),
-        centerTitle: true,
-      ),
+        title: const Text('BH'),
+      ), 
       body: const Center(
         child: Text(
           'This is the home page',

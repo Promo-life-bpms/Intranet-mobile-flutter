@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/views/about/bh.dart';
+import 'package:intranet_movil/views/about/promolife.dart';
 import 'package:intranet_movil/views/auth/login.dart';
-import 'package:intranet_movil/views/sample.dart';
 
 
 class NavigationDrawerWidget extends StatelessWidget {
 
   const NavigationDrawerWidget({Key? key}) : super(key: key);
+  static var _selectedDrawerItem = 0;
+
   @override
   Widget build(BuildContext context) {
- 
+   
     return Drawer(
       child: Material(
         
@@ -26,6 +28,7 @@ class NavigationDrawerWidget extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text('Inicio'),
+              selected: (_selectedDrawerItem == 0),
               onTap: () {
                 selectedItem(context, 0); 
               },  
@@ -33,6 +36,7 @@ class NavigationDrawerWidget extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.info),
               title: const Text('Acerca de'),
+              selected: (_selectedDrawerItem == 1),
               onTap: () {
                 selectedItem(context, 1); 
               },  
@@ -40,6 +44,7 @@ class NavigationDrawerWidget extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.chat_rounded),
               title: const Text('Organigrama'),
+              selected: (_selectedDrawerItem == 2),
               onTap: (){
                 selectedItem(context, 2); 
               },  
@@ -96,8 +101,10 @@ class NavigationDrawerWidget extends StatelessWidget {
                 ListTile(
                   leading: const Icon(Icons.exit_to_app),
                   title: const Text('Salir'),
+                  selected: (_selectedDrawerItem == 0),
                   onTap: () {
-                  selectedItem(context, 0); 
+                  selectedItem(context, 0);
+                   
                   },  
                 ),
           ],
@@ -106,65 +113,22 @@ class NavigationDrawerWidget extends StatelessWidget {
     );
   }
 
+  selectedItem(BuildContext context, int index) {
 
-
-  Widget buildHeader({
-    required String urlImage,
-    required String name,
-    required String email,
-    required VoidCallback onClicked,
-  }) =>
-      InkWell(
-        onTap: onClicked,
-        child: Row(
-          children: [
-            CircleAvatar(radius: 30, backgroundImage: NetworkImage(urlImage)),
-            const SizedBox(width: 20),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  name,
-                ),
-                const SizedBox(height: 4),
-                Text(
-                  email,
-                ),
-              ],
-            ),
-            const Spacer(),
-            const CircleAvatar(
-              radius: 24,
-            )
-          ],
-        ),
-      );
-
-
-  Widget buildMenuItem({
-    required String text,
-    required IconData icon,
-    VoidCallback? onClicked,
-  }) {
-    return ListTile(
-      leading: Icon(icon),
-      title: Text(text, ),
-      onTap: onClicked,
-    );
-  }
-
-  void selectedItem(BuildContext context, int index) {
     Navigator.of(context).pop();
 
     switch (index) {
       case 0:
+        _selectedDrawerItem = index;
         Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Login()));   
         break;
       case 1: 
+        _selectedDrawerItem = index;
         Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const AboutBH()));   
         break;
       case 2: 
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const Sample()));   
+        _selectedDrawerItem = index;
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const AboutPromolife()));   
         break;
     }
   }
