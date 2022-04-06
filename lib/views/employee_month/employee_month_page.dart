@@ -8,11 +8,14 @@ class EmployeeMonthPage extends StatelessWidget {
 
   static const String _title = 'Empleados del mes';
 
-  @override
+ @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: EmployeeMonthWidget(),
+    return Scaffold(
+      drawer: const NavigationDrawerWidget(),
+      appBar: AppBar(
+        title: const Text(_title),
+      ),
+      body: const EmployeeMonthWidget(),
     );
   }
 }
@@ -22,17 +25,9 @@ class EmployeeMonthWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-
-      appBar: AppBar(
-        title: const Text('Empleados del mes'),
-      ),
-      body: const Center(
-        child: Text(
-          'Pagina de los empleados del mes',
-          style: TextStyle(fontSize: 24),
-        ),
+    return const Center(
+      child: Text(
+        "Aqui va el codigo"
       ),
     );
   }

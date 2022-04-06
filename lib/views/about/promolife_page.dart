@@ -10,9 +10,12 @@ class PromolifePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: PromolifeWidget(),
+    return Scaffold(
+      drawer: const NavigationDrawerWidget(),
+      appBar: AppBar(
+        title: const Text(_title),
+      ),
+      body: const PromolifeWidget(),
     );
   }
 }
@@ -22,16 +25,9 @@ class PromolifeWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-      appBar: AppBar(
-        title: const Text('Promolife'),
-      ), 
-      body: const Center(
-        child: Text(
-          'Pagina de promolife',
-          style: TextStyle(fontSize: 24),
-        ),
+    return const Center(
+      child: Text(
+        "Aqui va el codigo"
       ),
     );
   }

@@ -8,11 +8,14 @@ class DirectoryPage extends StatelessWidget {
 
   static const String _title = 'Directorio';
 
-  @override
+   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: DirectoryWidget(),
+    return Scaffold(
+      drawer: const NavigationDrawerWidget(),
+      appBar: AppBar(
+        title: const Text(_title),
+      ),
+      body: const DirectoryWidget(),
     );
   }
 }
@@ -22,17 +25,9 @@ class DirectoryWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-
-      appBar: AppBar(
-        title: const Text('Title'),
-      ),
-      body: const Center(
-        child: Text(
-          'Pagina de directorio',
-          style: TextStyle(fontSize: 24),
-        ),
+    return const Center(
+      child: Text(
+        "Aqui va el codigo"
       ),
     );
   }

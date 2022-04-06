@@ -10,9 +10,12 @@ class AniversaryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: AniversaryWidget(),
+    return Scaffold(
+      drawer: const NavigationDrawerWidget(),
+      appBar: AppBar(
+        title: const Text(_title),
+      ),
+      body: const AniversaryWidget(),
     );
   }
 }
@@ -20,19 +23,12 @@ class AniversaryPage extends StatelessWidget {
 class AniversaryWidget extends StatelessWidget {
   const AniversaryWidget({Key? key}) : super(key: key);
 
+  
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-
-      appBar: AppBar(
-        title: const Text('Aniversarios'),
-      ),
-      body: const Center(
-        child: Text(
-          'Pagina de aniversarios',
-          style: TextStyle(fontSize: 24),
-        ),
+    return const Center(
+      child: Text(
+        "Aqui va el codigo"
       ),
     );
   }

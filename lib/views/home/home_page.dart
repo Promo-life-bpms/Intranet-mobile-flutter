@@ -10,9 +10,12 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: HomePageWidget(),
+    return Scaffold(
+      drawer: const NavigationDrawerWidget(),
+      appBar: AppBar(
+        title: const Text(_title),
+      ),
+      body: const HomePageWidget(),
     );
   }
 }
@@ -22,17 +25,9 @@ class HomePageWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-
-      appBar: AppBar(
-        title: const Text('Inicio'),
-      ),
-      body: const Center(
-        child: Text(
-          'Pagina de inicio',
-          style: TextStyle(fontSize: 24),
-        ),
+    return const Center(
+      child: Text(
+        "Aqui va el codigo"
       ),
     );
   }

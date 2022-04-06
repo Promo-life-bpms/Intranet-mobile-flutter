@@ -10,9 +10,12 @@ class OrganizationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: OrganizationWidget(),
+    return Scaffold(
+      drawer: const NavigationDrawerWidget(),
+      appBar: AppBar(
+        title: const Text(_title),
+      ),
+      body: const OrganizationWidget(),
     );
   }
 }
@@ -20,19 +23,11 @@ class OrganizationPage extends StatelessWidget {
 class OrganizationWidget extends StatelessWidget {
   const OrganizationWidget({Key? key}) : super(key: key);
 
-  @override
+ @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-
-      appBar: AppBar(
-        title: const Text('Organigrama'),
-      ),
-      body: const Center(
-        child: Text(
-          'Pagina del organigrama',
-          style: TextStyle(fontSize: 24),
-        ),
+    return const Center(
+      child: Text(
+        "Aqui va el codigo"
       ),
     );
   }

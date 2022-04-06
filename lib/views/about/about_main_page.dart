@@ -10,9 +10,12 @@ class AboutMainPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: _title,
-      home: AboutMainWidget(),
+    return Scaffold(
+      drawer: const NavigationDrawerWidget(),
+      appBar: AppBar(
+        title: const Text(_title),
+      ),
+      body: const AboutMainWidget(),
     );
   }
 }
@@ -20,20 +23,13 @@ class AboutMainPage extends StatelessWidget {
 class AboutMainWidget extends StatelessWidget {
   const AboutMainWidget({Key? key}) : super(key: key);
 
-  @override
+ @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-
-      appBar: AppBar(
-        title: const Text('Acerca de'),
-      ),
-      body: const Center(
-        child: Text(
-          'Pagina de acerca de',
-          style: TextStyle(fontSize: 24),
-        ),
+    return const Center(
+      child: Text(
+        "Pantalla de acerca de"
       ),
     );
   }
+
 }
