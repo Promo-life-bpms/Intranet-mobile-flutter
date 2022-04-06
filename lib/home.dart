@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/views/about/bh.dart';
+import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 class MainPage extends StatefulWidget {
@@ -14,7 +14,7 @@ class _MainPageState extends State<MainPage> {
   Widget build(BuildContext context) => const Scaffold(
         drawer:  NavigationDrawerWidget(),
       /*   appBar: AppBar(title: const Text("Home")), */
-        body:  AboutBH(),
+        body:  HomePage(),
       );
 }
 

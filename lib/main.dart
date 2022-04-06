@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/home.dart';
-import 'package:intranet_movil/views/auth/login.dart';
+import 'package:intranet_movil/views/auth/login_page.dart';
 
 
 void main() {
