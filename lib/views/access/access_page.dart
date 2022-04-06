@@ -26,10 +26,60 @@ class AccessWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Pantalla de accesos"
-      ),
+    return  Column(
+      children: [
+        Card(
+          child: Column(
+            children: <Widget>[
+              const SizedBox(
+                  height: 150.0,
+                  child:FittedBox(
+                    fit: BoxFit.fill,
+                    child: Image(
+                        image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                      )
+                  ), 
+                
+              ),
+              const ListTile(
+                title: Text("Cursos"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                    
+                },
+                child: const Text('INICIAR SESION'),
+                ),
+              ],
+          ),
+        ),
+        Card(
+          child: Column(
+            children: <Widget>[
+              const SizedBox(
+                  height: 150.0,
+                  child:FittedBox(
+                    fit: BoxFit.fill,
+                    child: Image(
+                        image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
+                      )
+                  ), 
+                
+              ),
+              const ListTile(
+                title: Text("Cursos"),
+              ),
+              ElevatedButton(
+                onPressed: () {
+                    
+                },
+                child: const Text('INICIAR SESION'),
+                ),
+              ],
+          ),
+        ),
+      ],
+      
     );
   }
 }
