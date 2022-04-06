@@ -105,7 +105,7 @@ class LoginFormView extends State<LoginForm> {
             height: 50, 
             child: ElevatedButton(
               onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  Home()));   
+                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const MainPage()));   
               },
                 child: const Text('INICIAR SESION'),
 

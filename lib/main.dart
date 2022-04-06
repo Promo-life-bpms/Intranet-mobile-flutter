@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/home.dart';
 import 'package:intranet_movil/views/auth/login.dart';
+
 
 void main() {
   runApp(const MyApp());
@@ -8,15 +10,13 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
+  static const String title = 'Navigation Drawer';
+
   @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
-      home: const Login(),
-    );
-  }
+  Widget build(BuildContext context) => MaterialApp(
+        title: title,
+        theme: ThemeData(primarySwatch: Colors.blue),
+        home: const Login(),
+      );
 }
 

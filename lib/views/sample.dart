@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
-void main() => runApp(const AboutPromolife());
+void main() => runApp(const Sample());
 
-class AboutPromolife extends StatelessWidget {
-  const AboutPromolife({Key? key}) : super(key: key);
+class Sample extends StatelessWidget {
+  const Sample({Key? key}) : super(key: key);
 
   static const String _title = 'Flutter Code Sample';
 
@@ -12,25 +12,22 @@ class AboutPromolife extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: _title,
-      home: PromolifeView(),
+      home: MyStatelessWidget(),
     );
   }
 }
 
-class PromolifeView extends StatelessWidget {
-  const PromolifeView({Key? key}) : super(key: key);
+class MyStatelessWidget extends StatelessWidget {
+  const MyStatelessWidget({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
-      /* appBar: AppBar(
+
+      appBar: AppBar(
         title: const Text('Title'),
-      ), */
-      /* appBar: AppBar(
-        title: const Text("Promolife"),
-        centerTitle: true,
-      ), */
+      ),
       body: const Center(
         child: Text(
           'This is the home page',
