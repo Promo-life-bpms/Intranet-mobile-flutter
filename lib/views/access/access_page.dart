@@ -20,7 +20,8 @@ class AccessPage extends StatelessWidget {
   }
 }
 
-
+/* Prueba git
+ */
 class AccessWidget extends StatelessWidget {
   const AccessWidget({Key? key}) : super(key: key);
 
@@ -83,4 +84,5 @@ class AccessWidget extends StatelessWidget {
     );
   }
 }
+
 
