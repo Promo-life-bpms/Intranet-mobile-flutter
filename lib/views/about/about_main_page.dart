@@ -23,13 +23,10 @@ class AboutMainPage extends StatelessWidget {
 class AboutMainWidget extends StatelessWidget {
   const AboutMainWidget({Key? key}) : super(key: key);
 
- @override
+  @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text(
-        "Pantalla de acerca de"
-      ),
+      child: Text("Pantalla"),
     );
   }
-
 }
