@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/widget/card_image_link.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
  
@@ -32,11 +31,12 @@ class _State extends State<AccessPage> {
   }
 }
 
-
+// Funcion que abre url en el navegador
 void _launchURL(_url) async {
   if (!await launch(_url)) throw 'Could not launch $_url';
 }
 
+// Clase utilizada para enviar datos al widget
 class AccessData {
   final String accName;
   final String accImage;
@@ -45,8 +45,7 @@ class AccessData {
   const AccessData(this.accName, this.accImage, this.accLink);
 }
 
-
-
+//Widget dinamico
 class CardImageLinkWidget  extends StatelessWidget {
   const CardImageLinkWidget({Key? key, required this.accessData}) : super(key: key);
 
