@@ -3,9 +3,11 @@ import 'package:url_launcher/url_launcher.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
  
 
-void main() => runApp(AccessPage());
+void main() => runApp(const AccessPage());
 
 class AccessPage extends StatefulWidget {
+  const AccessPage({Key? key}) : super(key: key);
+
   @override
   _State createState() => _State();
 }
