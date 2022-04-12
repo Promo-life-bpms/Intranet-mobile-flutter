@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/model/access.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
- 
 
 void main() => runApp(const AccessPage());
 
@@ -38,19 +38,12 @@ void _launchURL(_url) async {
   if (!await launch(_url)) throw 'Could not launch $_url';
 }
 
-// Clase utilizada para enviar datos al widget
-class AccessData {
-  final String accName;
-  final String accImage;
-  final String accLink;
-
-  const AccessData(this.accName, this.accImage, this.accLink);
-}
 
 //Widget dinamico
 class CardImageLinkWidget  extends StatelessWidget {
   const CardImageLinkWidget({Key? key, required this.accessData}) : super(key: key);
 
+  //Obtiene la estructura de la lista desde el modelo
   final List<AccessData> accessData;
   @override
   Widget build(BuildContext context) {
