@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/manual.dart';
 import 'package:intranet_movil/services/api_manual.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/utils/internet.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
-import 'package:url_launcher/url_launcher.dart';
+/* import 'package:url_launcher/url_launcher.dart'; */
 
 class ManualPage extends StatefulWidget {
   const ManualPage({Key? key}) : super(key: key);
@@ -69,7 +70,7 @@ class _HomeState extends State<ManualPage> {
                           height: 50, 
                           child: ElevatedButton(
                             onPressed: () {
-                              _launchURL(ApiIntranetConstans.baseUrl+_manualModel![index].file); 
+                              LaunchToInternet.launchURL(ApiIntranetConstans.baseUrl+_manualModel![index].file);
                             },
                               child: const Text('ABRIR'),
                           ),
@@ -85,7 +86,3 @@ class _HomeState extends State<ManualPage> {
 }
 
 
-// Funcion que abre url en el navegador
-void _launchURL(_url) async {
-  if (!await launch(_url)) throw 'Could not launch $_url';
-}

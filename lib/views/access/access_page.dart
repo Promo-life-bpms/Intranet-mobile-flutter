@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/access.dart';
-import 'package:url_launcher/url_launcher.dart';
+import 'package:intranet_movil/utils/internet.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 void main() => runApp(const AccessPage());
@@ -32,12 +32,6 @@ class _State extends State<AccessPage> {
     );
   }
 }
-
-// Funcion que abre url en el navegador
-void _launchURL(_url) async {
-  if (!await launch(_url)) throw 'Could not launch $_url';
-}
-
 
 //Widget dinamico
 class CardImageLinkWidget  extends StatelessWidget {
@@ -79,7 +73,7 @@ class CardImageLinkWidget  extends StatelessWidget {
                 height: 50, 
                 child: ElevatedButton(
                   onPressed: () {
-                    _launchURL(accessData[index].accLink); 
+                    LaunchToInternet.launchURL(accessData[index].accLink);
                     },
                   child: const Text('ABRIR'),
                 ),
