@@ -1,4 +1,4 @@
-import 'dart:async';
+/* import 'dart:async';
 import 'dart:convert';
 import 'dart:developer';
 import 'package:flutter/material.dart';
@@ -69,4 +69,74 @@ class _MyAppState extends State<ManualPage> {
     );
   }
 }
- 
+  */
+
+import 'package:flutter/material.dart';
+import 'package:intranet_movil/model/manual.dart';
+import 'package:intranet_movil/model/user_model.dart';
+import 'package:intranet_movil/services/api_manual.dart';
+import 'package:intranet_movil/services/api_service.dart';
+
+
+class ManualPage extends StatefulWidget {
+  const ManualPage({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<ManualPage> {
+  late List<ManualModel>? _manualModel = [];
+  
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+  void _getData() async {
+    _manualModel = (await ApiManualService().getManual())!.cast<ManualModel>();
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('REST API Example'),
+      ),
+      body: _manualModel == null || _manualModel!.isEmpty
+          ? const Center(
+              child: CircularProgressIndicator(),
+            )
+          : ListView.builder(
+              itemCount: _manualModel!.length,
+              itemBuilder: (context, index) {
+                return Card(
+                  child: Column(
+                    children: [
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(_manualModel![index].id.toString()),
+                          Text(_manualModel![index].name),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20.0,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Text(_manualModel![index].name),
+                          Text(_manualModel![index].name),
+                        ],
+                      ),
+                    ],
+                  ),
+                );
+              },
+            ),
+    );
+  }
+}
