@@ -1,82 +1,9 @@
-/* import 'dart:async';
-import 'dart:convert';
-import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/manual.dart';
-/* import 'package:intranet_movil/networking/manual.dart'; */
-import 'package:http/http.dart' as http;
-
-Future<List<Post>> getManuals() async{
-  final response =
-      await http.get(Uri.parse('https://intranet.kaths.com.mx/api/manuals'));
-
-    if (response.statusCode == 200) {
- 
-      final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
-      return parsed.map<Post>((json) => Post.fromMap(json)).toList();
-
-    } else {
-      throw Exception('Failed to load manual');
-    }
-  }
-void main() => runApp(ManualPage());
-
-class ManualPage extends StatefulWidget {
-  @override
-  _MyAppState createState() => _MyAppState();
-}
-
-class _MyAppState extends State<ManualPage> {
-  late Future<List<Post>> futurePost ;
-
-  @override
-  void initState() {
-    super.initState();
-    futurePost = getManuals();
-  
-  /*   log('data: $futurePost'); */
-   /*  print(futurePost); */
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Fetch Data Example',
-      theme: ThemeData(
-        primaryColor: Colors.lightBlueAccent,
-      ),
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Fetch Data Example'),
-        ),
-        body: FutureBuilder(
-          future: futurePost,
-          builder: (context, snapshot) {
-            if(snapshot.hasData){
-              print(snapshot);
-              return Text("Hola");
-            }else if(snapshot.hasError){
-              print(snapshot.error);
-              return Text("Adios");
-            }
-
-            return const Center(
-              child:  CircularProgressIndicator(),
-            );
-          } ,
-        ),
-      ),
-    );
-  }
-}
-  */
-
-import 'package:flutter/material.dart';
-import 'package:intranet_movil/model/manual.dart';
-import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_manual.dart';
-import 'package:intranet_movil/services/api_service.dart';
-
+import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ManualPage extends StatefulWidget {
   const ManualPage({Key? key}) : super(key: key);
@@ -102,41 +29,63 @@ class _HomeState extends State<ManualPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text('REST API Example'),
+        title: const Text('Manuales'),
       ),
       body: _manualModel == null || _manualModel!.isEmpty
           ? const Center(
               child: CircularProgressIndicator(),
             )
           : ListView.builder(
+              padding: const EdgeInsets.all(8),
               itemCount: _manualModel!.length,
               itemBuilder: (context, index) {
                 return Card(
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(_manualModel![index].id.toString()),
-                          Text(_manualModel![index].name),
-                        ],
-                      ),
-                      const SizedBox(
-                        height: 20.0,
-                      ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          Text(_manualModel![index].name),
-                          Text(_manualModel![index].name),
-                        ],
-                      ),
-                    ],
+                  child:Padding(
+                    padding: const EdgeInsets.only(bottom: 20.0),
+                      child: Column(
+                      children: [
+                        const SizedBox(
+                          width: double.infinity,
+                          height: 160.0,
+                          child:FittedBox(
+                            fit: BoxFit.contain,
+                            child: Image(
+                                image: AssetImage('lib/assets/pdf.png'),
+                              )
+                          ),
+                        ),
+
+                        Text(
+                          _manualModel![index].name,
+                          style: const TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold,),
+                        ),
+                        const  Padding( 
+                          padding: EdgeInsets.only(bottom: 20.0),
+                        ),
+                        SizedBox(
+                          width: 200,
+                          height: 50, 
+                          child: ElevatedButton(
+                            onPressed: () {
+                              _launchURL(ApiIntranetConstans.baseUrl+_manualModel![index].file); 
+                            },
+                              child: const Text('ABRIR'),
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 );
               },
             ),
     );
   }
+}
+
+
+// Funcion que abre url en el navegador
+void _launchURL(_url) async {
+  if (!await launch(_url)) throw 'Could not launch $_url';
 }

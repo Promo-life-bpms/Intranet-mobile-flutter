@@ -71,11 +71,18 @@ class CardImageLinkWidget  extends StatelessWidget {
                 style: const TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),
                 textAlign: TextAlign.center,
               ),
-              ElevatedButton( 
-              onPressed: () {
-                _launchURL(accessData[index].accLink); 
-              },
-              child: const Text('ABRIR'),
+              const  Padding( 
+                padding: EdgeInsets.only(bottom: 20.0),
+              ),
+              SizedBox(
+                width: 200,
+                height: 50, 
+                child: ElevatedButton(
+                  onPressed: () {
+                    _launchURL(accessData[index].accLink); 
+                    },
+                  child: const Text('ABRIR'),
+                ),
               ),
             ],
             ),
