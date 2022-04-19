@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/services/api_directory.dart';
+import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
@@ -49,7 +50,11 @@ class _HomeState extends State<DirectoryPage> {
                   clipBehavior: Clip.antiAlias,
                   child: InkWell(
                     onTap: (){
-                      _showDialog(context);
+                      UserCardAlertDialog.showFullDialog(
+                        context,
+                        ApiIntranetConstans.baseUrl + _directoryModel![0].photo,
+                        _directoryModel![index].name + " " +_directoryModel![index].lastname,
+                        _directoryModel![index].position );
                     },
                     child: Row(
                     children: [
@@ -109,7 +114,7 @@ class _HomeState extends State<DirectoryPage> {
     );
   }
 }
-
+/* 
 _showDialog(BuildContext context/* , String img, String name, String description */ ) {
     showDialog(
       context: context,
@@ -137,3 +142,55 @@ _showDialog(BuildContext context/* , String img, String name, String description
       },
     ); 
 }
+
+_showFullDialog(BuildContext context/* , String img, String name, String description, Data data  */ ) {
+
+  showGeneralDialog(
+        context: context,
+        barrierDismissible: true,
+        barrierLabel: MaterialLocalizations.of(context)
+          .modalBarrierDismissLabel,
+        transitionDuration: const Duration(milliseconds: 200),
+        pageBuilder: (BuildContext buildContext,
+          Animation animation,
+          Animation secondaryAnimation) {
+          return Padding(
+            padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
+            child: Card(
+              child:  SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
+                children: [
+                  Container(
+                  width: double.infinity,
+                  height: 200.0,
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: NetworkImage("https://media-exp1.licdn.com/dms/image/C4E1BAQHZpvSzm3mrGg/company-background_10000/0/1604596643746?e=2159024400&v=beta&t=7eQro0ejdMhEJ8UTKMZ2fEjTZmbCc6KtEm5kg-LeXIw"),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  
+                  child:const  Align(
+                    alignment:  Alignment(0, 2),
+                    child: SizedBox(
+                      width: 100.0,
+                      height: 100.0,
+                      child: OverflowBox(
+                        child: CircleAvatar(
+                        backgroundImage: AssetImage('lib/assets/user.png'),
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+                ],
+              ),
+              ),
+              
+            ),
+          );
+        }
+      );
+
+} */

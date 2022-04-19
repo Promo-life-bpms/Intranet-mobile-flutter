@@ -20,7 +20,7 @@ class DirectoryModel {
   int id;
   String name;
   String lastname;
-  String? photo; 
+  String photo; 
   String department;
   String position;
 /*   Data data; */ 
