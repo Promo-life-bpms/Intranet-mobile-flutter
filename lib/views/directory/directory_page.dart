@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/services/api_directory.dart';
+import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 class DirectoryPage extends StatefulWidget {
@@ -42,46 +43,97 @@ class _HomeState extends State<DirectoryPage> {
               itemCount: _directoryModel!.length,
               itemBuilder: (context, index) {
                 return Card(
+                  shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  clipBehavior: Clip.antiAlias,
+                  child: InkWell(
+                    onTap: (){
+                      _showDialog(context);
+                    },
                     child: Row(
                     children: [
-                      const Padding(
-                        padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                      _directoryModel![index].photo == null
+                          ?  const Padding(
+                              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                              child: SizedBox(
+                                width: 50,
+                                height: 50,
+                                child:CircleAvatar(
+                                backgroundImage: AssetImage('lib/assets/user.png'),
+                                ),
+                              )    
+                            )
+                          :
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                         child: SizedBox(
                           width: 50,
                           height: 50,
                           child:CircleAvatar(
-                          backgroundImage: AssetImage('lib/assets/pdf.png'),
-                          ),
+                          backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![0].photo.toString()),
+/*                           backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()),
+ */                          ),
                         )    
                       ),
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          RichText(
-                            overflow: TextOverflow.clip,
-                            strutStyle: const StrutStyle(fontSize: 12.0),
-                            text: TextSpan(
-                                style: const TextStyle(fontSize: 12.00,),
-                                text: _directoryModel![index].name + _directoryModel![index].lastname ,
+                          Text(
+                              _directoryModel![index].name + " " +_directoryModel![index].lastname,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold,),
                           ),
-                         /*  Text(
-                            _directoryModel![index].name + " " +_directoryModel![index].lastname ,
-                            style: const TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold,),
-                          ), */
-                          /* const Padding(padding: EdgeInsets.only(top:4)),
-                           Text(
-                            _directoryModel![index].position,
-                            style: const TextStyle(fontSize: 12.00,),
-                            textAlign: TextAlign.left,
-                          ), */
-                          ),   
+                         const Padding(
+                            padding: EdgeInsets.only(top:8)
+                          ),
+                         Text(
+                              _directoryModel![index].position,
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: const TextStyle(fontSize: 12.00,)
+                          )  
+                          
                         ],
                       ),        
                     ],
                   ),
+                  ),
+
+                    
                   
                 );
               },
             ),
     );
   }
+}
+
+_showDialog(BuildContext context/* , String img, String name, String description */ ) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Expanded(
+          child: AlertDialog(
+            title: Text('Welcome'),
+            content: Text('Do you wanna learn flutter?'),
+            actions: [
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('YES', style: TextStyle(color: Colors.black),),
+              ),
+              TextButton(
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+                child: Text('NO', style: TextStyle(color: Colors.black),),
+              ),
+            ],
+          ),
+        );
+      },
+    ); 
 }

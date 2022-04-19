@@ -11,38 +11,38 @@ class DirectoryModel {
       required this.id,
       required this.name,
       required this.lastname,
-     /*  required this.photo, */
+      required this.photo, 
       required this.department,
       required this.position,
-     /*  required this.data,  */
+ /*      required this.data,  */ 
   });
 
   int id;
   String name;
   String lastname;
- /*  String photo; */
+  String? photo; 
   String department;
   String position;
-  /* Data data; */ 
+/*   Data data; */ 
 
   factory DirectoryModel.fromJson(Map<String, dynamic> json) => DirectoryModel(
         id: json["id"],
         name: json["name"],
         lastname: json["lastname"],
-       /*  photo: json["photo"], */
+        photo: json["photo"], 
         department: json["department"],
         position: json["position"],
-      /*   data: Data.fromJson(json["data"]), */ 
+       /*  data: Data.fromJson(json["data"]), */ 
       );
 
   Map<String, dynamic> toJson() => {
         "id": id,
         "name": name,
         "lastname": lastname,
-       /*  "photo": photo, */
+        "photo": photo, 
         "department": department,
         "position": position,
-    /*     "data": data.toJson(),  */
+    /*      "data": data.toJson(),   */
       };
 }
 
