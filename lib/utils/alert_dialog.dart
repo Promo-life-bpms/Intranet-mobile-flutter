@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class UserCardAlertDialog{
   
-  static showFullDialog(BuildContext context , String img, String name, String position,/* Data data  */ ) {
+  static showFullDialog(BuildContext context , /* String img, */ String name, String position,/* Data data  */ ) {
 
   showGeneralDialog(
         context: context,
@@ -36,7 +36,8 @@ class UserCardAlertDialog{
                         height: 120.0,
                         child: OverflowBox(
                           child: CircleAvatar(
-                          backgroundImage: NetworkImage(img),
+                         /*  backgroundImage: NetworkImage(img), */
+                          backgroundImage: AssetImage('lib/assets/equipo.png'),
                           ),
                         ),
                       ),

@@ -52,7 +52,7 @@ class _HomeState extends State<DirectoryPage> {
                     onTap: (){
                       UserCardAlertDialog.showFullDialog(
                         context,
-                        ApiIntranetConstans.baseUrl + _directoryModel![0].photo,
+                       /*  ApiIntranetConstans.baseUrl + _directoryModel![0].photo, */
                         _directoryModel![index].name + " " +_directoryModel![index].lastname,
                         _directoryModel![index].position );
                     },
