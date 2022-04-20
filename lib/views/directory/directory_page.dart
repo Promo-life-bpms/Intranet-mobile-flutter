@@ -37,69 +37,70 @@ class _HomeState extends State<DirectoryPage> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : 
-          ListView.builder(
-              padding: const EdgeInsets.only(left:16, right: 16),
-              itemCount: _directoryModel!.length,
-              itemBuilder: (context, index) {
-                return Card(
-                  shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  child: InkWell(
-                    onTap: (){
-                      UserCardAlertDialog.showFullDialog(
-                        context,
-                        _directoryModel![index].name + " " +_directoryModel![index].lastname,
-                        _directoryModel![index].email,
-                         ApiIntranetConstans.baseUrl + _directoryModel![0].photo, 
-                        _directoryModel![index].department,
-                        _directoryModel![index].position );
-                    },
-                    child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                        child: SizedBox(
-                          width: 50,
-                          height: 50,
-                          child:CircleAvatar(
-                          backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![0].photo.toString()),
-/*                           backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()),
- */                          ),
-                        )    
+          : Column(
+            children: [
+              Text("Hola"),
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(left:16, right: 16),
+                  itemCount: _directoryModel!.length,
+                  itemBuilder: (context, index) {
+                    return Card(
+                      shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10.0),
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      clipBehavior: Clip.antiAlias,
+                      child: InkWell(
+                        onTap: (){
+                          UserCardAlertDialog.showFullDialog(
+                            context,
+                            _directoryModel![index].name + " " +_directoryModel![index].lastname,
+                            _directoryModel![index].email,
+                            ApiIntranetConstans.baseUrl + _directoryModel![0].photo, 
+                            _directoryModel![index].department,
+                            _directoryModel![index].position );
+                        },
+                        child: Row(
                         children: [
-                          Text(
-                              _directoryModel![index].name + " " +_directoryModel![index].lastname,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold,),
+                          Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
+                            child: SizedBox(
+                              width: 50,
+                              height: 50,
+                              child:CircleAvatar(
+                              backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![0].photo.toString()),
+                              /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */                          ),
+                            )    
                           ),
-                         const Padding(
-                            padding: EdgeInsets.only(top:8)
-                          ),
-                         Text(
-                              _directoryModel![index].position,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                              style: const TextStyle(fontSize: 12.00,)
-                          )  
-                          
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                  _directoryModel![index].name + " " +_directoryModel![index].lastname,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold,),
+                              ),
+                              const Padding(
+                                padding: EdgeInsets.only(top:8)
+                              ),
+                              Text(
+                                  _directoryModel![index].position,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 12.00,)
+                              ),  
+                            ],
+                          ),        
                         ],
-                      ),        
-                    ],
-                  ),
-                  ),
-
-                    
-                  
-                );
-              },
-            ),
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ) 
     );
   }
 }
