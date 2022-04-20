@@ -46,13 +46,13 @@ class _HomeState extends State<ManualPage> {
                     padding: const EdgeInsets.only(bottom: 20.0),
                       child: Column(
                       children: [
-                        const SizedBox(
+                        SizedBox(
                           width: double.infinity,
                           height: 160.0,
                           child:FittedBox(
                             fit: BoxFit.contain,
                             child: Image(
-                                image: AssetImage('lib/assets/pdf.png'),
+                                image: NetworkImage(ApiIntranetConstans.baseUrl+_manualModel![index].img),
                               )
                           ),
                         ),

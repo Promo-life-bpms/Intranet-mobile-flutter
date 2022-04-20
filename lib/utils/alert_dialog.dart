@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class UserCardAlertDialog{
   
-  static showFullDialog(BuildContext context , /* String img, */ String name, String position,/* Data data  */ ) {
+  static showFullDialog(BuildContext context,  String name, String email, String photo, String department, String position, ) {
 
   showGeneralDialog(
         context: context,
@@ -16,6 +16,9 @@ class UserCardAlertDialog{
           return Padding(
             padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
             child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(10.0),
+              ),
               child:  SingleChildScrollView(
               scrollDirection: Axis.vertical,
               child: Column(
@@ -36,8 +39,7 @@ class UserCardAlertDialog{
                         height: 120.0,
                         child: OverflowBox(
                           child: CircleAvatar(
-                         /*  backgroundImage: NetworkImage(img), */
-                          backgroundImage: AssetImage('lib/assets/equipo.png'),
+                          backgroundImage: NetworkImage(photo), 
                           ),
                         ),
                       ),
@@ -48,17 +50,51 @@ class UserCardAlertDialog{
                   ),
                   Column(
                     children: [
-                    Text(
-                      name,
-                      style: const TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold,),
-                    ),
-                    const Padding(
-                    padding: EdgeInsets.only(top: 12.0) ,
-                    ),
-                    Text(
-                      position,
-                      style: const TextStyle(fontSize: 16.00),
-                    ),
+                      Text(
+                        name,
+                        style: const TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold,),
+                      ),
+                      const Padding(
+                      padding: EdgeInsets.only(top: 14.0) ,
+                      ),
+                      Text(
+                        position,
+                        style: const TextStyle(fontSize: 16.00),
+                      ),
+                      const Padding(
+                      padding: EdgeInsets.only(top: 36.0),
+                      ),
+                      Padding(
+                        padding:const EdgeInsets.only(left: 24.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Icon( Icons.house),
+                                const Padding(padding: EdgeInsets.only(right: 8.0)),
+                                Text(department)
+                              ],
+                            ),
+                            const Padding(padding: EdgeInsets.only(top: 12.0)),
+                            Row(
+                              children: [
+                                const Icon( Icons.work),
+                                const Padding(padding: EdgeInsets.only(right: 8.0)),
+                                Text(position)
+                              ],
+                            ),
+                            const Padding(padding: EdgeInsets.only(top: 12.0)),
+                            Row(
+                              children: [
+                                const Icon( Icons.mail),
+                                const Padding(padding: EdgeInsets.only(right: 8.0)),
+                                Text(email)
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+
                     ],
                   ),
                   
@@ -70,6 +106,5 @@ class UserCardAlertDialog{
           );
         }
       );
-
   }
 }

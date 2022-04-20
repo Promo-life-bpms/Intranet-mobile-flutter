@@ -19,7 +19,6 @@ class _HomeState extends State<DirectoryPage> {
   void initState() {
     super.initState();
     _getData();
-    print(_directoryModel);
   }
 
   void _getData() async {
@@ -52,24 +51,14 @@ class _HomeState extends State<DirectoryPage> {
                     onTap: (){
                       UserCardAlertDialog.showFullDialog(
                         context,
-                       /*  ApiIntranetConstans.baseUrl + _directoryModel![0].photo, */
                         _directoryModel![index].name + " " +_directoryModel![index].lastname,
+                        _directoryModel![index].email,
+                         ApiIntranetConstans.baseUrl + _directoryModel![0].photo, 
+                        _directoryModel![index].department,
                         _directoryModel![index].position );
                     },
                     child: Row(
                     children: [
-                      _directoryModel![index].photo == null
-                          ?  const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                              child: SizedBox(
-                                width: 50,
-                                height: 50,
-                                child:CircleAvatar(
-                                backgroundImage: AssetImage('lib/assets/user.png'),
-                                ),
-                              )    
-                            )
-                          :
                       Padding(
                         padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
                         child: SizedBox(
@@ -114,83 +103,3 @@ class _HomeState extends State<DirectoryPage> {
     );
   }
 }
-/* 
-_showDialog(BuildContext context/* , String img, String name, String description */ ) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Expanded(
-          child: AlertDialog(
-            title: Text('Welcome'),
-            content: Text('Do you wanna learn flutter?'),
-            actions: [
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('YES', style: TextStyle(color: Colors.black),),
-              ),
-              TextButton(
-                onPressed: () {
-                  Navigator.of(context).pop();
-                },
-                child: Text('NO', style: TextStyle(color: Colors.black),),
-              ),
-            ],
-          ),
-        );
-      },
-    ); 
-}
-
-_showFullDialog(BuildContext context/* , String img, String name, String description, Data data  */ ) {
-
-  showGeneralDialog(
-        context: context,
-        barrierDismissible: true,
-        barrierLabel: MaterialLocalizations.of(context)
-          .modalBarrierDismissLabel,
-        transitionDuration: const Duration(milliseconds: 200),
-        pageBuilder: (BuildContext buildContext,
-          Animation animation,
-          Animation secondaryAnimation) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
-            child: Card(
-              child:  SingleChildScrollView(
-              scrollDirection: Axis.vertical,
-              child: Column(
-                children: [
-                  Container(
-                  width: double.infinity,
-                  height: 200.0,
-                  decoration: const BoxDecoration(
-                    image: DecorationImage(
-                      image: NetworkImage("https://media-exp1.licdn.com/dms/image/C4E1BAQHZpvSzm3mrGg/company-background_10000/0/1604596643746?e=2159024400&v=beta&t=7eQro0ejdMhEJ8UTKMZ2fEjTZmbCc6KtEm5kg-LeXIw"),
-                      fit: BoxFit.cover,
-                    ),
-                  ),
-                  
-                  child:const  Align(
-                    alignment:  Alignment(0, 2),
-                    child: SizedBox(
-                      width: 100.0,
-                      height: 100.0,
-                      child: OverflowBox(
-                        child: CircleAvatar(
-                        backgroundImage: AssetImage('lib/assets/user.png'),
-                        ),
-                      ),
-                    ),
-                  ),
-                ),
-                ],
-              ),
-              ),
-              
-            ),
-          );
-        }
-      );
-
-} */
