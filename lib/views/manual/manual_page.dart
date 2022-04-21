@@ -4,7 +4,6 @@ import 'package:intranet_movil/services/api_manual.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/utils/internet.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
-/* import 'package:url_launcher/url_launcher.dart'; */
 
 class ManualPage extends StatefulWidget {
   const ManualPage({Key? key}) : super(key: key);
