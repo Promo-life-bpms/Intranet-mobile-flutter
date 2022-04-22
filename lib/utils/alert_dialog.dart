@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class UserCardAlertDialog{
   
-  static showFullDialog(BuildContext context,  String name, String email, String photo, String department, String position, ) {
+  static showFullDialog(BuildContext context,  String fullname, String email, String photo, String department, String position, ) {
 
   showGeneralDialog(
         context: context,
@@ -28,7 +28,7 @@ class UserCardAlertDialog{
                     height: 200.0,
                     decoration: const BoxDecoration(
                       image: DecorationImage(
-                        image: NetworkImage("https://media-exp1.licdn.com/dms/image/C4E1BAQHZpvSzm3mrGg/company-background_10000/0/1604596643746?e=2159024400&v=beta&t=7eQro0ejdMhEJ8UTKMZ2fEjTZmbCc6KtEm5kg-LeXIw"),
+                        image: AssetImage("lib/assets/background.jpg"),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -51,7 +51,7 @@ class UserCardAlertDialog{
                   Column(
                     children: [
                       Text(
-                        name,
+                        fullname,
                         style: const TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold,),
                       ),
                       const Padding(

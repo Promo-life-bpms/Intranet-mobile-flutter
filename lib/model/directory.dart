@@ -9,8 +9,7 @@ String directoryModelToJson(List<DirectoryModel> data) =>
 class DirectoryModel {
   DirectoryModel({
       required this.id,
-      required this.name,
-      required this.lastname,
+      required this.fullname,
       required this.email,
       required this.photo, 
       required this.department,
@@ -19,8 +18,7 @@ class DirectoryModel {
   });
 
   int id;
-  String name;
-  String lastname;
+  String fullname;
   String email;
   String photo; 
   String department;
@@ -29,8 +27,7 @@ class DirectoryModel {
 
   factory DirectoryModel.fromJson(Map<String, dynamic> json) => DirectoryModel(
         id: json["id"],
-        name: json["name"],
-        lastname: json["lastname"],
+        fullname: json["fullname"],
         email: json["email"],
         photo: json["photo"], 
         department: json["department"],
@@ -40,8 +37,7 @@ class DirectoryModel {
 
   Map<String, dynamic> toJson() => {
         "id": id,
-        "name": name,
-        "lastname": lastname,
+        "fullname": fullname,
         "email": email,
         "photo": photo, 
         "department": department,
