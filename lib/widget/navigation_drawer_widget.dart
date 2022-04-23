@@ -142,7 +142,7 @@ class NavigationDrawerWidget extends StatelessWidget {
         break;
       case 2: 
         _selectedDrawerItem = index;
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const OrganizationPage()));   
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  OrganizationPage()));   
         break;
       case 3:
         _selectedDrawerItem = index;
