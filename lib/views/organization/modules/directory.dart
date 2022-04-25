@@ -15,12 +15,32 @@ class OrganizationDirectoryPage extends StatefulWidget {
 
 class _HomeState extends State<OrganizationDirectoryPage> {
   late List<DirectoryModel>? _directoryModel = [];
+  late List<DirectoryModel> _directoryModelDirectory = [];
+  final _debouncer = Debouncer();
 
   @override
   void initState() {
     super.initState();
     _getData();
-  }
+
+   _directoryModelDirectory = _directoryModel!; 
+    _debouncer.run(() {
+                    setState(() {
+                      _directoryModelDirectory = _directoryModel!
+                        .where(
+                            (u) => (u.department.contains(
+                                  "Direccion " ,
+                                )),
+                          )
+                          .toList();
+      });
+    });
+
+    print(_directoryModelDirectory);
+/*     _directoryModelDirectory = _directoryModel!; 
+ */    _directoryModelDirectory = _directoryModel!.where((u) => (u.department.contains("Direccion"))).toList();
+
+    }
 
   void _getData() async {
     _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
@@ -33,74 +53,62 @@ class _HomeState extends State<OrganizationDirectoryPage> {
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : 
-          Expanded(
-            child: ListView.builder(
-              padding: const EdgeInsets.only(left:16, right: 16),
-              itemCount: _directoryModel!.length,
-              itemBuilder: (context, index) {
-                return 
-                _directoryModel![index].department ==  "Direccion"
-                ?
-                  Card(
-                      shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: InkWell(
-                        onTap: (){
-                          UserCardAlertDialog.showFullDialog(
-                            context,
-                            _directoryModel![index].fullname.toString(),
-                            _directoryModel![index].email,
-                            ApiIntranetConstans.baseUrl + _directoryModel![index].photo, 
-                            _directoryModel![index].department,
-                            _directoryModel![index].position );
-                        },
-                        child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                            child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child:CircleAvatar(
-                              backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()),
-                              /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */                          ),
-                            )    
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  _directoryModel![index].fullname,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold,),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(top:8)
-                              ),
-                              Text(
-                                  _directoryModel![index].position,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 12.00,)
-                              ),  
-                            ],
-                          ),        
-                        ],
-                        ),
-                      ),
-                    )
-                    :
-                    const Center(
-                      child: Text("No se encontro sis "),
-                    );
-                  },
-                ),
-              );
-              
+          :       
+           GridView.builder(
+              padding: const EdgeInsets.all(0),
+              itemCount:  _directoryModel?.where((c) => c.department == "Direccion").length,                 
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 3,
+              childAspectRatio: 1,
+            ),
+            itemBuilder: (BuildContext context, int index) {
+            
+            return
+            _directoryModelDirectory![index].department == "Direccion"
+            ?  Column(
+                children: [
+                  SizedBox(
+                    width: 80,
+                    height: 80,
+                    child: CircleAvatar(
+                    backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModelDirectory[index].photo.toString()),
+                    ),
+                  ),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 8)),
+                  Center(
+                    child: Text(_directoryModelDirectory[index].fullname,
+                    style: const TextStyle(fontSize: 12.00,fontWeight: FontWeight.bold,),
+                    textAlign: TextAlign.center),
+                  ),
+                  const Padding(padding: EdgeInsets.symmetric(vertical: 4)),
+                  Center(
+                    child: Text(_directoryModelDirectory[index].position,
+                    style: const TextStyle(fontSize: 10.00),
+                    textAlign: TextAlign.center)
+                  )
+                ],   
+              )
+              : 
+              const Padding(padding: EdgeInsets.all(0));
+            },  
+          );
+          
   }
+
 }
 
+class Debouncer {
+  int? milliseconds;
+  VoidCallback? action;
+  Timer? timer;
+
+  run(VoidCallback action) {
+    if (null != timer) {
+      timer!.cancel();
+    }
+    timer = Timer(
+      Duration(milliseconds: Duration.millisecondsPerSecond),
+      action,
+    );
+  }
+}
