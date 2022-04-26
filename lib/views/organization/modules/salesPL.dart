@@ -6,14 +6,14 @@ import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
 
-class OrganizationDirectoryPage extends StatefulWidget {
-  const OrganizationDirectoryPage({Key? key}) : super(key: key);
+class SalesPLDirectoryPage extends StatefulWidget {
+  const SalesPLDirectoryPage({Key? key}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
 }
 
-class _HomeState extends State<OrganizationDirectoryPage> {
+class _HomeState extends State<SalesPLDirectoryPage> {
   late List<DirectoryModel>? _directoryModel = [];
 
   @override
@@ -43,7 +43,7 @@ class _HomeState extends State<OrganizationDirectoryPage> {
                   itemCount: _directoryModel!.length,
                   itemBuilder: (context, index) {
                     return 
-                    _directoryModel![index].department =="Direccion"
+                    _directoryModel![index].department =="Ventas BH"
                     ?Card(
                       shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),

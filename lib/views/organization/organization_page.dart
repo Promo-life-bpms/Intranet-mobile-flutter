@@ -1,5 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/views/organization/modules/cancun.dart';
+import 'package:intranet_movil/views/organization/modules/communication.dart';
+import 'package:intranet_movil/views/organization/modules/desing.dart';
 import 'package:intranet_movil/views/organization/modules/directory.dart';
+import 'package:intranet_movil/views/organization/modules/imports.dart';
+import 'package:intranet_movil/views/organization/modules/logistics.dart';
+import 'package:intranet_movil/views/organization/modules/management.dart';
+import 'package:intranet_movil/views/organization/modules/marketing.dart';
+import 'package:intranet_movil/views/organization/modules/operations.dart';
+import 'package:intranet_movil/views/organization/modules/rh.dart';
+import 'package:intranet_movil/views/organization/modules/salesBH.dart';
+import 'package:intranet_movil/views/organization/modules/salesPL.dart';
+import 'package:intranet_movil/views/organization/modules/store.dart';
+import 'package:intranet_movil/views/organization/modules/systems.dart';
+import 'package:intranet_movil/views/organization/modules/technology.dart';
 import 'package:intranet_movil/views/organization/modules/test.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
@@ -43,20 +57,20 @@ class OrganizationPage extends StatelessWidget {
           body: const TabBarView(
             children: [
               OrganizationDirectoryPage(),
-              Center(child: Text("Hola"),),
-              Icon(Icons.directions_bike),
-               Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
-               Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
-               Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
-               Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
-               Icon(Icons.directions_transit),
-              Icon(Icons.directions_bike),
-               Icon(Icons.directions_transit),
-              TestPage(),
+              RHDirectoryPage(),
+              ManagementDirectoryPage(),
+              SalesBHDirectoryPage(),
+              SalesPLDirectoryPage(),
+              ImportsDirectoryPage(),
+              DesignDirectoryPage(),
+              SystemsDirectoryPage(),
+              OperationsDirectoryPage(),
+              TechnologyDirectoryPage(),
+              CancunDirectoryPage(),
+              MarketingDirectoryPage(),
+              CommunicationDirectoryPage(),
+              LogisticsDirectoryPage(),
+              StoreDirectoryPage(),
             ],
           ),
         ),
