@@ -74,10 +74,13 @@ class _HomeState extends State<AniversaryPage> {
                             const Padding(
                                 padding: EdgeInsets.symmetric(vertical: 8)),
                             Center(
-                              child: Text(_aniversaryModel![index].lastname,
+                              child: Text(_aniversaryModel![index].name +" "+ _aniversaryModel![index].lastname,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(
                                     fontSize: 12.00,
                                     fontWeight: FontWeight.bold,
+                                    
                                   ),
                                   textAlign: TextAlign.center),
                             ),
@@ -85,8 +88,10 @@ class _HomeState extends State<AniversaryPage> {
                                 padding: EdgeInsets.symmetric(vertical: 4)),
                             Center(
                                 child: Text(_aniversaryModel![index].date,
-                                    style: const TextStyle(fontSize: 10.00),
-                                    textAlign: TextAlign.center))
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 10.00),
+                                  textAlign: TextAlign.center))
                           ],
                         );
                       }),
