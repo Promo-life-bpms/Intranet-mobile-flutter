@@ -14,7 +14,7 @@ class ManualPage extends StatefulWidget {
 
 class _HomeState extends State<ManualPage> {
   late List<ManualModel>? _manualModel = [];
-  
+
   @override
   void initState() {
     super.initState();
@@ -42,36 +42,39 @@ class _HomeState extends State<ManualPage> {
               itemCount: _manualModel!.length,
               itemBuilder: (context, index) {
                 return Card(
-                  child:Padding(
+                  child: Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Column(
+                    child: Column(
                       children: [
                         const SizedBox(
                           width: double.infinity,
                           height: 160.0,
-                          child:FittedBox(
-                            fit: BoxFit.contain,
-                            child: Image(
+                          child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Image(
                                 image: AssetImage('lib/assets/pdf.png'),
-                              )
-                          ),
+                              )),
                         ),
-
                         Text(
                           _manualModel![index].name,
-                          style: const TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold,),
+                          style: const TextStyle(
+                            fontSize: 20.00,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
-                        const  Padding( 
+                        const Padding(
                           padding: EdgeInsets.only(bottom: 20.0),
                         ),
                         SizedBox(
                           width: 200,
-                          height: 50, 
+                          height: 50,
                           child: ElevatedButton(
                             onPressed: () {
-                              LaunchToInternet.launchURL(ApiIntranetConstans.baseUrl+_manualModel![index].file);
+                              LaunchToInternet.launchURL(
+                                  ApiIntranetConstans.baseUrl +
+                                      _manualModel![index].file);
                             },
-                              child: const Text('ABRIR'),
+                            child: const Text('ABRIR'),
                           ),
                         ),
                       ],
@@ -83,5 +86,3 @@ class _HomeState extends State<ManualPage> {
     );
   }
 }
-
-
