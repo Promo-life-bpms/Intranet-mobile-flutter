@@ -5,6 +5,8 @@ class ApiConstants {
 
 class ApiIntranetConstans{
   static String baseUrl = 'https://intranet.kaths.com.mx/';
+  static String loginEndpoint = 'api/login' ;
+  static String getUser = 'api/getUser/' ;
   static String manualEndpoint = 'api/manuals' ;
   static String monthEmployeeEndpoint = 'api/month-employees/';
   static String monthAniversayEndpoint =  'api/month-anniversaries/';
