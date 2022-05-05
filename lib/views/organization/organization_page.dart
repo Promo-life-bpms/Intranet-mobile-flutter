@@ -1,4 +1,20 @@
-/* import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
+import 'package:intranet_movil/views/organization/modules/cancun.dart';
+import 'package:intranet_movil/views/organization/modules/communication.dart';
+import 'package:intranet_movil/views/organization/modules/desing.dart';
+import 'package:intranet_movil/views/organization/modules/directory.dart';
+import 'package:intranet_movil/views/organization/modules/imports.dart';
+import 'package:intranet_movil/views/organization/modules/logistics.dart';
+import 'package:intranet_movil/views/organization/modules/management.dart';
+import 'package:intranet_movil/views/organization/modules/marketing.dart';
+import 'package:intranet_movil/views/organization/modules/operations.dart';
+import 'package:intranet_movil/views/organization/modules/rh.dart';
+import 'package:intranet_movil/views/organization/modules/salesBH.dart';
+import 'package:intranet_movil/views/organization/modules/salesPL.dart';
+import 'package:intranet_movil/views/organization/modules/store.dart';
+import 'package:intranet_movil/views/organization/modules/systems.dart';
+import 'package:intranet_movil/views/organization/modules/technology.dart';
+import 'package:intranet_movil/views/organization/modules/test.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 void main() => runApp(const OrganizationPage());
@@ -7,208 +23,60 @@ class OrganizationPage extends StatelessWidget {
   const OrganizationPage({Key? key}) : super(key: key);
 
   static const String _title = 'Organigrama';
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-      appBar: AppBar(
-        title: const Text(_title),
-      ),
-      body: const OrganizationWidget(),
-    );
-  }
-}
-
-class OrganizationWidget extends StatelessWidget {
-  const OrganizationWidget({Key? key}) : super(key: key);
-
- @override
-  Widget build(BuildContext context) {
-    return const Center(
-      child: Text(
-        "Aqui va el codigo"
-      ),
-    );
-  }
-}
- */
-import 'dart:async';
-import 'dart:convert';
-import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
-
-class OrganizationPage extends StatefulWidget {
-  OrganizationPage() : super();
-
-  @override
-  JobsState createState() => JobsState();
-}
-
-class Debouncer {
-  int? milliseconds;
-  VoidCallback? action;
-  Timer? timer;
-
-  run(VoidCallback action) {
-    if (null != timer) {
-      timer!.cancel();
-    }
-    timer = Timer(
-      Duration(milliseconds: Duration.millisecondsPerSecond),
-      action,
-    );
-  }
-}
-
-class JobsState extends State<OrganizationPage> {
-  final _debouncer = Debouncer();
-
-  List<Subject> ulist = [];
-  List<Subject> userLists = [];
-  //API call for All Subject List
-
-  String url = 'https://type.fit/api/quotes';
-
-  Future<List<Subject>> getAllulistList() async {
-    try {
-      final response = await http.get(Uri.parse(url));
-      if (response.statusCode == 200) {
-        // print(response.body);
-        List<Subject> list = parseAgents(response.body);
-        return list;
-      } else {
-        throw Exception('Error');
-      }
-    } catch (e) {
-      throw Exception(e.toString());
-    }
-  }
-
-  static List<Subject> parseAgents(String responseBody) {
-    final parsed = json.decode(responseBody).cast<Map<String, dynamic>>();
-    return parsed.map<Subject>((json) => Subject.fromJson(json)).toList();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    getAllulistList().then((subjectFromServer) {
-      setState(() {
-        ulist = subjectFromServer;
-        userLists = ulist;
-      });
-    });
-  }
-
-  //Main Widget
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'All Users',
-          style: TextStyle(fontSize: 25),
+    return MaterialApp(
+      home: DefaultTabController(
+        length: 15  ,
+        child: Scaffold(
+          drawer: const NavigationDrawerWidget(),
+          appBar: AppBar(
+            bottom: TabBar(
+              isScrollable: true,
+              unselectedLabelColor: Colors.white.withOpacity(0.3),
+              indicatorColor: Colors.white,
+              tabs: const [
+                  Tab(child: Text('Direccion'),),
+                  Tab(child: Text('Recursos Humanos'),),
+                  Tab(child: Text('Administración'),),
+                  Tab(child: Text('Ventas BH'),),
+                  Tab(child: Text('Ventas PL'),),
+                  Tab(child: Text('Importaciones'),),
+                  Tab(child: Text('Diseno'),),
+                  Tab(child: Text('Sistemas'),),
+                  Tab(child: Text('Operaciones'),),
+                  Tab(child: Text('Tecnología e Innovación'),),
+                  Tab(child: Text('Cancún'),),
+                  Tab(child: Text('Marketing'),),
+                  Tab(child: Text('Comunicación'),),
+                  Tab(child: Text('Logística'),),
+                  Tab(child: Text('Almacen'),),
+                ]),
+            title: const Text(_title),
+          ),
+          body: const TabBarView(
+            children: [
+              OrganizationDirectoryPage(),
+              RHDirectoryPage(),
+              ManagementDirectoryPage(),
+              SalesBHDirectoryPage(),
+              SalesPLDirectoryPage(),
+              ImportsDirectoryPage(),
+              DesignDirectoryPage(),
+              SystemsDirectoryPage(),
+              OperationsDirectoryPage(),
+              TechnologyDirectoryPage(),
+              CancunDirectoryPage(),
+              MarketingDirectoryPage(),
+              CommunicationDirectoryPage(),
+              LogisticsDirectoryPage(),
+              StoreDirectoryPage(),
+            ],
+          ),
         ),
       ),
-      body: Column(
-        children: <Widget>[
-          //Search Bar to List of typed Subject
-          Container(
-            padding: EdgeInsets.all(15),
-            child: TextField(
-              textInputAction: TextInputAction.search,
-              decoration: InputDecoration(
-                enabledBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(25.0),
-                  borderSide: BorderSide(
-                    color: Colors.grey,
-                  ),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(20.0),
-                  borderSide: BorderSide(
-                    color: Colors.blue,
-                  ),
-                ),
-                suffixIcon: InkWell(
-                  child: Icon(Icons.search),
-                ),
-                contentPadding: EdgeInsets.all(15.0),
-                hintText: 'Search ',
-              ),
-              onChanged: (string) {
-                _debouncer.run(() {
-                  setState(() {
-                    userLists = ulist
-                        .where(
-                          (u) => (u.text.toLowerCase().contains(
-                                string.toLowerCase(),
-                              )),
-                        )
-                        .toList();
-                  });
-                });
-              },
-            ),
-          ),
-          Expanded(
-            child: ListView.builder(
-              shrinkWrap: true,
-              physics: ClampingScrollPhysics(),
-              padding: EdgeInsets.all(5),
-              itemCount: userLists.length,
-              itemBuilder: (BuildContext context, int index) {
-                return Card(
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(20),
-                    side: BorderSide(
-                      color: Colors.grey.shade300,
-                    ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.all(5.0),
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: <Widget>[
-                        ListTile(
-                          title: Text(
-                            userLists[index].text,
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          subtitle: Text(
-                            userLists[index].author ?? "null",
-                            style: TextStyle(fontSize: 16),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                );
-              },
-            ),
-          ),
-        ],
-      ),
     );
   }
 }
 
-//Declare Subject class for json data or parameters of json string/data
-//Class For Subject
-class Subject {
-  var text;
-  var author;
-  Subject({
-    required this.text,
-    required this.author,
-  });
 
-  factory Subject.fromJson(Map<dynamic, dynamic> json) {
-    return Subject(
-      text: json['text'],
-      author: json['author'],
-    );
-  }
-}
