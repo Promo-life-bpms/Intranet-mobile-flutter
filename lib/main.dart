@@ -82,7 +82,7 @@ class MyApp extends StatefulWidget {
 
 class _HomeState extends State<MyApp> {
     
-  late List<UserModel>? _userlModel = [];
+  late String? _token = "";
 
   @override
   void initState() {
@@ -92,11 +92,10 @@ class _HomeState extends State<MyApp> {
 
    void _getData() async {
     final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-
-    _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    _token = prefs.getString('token');
+      Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
+  
   @override
   Widget build(BuildContext context) {
     return 
@@ -104,7 +103,7 @@ class _HomeState extends State<MyApp> {
       title: 'Login',
       home:  Scaffold(
         body:
-        _userlModel == null || _userlModel!.isEmpty
+        _token == null || _token!.isEmpty || _token == ""
         ?Center(
             child: Consumer<AuthProvider>(
               builder: (context, auth, child) {
