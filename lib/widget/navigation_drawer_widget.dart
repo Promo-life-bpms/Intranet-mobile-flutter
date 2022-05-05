@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/views/about/about_main_page.dart';
 import 'package:intranet_movil/views/access/access_page.dart';
-import 'package:intranet_movil/views/aniversary/aniversary_page.dart';
+import 'package:intranet_movil/views/aniversary/home_page.dart';
 import 'package:intranet_movil/views/auth/login_page.dart';
 import 'package:intranet_movil/views/communicate/communicate_page.dart';
 import 'package:intranet_movil/views/directory/directory_page.dart';
@@ -74,7 +74,7 @@ class NavigationDrawerWidget extends StatelessWidget {
             ),
             ListTile(
               leading: const Icon(Icons.celebration),
-              title: const Text('Aniversarios'),
+              title: const Text('Cumpleaños y Aniversarios'),
               selected: (_selectedDrawerItem == 5),
               onTap: () {
                 selectedItem(context, 5);
@@ -142,7 +142,7 @@ class NavigationDrawerWidget extends StatelessWidget {
         break;
       case 2:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=>  OrganizationPage()));   
+        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const OrganizationPage()));   
         break;
       case 3:
         _selectedDrawerItem = index;
@@ -156,8 +156,8 @@ class NavigationDrawerWidget extends StatelessWidget {
         break;
       case 5:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const AniversaryPage()));
+        Navigator.of(context).push(MaterialPageRoute(
+            builder: (context) => const AniversaryHomePage()));
         break;
       case 6:
         _selectedDrawerItem = index;

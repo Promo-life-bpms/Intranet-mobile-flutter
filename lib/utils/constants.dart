@@ -3,12 +3,12 @@ class ApiConstants {
   static String usersEndpoint = '/users';
 }
 
-class ApiIntranetConstans{
+class ApiIntranetConstans {
   static String baseUrl = 'https://intranet.kaths.com.mx/';
-  static String manualEndpoint = 'api/manuals' ;
-  static String monthEmployeeEndpoint = 'api/month-employees/';
-  static String monthAniversayEndpoint =  'api/month-anniversaries/';
-  static String monthBirthdayEndpoint = 'api/api/month-birthdays/';
+  static String manualEndpoint = 'api/manuals';
+  static String monthEmployeeEndpoint = 'api/manuals';
+  static String monthAniversaryEndpoint = 'api/month-anniversaries/';
+  static String monthBirthdayEndpoint = 'api/month-birthdays/';
   static String communicateEndpoint = 'api/communicate/';
   static String directoryEndponit = 'api/directory/';
   static String organizationEndpoint = '/api/organization/';

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
-void main() => runApp(const BHPage());
-
 class BHPage extends StatelessWidget {
   const BHPage({Key? key}) : super(key: key);
 
@@ -22,14 +20,13 @@ class BHPage extends StatelessWidget {
 class BHWidget extends StatelessWidget {
   const BHWidget({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Card(
         margin: const EdgeInsets.symmetric(
-            horizontal: 0,
+          horizontal: 0,
         ),
         child: Column(
           children: <Widget>[
@@ -37,23 +34,22 @@ class BHWidget extends StatelessWidget {
               width: double.infinity,
               height: 200.0,
               decoration: const BoxDecoration(
-              image: DecorationImage(
-                colorFilter: ColorFilter.mode(
-                  Colors.blue,
-                  BlendMode.softLight,
-                ),
-                image: NetworkImage("http://www.trademarket.com.mx/assets/imgs/quienes.jpg"),
-                fit: BoxFit.cover,
+                image: DecorationImage(
+                  colorFilter: ColorFilter.mode(
+                    Colors.blue,
+                    BlendMode.softLight,
+                  ),
+                  image: NetworkImage(
+                      "http://www.trademarket.com.mx/assets/imgs/quienes.jpg"),
+                  fit: BoxFit.cover,
                 ),
               ),
               child: const Align(
-                alignment:  Alignment(0, 3),
+                alignment: Alignment(0, 3),
                 child: SizedBox(
-                width: 150.0,
-                  child: Image(
-                    image: AssetImage('lib/assets/bhtrade.png')
-                  ),
-                ),     
+                  width: 150.0,
+                  child: Image(image: AssetImage('lib/assets/bhtrade.png')),
+                ),
               ),
             ),
             const Padding(
@@ -79,46 +75,45 @@ class BHWidget extends StatelessWidget {
                 width: double.infinity,
                 height: 150,
                 child: Text(
-                  "Más de una década importando, fabricando y distribuyendo "
-                  "productos promocionales y regalos corporativos para las marcas"
-                  "más prestigiosas. Expertos asesores, socios estratégicos y facilitadores"
-                  "para la adquisición del producto exacto para cada campaña externa o interna"
-                  "de las empresas AAA.",
+                    "Más de una década importando, fabricando y distribuyendo "
+                    "productos promocionales y regalos corporativos para las marcas"
+                    "más prestigiosas. Expertos asesores, socios estratégicos y facilitadores"
+                    "para la adquisición del producto exacto para cada campaña externa o interna"
+                    "de las empresas AAA.",
                     style: TextStyle(height: 1.5),
-                    textAlign: TextAlign.justify
-                    ),
-                  ),
-                ),
+                    textAlign: TextAlign.justify),
+              ),
+            ),
             const Padding(
-              padding:EdgeInsets.only(top: 40),
+              padding: EdgeInsets.only(top: 40),
               child: SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: Text(
                   "Codigo de valores",
                   style: TextStyle(
-                    color: Colors.blueGrey,
-                    height: 2,
-                    fontSize: 20,
-                    fontWeight: FontWeight.w700),
-                    textAlign: TextAlign.center,
+                      color: Colors.blueGrey,
+                      height: 2,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
+                  textAlign: TextAlign.center,
                 ),
               ),
             ),
             const Padding(
-              padding:EdgeInsets.symmetric(horizontal: 30),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: Text(
                   "Lealtad",
                   style: TextStyle(
-                  color: Colors.blueGrey,
-                  height: 2,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700),
+                      color: Colors.blueGrey,
+                      height: 2,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
                   textAlign: TextAlign.justify,
-                  ),
+                ),
               ),
             ),
             Padding(
@@ -140,25 +135,24 @@ class BHWidget extends StatelessWidget {
                       style: TextStyle(height: 1.5),
                       textAlign: TextAlign.justify,
                     ),
-                  ),           
+                  ),
                 ],
-              ),        
+              ),
             ),
-
             const Padding(
-              padding:EdgeInsets.symmetric(horizontal: 30),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: Text(
                   "Confianza",
                   style: TextStyle(
-                  color: Colors.blueGrey,
-                  height: 2,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700),
+                      color: Colors.blueGrey,
+                      height: 2,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
                   textAlign: TextAlign.justify,
-                  ),
+                ),
               ),
             ),
             Padding(
@@ -180,25 +174,24 @@ class BHWidget extends StatelessWidget {
                       style: TextStyle(height: 1.5),
                       textAlign: TextAlign.justify,
                     ),
-                  ),           
+                  ),
                 ],
-              ),        
+              ),
             ),
-
             const Padding(
-              padding:EdgeInsets.symmetric(horizontal: 30),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: Text(
                   "Honestidad",
                   style: TextStyle(
-                  color: Colors.blueGrey,
-                  height: 2,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700),
+                      color: Colors.blueGrey,
+                      height: 2,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
                   textAlign: TextAlign.justify,
-                  ),
+                ),
               ),
             ),
             Padding(
@@ -217,25 +210,24 @@ class BHWidget extends StatelessWidget {
                       style: TextStyle(height: 1.5),
                       textAlign: TextAlign.justify,
                     ),
-                  ),           
+                  ),
                 ],
-              ),        
+              ),
             ),
-
             const Padding(
-              padding:EdgeInsets.symmetric(horizontal: 30),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: Text(
                   "Trabajo en equipo",
                   style: TextStyle(
-                  color: Colors.blueGrey,
-                  height: 2,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700),
+                      color: Colors.blueGrey,
+                      height: 2,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
                   textAlign: TextAlign.justify,
-                  ),
+                ),
               ),
             ),
             Padding(
@@ -256,25 +248,24 @@ class BHWidget extends StatelessWidget {
                       style: TextStyle(height: 1.5),
                       textAlign: TextAlign.justify,
                     ),
-                  ),           
+                  ),
                 ],
-              ),        
+              ),
             ),
-            
             const Padding(
-              padding:EdgeInsets.symmetric(horizontal: 30),
+              padding: EdgeInsets.symmetric(horizontal: 30),
               child: SizedBox(
                 width: double.infinity,
                 height: 50,
                 child: Text(
                   "Productividad",
                   style: TextStyle(
-                  color: Colors.blueGrey,
-                  height: 2,
-                  fontSize: 20,
-                  fontWeight: FontWeight.w700),
+                      color: Colors.blueGrey,
+                      height: 2,
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
                   textAlign: TextAlign.justify,
-                  ),
+                ),
               ),
             ),
             Padding(
@@ -293,9 +284,9 @@ class BHWidget extends StatelessWidget {
                       style: TextStyle(height: 1.5),
                       textAlign: TextAlign.justify,
                     ),
-                  ),           
+                  ),
                 ],
-              ),        
+              ),
             ),
           ],
         ),
@@ -303,4 +294,3 @@ class BHWidget extends StatelessWidget {
     );
   }
 }
-

@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/model/aniversary.dart';
-import 'package:intranet_movil/services/api_aniversary.dart';
+import 'package:intranet_movil/model/brithday.dart';
+import 'package:intranet_movil/services/api_brithday.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:lottie/lottie.dart';
 
-class AniversaryPage extends StatefulWidget {
-  const AniversaryPage({Key? key}) : super(key: key);
+class BrithdayPage extends StatefulWidget {
+  const BrithdayPage({Key? key}) : super(key: key);
 
   @override
   _HomeState createState() => _HomeState();
-  static const String _title = 'Aniversarios';
+  static const String _title = 'Cumpleaños';
 
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,8 +22,8 @@ class AniversaryPage extends StatefulWidget {
   }
 }
 
-class _HomeState extends State<AniversaryPage> {
-  late List<AniversaryModel>? _aniversaryModel = [];
+class _HomeState extends State<BrithdayPage> {
+  late List<BrithdayModel>? _brithdayModel = [];
 
   @override
   void initState() {
@@ -32,8 +32,8 @@ class _HomeState extends State<AniversaryPage> {
   }
 
   void _getData() async {
-    _aniversaryModel =
-        (await ApiAniversaryService().getAniversary())!.cast<AniversaryModel>();
+    _brithdayModel =
+        (await ApiBrithdayService().getBrithday())!.cast<BrithdayModel>();
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -41,9 +41,9 @@ class _HomeState extends State<AniversaryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Aniversarios'),
+        title: const Text('Cumpleaños'),
       ),
-      body: _aniversaryModel == null || _aniversaryModel!.isEmpty
+      body: _brithdayModel == null || _brithdayModel!.isEmpty
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -53,7 +53,7 @@ class _HomeState extends State<AniversaryPage> {
                 children: [
                   Container(
                     padding: const EdgeInsets.all(8.0),
-                    width: 750,
+                    width: 700,
                     child: Lottie.asset("lib/assets/flags.json"),
                   ),
                 ],
@@ -61,7 +61,7 @@ class _HomeState extends State<AniversaryPage> {
               Expanded(
                 child: GridView.builder(
                   padding: const EdgeInsets.all(0),
-                  itemCount: _aniversaryModel!.length,
+                  itemCount: _brithdayModel!.length,
                   gridDelegate:
                       const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 3,
@@ -74,21 +74,21 @@ class _HomeState extends State<AniversaryPage> {
                           width: 80,
                           height: 80,
                           child: CircleAvatar(
-                              backgroundImage: NetworkImage(
+                               backgroundImage: NetworkImage(
                               ApiIntranetConstans.baseUrl +
-                                  _aniversaryModel![index].photo.toString()),
+                                  _brithdayModel![index].photo.toString()),
                               ),
                         ),
                         const Padding(
                             padding: EdgeInsets.only(
-                                left: 1, top: 10, right: 5, bottom: 4)),
+                                left: 1, top: 5, right: 5, bottom: 4)),
                         SizedBox(
                           width: 100,
                           height: 30,
                           child: Text(
-                              _aniversaryModel![index].name +
+                              _brithdayModel![index].name +
                                   " " +
-                                  _aniversaryModel![index].lastname,
+                                  _brithdayModel![index].lastname,
                               style: const TextStyle(
                                 fontSize: 12.00,
                                 fontWeight: FontWeight.bold,
@@ -96,9 +96,9 @@ class _HomeState extends State<AniversaryPage> {
                               textAlign: TextAlign.center),
                         ),
                         const Padding(
-                            padding: EdgeInsets.symmetric(vertical: 2)),
+                            padding: EdgeInsets.symmetric(vertical: 4)),
                         Center(
-                            child: Text(_aniversaryModel![index].date,
+                            child: Text(_brithdayModel![index].date,
                                 style: const TextStyle(fontSize: 10.00),
                                 textAlign: TextAlign.center)),
                         const Padding(

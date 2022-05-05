@@ -14,7 +14,6 @@ import 'package:intranet_movil/views/organization/modules/salesPL.dart';
 import 'package:intranet_movil/views/organization/modules/store.dart';
 import 'package:intranet_movil/views/organization/modules/systems.dart';
 import 'package:intranet_movil/views/organization/modules/technology.dart';
-import 'package:intranet_movil/views/organization/modules/test.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 void main() => runApp(const OrganizationPage());
