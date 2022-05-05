@@ -1,12 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_user.dart';
-import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/about/about_main_page.dart';
 import 'package:intranet_movil/views/access/access_page.dart';
 import 'package:intranet_movil/views/aniversary/aniversary_page.dart';
-import 'package:intranet_movil/views/auth/login_page.dart';
+import 'package:intranet_movil/views/auth/logout.page.dart';
 import 'package:intranet_movil/views/communicate/communicate_page.dart';
 import 'package:intranet_movil/views/directory/directory_page.dart';
 import 'package:intranet_movil/views/employee_month/employee_month_page.dart';
@@ -222,11 +221,10 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             .push(MaterialPageRoute(builder: (context) => const AccessPage()));
         break;
       case 10:
-       /* Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const HomePage())); */
-        LogoutAlertDialog().showAlertDialog(context);
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const LogoutPage())); 
 
-        break;
+        break; 
     }
   }
 }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/home.dart';
+import 'package:intranet_movil/services/auth.dart';
 import 'package:intranet_movil/views/auth/login_page.dart';
 import 'package:intranet_movil/views/home/home_page.dart';
 
@@ -119,16 +121,16 @@ class LogoutAlertDialog{
     Widget cancelButton = TextButton(
       child: const Text("Cancelar"),
       onPressed:  () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const HomePage())); 
-        Navigator.of(context, rootNavigator: true).pop('dialog');
+        Navigator.pop(context);
       },
     );
     Widget continueButton = TextButton(
       child:const Text("Aceptar"),
       onPressed:  () {
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const LoginForm()));
+         AuthProvider().logout();
+          Navigator.of(context, rootNavigator: true).pop('dialog');
+          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Login()), (e) => false);
+
       },
     );
 
