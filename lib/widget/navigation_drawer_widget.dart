@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_user.dart';
+import 'package:intranet_movil/utils/alert_dialog.dart';
+import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/about/about_main_page.dart';
 import 'package:intranet_movil/views/access/access_page.dart';
 import 'package:intranet_movil/views/aniversary/aniversary_page.dart';
@@ -47,13 +49,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return
-    _userlModel == null || _userlModel!.isEmpty
-    ?   Drawer(
+    return Drawer(
       child: Material(
         child: ListView(
           children: <Widget>[
-            const UserAccountsDrawerHeader(
+            _userlModel == null || _userlModel!.isEmpty
+            ? const UserAccountsDrawerHeader(
               accountName: Text("Obteniendo nombre ..."),
               accountEmail: Text("Obteniendo email ..."),
               currentAccountPicture: CircleAvatar(
@@ -63,112 +64,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   style: TextStyle(fontSize: 40.0),
                 ),
               ),
-            ),
-            ListTile(
-              leading: const Icon(Icons.home),
-              title: const Text('Inicio'),
-              selected: (_selectedDrawerItem == 0),
-              onTap: () {
-                selectedItem(context, 0);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.info),
-              title: const Text('Acerca de'),
-              selected: (_selectedDrawerItem == 1),
-              onTap: () {
-                selectedItem(context, 1);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.chat_rounded),
-              title: const Text('Organigrama'),
-              selected: (_selectedDrawerItem == 2),
-              onTap: () {
-                selectedItem(context, 2);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.edit),
-              title: const Text('Solicitudes'),
-              selected: (_selectedDrawerItem == 3),
-              onTap: () {
-                selectedItem(context, 3);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.contact_mail),
-              title: const Text('Directorio'),
-              selected: (_selectedDrawerItem == 4),
-              onTap: () {
-                selectedItem(context, 4);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.celebration),
-              title: const Text('Aniversarios'),
-              selected: (_selectedDrawerItem == 5),
-              onTap: () {
-                selectedItem(context, 5);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.emoji_events),
-              title: const Text('Empleado del Mes'),
-              selected: (_selectedDrawerItem == 6),
-              onTap: () {
-                selectedItem(context, 6);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.notifications),
-              title: const Text('Comunicados'),
-              selected: (_selectedDrawerItem == 7),
-              onTap: () {
-                selectedItem(context, 7);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.library_books),
-              title: const Text('Manuales'),
-              selected: (_selectedDrawerItem == 8),
-              onTap: () {
-                selectedItem(context, 8);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.public),
-              title: const Text('Accesos'),
-              selected: (_selectedDrawerItem == 9),
-              onTap: () {
-                selectedItem(context, 9);
-              },
-            ),
-            ListTile(
-              leading: const Icon(Icons.exit_to_app),
-              title: const Text('Salir'),
-              selected: (_selectedDrawerItem == 10),
-              onTap: () {
-                selectedItem(context, 10);
-              },
-            ),
-          ],
-        ),
-      ),
-    ):
-     Drawer(
-      child: Material(
-        child: ListView(
-          children: <Widget>[
-            const UserAccountsDrawerHeader(
-              accountName: Text(""),
-              accountEmail: Text("test@test.com"),
+            )
+            :UserAccountsDrawerHeader(
+              accountName: Text(_userlModel![0].fullname),
+              accountEmail: Text(_userlModel![0].email),
               currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.black,
-                child: Text(
-                  "O",
-                  style: TextStyle(fontSize: 40.0),
-                ),
+                backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl+_userlModel![0].photo),
               ),
             ),
             ListTile(
@@ -263,6 +164,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         ),
       ),
     );
+     
     
 }
 
@@ -320,13 +222,19 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             .push(MaterialPageRoute(builder: (context) => const AccessPage()));
         break;
       case 10:
-        _selectedDrawerItem = index;
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const Login()));
+       /* Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const HomePage())); */
+        LogoutAlertDialog().showAlertDialog(context);
+
         break;
     }
   }
 }
+
+logout() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
+  }
 
 
  Future<String?> getToken() async {

@@ -11,7 +11,7 @@ class AuthProvider extends ChangeNotifier {
   bool _isAuthenticated = false;
 
   bool get isAuthenticated => _isAuthenticated;
-
+ 
   Future<bool> login(String email, String password) async {
     final response = await http.post(Uri.parse(ApiIntranetConstans.baseUrl+ApiIntranetConstans.loginEndpoint) , body: {
       'email': email,
@@ -21,24 +21,19 @@ class AuthProvider extends ChangeNotifier {
       'Accept': 'application/json',
     });
 
-
     if (response.statusCode == 200) {
-      String token = response.body;
-      print("--------TOKEN-------");
-      print(token);
-      var setToken = token;
-      await saveToken(token);
-      _isAuthenticated = true;
-      notifyListeners();
-      return true;
-    }
+        String token = response.body;
+        await saveToken(token);
+        _isAuthenticated = true;
+        notifyListeners();
+        return true;
+      }else{
+        _isAuthenticated = true;
+        return false;
+      }
 
-    if (response.statusCode == 422) {
-      return false;
-    }
-
-    return false;
   }
+
 
   getDeviceId() async {
     final DeviceInfoPlugin deviceInfoPlugin =  DeviceInfoPlugin();
@@ -59,12 +54,7 @@ class AuthProvider extends ChangeNotifier {
   saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
-
-    final String? sharedToken = prefs.getString('token');
-     
-    print("-----------TOKEN SAVE---------");
-    print(sharedToken);
-    
+    final String? sharedToken = prefs.getString('token');  
   }
 
   Future<String?> getToken() async {

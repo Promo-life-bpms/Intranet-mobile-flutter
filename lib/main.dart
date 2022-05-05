@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/services/auth.dart';
 import 'package:intranet_movil/views/auth/login_page.dart';
 import 'package:intranet_movil/views/home/home_page.dart';
-/* import 'package:intranet_movil/widget/splash_screen.dart';
- */import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 /* void main() => runApp( const MyApp());
 
@@ -39,7 +38,8 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return 
+     MaterialApp(
       title: 'Sanctum Books',
       home:  Scaffold(
         body: Center(
@@ -47,9 +47,9 @@ class MyApp extends StatelessWidget {
               builder: (context, auth, child) {
                 switch (auth.isAuthenticated) {
                   case true:
-                    return  HomePage();
+                    return  const HomePage();
                   default:
-                    return  LoginForm();
+                    return  const LoginForm();
                 }
               },
             )

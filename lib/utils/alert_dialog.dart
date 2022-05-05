@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/views/auth/login_page.dart';
+import 'package:intranet_movil/views/home/home_page.dart';
 
 class UserCardAlertDialog{
   
@@ -107,4 +109,46 @@ class UserCardAlertDialog{
         }
       );
   }
+}
+
+
+class LogoutAlertDialog{
+
+  showAlertDialog(BuildContext context) {
+
+    Widget cancelButton = TextButton(
+      child: const Text("Cancelar"),
+      onPressed:  () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const HomePage())); 
+        Navigator.of(context, rootNavigator: true).pop('dialog');
+      },
+    );
+    Widget continueButton = TextButton(
+      child:const Text("Aceptar"),
+      onPressed:  () {
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const LoginForm()));
+      },
+    );
+
+    AlertDialog alert = AlertDialog(
+      title:const Text("Salir de la aplicación"),
+      content:const Text("¿Desea cerra la aplicación?"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+
+    // show the dialog
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return alert;
+      },
+    );
+  }
+  
+  
 }
