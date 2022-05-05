@@ -22,15 +22,18 @@ class AuthProvider extends ChangeNotifier {
     });
 
     if (response.statusCode == 200) {
-        String token = response.body;
-        await saveToken(token);
-        _isAuthenticated = true;
-        notifyListeners();
-        return true;
-      }else{
-        _isAuthenticated = true;
-        return false;
-      }
+      String token = response.body;
+      await saveToken(token);
+      _isAuthenticated = true;
+      notifyListeners();
+      return true;
+    }
+
+    if (response.statusCode == 422) {
+      return false;
+    }
+
+    return false;
 
   }
 
