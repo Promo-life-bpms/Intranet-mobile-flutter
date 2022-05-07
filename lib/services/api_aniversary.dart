@@ -7,7 +7,7 @@ class ApiAniversaryService {
   Future<List<AniversaryModel>?> getAniversary() async {
     try {
       var url = Uri.parse(ApiIntranetConstans.baseUrl +
-          ApiIntranetConstans.monthAniversaryEndpoint);
+          ApiIntranetConstans.monthAniveraryEndpoint);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         List<AniversaryModel> _model = aniversaryModelFromJson(response.body);
