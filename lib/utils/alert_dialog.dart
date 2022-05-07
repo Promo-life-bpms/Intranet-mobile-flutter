@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/home.dart';
+import 'package:flutter/services.dart';
 import 'package:intranet_movil/services/auth.dart';
-import 'package:intranet_movil/views/auth/login_page.dart';
-import 'package:intranet_movil/views/home/home_page.dart';
 
 class UserCardAlertDialog{
   
@@ -129,14 +127,13 @@ class LogoutAlertDialog{
       onPressed:  () {
          AuthProvider().logout();
           Navigator.of(context, rootNavigator: true).pop('dialog');
-          Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context) => const Login()), (e) => false);
-
+          SystemNavigator.pop();
       },
     );
 
     AlertDialog alert = AlertDialog(
-      title:const Text("Salir de la aplicación"),
-      content:const Text("¿Desea cerra la aplicación?"),
+      title:const Text("¿Cerrar sesión?"),
+      content:const Text("Deberá ingresar sus datos nuevamente para acceder al contenido", ),
       actions: [
         cancelButton,
         continueButton,

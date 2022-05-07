@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/model/user_model.dart';
+import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/services/auth.dart';
+import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/auth/login_page.dart';
 import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
 
 
 void main() {
@@ -24,9 +28,9 @@ class MyApp extends StatefulWidget {
 }
 
 class _HomeState extends State<MyApp> {
-    
+  late List<UserModel>? _userModel = [];
   late String? _token = "";
-
+    
   @override
   void initState() {
     super.initState();
@@ -36,7 +40,8 @@ class _HomeState extends State<MyApp> {
    void _getData() async {
     final prefs = await SharedPreferences.getInstance();
     _token = prefs.getString('token');
-      Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    _userModel = (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   @override
@@ -44,14 +49,17 @@ class _HomeState extends State<MyApp> {
     return 
      MaterialApp(
       title: 'Login',
+       theme: ThemeData(
+        primaryColor: ColorIntranetConstants.kPrimaryColorLight, 
+        primaryColorLight: ColorIntranetConstants.kPrimaryColorLight,
+        primaryColorDark: ColorIntranetConstants.kPrimaryColorDark,
+        backgroundColor: ColorIntranetConstants.kbackgroundColorDark,
+        hoverColor: ColorIntranetConstants.kPrimaryColorLight,
+        appBarTheme: const AppBarTheme(backgroundColor: ColorIntranetConstants.kPrimaryColorLight) 
+        ),
       home:  Scaffold(
-        body:
-        _token == ""?
-        const Center(
-          child: CircularProgressIndicator(),
-        )
-        :
-        _token == null || _token!.isEmpty 
+        body:  
+        _userModel == null || _userModel!.isEmpty 
         ?Center(
             child: Consumer<AuthProvider>(
               builder: (context, auth, child) {

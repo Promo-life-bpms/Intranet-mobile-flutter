@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/organization/modules/cancun.dart';
 import 'package:intranet_movil/views/organization/modules/communication.dart';
 import 'package:intranet_movil/views/organization/modules/desing.dart';
@@ -14,7 +15,6 @@ import 'package:intranet_movil/views/organization/modules/salesPL.dart';
 import 'package:intranet_movil/views/organization/modules/store.dart';
 import 'package:intranet_movil/views/organization/modules/systems.dart';
 import 'package:intranet_movil/views/organization/modules/technology.dart';
-import 'package:intranet_movil/views/organization/modules/test.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 void main() => runApp(const OrganizationPage());
@@ -26,6 +26,14 @@ class OrganizationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      theme: ThemeData(
+        primaryColor: ColorIntranetConstants.kPrimaryColorLight, 
+        primaryColorLight: ColorIntranetConstants.kPrimaryColorLight,
+        primaryColorDark: ColorIntranetConstants.kPrimaryColorDark,
+        backgroundColor: ColorIntranetConstants.kbackgroundColorDark,
+        hoverColor: ColorIntranetConstants.kPrimaryColorLight,
+        appBarTheme: const AppBarTheme(backgroundColor: ColorIntranetConstants.kPrimaryColorLight) 
+        ),
       home: DefaultTabController(
         length: 15  ,
         child: Scaffold(

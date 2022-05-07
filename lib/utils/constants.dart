@@ -1,7 +1,4 @@
-class ApiConstants {
-  static String baseUrl = 'https://jsonplaceholder.typicode.com';
-  static String usersEndpoint = '/users';
-}
+import 'package:flutter/material.dart';
 
 class ApiIntranetConstans{
   static String baseUrl = 'https://intranet.kaths.com.mx/';
@@ -14,4 +11,15 @@ class ApiIntranetConstans{
   static String communicateEndpoint = 'api/communicate/';
   static String directoryEndponit = 'api/directory/';
   static String organizationEndpoint = '/api/organization/';
+}
+
+class ColorIntranetConstants{
+  static const kPrimaryColorDark = Color(0XFF1A346B);
+  static const kPrimaryColorNormal = Color(0XFF006EAD);
+  static const kPrimaryColorLight = Color(0XFF0084C3);
+
+  static const kbackgroundColorDark = Color(0XFFE3E4E4);
+  static const kbackgroundColorNormal = Color(0XFFF4F4F4);
+  static const kbackgroundColorLight = Color(0XFFFFFFFF);
+  
 }
