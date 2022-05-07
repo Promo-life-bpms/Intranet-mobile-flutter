@@ -4,7 +4,6 @@ import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/about/about_main_page.dart';
 import 'package:intranet_movil/views/access/access_page.dart';
-import 'package:intranet_movil/views/aniversary/aniversary_page.dart';
 import 'package:intranet_movil/views/aniversary/home_page.dart';
 import 'package:intranet_movil/views/auth/logout.page.dart';
 import 'package:intranet_movil/views/communicate/communicate_page.dart';
@@ -13,6 +12,7 @@ import 'package:intranet_movil/views/employee_month/employee_month_page.dart';
 import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/views/manual/manual_page.dart';
 import 'package:intranet_movil/views/organization/organization_page.dart';
+import 'package:intranet_movil/views/profile/user.dart';
 import 'package:intranet_movil/views/request/request_main_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -69,6 +69,10 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               accountName: Text(_userlModel![0].fullname),
               accountEmail: Text(_userlModel![0].email),
               currentAccountPicture: CircleAvatar(
+                child: InkWell(
+                  onTap: ()=>Navigator.of(context)
+                   .push(MaterialPageRoute(builder: (context) =>  UserProfilePage())),
+                ),
                 backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl+_userlModel![0].photo),
               ),
             ),
