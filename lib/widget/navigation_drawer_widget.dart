@@ -54,15 +54,15 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         child: ListView(
           children: <Widget>[
             _userlModel == null || _userlModel!.isEmpty
-            ? const UserAccountsDrawerHeader(
-              accountName: Text("Obteniendo nombre ..."),
-              accountEmail: Text("Obteniendo email ..."),
+            ? UserAccountsDrawerHeader(
+              accountName: const Text("Obteniendo nombre ..."),
+              accountEmail: const Text("Obteniendo email ..."),
               currentAccountPicture: CircleAvatar(
-                backgroundColor: Colors.black,
-                child: Text(
-                  "O",
-                  style: TextStyle(fontSize: 40.0),
+                child: InkWell(
+                  onTap: ()=>Navigator.of(context)
+                   .push(MaterialPageRoute(builder: (context) => const UserProfilePage())),
                 ),
+                backgroundColor: ColorIntranetConstants.kPrimaryColorLight,
               ),
             )
             :UserAccountsDrawerHeader(

@@ -5,6 +5,7 @@ import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_custom.dart';
 
 class SalesPLDirectoryPage extends StatefulWidget {
   const SalesPLDirectoryPage({Key? key}) : super(key: key);
@@ -30,9 +31,7 @@ class _HomeState extends State<SalesPLDirectoryPage> {
   @override
   Widget build(BuildContext context) {
     return  _directoryModel == null || _directoryModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? ListViewExample2Page()
           : 
           Column(
             children: [

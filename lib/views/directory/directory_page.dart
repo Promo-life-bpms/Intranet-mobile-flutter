@@ -6,6 +6,10 @@ import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
+import 'package:intranet_movil/widget/skeletons/custom_shimmer_gradient.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_custom.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_default.dart';
+import 'package:intranet_movil/widget/skeletons/widgets.dart';
 
 class DirectoryPage extends StatefulWidget {
   const DirectoryPage({Key? key}) : super(key: key);
@@ -39,9 +43,10 @@ class _HomeState extends State<DirectoryPage> {
         title: const Text('Directorio'),
       ),
       body: _directoryModel == null || _directoryModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ?
+ 
+          ListViewExample2Page()
+
           : 
           Column(
             children: [
