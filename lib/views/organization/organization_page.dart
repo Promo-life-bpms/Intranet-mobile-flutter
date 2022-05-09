@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/model/directory.dart';
+import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/organization/modules/cancun.dart';
 import 'package:intranet_movil/views/organization/modules/communication.dart';
@@ -17,10 +19,32 @@ import 'package:intranet_movil/views/organization/modules/systems.dart';
 import 'package:intranet_movil/views/organization/modules/technology.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
-void main() => runApp(const OrganizationPage());
-
-class OrganizationPage extends StatelessWidget {
+class OrganizationPage extends StatefulWidget {
   const OrganizationPage({Key? key}) : super(key: key);
+
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<OrganizationPage> {
+  late List<DirectoryModel>? _directoryModel = [];
+  late List<DirectoryModel>? _directoryModelFull = [];
+
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+    }
+
+  void _getData() async {
+    _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+    if(_directoryModel!=null && _directoryModel!.isNotEmpty){
+      _directoryModelFull = _directoryModel;
+    }
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
 
   static const String _title = 'Organigrama';
   @override
@@ -62,23 +86,23 @@ class OrganizationPage extends StatelessWidget {
                 ]),
             title: const Text(_title),
           ),
-          body: const TabBarView(
+          body: TabBarView(
             children: [
-              OrganizationDirectoryPage(),
-              RHDirectoryPage(),
-              ManagementDirectoryPage(),
-              SalesBHDirectoryPage(),
-              SalesPLDirectoryPage(),
-              ImportsDirectoryPage(),
-              DesignDirectoryPage(),
-              SystemsDirectoryPage(),
-              OperationsDirectoryPage(),
-              TechnologyDirectoryPage(),
-              CancunDirectoryPage(),
-              MarketingDirectoryPage(),
-              CommunicationDirectoryPage(),
-              LogisticsDirectoryPage(),
-              StoreDirectoryPage(),
+              OrganizationDirectoryPage(directoryModel: _directoryModel),
+              RHDirectoryPage(directoryModel: _directoryModel),
+              ManagementDirectoryPage(directoryModel: _directoryModel),
+              SalesBHDirectoryPage(directoryModel: _directoryModel),
+              SalesPLDirectoryPage(directoryModel: _directoryModel),
+              ImportsDirectoryPage(directoryModel: _directoryModel),
+              DesignDirectoryPage(directoryModel: _directoryModel),
+              SystemsDirectoryPage(directoryModel: _directoryModel),
+              OperationsDirectoryPage(directoryModel: _directoryModel),
+              TechnologyDirectoryPage(directoryModel: _directoryModel),
+              CancunDirectoryPage(directoryModel: _directoryModel),
+              MarketingDirectoryPage(directoryModel: _directoryModel),
+              CommunicationDirectoryPage(directoryModel: _directoryModel),
+              LogisticsDirectoryPage(directoryModel: _directoryModel),
+              StoreDirectoryPage(directoryModel: _directoryModel),
             ],
           ),
         ),

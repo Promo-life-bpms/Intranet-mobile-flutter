@@ -1,37 +1,18 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
-import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/widget/skeletons/list_view_custom.dart';
-import 'package:lottie/lottie.dart';
 
-class SalesPLDirectoryPage extends StatefulWidget {
-  const SalesPLDirectoryPage({Key? key}) : super(key: key);
+void main() => runApp( SalesPLDirectoryPage(directoryModel: [],));
 
-  @override
-  _HomeState createState() => _HomeState();
-}
+class SalesPLDirectoryPage extends StatelessWidget {
+   SalesPLDirectoryPage({Key? key, required this.directoryModel}) : super(key: key);
+   late List<DirectoryModel>? directoryModel = [];
 
-class _HomeState extends State<SalesPLDirectoryPage> {
-  late List<DirectoryModel>? _directoryModel = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-    }
-
-  void _getData() async {
-    _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
 
   @override
   Widget build(BuildContext context) {
-    return  _directoryModel == null || _directoryModel!.isEmpty
+    return  directoryModel == null || directoryModel!.isEmpty
           ? const Center(
             child: CircularProgressIndicator(color: ColorIntranetConstants.kPrimaryColorNormal,),
           )
@@ -42,10 +23,10 @@ class _HomeState extends State<SalesPLDirectoryPage> {
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.only(left:16, right: 16),
-                  itemCount: _directoryModel!.length,
+                  itemCount: directoryModel!.length,
                   itemBuilder: (context, index) {
                     return 
-                    _directoryModel![index].department =="Ventas BH"
+                    directoryModel![index].department =="Ventas BH"
                     ?Card(
                       shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
@@ -55,11 +36,11 @@ class _HomeState extends State<SalesPLDirectoryPage> {
                         onTap: (){
                           UserCardAlertDialog.showFullDialog(
                             context,
-                            _directoryModel![index].fullname.toString(),
-                            _directoryModel![index].email,
-                            ApiIntranetConstans.baseUrl + _directoryModel![index].photo, 
-                            _directoryModel![index].department,
-                            _directoryModel![index].position );
+                            directoryModel![index].fullname.toString(),
+                            directoryModel![index].email,
+                            ApiIntranetConstans.baseUrl + directoryModel![index].photo, 
+                            directoryModel![index].department,
+                            directoryModel![index].position );
                         },
                         child: Row(
                         children: [
@@ -69,7 +50,7 @@ class _HomeState extends State<SalesPLDirectoryPage> {
                               width: 50,
                               height: 50,
                               child:CircleAvatar(
-                              backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()),
+                              backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + directoryModel![index].photo.toString()),
                               /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */                          ),
                             )    
                           ),
@@ -77,7 +58,7 @@ class _HomeState extends State<SalesPLDirectoryPage> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                  _directoryModel![index].fullname,
+                                  directoryModel![index].fullname,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold,),
@@ -86,7 +67,7 @@ class _HomeState extends State<SalesPLDirectoryPage> {
                                 padding: EdgeInsets.only(top:8)
                               ),
                               Text(
-                                  _directoryModel![index].position,
+                                  directoryModel![index].position,
                                   maxLines: 1,
                                   overflow: TextOverflow.ellipsis,
                                   style: const TextStyle(fontSize: 12.00,)
