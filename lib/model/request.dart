@@ -14,6 +14,7 @@ class RequestModel {
     required this.payment,
     required this.start,
     required this.end,
+    required this.reason,
     required this.directManagerId,
     required this.directManagerStatus,
     required this.humanResourcesStatus, 
@@ -27,6 +28,7 @@ class RequestModel {
   String payment;
   String start;
   String end;
+  String reason;
   int directManagerId;
   String directManagerStatus;
   String humanResourcesStatus;
@@ -41,6 +43,7 @@ class RequestModel {
         payment: json["payment"],
         start: json["start"],
         end: json["end"],
+        reason: json["reason"],
         directManagerId: json["directManagerId"],
         directManagerStatus: json["directManagerStatus"],
         humanResourcesStatus: json["humanResourcesStatus"],
@@ -55,6 +58,7 @@ class RequestModel {
         "payment": payment,
         "start": start,
         "end": end,
+        "reason": reason,
         "directManagerId": directManagerId,
         "directManagerStatus": directManagerStatus,
         "humanResourcesStatus": humanResourcesStatus,

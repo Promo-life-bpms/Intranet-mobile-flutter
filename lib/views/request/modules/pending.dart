@@ -1,101 +1,116 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/request.dart';
-import 'package:intranet_movil/services/api_request.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:intranet_movil/utils/alert_dialog.dart';
 
-class PendingRequestPage extends StatefulWidget {
-  const PendingRequestPage({Key? key}) : super(key: key);
+void main() => runApp( PendingRequestPage(requestModel: [],));
 
-  @override
-  _HomeState createState() => _HomeState();
-}
-
-class _HomeState extends State<PendingRequestPage> {
-
-  
-
-   late List<RequestModel>? _userlModel = [];
-
-  @override
-  void initState() {
-    super.initState();
-    _getData();
-  }
-
-   void _getData() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-
-    _userlModel = (await ApiRequestService().getRequest(token.toString()))!.cast<RequestModel>();
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
+class PendingRequestPage extends StatelessWidget {
+   PendingRequestPage({Key? key, required this.requestModel}) : super(key: key);
+   late List<RequestModel>? requestModel = [];
  
   @override
   Widget build(BuildContext context) {
-    return  _userlModel == null || _userlModel!.isEmpty
+    return  requestModel == null || requestModel!.isEmpty
           ? const Center(
               child: CircularProgressIndicator(),
             )
-          : 
-          Center(child: Text("adqdw"),);
-          /* Column(
+          : Column(
             children: [
-              const Padding(padding: EdgeInsets.only(top: 20)),
               Expanded(
                 child: ListView.builder(
-                  padding: const EdgeInsets.only(left:16, right: 16),
-                  itemCount: _requestModel!.length,
+                  padding: const EdgeInsets.all(8),
+                  itemCount: requestModel!.length,
                   itemBuilder: (context, index) {
-                    return 
-                    _requestModel![index].direct_manager_status =="Pendiente" && _requestModel![index].human_resources_status =="Pendiente" 
-                    ?Card(
-                      shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      /* child: InkWell(
-                        onTap: (){
-                          UserCardAlertDialog.showFullDialog(
-                            context,
-                            _requestModel![index].type_request.toString(),
-                            _directoryModel![index].email,
-                            ApiIntranetConstans.baseUrl + _directoryModel![index].photo, 
-                            _directoryModel![index].department,
-                            _directoryModel![index].position );
-                        }, */
-                        child: Row(
-                        children: [
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  _requestModel![index].type_request,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold,),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(top:8)
-                              ),
-                              Text(
-                                  _requestModel![index].payment,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 12.00,)
-                              ),  
-                            ],
-                          ),        
-                        ],
-                        ),
-                      )
-                    
-                    : const Padding(padding: EdgeInsets.zero);
+                    return requestModel![index].directManagerStatus ==
+                                "Pendiente" &&
+                            requestModel![index].humanResourcesStatus ==
+                                "Pendiente"
+                        ? Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: Card(
+                                elevation: 10,
+                                shape: RoundedRectangleBorder(
+                                  side: const BorderSide(
+                                      color: Colors.white70, width: 1),
+                                  borderRadius: BorderRadius.circular(10),
+                                ),
+                                child: InkWell(
+                                  onTap: () {
+                                    RequestDetailAlertDialog.showFullDialog(
+                                    context, 
+                                    requestModel![index].typeRequest,
+                                    requestModel![index].payment,
+                                    requestModel![index].start,
+                                    requestModel![index].end,
+                                    requestModel![index].reason,
+                                    requestModel![index].directManagerStatus,
+                                    requestModel![index].humanResourcesStatus,
+                                    requestModel![index].days );
+                                  },
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(16),
+                                        child: Text(
+                                          requestModel![index].typeRequest,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 16.00,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 16, bottom: 16),
+                                        child: Row(
+                                          children: [
+                                            Text(requestModel![index].payment,
+                                                maxLines: 1,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: const TextStyle(
+                                                  fontSize: 12.00,
+                                                )),
+                                            const Padding(
+                                                padding:
+                                                    EdgeInsets.only(left: 24)),
+                                            const Text("Dias:  ",
+                                                maxLines: 3,
+                                                overflow: TextOverflow.ellipsis,
+                                                style: TextStyle(
+                                                    fontSize: 12.00,
+                                                    fontWeight:
+                                                        FontWeight.bold)),
+                                            Flexible(
+                                              child: Container(
+                                                padding: const EdgeInsets.only(
+                                                    right: 13.0),
+                                                child: Text(
+                                                    requestModel![index].days,
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    softWrap: false,
+                                                    style: const TextStyle(
+                                                      fontSize: 12.00,
+                                                    )),
+                                              ),
+                                            )
+                                          ],
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          )
+                        : const Padding(padding: EdgeInsets.zero);
                   },
                 ),
               )
             ],
-          ); */
+          );
   }
 }

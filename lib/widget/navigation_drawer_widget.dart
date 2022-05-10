@@ -189,56 +189,112 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     switch (index) {
       case 0:
         _selectedDrawerItem = index;
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const HomePage()));
+        Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) => const HomePage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 1:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const AboutMainPage()));
+          Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const AboutMainPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 2:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const OrganizationPage()));   
+        Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const OrganizationPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 3:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const RequestMainPage()));
+          Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const RequestMainPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 4:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const DirectoryPage()));
+          Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const DirectoryPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 5:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const AniversaryHomePage()));
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) => const AniversaryHomePage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 6:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const EmployeeMonthPage()));
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const EmployeeMonthPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 7:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const CommunicatePage()));
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const CommunicatePage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 8:
         _selectedDrawerItem = index;
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const ManualPage()));
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const ManualPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 9:
         _selectedDrawerItem = index;
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const AccessPage()));
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const RequestMainPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 10:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const LogoutPage())); 
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const RequestMainPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
 
         break; 
     }
