@@ -230,43 +230,63 @@ class RequestDetailAlertDialog {
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 16)),
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 24)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: const [
-                          Text("Horario de salida",
-                              style: TextStyle(fontSize: 16.00)),
-                          Text("Horario de reingreso",
-                              style: TextStyle(fontSize: 16.00)),
-                        ],
-                      ),
-                      const Padding(padding: EdgeInsets.only(top: 8)),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Flexible(
-                            child: TextFormField(
-                              enabled: false,
-                              initialValue: start,
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 16)),
-                            ),
-                          ),
-                          Flexible(
-                            child: TextFormField(
-                              enabled: false,
-                              initialValue: end,
-                              decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
-                                  contentPadding: EdgeInsets.symmetric(
-                                      vertical: 8, horizontal: 16)),
-                            ),
-                          )
-                        ],
-                      ),
-                      const Padding(padding: EdgeInsets.only(top: 16)),
+                      start != "Sin especificar"
+                          ? Column(
+                              children: [
+                                const Padding(padding: EdgeInsets.only(top: 16)),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: const [
+                                    Text("Horario de salida",
+                                        style: TextStyle(fontSize: 16.00)),
+                                    Text("Horario de reingreso",
+                                        style: TextStyle(fontSize: 16.00)),
+                                    Padding(
+                                        padding: EdgeInsets.only(top: 8)),
+                                  ],
+                                ),
+                                const Padding(padding: EdgeInsets.only(top: 8)),
+                                Row(
+                                  children: [
+                                    Flexible(
+                                      child: TextFormField(
+                                        enabled: false,
+                                        initialValue: start,
+                                        decoration: const InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 8,
+                                                    horizontal: 16)),
+                                      ),
+                                    ),
+                                    Flexible(
+                                      child: TextFormField(
+                                        enabled: false,
+                                        initialValue: end,
+                                        decoration: const InputDecoration(
+                                            border: OutlineInputBorder(
+                                              borderSide: BorderSide(
+                                                color: Colors.blue,
+                                              ),
+                                            ),
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    vertical: 8,
+                                                    horizontal: 16)),
+                                      ),
+                                    )
+                                  ],
+                                ),
+                                const Padding(padding: EdgeInsets.only(top: 16)),
+                              ],
+                            )
+                          : const Padding(padding: EdgeInsets.only(top: 16)),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: const [
@@ -283,9 +303,13 @@ class RequestDetailAlertDialog {
                           Flexible(
                             child: TextFormField(
                               enabled: false,
-                              initialValue:directManagerStatus ,
+                              initialValue: directManagerStatus,
                               decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 8, horizontal: 16)),
                             ),
@@ -295,7 +319,11 @@ class RequestDetailAlertDialog {
                               enabled: false,
                               initialValue: humanResourcesStatus,
                               decoration: const InputDecoration(
-                                  border: OutlineInputBorder(),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide(
+                                      color: Colors.blue,
+                                    ),
+                                  ),
                                   contentPadding: EdgeInsets.symmetric(
                                       vertical: 8, horizontal: 16)),
                             ),
@@ -312,11 +340,14 @@ class RequestDetailAlertDialog {
                         enabled: false,
                         initialValue: days,
                         decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              ),
+                            ),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 16)),
                       ),
-
                       const Padding(padding: EdgeInsets.only(top: 16)),
                       const Text(
                         "Motivo",
@@ -328,7 +359,11 @@ class RequestDetailAlertDialog {
                         initialValue: reason,
                         maxLines: 4,
                         decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: Colors.blue,
+                              ),
+                            ),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 16)),
                       )
