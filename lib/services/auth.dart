@@ -48,16 +48,14 @@ class AuthProvider extends ChangeNotifier {
         var data = await deviceInfoPlugin.iosInfo;
         return data.identifierForVendor;
       }
-      print(deviceInfoPlugin);
     } on PlatformException {
-      print('Failed to get platform version');
+
     }
   }
 
   saveToken(String token) async {
     final prefs = await SharedPreferences.getInstance();
     await prefs.setString('token', token);
-    final String? sharedToken = prefs.getString('token');  
   }
 
   Future<String?> getToken() async {

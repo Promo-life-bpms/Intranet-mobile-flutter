@@ -20,7 +20,7 @@ class ImportsDirectoryPage extends StatelessWidget {
     return  directoryModel == null || directoryModel!.isEmpty
           ? 
           const Center(
-            child: CircularProgressIndicator(color: ColorIntranetConstants.kPrimaryColorNormal,),
+            child: CircularProgressIndicator(color: ColorIntranetConstants.primaryColorNormal,),
           )
           : 
           Column(

@@ -233,7 +233,8 @@ class RequestDetailAlertDialog {
                       start != "Sin especificar"
                           ? Column(
                               children: [
-                                const Padding(padding: EdgeInsets.only(top: 16)),
+                                const Padding(
+                                    padding: EdgeInsets.only(top: 16)),
                                 Row(
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
@@ -242,8 +243,7 @@ class RequestDetailAlertDialog {
                                         style: TextStyle(fontSize: 16.00)),
                                     Text("Horario de reingreso",
                                         style: TextStyle(fontSize: 16.00)),
-                                    Padding(
-                                        padding: EdgeInsets.only(top: 8)),
+                                    Padding(padding: EdgeInsets.only(top: 8)),
                                   ],
                                 ),
                                 const Padding(padding: EdgeInsets.only(top: 8)),
@@ -283,7 +283,8 @@ class RequestDetailAlertDialog {
                                     )
                                   ],
                                 ),
-                                const Padding(padding: EdgeInsets.only(top: 16)),
+                                const Padding(
+                                    padding: EdgeInsets.only(top: 16)),
                               ],
                             )
                           : const Padding(padding: EdgeInsets.only(top: 16)),
