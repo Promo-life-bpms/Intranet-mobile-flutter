@@ -4,6 +4,7 @@ import 'package:intranet_movil/services/api_manual.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/utils/internet.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_cards.dart';
 
 class ManualPage extends StatefulWidget {
   const ManualPage({Key? key}) : super(key: key);
@@ -34,9 +35,7 @@ class _HomeState extends State<ManualPage> {
         title: const Text('Manuales'),
       ),
       body: _manualModel == null || _manualModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? ListviewCardsExamplePage()
           : ListView.builder(
               padding: const EdgeInsets.all(8),
               itemCount: _manualModel!.length,
@@ -49,13 +48,13 @@ class _HomeState extends State<ManualPage> {
                         SizedBox(
                           width: double.infinity,
                           height: 160.0,
-                          child:FittedBox(
-                            fit: BoxFit.contain,
-                            child: Image(
-                                image: NetworkImage(ApiIntranetConstans.baseUrl+_manualModel![index].img),
-                              )
-                          ),
-
+                          child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Image(
+                                image: NetworkImage(
+                                    ApiIntranetConstans.baseUrl +
+                                        _manualModel![index].img),
+                              )),
                         ),
                         Text(
                           _manualModel![index].name,

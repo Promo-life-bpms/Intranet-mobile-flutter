@@ -3,6 +3,7 @@ import 'package:intranet_movil/model/employee.dart';
 import 'package:intranet_movil/services/api_employee.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_employe.dart';
 
 class EmployeeMonthPage extends StatefulWidget {
   const EmployeeMonthPage({Key? key}) : super(key: key);
@@ -34,9 +35,7 @@ class _HomeState extends State<EmployeeMonthPage> {
         title: const Text("Empleado del Mes"),
       ),
       body: _monthEmployeeModel == null || _monthEmployeeModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? ListviewEmploye()
           : ListView.builder(
               padding: const EdgeInsets.all(8),
               itemCount: _monthEmployeeModel!.length,

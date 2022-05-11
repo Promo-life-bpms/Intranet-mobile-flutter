@@ -31,190 +31,206 @@ class _HomeState extends State<DirectoryPage> {
   }
 
   void _getData() async {
-    _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+    _directoryModel =
+        (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const NavigationDrawerWidget(),
-      appBar: AppBar(
-        title: const Text('Directorio'),
-      ),
-      body: _directoryModel == null || _directoryModel!.isEmpty
-          ?
- 
-          ListViewExample2Page()
-
-          : 
-          Column(
-            children: [
-              Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                child: TextField(
-                  textInputAction: TextInputAction.search,
-                  decoration: InputDecoration(
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(25.0),
-                      borderSide: const BorderSide(
-                      color: Colors.grey,
-                      ),
-                    ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(20.0),
-                    borderSide: const BorderSide(
-                      color: Colors.blue,
-                    ),
-                  ),
-                  suffixIcon: const InkWell(
-                    child: Icon(Icons.search),
-                  ),
-                  contentPadding: const EdgeInsets.all(15.0),
-                  hintText: 'Buscar',
-                  ),
-                  onChanged: (string) {
-                  _debouncer.run(() {
-                    setState(() {
-                      _directoryModelSearch = _directoryModel
-                          ?.where(
-                            (u) => (u.fullname.toLowerCase().contains(
-                                  string.toLowerCase() ,
-                                )),
-                          )
-                          .toList();
-                    });
-                  });
-                },
-                )    
-              ),
-
-              _directoryModelSearch!.isEmpty
-              ?
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(left:16, right: 16),
-                  itemCount: _directoryModel!.length,
-                  itemBuilder: (context, index) {
-                    return 
-                   Card(
-                      shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: InkWell(
-                        onTap: (){
-                          UserCardAlertDialog.showFullDialog(
-                            context,
-                            _directoryModel![index].fullname.toString(),
-                            _directoryModel![index].email,
-                            ApiIntranetConstans.baseUrl + _directoryModel![index].photo, 
-                            _directoryModel![index].department,
-                            _directoryModel![index].position );
-                        },
-                        child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                            child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child:CircleAvatar(
-                              backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()),
-                              /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */                          ),
-                            )    
+        drawer: const NavigationDrawerWidget(),
+        appBar: AppBar(
+          title: const Text('Directorio'),
+        ),
+        body: _directoryModel == null || _directoryModel!.isEmpty
+            ? ListViewExample2Page()
+            : Column(
+                children: [
+                  Padding(
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 16.0, horizontal: 24.0),
+                      child: TextField(
+                        textInputAction: TextInputAction.search,
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(25.0),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                            ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  _directoryModel![index].fullname,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold,),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(top:8)
-                              ),
-                              Text(
-                                  _directoryModel![index].position,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 12.00,)
-                              ),  
-                            ],
-                          ),        
-                        ],
-                        ),
-                      ),
-                    );
-                  },
-                ),
-              )
-              :
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(left:16, right: 16),
-                  itemCount: _directoryModelSearch!.length,
-                  itemBuilder: (context, index) {
-                    return 
-                   Card(
-                      shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: InkWell(
-                        onTap: (){
-                          UserCardAlertDialog.showFullDialog(
-                            context,
-                            _directoryModelSearch![index].fullname.toString(),
-                            _directoryModelSearch![index].email,
-                            ApiIntranetConstans.baseUrl + _directoryModelSearch![index].photo, 
-                            _directoryModelSearch![index].department,
-                            _directoryModelSearch![index].position );
-                        },
-                        child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                            child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child:CircleAvatar(
-                              backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModelSearch![index].photo.toString()),
-                              /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */                          ),
-                            )    
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(20.0),
+                            borderSide: const BorderSide(
+                              color: Colors.blue,
+                            ),
                           ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  _directoryModelSearch![index].fullname,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold,),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(top:8)
-                              ),
-                              Text(
-                                  _directoryModelSearch![index].position,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 12.00,)
-                              ),  
-                            ],
-                          ),        
-                        ],
+                          suffixIcon: const InkWell(
+                            child: Icon(Icons.search),
+                          ),
+                          contentPadding: const EdgeInsets.all(15.0),
+                          hintText: 'Buscar',
                         ),
-                      ),
-                    );
-                  },
-                ),
-              ),
-            ],
-          ) 
-    );
+                        onChanged: (string) {
+                          _debouncer.run(() {
+                            setState(() {
+                              _directoryModelSearch = _directoryModel
+                                  ?.where(
+                                    (u) => (u.fullname.toLowerCase().contains(
+                                          string.toLowerCase(),
+                                        )),
+                                  )
+                                  .toList();
+                            });
+                          });
+                        },
+                      )),
+                  _directoryModelSearch!.isEmpty
+                      ? Expanded(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            itemCount: _directoryModel!.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                clipBehavior: Clip.antiAlias,
+                                child: InkWell(
+                                  onTap: () {
+                                    UserCardAlertDialog.showFullDialog(
+                                        context,
+                                        _directoryModel![index]
+                                            .fullname
+                                            .toString(),
+                                        _directoryModel![index].email,
+                                        ApiIntranetConstans.baseUrl +
+                                            _directoryModel![index].photo,
+                                        _directoryModel![index].department,
+                                        _directoryModel![index].position);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 16.0, horizontal: 24.0),
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                  ApiIntranetConstans.baseUrl +
+                                                      _directoryModel![index]
+                                                          .photo
+                                                          .toString()), /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */
+                                            ),
+                                          )),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            _directoryModel![index].fullname,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 16.00,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const Padding(
+                                              padding: EdgeInsets.only(top: 8)),
+                                          Text(_directoryModel![index].position,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 12.00,
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        )
+                      : Expanded(
+                          child: ListView.builder(
+                            padding: const EdgeInsets.only(left: 16, right: 16),
+                            itemCount: _directoryModelSearch!.length,
+                            itemBuilder: (context, index) {
+                              return Card(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                clipBehavior: Clip.antiAlias,
+                                child: InkWell(
+                                  onTap: () {
+                                    UserCardAlertDialog.showFullDialog(
+                                        context,
+                                        _directoryModelSearch![index]
+                                            .fullname
+                                            .toString(),
+                                        _directoryModelSearch![index].email,
+                                        ApiIntranetConstans.baseUrl +
+                                            _directoryModelSearch![index].photo,
+                                        _directoryModelSearch![index]
+                                            .department,
+                                        _directoryModelSearch![index].position);
+                                  },
+                                  child: Row(
+                                    children: [
+                                      Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 16.0, horizontal: 24.0),
+                                          child: SizedBox(
+                                            width: 50,
+                                            height: 50,
+                                            child: CircleAvatar(
+                                              backgroundImage: NetworkImage(
+                                                  ApiIntranetConstans.baseUrl +
+                                                      _directoryModelSearch![
+                                                              index]
+                                                          .photo
+                                                          .toString()), /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */
+                                            ),
+                                          )),
+                                      Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            _directoryModelSearch![index]
+                                                .fullname,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 16.00,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                          const Padding(
+                                              padding: EdgeInsets.only(top: 8)),
+                                          Text(
+                                              _directoryModelSearch![index]
+                                                  .position,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 12.00,
+                                              )),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                ],
+              ));
   }
 }
 

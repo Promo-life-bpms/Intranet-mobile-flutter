@@ -142,7 +142,6 @@ class SkeletonListTileStyle {
   });
 }
 
-
 class SkeletonHeaderLineStyle {
   final double? width;
   final double? height;

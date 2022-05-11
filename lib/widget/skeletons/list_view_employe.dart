@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/widget/skeletons/stylings.dart';
 import 'package:intranet_movil/widget/skeletons/widgets.dart';
 
-class ListviewCardsExamplePage extends StatefulWidget {
+class ListviewEmploye extends StatefulWidget {
   @override
   _ListviewCardsExamplePageState createState() =>
       _ListviewCardsExamplePageState();
 }
 
-class _ListviewCardsExamplePageState extends State<ListviewCardsExamplePage> {
+class _ListviewCardsExamplePageState extends State<ListviewEmploye> {
   bool _isLoading = true;
 
   void _toggleLoading() {
@@ -34,7 +34,6 @@ class _ListviewCardsExamplePageState extends State<ListviewCardsExamplePage> {
   }
 
   Widget _skeletonView() => ListView.builder(
-        // padding: padding,
         physics: const NeverScrollableScrollPhysics(),
         itemCount: 50,
         itemBuilder: (context, index) => Padding(
@@ -48,11 +47,52 @@ class _ListviewCardsExamplePageState extends State<ListviewCardsExamplePage> {
                 const SizedBox(
                   height: 12,
                 ),
+                SkeletonParagraph(
+                  style: SkeletonParagraphStyle(
+                      lines: 1,
+                      spacing: 2,
+                      lineStyle: SkeletonLineStyle(
+                          randomLength: true,
+                          height: 20,
+                          borderRadius: BorderRadius.circular(8),
+                          minLength: MediaQuery.of(context).size.width / 2,
+                          alignment: Alignment.bottomCenter)),
+                ),
+                const SizedBox(
+                  height: 0,
+                ),
+                SkeletonParagraph(
+                  style: SkeletonParagraphStyle(
+                      lines: 1,
+                      spacing: 2,
+                      lineStyle: SkeletonLineStyle(
+                          randomLength: true,
+                          height: 20,
+                          borderRadius: BorderRadius.circular(8),
+                          minLength: MediaQuery.of(context).size.width / 5,
+                          alignment: Alignment.bottomCenter)),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
                 const SkeletonAvatar(
                   style: SkeletonAvatarStyle(
                     height: 310,
-                    width: double.infinity,
+                    width: 250,
                   ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                SkeletonParagraph(
+                  style: SkeletonParagraphStyle(
+                      lines: 1,
+                      spacing: 2,
+                      lineStyle: SkeletonLineStyle(
+                          randomLength: true,
+                          height: 20,
+                          borderRadius: BorderRadius.circular(8),
+                          alignment: Alignment.bottomCenter)),
                 ),
                 const SizedBox(
                   height: 12,
@@ -76,8 +116,8 @@ class _ListviewCardsExamplePageState extends State<ListviewCardsExamplePage> {
                   children: [
                     SkeletonLine(
                       style: SkeletonLineStyle(
-                          height: 50,
-                          width: 110,
+                          height: 20,
+                          width: 35,
                           borderRadius: BorderRadius.circular(5),
                           alignment: Alignment.bottomCenter),
                     )
