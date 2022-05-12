@@ -7,6 +7,7 @@ import 'package:intranet_movil/views/request/modules/pending.dart';
 import 'package:intranet_movil/views/request/modules/process.dart';
 import 'package:intranet_movil/views/request/modules/rejected.dart';
 import 'package:intranet_movil/views/request/new_request.dart';
+import 'package:intranet_movil/views/request/task.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -85,7 +86,7 @@ class _HomeState extends State<RequestMainPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => const RequestFormPage()),
+                    builder: (context) => RequestPage()),
               );
             },
             backgroundColor: ColorIntranetConstants.primaryColorNormal,
@@ -96,3 +97,5 @@ class _HomeState extends State<RequestMainPage> {
     );
   }
 }
+
+

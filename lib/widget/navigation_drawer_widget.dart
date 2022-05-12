@@ -13,6 +13,7 @@ import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/views/manual/manual_page.dart';
 import 'package:intranet_movil/views/organization/organization_page.dart';
 import 'package:intranet_movil/views/profile/user.dart';
+import 'package:intranet_movil/views/request/new_request.dart';
 import 'package:intranet_movil/views/request/request_main_page.dart';
 import 'package:intranet_movil/views/request/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -223,7 +224,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
           Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(
-              builder: (context) =>   TaskApp()
+              builder: (context) => const  RequestMainPage()
             ), 
           ModalRoute.withName("/Home")
           );
