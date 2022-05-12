@@ -20,6 +20,7 @@ class RequestModel {
     required this.humanResourcesStatus, 
     required this.visible,  
     required this.days, 
+    required this.daysAvailables,
     });
 
   int id;
@@ -34,6 +35,7 @@ class RequestModel {
   String humanResourcesStatus;
   int visible; 
   String days; 
+  int daysAvailables;
 
 
   factory RequestModel.fromJson(Map<String, dynamic> json) => RequestModel(
@@ -49,6 +51,7 @@ class RequestModel {
         humanResourcesStatus: json["humanResourcesStatus"],
         visible: json["visible"], 
         days: json["days"],  
+        daysAvailables: json["daysAvailables"],  
        );
 
   Map<String, dynamic> toJson() => {
@@ -64,5 +67,6 @@ class RequestModel {
         "humanResourcesStatus": humanResourcesStatus,
         "visible": visible, 
         "days": days, 
+        "daysAvailables":daysAvailables,
         };
 }
