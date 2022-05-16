@@ -7,6 +7,7 @@ import 'package:intranet_movil/model/post_request.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/request/request_main_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -253,12 +254,13 @@ class _MyHomePageState extends State<RequestPage> {
                           ),
                           onPressed: () {
 
+                            if (_formKey.currentState!.validate()) {
+                                    ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(content: Text('Procesando Datos')),
+                            );
+                            }
                             postRequest( token, dropdownvalue, payment, selectedTime.format(context)  , daysToSend.toString() , reason.text ,(maxDays-days.length).toString());
-                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(reason.text),
-                            )); 
-/*                             createRequest()
- */
+                             
                           },
                           child: const Text("CREAR SOLICITUD"),
                         ),
@@ -329,6 +331,12 @@ class _MyHomePageState extends State<RequestPage> {
     print(url);
     if (response.statusCode == 200) {
       print(response.statusCode);
+      Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const RequestMainPage()
+            ), 
+          ModalRoute.withName("/Home"));
       return true;
     }
     print(response.statusCode);
