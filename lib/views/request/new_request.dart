@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -21,6 +22,7 @@ class _MyHomePageState extends State<RequestPage> {
   String date = "";
   int maxDays = 0;
   List<String> days = [];
+  List<String> daysToSend = [];
 
   final reason = TextEditingController();
   late String token = "";
@@ -209,7 +211,7 @@ class _MyHomePageState extends State<RequestPage> {
                                         .primaryColorNormal,
                                   ),
                                   onTap: () {
-                                    _delete(days, days[index]);
+                                    _delete(days, days[index], daysToSend[index]);
                                   },
                                   title: Text(days[index])),
                             );
@@ -251,7 +253,7 @@ class _MyHomePageState extends State<RequestPage> {
                           ),
                           onPressed: () {
 
-                            postRequest( token, dropdownvalue, payment, selectedTime.format(context)  , days.toString(), reason.text ,(maxDays-days.length).toString());
+                            postRequest( token, dropdownvalue, payment, selectedTime.format(context)  , daysToSend.toString() , reason.text ,(maxDays-days.length).toString());
                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                               content: Text(reason.text),
                             )); 
@@ -279,14 +281,18 @@ class _MyHomePageState extends State<RequestPage> {
       setState(() {
         String formattedDate = DateFormat('yyyy-MM-dd').format(selected);
         days.add(formattedDate);
+        String formattedDate2 = DateFormat('ddMMyyyy').format(selected);
+        daysToSend.add(formattedDate2);
       });
     }
   }
 
 
-  _delete(days, selected) async {
+  _delete(days, selected, selectedToSend) async {
     setState(() {
       days.remove(selected);
+      daysToSend.remove(selectedToSend);
+
     });
   }
 
@@ -303,7 +309,9 @@ class _MyHomePageState extends State<RequestPage> {
     }
   }
 
-  Future postRequest(String token, String typeRequest,String payment, String start,String reason, String days,String daysAvailables) async {
+
+
+  Future postRequest(String token, String typeRequest,String payment, String start,String daysToSend,String reason, String daysAvailables) async {
     String url =
         ApiIntranetConstans.baseUrl + ApiIntranetConstans.postRequestEndpoint;
     final response = await http.post(Uri.parse(url), body: {
@@ -311,8 +319,8 @@ class _MyHomePageState extends State<RequestPage> {
       'typeRequest': typeRequest,
       'payment': payment,
       'start': start,
+      'days': daysToSend,
       'reason': reason,
-      'days': days,
       'daysAvailables': daysAvailables,
     }, headers: {
       'Accept': 'application/json',
@@ -331,4 +339,15 @@ class _MyHomePageState extends State<RequestPage> {
     return false;
   }
 
+  
+
+}
+
+
+class DaysTo {
+  final String day;
+  const DaysTo(this.day);
+  Map<String, dynamic> toJson() => {
+        "day": day,
+      };
 }
