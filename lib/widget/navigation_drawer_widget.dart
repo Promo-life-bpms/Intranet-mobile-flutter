@@ -284,7 +284,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
          Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(
-              builder: (context) =>  const RequestMainPage()
+              builder: (context) =>  const AccessPage()
             ), 
           ModalRoute.withName("/Home")
           );
@@ -293,7 +293,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
          Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(
-              builder: (context) =>  const RequestMainPage()
+              builder: (context) =>  const LogoutPage()
             ), 
           ModalRoute.withName("/Home")
           );

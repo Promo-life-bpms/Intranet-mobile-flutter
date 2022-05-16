@@ -23,6 +23,7 @@ class _MyHomePageState extends State<RequestPage> {
   List<String> days = [];
 
   final reason = TextEditingController();
+  late String token = "";
 
 
   final _formKey = GlobalKey<FormState>();
@@ -37,6 +38,10 @@ class _MyHomePageState extends State<RequestPage> {
   late String payment = "Descontar Tiempo/Dia";
   TimeOfDay selectedTime = TimeOfDay.now();
   DateTime selectedDate = DateTime.now();
+  var df =  DateFormat("hh:mm");
+
+
+
 
   late List<UserModel>? _userlModel = [];
 
@@ -54,7 +59,10 @@ class _MyHomePageState extends State<RequestPage> {
 
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    String? _token = prefs.getString('token');
+    if (_token != null || _token!.isNotEmpty) {
+      token = _token;
+    }
 
     _userlModel =
         (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
@@ -242,9 +250,11 @@ class _MyHomePageState extends State<RequestPage> {
                             onPrimary: Colors.white, // foreground
                           ),
                           onPressed: () {
-                            /* ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text("Tipo: $dropdownvalue, pago: $payment, hora "+ selectedTime.format(context)+"dias $days motivo "+ reason.text),
-                            )); */
+
+                            postRequest( token, dropdownvalue, payment, selectedTime.format(context)  , days.toString(), reason.text ,(maxDays-days.length).toString());
+                           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                              content: Text(reason.text),
+                            )); 
 /*                             createRequest()
  */
                           },
@@ -269,7 +279,6 @@ class _MyHomePageState extends State<RequestPage> {
       setState(() {
         String formattedDate = DateFormat('yyyy-MM-dd').format(selected);
         days.add(formattedDate);
-        selectedDate = selected;
       });
     }
   }
@@ -293,24 +302,33 @@ class _MyHomePageState extends State<RequestPage> {
       });
     }
   }
-/* 
-Future<RequestPost> createAlbum() async {
-    final response = await http.post(Uri.parse(ApiIntranetConstans.baseUrl+ApiIntranetConstans.postRequestEndpoint) , body: {
-      'email': email,
-      'password': password,
-      'device_name': await getDeviceId(),
+
+  Future postRequest(String token, String typeRequest,String payment, String start,String reason, String days,String daysAvailables) async {
+    String url =
+        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postRequestEndpoint;
+    final response = await http.post(Uri.parse(url), body: {
+      'token': token,
+      'typeRequest': typeRequest,
+      'payment': payment,
+      'start': start,
+      'reason': reason,
+      'days': days,
+      'daysAvailables': daysAvailables,
     }, headers: {
       'Accept': 'application/json',
     });
 
-   if (response.statusCode == 200) {
-      print("POST EXITOSO");
+    print(url);
+    if (response.statusCode == 200) {
+      print(response.statusCode);
+      return true;
     }
-
+    print(response.statusCode);
     if (response.statusCode == 422) {
-      print("POST FALLIDO")
+      return false;
     }
 
-} */
+    return false;
+  }
 
 }

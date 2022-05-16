@@ -4,7 +4,7 @@ class RequestPost {
   final String payment;
   final String start;
   final String reason;
-  final String days;
+  final Days days;
 
   const RequestPost({
     required this.token,
@@ -23,6 +23,18 @@ class RequestPost {
       start: json['start'],
       reason: json['reason'],
       days: json['days'],
+    );
+  }
+}
+
+
+class Days {
+  final String start;
+  const Days( {required this.start});
+
+  factory Days.fromJson(Map<String, dynamic> json) {
+    return Days(
+      start: json['start'],
     );
   }
 }
