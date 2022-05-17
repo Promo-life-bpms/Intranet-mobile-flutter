@@ -29,7 +29,6 @@ class _MyHomePageState extends State<RequestPage> {
   final reason = TextEditingController();
   late String token = "";
 
-
   final _formKey = GlobalKey<FormState>();
 
   var typeRequest = [
@@ -42,10 +41,7 @@ class _MyHomePageState extends State<RequestPage> {
   late String payment = "Descontar Tiempo/Dia";
   TimeOfDay selectedTime = TimeOfDay.now();
   DateTime selectedDate = DateTime.now();
-  var df =  DateFormat("hh:mm");
-
-
-
+  var df = DateFormat("hh:mm");
 
   late List<UserModel>? _userlModel = [];
 
@@ -54,12 +50,12 @@ class _MyHomePageState extends State<RequestPage> {
     super.initState();
     _getData();
   }
-    @override
+
+  @override
   void dispose() {
     reason.dispose();
     super.dispose();
   }
-
 
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -141,11 +137,10 @@ class _MyHomePageState extends State<RequestPage> {
                           ),
                         ],
                       ),
-                      const Padding(padding: EdgeInsets.only(top: 24)),
-                      payment == "Descontar Tiempo/Dia"
+                      dropdownvalue == "Salir durante la jornada" 
                           ? Column(
                               children: [
-                                const Padding(padding: EdgeInsets.only(top: 8)),
+                                const Padding(padding: EdgeInsets.only(top: 24)),
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.start,
                                   children: [
@@ -213,7 +208,8 @@ class _MyHomePageState extends State<RequestPage> {
                                         .primaryColorNormal,
                                   ),
                                   onTap: () {
-                                    _delete(days, days[index], daysToSend[index]);
+                                    _delete(
+                                        days, days[index], daysToSend[index]);
                                   },
                                   title: Text(days[index])),
                             );
@@ -238,10 +234,10 @@ class _MyHomePageState extends State<RequestPage> {
                             ),
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 16)),
-                           validator: (value) => value!.isEmpty
-                                          ? 'Este campo no puede estar vacio'
-                                          : null,
-                            controller: reason,
+                        validator: (value) => value!.isEmpty
+                            ? 'Este campo no puede estar vacio'
+                            : null,
+                        controller: reason,
                       ),
                       const Padding(padding: EdgeInsets.only(top: 16)),
                       SizedBox(
@@ -254,20 +250,23 @@ class _MyHomePageState extends State<RequestPage> {
                             onPrimary: Colors.white, // foreground
                           ),
                           onPressed: () {
-
                             if (_formKey.currentState!.validate()) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Procesando datos')),
-                            );
+                              if (daysToSend.isNotEmpty) {
+                                postRequest(
+                                    token,
+                                    dropdownvalue,
+                                    payment,
+                                    selectedTime.format(context),
+                                    daysToSend.toString(),
+                                    reason.text,
+                                    (maxDays - days.length).toString());
+                              } else {
+                                ScaffoldMessenger.of(context).showSnackBar(
+                                    const SnackBar(
+                                        content:
+                                            Text('No hay dias seleccionados')));
+                              }
                             }
-                            if(daysToSend.length>0){
-                              postRequest( token, dropdownvalue, payment, selectedTime.format(context)  , daysToSend.toString() , reason.text ,(maxDays-days.length).toString());
-
-                            }else{
-                              WrongAlertDialog.showAlertDialog(context);
-
-                            }
-                             
                           },
                           child: const Text("CREAR SOLICITUD"),
                         ),
@@ -284,7 +283,7 @@ class _MyHomePageState extends State<RequestPage> {
       firstDate: selectedDate,
       lastDate: DateTime(2025),
       selectableDayPredicate: (DateTime val) =>
-            val.weekday == 6 || val.weekday == 7 ? false : true,
+          val.weekday == 6 || val.weekday == 7 ? false : true,
     );
     if (selected != null && selected != selectedDate) {
       setState(() {
@@ -296,12 +295,10 @@ class _MyHomePageState extends State<RequestPage> {
     }
   }
 
-
   _delete(days, selected, selectedToSend) async {
     setState(() {
       days.remove(selected);
       daysToSend.remove(selectedToSend);
-
     });
   }
 
@@ -318,9 +315,14 @@ class _MyHomePageState extends State<RequestPage> {
     }
   }
 
-
-
-  Future postRequest(String token, String typeRequest,String payment, String start,String daysToSend,String reason, String daysAvailables) async {
+  Future postRequest(
+      String token,
+      String typeRequest,
+      String payment,
+      String start,
+      String daysToSend,
+      String reason,
+      String daysAvailables) async {
     String url =
         ApiIntranetConstans.baseUrl + ApiIntranetConstans.postRequestEndpoint;
     final response = await http.post(Uri.parse(url), body: {
@@ -337,24 +339,18 @@ class _MyHomePageState extends State<RequestPage> {
 
     print(url);
     if (response.statusCode == 200) {
-     SuccessfulAlertDialog.showAlertDialog(context);
+      SuccessfulAlertDialog.showAlertDialog(context);
       return true;
     }
 
-    if(response.statusCode == 500){
+    if (response.statusCode == 500) {
       WrongAlertDialog.showAlertDialog(context);
       return false;
-
     }
-      print(response.statusCode);
-      return false;
-
+    print(response.statusCode);
+    return false;
   }
-
-  
-
 }
-
 
 class DaysTo {
   final String day;

@@ -384,7 +384,6 @@ class RequestDetailAlertDialog {
   }
 }
 
-
 class SuccessfulAlertDialog {
   static showAlertDialog(
     BuildContext context,
@@ -470,7 +469,6 @@ class SuccessfulAlertDialog {
   }
 }
 
-
 class WrongAlertDialog {
   static showAlertDialog(
     BuildContext context,
@@ -485,7 +483,7 @@ class WrongAlertDialog {
             Animation secondaryAnimation) {
           return Padding(
             padding:
-                const EdgeInsets.symmetric(vertical: 100.0, horizontal: 16.0),
+                const EdgeInsets.symmetric(vertical: 48.0, horizontal: 16.0),
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(10.0),
@@ -506,11 +504,15 @@ class WrongAlertDialog {
                           ),
                         ),
                       ),
-                      Center(
-                        child: SizedBox(
-                          width: double.infinity,
-                          child: Lottie.asset("lib/assets/wrong.json",
-                              repeat: false, reverse: false),
+                      Padding(
+                        padding: EdgeInsets.only(left: 16, right: 16),
+                        child: Center(
+                          child: SizedBox(
+                            width: double.infinity,
+                            child: Lottie.asset(
+                              "lib/assets/500.json",
+                            ),
+                          ),
                         ),
                       ),
                       const Padding(padding: EdgeInsets.only(top: 16)),
@@ -518,7 +520,7 @@ class WrongAlertDialog {
                         padding: EdgeInsets.all(16),
                         child: Center(
                           child: Text(
-                            "Revisa tu solicitud e intenta nuevamente",
+                            "Revisa los datos de tu solicitud e intenta nuevamente",
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
@@ -536,12 +538,6 @@ class WrongAlertDialog {
                               ),
                               onPressed: () {
                                 Navigator.pop(context);
-                                Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const RequestMainPage()),
-                                    ModalRoute.withName("/Home"));
                               },
                               child: const Text('ACEPTAR'),
                             ),
@@ -555,4 +551,3 @@ class WrongAlertDialog {
         });
   }
 }
-
