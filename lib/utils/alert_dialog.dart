@@ -236,7 +236,7 @@ class RequestDetailAlertDialog {
                             contentPadding: EdgeInsets.symmetric(
                                 vertical: 8, horizontal: 16)),
                       ),
-                      start != "Sin especificar"
+                       typeRequest == "Salir durante la jornada" 
                           ? Column(
                               children: [
                                 const Padding(
