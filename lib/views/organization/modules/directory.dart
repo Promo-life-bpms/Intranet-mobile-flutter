@@ -26,9 +26,7 @@ class OrganizationDirectoryPage extends StatelessWidget {
                   padding: const EdgeInsets.only(left:16, right: 16),
                   itemCount: directoryModel!.length,
                   itemBuilder: (context, index) {
-                    return 
-                    directoryModel![index].department =="Direccion"
-                    ?Card(
+                    return Card(
                       shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       ),
@@ -78,8 +76,7 @@ class OrganizationDirectoryPage extends StatelessWidget {
                         ],
                         ),
                       ),
-                    )
-                    : const Padding(padding: EdgeInsets.zero);
+                    );
                   },
                 ),
               )
