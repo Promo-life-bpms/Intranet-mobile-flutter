@@ -74,10 +74,10 @@ class _HomeState extends State<RequestMainPage> {
           ),
           body: TabBarView(
             children: [
-              PendingRequestPage(requestModel: _requestModel),
-              ProcessRequestPage(requestModel: _requestModel),
-              ApprovedRequestPage(requestModel: _requestModel),
-              RejectedRequestPage(requestModel: _requestModel),
+              PendingRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Pendiente" && i.humanResourcesStatus=="Pendiente").toList()),
+              ProcessRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Aprobada" && i.humanResourcesStatus=="Pendiente").toList()),
+              ApprovedRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Aprobada" && i.humanResourcesStatus=="Aprobada").toList()),
+              RejectedRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Rechazada" || i.humanResourcesStatus=="Rechazada").toList()),
             ],
           ),
           floatingActionButton: FloatingActionButton(

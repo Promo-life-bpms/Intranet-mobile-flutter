@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/request.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_request.dart';
 
 void main() => runApp( PendingRequestPage(requestModel: [],));
 
@@ -11,9 +12,7 @@ class PendingRequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  requestModel == null || requestModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? ListviewRequestPage()
           : Column(
             children: [
               Expanded(
@@ -21,11 +20,7 @@ class PendingRequestPage extends StatelessWidget {
                   padding: const EdgeInsets.all(8),
                   itemCount: requestModel!.length,
                   itemBuilder: (context, index) {
-                    return requestModel![index].directManagerStatus ==
-                                "Pendiente" &&
-                            requestModel![index].humanResourcesStatus ==
-                                "Pendiente"
-                        ? Padding(
+                    return  Padding(
                             padding: const EdgeInsets.all(8),
                             child: Card(
                                 elevation: 10,
@@ -105,8 +100,7 @@ class PendingRequestPage extends StatelessWidget {
                                     ],
                                   ),
                                 )),
-                          )
-                        : const Padding(padding: EdgeInsets.zero);
+                          ); 
                   },
                 ),
               )
