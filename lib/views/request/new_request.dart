@@ -6,6 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:intranet_movil/model/post_request.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_user.dart';
+import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/request/request_main_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -256,10 +257,16 @@ class _MyHomePageState extends State<RequestPage> {
 
                             if (_formKey.currentState!.validate()) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('Procesando Datos')),
+                              const SnackBar(content: Text('Procesando datos')),
                             );
                             }
-                            postRequest( token, dropdownvalue, payment, selectedTime.format(context)  , daysToSend.toString() , reason.text ,(maxDays-days.length).toString());
+                            if(daysToSend.length>0){
+                              postRequest( token, dropdownvalue, payment, selectedTime.format(context)  , daysToSend.toString() , reason.text ,(maxDays-days.length).toString());
+
+                            }else{
+                              WrongAlertDialog.showAlertDialog(context);
+
+                            }
                              
                           },
                           child: const Text("CREAR SOLICITUD"),
@@ -330,21 +337,18 @@ class _MyHomePageState extends State<RequestPage> {
 
     print(url);
     if (response.statusCode == 200) {
-      print(response.statusCode);
-      Navigator.pushAndRemoveUntil(
-            context, 
-            MaterialPageRoute(
-              builder: (context) =>  const RequestMainPage()
-            ), 
-          ModalRoute.withName("/Home"));
+     SuccessfulAlertDialog.showAlertDialog(context);
       return true;
     }
-    print(response.statusCode);
-    if (response.statusCode == 422) {
-      return false;
-    }
 
-    return false;
+    if(response.statusCode == 500){
+      WrongAlertDialog.showAlertDialog(context);
+      return false;
+
+    }
+      print(response.statusCode);
+      return false;
+
   }
 
   
