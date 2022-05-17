@@ -16,11 +16,10 @@ class CancunDirectoryPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return directoryModel == null || directoryModel!.isEmpty
-        ? const Center(
-            child: CircularProgressIndicator(
-              color: ColorIntranetConstants.kPrimaryColorNormal,
-            ),
+
+    return  directoryModel == null || directoryModel!.isEmpty
+          ? const Center(
+            child: CircularProgressIndicator(color: ColorIntranetConstants.primaryColorNormal,),
           )
         : Column(
             children: [

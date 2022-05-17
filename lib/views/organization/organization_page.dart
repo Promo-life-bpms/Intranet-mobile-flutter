@@ -51,12 +51,12 @@ class _HomeState extends State<OrganizationPage> {
   Widget build(BuildContext context) {
     return MaterialApp(
       theme: ThemeData(
-        primaryColor: ColorIntranetConstants.kPrimaryColorLight, 
-        primaryColorLight: ColorIntranetConstants.kPrimaryColorLight,
-        primaryColorDark: ColorIntranetConstants.kPrimaryColorDark,
-        backgroundColor: ColorIntranetConstants.kbackgroundColorDark,
-        hoverColor: ColorIntranetConstants.kPrimaryColorLight,
-        appBarTheme: const AppBarTheme(backgroundColor: ColorIntranetConstants.kPrimaryColorLight) 
+        primaryColor: ColorIntranetConstants.primaryColorLight, 
+        primaryColorLight: ColorIntranetConstants.primaryColorLight,
+        primaryColorDark: ColorIntranetConstants.primaryColorDark,
+        backgroundColor: ColorIntranetConstants.backgroundColorDark,
+        hoverColor: ColorIntranetConstants.primaryColorLight,
+        appBarTheme: const AppBarTheme(backgroundColor: ColorIntranetConstants.primaryColorLight) 
         ),
       home: DefaultTabController(
         length: 15  ,

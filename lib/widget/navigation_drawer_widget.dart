@@ -13,7 +13,9 @@ import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/views/manual/manual_page.dart';
 import 'package:intranet_movil/views/organization/organization_page.dart';
 import 'package:intranet_movil/views/profile/user.dart';
+import 'package:intranet_movil/views/request/new_request.dart';
 import 'package:intranet_movil/views/request/request_main_page.dart';
+import 'package:intranet_movil/views/request/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
@@ -62,7 +64,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   onTap: ()=>Navigator.of(context)
                    .push(MaterialPageRoute(builder: (context) => const UserProfilePage())),
                 ),
-                backgroundColor: ColorIntranetConstants.kPrimaryColorLight,
+                backgroundColor: ColorIntranetConstants.primaryColorLight,
               ),
             )
             :UserAccountsDrawerHeader(
@@ -80,7 +82,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               leading: const Icon(Icons.home),
               title: const Text('Inicio'),
               selected: (_selectedDrawerItem == 0),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
                 selectedItem(context, 0);
               },
@@ -89,7 +91,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               leading: const Icon(Icons.info),
               title: const Text('Acerca de'),
               selected: (_selectedDrawerItem == 1),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
                 selectedItem(context, 1);
               },
@@ -97,7 +99,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ListTile(
               leading: const Icon(Icons.chat_rounded),
               title: const Text('Organigrama'),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               selected: (_selectedDrawerItem == 2),
               onTap: () {
                 selectedItem(context, 2);
@@ -107,7 +109,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               leading: const Icon(Icons.edit),
               title: const Text('Solicitudes'),
               selected: (_selectedDrawerItem == 3),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
                 selectedItem(context, 3);
               },
@@ -116,7 +118,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               leading: const Icon(Icons.contact_mail),
               title: const Text('Directorio'),
               selected: (_selectedDrawerItem == 4),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
                 selectedItem(context, 4);
               },
@@ -125,7 +127,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               leading: const Icon(Icons.celebration),
               title: const Text('Cumpleaños y Aniversarios'),
               selected: (_selectedDrawerItem == 5),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
                 selectedItem(context, 5);
               },
@@ -134,7 +136,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               leading: const Icon(Icons.emoji_events),
               title: const Text('Empleado del Mes'),
               selected: (_selectedDrawerItem == 6),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
                 selectedItem(context, 6);
               },
@@ -143,7 +145,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               leading: const Icon(Icons.notifications),
               title: const Text('Comunicados'),
               selected: (_selectedDrawerItem == 7),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
                 selectedItem(context, 7);
               },
@@ -152,7 +154,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               leading: const Icon(Icons.library_books),
               title: const Text('Manuales'),
               selected: (_selectedDrawerItem == 8),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
                 selectedItem(context, 8);
               },
@@ -161,7 +163,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               leading: const Icon(Icons.public),
               title: const Text('Accesos'),
               selected: (_selectedDrawerItem == 9),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
                 selectedItem(context, 9);
               },
@@ -170,7 +172,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               leading: const Icon(Icons.exit_to_app),
               title: const Text('Salir'),
               selected: (_selectedDrawerItem == 10),
-              selectedColor: ColorIntranetConstants.kPrimaryColorLight,
+              selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
                 selectedItem(context, 10);
               },
@@ -189,56 +191,112 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     switch (index) {
       case 0:
         _selectedDrawerItem = index;
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const HomePage()));
+        Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) => const HomePage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 1:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const AboutMainPage()));
+          Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const AboutMainPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 2:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const OrganizationPage()));   
+        Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const OrganizationPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 3:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const RequestMainPage()));
+          Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) => const  RequestMainPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 4:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const DirectoryPage()));
+          Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const DirectoryPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 5:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => const AniversaryHomePage()));
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) => const AniversaryHomePage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 6:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const EmployeeMonthPage()));
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const EmployeeMonthPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 7:
         _selectedDrawerItem = index;
-        Navigator.of(context).push(
-            MaterialPageRoute(builder: (context) => const CommunicatePage()));
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const CommunicatePage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 8:
         _selectedDrawerItem = index;
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const ManualPage()));
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const ManualPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 9:
         _selectedDrawerItem = index;
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const AccessPage()));
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const AccessPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
         break;
       case 10:
-        Navigator.of(context)
-            .push(MaterialPageRoute(builder: (context) => const LogoutPage())); 
+         Navigator.pushAndRemoveUntil(
+            context, 
+            MaterialPageRoute(
+              builder: (context) =>  const LogoutPage()
+            ), 
+          ModalRoute.withName("/Home")
+          );
 
         break; 
     }

@@ -22,106 +22,6 @@ class Login extends StatelessWidget {
   }
 }
 
-/* class LoginForm extends StatefulWidget {
-  const LoginForm({Key? key}) : super(key: key);
-
-  @override
-  LoginFormView createState() {
-    return LoginFormView();
-  }
-}
-
-class LoginFormView extends State<LoginForm> {
- 
-  final _formKey = GlobalKey<FormState>();
-
-  @override
-  Widget build(BuildContext context) {
-    return Form(
-      key: _formKey,
-
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        
-        children: [
-
-          const SizedBox(height: 100,),
-
-           const SizedBox(
-            width: 200,
-            height: 200, 
-            child: Image(
-              image: NetworkImage('https://flutter.github.io/assets-for-api-docs/assets/widgets/owl.jpg'),
-            )
-            
-          ),
-          
-
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-            child: TextFormField(
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return 'Debes llenar todos los campos';
-                  }
-                  return null;
-                },
-                decoration: const InputDecoration(
-                contentPadding: EdgeInsets.only(top: 20), 
-                isDense: true,
-                hintText: "Correo",
-                prefixIcon: Padding(
-                  padding: EdgeInsets.only(top: 15), 
-                  child: Icon(Icons.mail),
-                ),
-              ),
-            ),
-          ),
-          
-          Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-            child:TextFormField(
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Debes llenar todos los campos';
-                }
-                return null;
-                
-              },
-              obscureText: true,
-              decoration: const InputDecoration(
-                contentPadding: EdgeInsets.only(top: 20), 
-                isDense: true,
-                hintText: "Contrasena",
-                prefixIcon: Padding(
-                  padding: EdgeInsets.only(top: 15), 
-                  child: Icon(Icons.password_rounded),
-                ),
-              ),
-            ),
-          ),
-          
-          const SizedBox(height: 20,),
-
-          SizedBox(
-            width: 200,
-            height: 50, 
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const MainPage()));   
-              },
-                child: const Text('INICIAR SESION'),
-
-            ),
-          ),
-
-          
-        ],
-      ),
-    );
-  }
-} */
-
 class LoginForm extends StatefulWidget {
   const LoginForm({
     Key? key,
@@ -164,14 +64,14 @@ class LoginFormState extends State<LoginForm> {
                   width: double.infinity,
                   height: 320.0,
                   decoration: const BoxDecoration(
-                    color: ColorIntranetConstants.kPrimaryColorLight,
+                    color: ColorIntranetConstants.primaryColorLight,
                   ),
                 ),
                 Container(
                   width: double.infinity,
                   height: 600.0,
                   decoration: const BoxDecoration(
-                    color: ColorIntranetConstants.kbackgroundColorNormal,
+                    color: ColorIntranetConstants.backgroundColorNormal,
                   ),
                   child: Align(
                     alignment: const Alignment(0, -30),

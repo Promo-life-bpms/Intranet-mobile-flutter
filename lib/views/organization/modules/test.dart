@@ -36,7 +36,7 @@ class _HomeState extends State<TestPage> {
   Widget build(BuildContext context) {
     return  _directoryModel == null || _directoryModel!.isEmpty
           ?const Center(
-            child: CircularProgressIndicator(color: ColorIntranetConstants.kPrimaryColorNormal,),
+            child: CircularProgressIndicator(color: ColorIntranetConstants.primaryColorNormal,),
           )
           : 
           Column(
