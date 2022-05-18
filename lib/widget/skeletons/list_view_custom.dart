@@ -5,12 +5,14 @@ import 'package:intranet_movil/widget/skeletons/stylings.dart';
 import 'package:intranet_movil/widget/skeletons/widgets.dart';
 
 class ListViewExample2Page extends StatefulWidget {
+  const ListViewExample2Page({Key? key}) : super(key: key);
+
   @override
   _ListViewExample2PageState createState() => _ListViewExample2PageState();
 }
 
 class _ListViewExample2PageState extends State<ListViewExample2Page> {
-  bool _isLoading = true;
+  final bool _isLoading = true;
 
   final random =  Random();
 
@@ -25,17 +27,12 @@ class _ListViewExample2PageState extends State<ListViewExample2Page> {
     "Mauris aliquet sapien rutrum enim dignissim tincidunt.",
   ];
 
-  void _toggleLoading() {
-    setState(() {
-      _isLoading = !_isLoading;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.all(24),
+        padding:const EdgeInsets.all(24),
         child: Skeleton(
         isLoading: _isLoading,
         skeleton: _skeletonView(),
@@ -49,7 +46,7 @@ class _ListViewExample2PageState extends State<ListViewExample2Page> {
   Widget _skeletonView() => SkeletonListView(
         item: SkeletonListTile(
           verticalSpacing: 12,
-          leadingStyle: SkeletonAvatarStyle(
+          leadingStyle: const  SkeletonAvatarStyle(
               width: 64, height: 64, shape: BoxShape.circle),
           titleStyle: SkeletonLineStyle(
               height: 16,
@@ -66,8 +63,8 @@ class _ListViewExample2PageState extends State<ListViewExample2Page> {
       );
 
   Widget _contentView() => ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 16.0),
-        physics: NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 16.0),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Row(
@@ -75,13 +72,13 @@ class _ListViewExample2PageState extends State<ListViewExample2Page> {
               Container(
                 width: 64,
                 height: 64,
-                decoration: BoxDecoration(
+                decoration: const  BoxDecoration(
                   image: DecorationImage(
                       image: AssetImage("assets/placeholder.png")),
                   shape: BoxShape.circle,
                 ),
               ),
-              SizedBox(
+              const SizedBox(
                 width: 8,
               ),
               Expanded(
@@ -96,7 +93,7 @@ class _ListViewExample2PageState extends State<ListViewExample2Page> {
                         .copyWith(fontSize: 16),
                     maxLines: 1,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 8,
                   ),
                   Text(

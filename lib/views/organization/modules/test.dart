@@ -5,8 +5,6 @@ import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/widget/skeletons/list_view_custom.dart';
-import 'package:lottie/lottie.dart';
 
 class TestPage extends StatefulWidget {
   const TestPage({Key? key}) : super(key: key);

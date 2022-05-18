@@ -1,13 +1,12 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
 
-void main() => runApp( CommunicationDirectoryPage(directoryModel: [],));
+void main() => runApp( CommunicationDirectoryPage(directoryModel: const [],));
 
 
+// ignore: must_be_immutable
 class CommunicationDirectoryPage extends StatelessWidget {
    CommunicationDirectoryPage({Key? key, required this.directoryModel}) : super(key: key);
    late List<DirectoryModel>? directoryModel = [];

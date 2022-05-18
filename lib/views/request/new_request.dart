@@ -95,7 +95,7 @@ class _MyHomePageState extends State<RequestPage> {
                           DropdownButton(
                             value: dropdownvalue,
                             icon: const Icon(Icons.keyboard_arrow_down),
-                            underline: SizedBox(),
+                            underline: const SizedBox(),
                             items: typeRequest.map((String items) {
                               return DropdownMenuItem(
                                 value: items,
@@ -202,7 +202,7 @@ class _MyHomePageState extends State<RequestPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
-                                    padding: EdgeInsets.only(left: 16),
+                                    padding:const EdgeInsets.only(left: 16),
                                     child: Text(days[index]),
                                   ),
                                   IconButton(
@@ -351,7 +351,6 @@ class _MyHomePageState extends State<RequestPage> {
       WrongAlertDialog.showAlertDialog(context);
       return false;
     }
-    print(response.statusCode);
     return false;
   }
 }

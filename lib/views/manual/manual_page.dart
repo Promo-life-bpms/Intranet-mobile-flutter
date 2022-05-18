@@ -35,7 +35,7 @@ class _HomeState extends State<ManualPage> {
         title: const Text('Manuales'),
       ),
       body: _manualModel == null || _manualModel!.isEmpty
-          ? ListviewCardsExamplePage()
+          ? const ListviewCardsExamplePage()
           : ListView.builder(
               padding: const EdgeInsets.all(8),
               itemCount: _manualModel!.length,

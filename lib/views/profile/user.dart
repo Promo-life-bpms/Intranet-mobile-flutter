@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/model/access.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';

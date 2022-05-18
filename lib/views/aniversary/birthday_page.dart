@@ -45,7 +45,7 @@ class _HomeState extends State<BrithdayPage> {
         title: const Text('Cumpleaños'),
       ),
       body: _brithdayModel == null || _brithdayModel!.isEmpty
-          ? ListviewAniversary()
+          ? const ListviewAniversary()
           : Column(
               children: [
                 Column(

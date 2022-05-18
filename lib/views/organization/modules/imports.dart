@@ -3,8 +3,9 @@ import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
 
-void main() => runApp( ImportsDirectoryPage(directoryModel: [],));
+void main() => runApp( ImportsDirectoryPage(directoryModel: const [],));
 
+// ignore: must_be_immutable
 class ImportsDirectoryPage extends StatelessWidget {
    ImportsDirectoryPage({Key? key, required this.directoryModel}) : super(key: key);
    late List<DirectoryModel>? directoryModel = [];

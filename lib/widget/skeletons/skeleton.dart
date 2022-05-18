@@ -1,8 +1,5 @@
 part of 'widgets.dart';
 
-/*
-thanks to: https://flutter.dev/docs/cookbook/effects/shimmer-loading
-*/
 class Skeleton extends StatefulWidget {
   const Skeleton({
     Key? key,
@@ -31,7 +28,7 @@ class _SkeletonState extends State<Skeleton> {
   @override
   Widget build(BuildContext context) {
     return AnimatedSwitcher(
-      duration: Duration(milliseconds: 150),
+      duration: const Duration(milliseconds: 150),
       child: widget.isLoading
           ? ShimmerWidget(
               child: _SkeletonWidget(
@@ -96,21 +93,16 @@ class __SkeletonWidgetState extends State<_SkeletonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    // if (!widget.isLoading) {
-    //   return widget.child;
-    // }
 
-    // Collect ancestor shimmer info.
     final shimmer = Shimmer.of(context)!;
     if (!shimmer.isSized) {
-      // The ancestor Shimmer widget has not laid
-      // itself out yet. Return an empty box.
-      return SizedBox();
+      
+      return const SizedBox();
     }
     final shimmerSize = shimmer.size;
     final gradient = shimmer.currentGradient;
 
-    if (context.findRenderObject() == null) return SizedBox();
+    if (context.findRenderObject() == null) return const SizedBox();
 
     final offsetWithinShimmer = shimmer.getDescendantOffset(
       descendant: context.findRenderObject() as RenderBox,

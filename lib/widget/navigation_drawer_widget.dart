@@ -13,9 +13,7 @@ import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/views/manual/manual_page.dart';
 import 'package:intranet_movil/views/organization/organization_page.dart';
 import 'package:intranet_movil/views/profile/user.dart';
-import 'package:intranet_movil/views/request/new_request.dart';
 import 'package:intranet_movil/views/request/request_main_page.dart';
-import 'package:intranet_movil/views/request/task.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
@@ -24,8 +22,6 @@ class NavigationDrawerWidget extends StatefulWidget {
   @override
   _NavigationDrawerWidgetState createState() => _NavigationDrawerWidgetState();
 }
-
-
 
 class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   late List<UserModel>? _userlModel = [];
@@ -43,9 +39,6 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
- 
-
- 
 
    static var _selectedDrawerItem = 0;
 
@@ -73,7 +66,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               currentAccountPicture: CircleAvatar(
                 child: InkWell(
                   onTap: ()=>Navigator.of(context)
-                   .push(MaterialPageRoute(builder: (context) =>  UserProfilePage())),
+                   .push(MaterialPageRoute(builder: (context) => const UserProfilePage())),
                 ),
                 backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl+_userlModel![0].photo),
               ),
@@ -290,6 +283,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
           );
         break;
       case 10:
+        _selectedDrawerItem = index;
          Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(

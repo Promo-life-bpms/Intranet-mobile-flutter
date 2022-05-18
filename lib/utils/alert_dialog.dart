@@ -1,10 +1,7 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intranet_movil/services/auth.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/views/request/new_request.dart';
 import 'package:intranet_movil/views/request/request_main_page.dart';
 import 'package:lottie/lottie.dart';
 
@@ -437,7 +434,7 @@ class SuccessfulAlertDialog {
                         ),
                       ),
                       Padding(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           child: SizedBox(
                             width: double.infinity,
                             height: 60,
@@ -505,7 +502,7 @@ class WrongAlertDialog {
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(left: 16, right: 16),
+                        padding: const EdgeInsets.only(left: 16, right: 16),
                         child: Center(
                           child: SizedBox(
                             width: double.infinity,
@@ -526,7 +523,7 @@ class WrongAlertDialog {
                         ),
                       ),
                       Padding(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           child: SizedBox(
                             width: double.infinity,
                             height: 60,

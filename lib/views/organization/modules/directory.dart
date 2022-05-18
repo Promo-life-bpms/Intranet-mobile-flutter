@@ -2,9 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 
-void main() => runApp( OrganizationDirectoryPage(directoryModel: [],));
+void main() => runApp( OrganizationDirectoryPage(directoryModel: const [],));
 
+// ignore: must_be_immutable
 class OrganizationDirectoryPage extends StatelessWidget {
    OrganizationDirectoryPage({Key? key, required this.directoryModel}) : super(key: key);
    late List<DirectoryModel>? directoryModel = [];
@@ -14,9 +16,7 @@ class OrganizationDirectoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return  directoryModel == null || directoryModel!.isEmpty
           ? 
-          const Center(
-            child: CircularProgressIndicator(color: ColorIntranetConstants.primaryColorNormal,),
-          )
+          const ListviewCompanyPage()
           : 
           Column(
             children: [

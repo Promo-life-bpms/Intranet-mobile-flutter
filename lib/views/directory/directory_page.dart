@@ -41,7 +41,7 @@ class _HomeState extends State<DirectoryPage> {
           title: const Text('Directorio'),
         ),
         body: _directoryModel == null || _directoryModel!.isEmpty
-            ? ListViewExample2Page()
+            ? const ListViewExample2Page()
             : Column(
                 children: [
                   Padding(

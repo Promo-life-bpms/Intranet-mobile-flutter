@@ -4,9 +4,10 @@ import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_request.dart';
 
 void main() => runApp(ApprovedRequestPage(
-      requestModel: [],
+      requestModel: const [],
     ));
 
+// ignore: must_be_immutable
 class ApprovedRequestPage extends StatelessWidget {
   ApprovedRequestPage({Key? key, required this.requestModel}) : super(key: key);
   late List<RequestModel>? requestModel = [];
@@ -14,7 +15,7 @@ class ApprovedRequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return requestModel == null || requestModel!.isEmpty
-        ? ListviewRequestPage()
+        ? const ListviewRequestPage()
         : Column(
             children: [
               Expanded(
@@ -61,7 +62,7 @@ class ApprovedRequestPage extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(
+                                        padding:const EdgeInsets.only(
                                             left: 16, bottom: 16),
                                         child: Row(
                                           children: [

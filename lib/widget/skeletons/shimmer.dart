@@ -1,17 +1,11 @@
 // Copyright 2020, the Flutter project authors. Please see the AUTHORS file
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
-
 import 'stylings.dart';
 import 'theme.dart';
 
 class ShimmerWidget extends StatefulWidget {
-  // static ShimmerState? of(BuildContext context) {
-  //   return context.findAncestorStateOfType<ShimmerState>();
-  // }
 
   const ShimmerWidget({
     Key? key,
@@ -35,24 +29,16 @@ class ShimmerWidget extends StatefulWidget {
 class ShimmerState extends State<ShimmerWidget>
     with SingleTickerProviderStateMixin {
   late AnimationController _shimmerController;
-  // late LinearGradient _linearGradient;
 
   @override
   void initState() {
     super.initState();
-    // WidgetsBinding.instance?.addPostFrameCallback((_) => _setGradient());
     _shimmerController = AnimationController.unbounded(vsync: this)
       ..repeat(
           min: -2.0,
           max: 2,
           period: widget.duration ?? const Duration(milliseconds: 1000));
   }
-
-  // _setGradient() {
-  //   _linearGradient = widget.linearGradient ??
-  //       SkeletonTheme.of(context)?.shimmerGradient ??
-  //       shimmerGradient;
-  // }
 
   @override
   void dispose() {
@@ -133,7 +119,7 @@ class _SlidingGradientTransform extends GradientTransform {
 
 class Shimmer extends InheritedWidget {
   final ShimmerState shimmer;
-  Shimmer({
+  const Shimmer({
     Key? key,
     required Widget child,
     required this.shimmer,

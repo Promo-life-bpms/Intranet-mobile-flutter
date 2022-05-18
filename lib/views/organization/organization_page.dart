@@ -12,8 +12,8 @@ import 'package:intranet_movil/views/organization/modules/management.dart';
 import 'package:intranet_movil/views/organization/modules/marketing.dart';
 import 'package:intranet_movil/views/organization/modules/operations.dart';
 import 'package:intranet_movil/views/organization/modules/rh.dart';
-import 'package:intranet_movil/views/organization/modules/salesBH.dart';
-import 'package:intranet_movil/views/organization/modules/salesPL.dart';
+import 'package:intranet_movil/views/organization/modules/sales_bh.dart';
+import 'package:intranet_movil/views/organization/modules/sales_pl.dart';
 import 'package:intranet_movil/views/organization/modules/store.dart';
 import 'package:intranet_movil/views/organization/modules/systems.dart';
 import 'package:intranet_movil/views/organization/modules/technology.dart';
@@ -28,7 +28,6 @@ class OrganizationPage extends StatefulWidget {
 
 class _HomeState extends State<OrganizationPage> {
   late List<DirectoryModel>? _directoryModel = [];
-  late List<DirectoryModel>? _directoryModelFull = [];
 
 
   @override
@@ -40,7 +39,6 @@ class _HomeState extends State<OrganizationPage> {
   void _getData() async {
     _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
     if(_directoryModel!=null && _directoryModel!.isNotEmpty){
-      _directoryModelFull = _directoryModel;
     }
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }

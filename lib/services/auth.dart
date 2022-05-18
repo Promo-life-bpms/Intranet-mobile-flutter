@@ -48,8 +48,9 @@ class AuthProvider extends ChangeNotifier {
         var data = await deviceInfoPlugin.iosInfo;
         return data.identifierForVendor;
       }
+    // ignore: empty_catches
     } on PlatformException {
-
+      
     }
   }
 

@@ -6,9 +6,11 @@ import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:pagination_view/pagination_view.dart';
 
-void main() => runApp(TestApp());
+void main() => runApp(const TestApp());
 
 class TestApp extends StatelessWidget {
+  const TestApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -31,8 +33,7 @@ class _HomePageState extends State<TesPagePagination> {
   late PaginationViewType paginationViewType;
   late Axis scrollDirection;
   late GlobalKey<PaginationViewState> key;
-  late List<DirectoryModel>? _directoryModel = [];
-  late List<DirectoryModel>? _directoryModelSearch = [];
+
 
   @override
   void initState() {
@@ -49,7 +50,7 @@ class _HomePageState extends State<TesPagePagination> {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: Text('PaginationView Example'),
+        title:const Text('PaginationView Example'),
       ),
       body: PaginationView(
         key: key,
@@ -143,7 +144,7 @@ class _HomePageState extends State<TesPagePagination> {
     List<DirectoryModel> _directoryModel =
         (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-    if (_directoryModel.length == 0) {
+    if (_directoryModel.isEmpty) {
       return [];
     } else {
       return _directoryModel;

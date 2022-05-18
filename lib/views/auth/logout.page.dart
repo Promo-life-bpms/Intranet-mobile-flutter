@@ -17,7 +17,7 @@ class _LogoutState extends State<LogoutPage> {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text('Directorio'),
+        title: const Text('Cerrar sesión'),
       ),
       body: const AccessWidget(),
     );

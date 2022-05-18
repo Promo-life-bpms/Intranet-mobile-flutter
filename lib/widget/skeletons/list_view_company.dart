@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/widget/skeletons/stylings.dart';
 import 'package:intranet_movil/widget/skeletons/widgets.dart';
 
-class ListviewRequestPage extends StatefulWidget {
-  const ListviewRequestPage({Key? key}) : super(key: key);
+class ListviewCompanyPage extends StatefulWidget {
+  const ListviewCompanyPage({Key? key}) : super(key: key);
 
   @override
   _ListviewCardsExamplePageState createState() =>
       _ListviewCardsExamplePageState();
 }
 
-class _ListviewCardsExamplePageState extends State<ListviewRequestPage> {
+class _ListviewCardsExamplePageState extends State<ListviewCompanyPage> {
   bool _isLoading = true;
 
   void _toggleLoading() {
@@ -38,56 +38,46 @@ class _ListviewCardsExamplePageState extends State<ListviewRequestPage> {
   Widget _skeletonView() => ListView.builder(
         // padding: padding,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 50,
+        itemCount: 12,
         itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 4),
           child: Container(
-            decoration: const BoxDecoration(color:Colors.white ,
+            decoration: const BoxDecoration(
+                color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(10))),
             padding: const EdgeInsets.all(8.0),
             child: SkeletonItem(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SkeletonParagraph(
-                  style: SkeletonParagraphStyle(
-                      lines: 1,
-                      spacing: 2,
-                      lineStyle: SkeletonLineStyle(
-                          randomLength: true,
-                          width: double.infinity,
-                          height: 16,
-                          borderRadius: BorderRadius.circular(8),
-                          minLength: MediaQuery.of(context).size.width / 2,
-                          alignment: Alignment.bottomLeft)),
-                ),
-                const SizedBox(
-                  height: 8,
-                ),
-                Padding(padding: const EdgeInsets.all(8),
                 child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SkeletonLine(
-                      style: SkeletonLineStyle(
-                          height: 16,
-                          width: 80,
-                          borderRadius: BorderRadius.circular(5),
-                          alignment: Alignment.bottomCenter),
-                    ),
-                    SkeletonLine(
-                      style: SkeletonLineStyle(
-                          height: 16,
-                          width:  200,
-                          borderRadius: BorderRadius.circular(5),
-                          alignment: Alignment.bottomCenter),
-                    )
-                  ],
-                )
-                
-                )
-                
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const  SkeletonAvatar(
+                  style: SkeletonAvatarStyle(
+                      shape: BoxShape.circle, height: 48, width: 48),
+                ),
+                Padding(
+                    padding:const EdgeInsets.all(8),
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        SkeletonLine(
+                          style: SkeletonLineStyle(
+                              height: 8,
+                              width: 120,
+                              borderRadius: BorderRadius.circular(5),
+                              alignment: Alignment.bottomLeft),
+                        ),
+                        const Padding(padding: EdgeInsets.only(top: 16)),
+                        SkeletonLine(
+                          style: SkeletonLineStyle(
+                              height: 8,
+                              width: 80,
+                              borderRadius: BorderRadius.circular(5),
+                              alignment: Alignment.bottomLeft),
+                        )
+                      ],
+                    ))
               ],
             )),
           ),

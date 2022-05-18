@@ -85,7 +85,7 @@ class _HomeState extends State<RequestMainPage> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                    builder: (context) => RequestPage()),
+                    builder: (context) => const RequestPage()),
               );
             },
             backgroundColor: ColorIntranetConstants.primaryColorNormal,

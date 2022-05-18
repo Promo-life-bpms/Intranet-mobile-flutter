@@ -1,12 +1,11 @@
-
-
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
 
-void main() => runApp( SalesBHDirectoryPage(directoryModel: [],));
+void main() => runApp( SalesBHDirectoryPage(directoryModel: const [],));
 
+// ignore: must_be_immutable
 class SalesBHDirectoryPage extends StatelessWidget {
    SalesBHDirectoryPage({Key? key, required this.directoryModel}) : super(key: key);
    late List<DirectoryModel>? directoryModel = [];

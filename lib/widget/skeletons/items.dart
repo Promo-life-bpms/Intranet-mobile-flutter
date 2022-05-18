@@ -10,21 +10,21 @@ class ItemsExamplePage extends StatelessWidget {
     return Scaffold(
       // backgroundColor: Color(0xFF0E0E0E),
       appBar: AppBar(
-        title: Text("Items"),
+        title: const Text("Items"),
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(vertical: 16),
+        padding:  const EdgeInsets.symmetric(vertical: 16),
         children: [
           _linesView(),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           _avatarsView(),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           _listTilesView(),
-          SizedBox(
+          const SizedBox(
             height: 16,
           ),
           _paragraphsView(),
@@ -37,22 +37,22 @@ class ItemsExamplePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             "SkeletonLine",
             style: TextStyle(fontSize: 20),
           ),
         ),
-        Divider(),
-        SkeletonLine(),
+        const Divider(),
+        const SkeletonLine(),
         SkeletonLine(
           style: SkeletonLineStyle(
-            padding: EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
             borderRadius: BorderRadius.circular(24),
           ),
         ),
-        SkeletonLine(
+        const SkeletonLine(
           style: SkeletonLineStyle(
             padding: EdgeInsets.symmetric(horizontal: 24.0),
             height: 11,
@@ -60,7 +60,7 @@ class ItemsExamplePage extends StatelessWidget {
         ),
         SkeletonLine(
           style: SkeletonLineStyle(
-              padding: EdgeInsets.all(16.0),
+              padding:const EdgeInsets.all(16.0),
               borderRadius: BorderRadius.circular(8),
               height: 28,
               randomLength: true),
@@ -73,33 +73,33 @@ class ItemsExamplePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             "SkeletonAvatar",
             style: TextStyle(fontSize: 20),
           ),
         ),
-        Divider(),
+        const Divider(),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            VerticalDivider(),
-            SkeletonAvatar(),
-            VerticalDivider(),
+            const VerticalDivider(),
+            const SkeletonAvatar(),
+            const VerticalDivider(),
             SkeletonAvatar(
               style: SkeletonAvatarStyle(
                   borderRadius: BorderRadius.circular(8),
                   height: 62,
                   width: 62),
             ),
-            VerticalDivider(),
-            SkeletonAvatar(
+            const VerticalDivider(),
+            const SkeletonAvatar(
               style: SkeletonAvatarStyle(
                   shape: BoxShape.circle, height: 72, width: 72),
             ),
-            VerticalDivider(),
-            SkeletonAvatar(
+            const VerticalDivider(),
+            const SkeletonAvatar(
               style: SkeletonAvatarStyle(height: 96, width: 72),
             ),
           ],
@@ -112,25 +112,25 @@ class ItemsExamplePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             "SkeletonListTile",
             style: TextStyle(fontSize: 20),
           ),
         ),
-        Divider(),
-        SkeletonListTile(
+        const Divider(),
+        const SkeletonListTile(
           padding: EdgeInsets.symmetric(horizontal: 16),
         ),
-        SkeletonListTile(
+        const SkeletonListTile(
           hasSubtitle: true,
           padding: EdgeInsets.all(16),
         ),
         SkeletonListTile(
           hasSubtitle: true,
-          padding: EdgeInsets.symmetric(horizontal: 16),
-          leadingStyle: SkeletonAvatarStyle(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          leadingStyle: const SkeletonAvatarStyle(
               shape: BoxShape.circle, width: 64, height: 64),
           titleStyle:
               SkeletonLineStyle(borderRadius: BorderRadius.circular(16)),
@@ -142,11 +142,11 @@ class ItemsExamplePage extends StatelessWidget {
         ),
         SkeletonListTile(
           hasSubtitle: true,
-          padding: EdgeInsets.all(16),
-          leadingStyle: SkeletonAvatarStyle(
+          padding: const EdgeInsets.all(16),
+          leadingStyle: const SkeletonAvatarStyle(
               shape: BoxShape.circle, width: 72, height: 72),
-          titleStyle: SkeletonLineStyle(height: 18),
-          subtitleStyle: SkeletonLineStyle(
+          titleStyle: const SkeletonLineStyle(height: 18),
+          subtitleStyle: const SkeletonLineStyle(
             height: 12,
             maxLength: 172,
             minLength: 128,
@@ -158,7 +158,7 @@ class ItemsExamplePage extends StatelessWidget {
                 height: 32,
                 width: 50,
                 borderRadius: BorderRadius.circular(4),
-                padding: EdgeInsetsDirectional.only(start: 16)),
+                padding: const EdgeInsetsDirectional.only(start: 16)),
           ),
         ),
       ],
@@ -169,16 +169,16 @@ class ItemsExamplePage extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+        const Padding(
+          padding:  EdgeInsets.symmetric(horizontal: 16),
           child: Text(
             "SkeletonParagraph",
             style: TextStyle(fontSize: 20),
           ),
         ),
-        Divider(),
-        SkeletonParagraph(),
-        Divider(),
+        const Divider(),
+        const SkeletonParagraph(),
+        const Divider(),
         SkeletonParagraph(
           style: SkeletonParagraphStyle(
               spacing: 6,
@@ -187,8 +187,8 @@ class ItemsExamplePage extends StatelessWidget {
                   randomLength: true,
                   borderRadius: BorderRadius.circular(16))),
         ),
-        Divider(),
-        SkeletonParagraph(
+        const Divider(),
+        const SkeletonParagraph(
           style: SkeletonParagraphStyle(
               lines: 8,
               spacing: 6,
@@ -197,8 +197,8 @@ class ItemsExamplePage extends StatelessWidget {
                 randomLength: true,
               )),
         ),
-        Divider(),
-        SkeletonParagraph(
+        const Divider(),
+        const SkeletonParagraph(
           style: SkeletonParagraphStyle(
               lines: 5,
               spacing: 8,
@@ -208,7 +208,7 @@ class ItemsExamplePage extends StatelessWidget {
                 randomLength: true,
               )),
         ),
-        Divider(),
+        const Divider(),
       ],
     );
   }

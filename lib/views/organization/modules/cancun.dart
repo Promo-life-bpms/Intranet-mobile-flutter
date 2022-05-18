@@ -1,14 +1,14 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 
 void main() => runApp(CancunDirectoryPage(
-      directoryModel: [],
+      directoryModel: const [],
     ));
 
+// ignore: must_be_immutable
 class CancunDirectoryPage extends StatelessWidget {
   CancunDirectoryPage({Key? key, required this.directoryModel})
       : super(key: key);
@@ -18,9 +18,7 @@ class CancunDirectoryPage extends StatelessWidget {
   Widget build(BuildContext context) {
 
     return  directoryModel == null || directoryModel!.isEmpty
-          ? const Center(
-            child: CircularProgressIndicator(color: ColorIntranetConstants.primaryColorNormal,),
-          )
+          ? const ListviewCompanyPage()
         : Column(
             children: [
               const Padding(padding: EdgeInsets.only(top: 20)),
@@ -95,7 +93,6 @@ class CancunDirectoryPage extends StatelessWidget {
           );
   }
 
-  @override
   State<StatefulWidget> createState() {
     throw UnimplementedError();
   }

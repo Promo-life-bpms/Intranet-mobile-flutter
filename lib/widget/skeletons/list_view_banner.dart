@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/widget/skeletons/stylings.dart';
 import 'package:intranet_movil/widget/skeletons/widgets.dart';
 
 class ListviewBanner extends StatefulWidget {
+  const ListviewBanner({Key? key}) : super(key: key);
+
   @override
   _ListviewCardsExamplePageState createState() =>
       _ListviewCardsExamplePageState();

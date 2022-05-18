@@ -3,6 +3,8 @@ import 'package:intranet_movil/widget/skeletons/stylings.dart';
 import 'package:intranet_movil/widget/skeletons/widgets.dart';
 
 class ListviewCardsExamplePage extends StatefulWidget {
+  const ListviewCardsExamplePage({Key? key}) : super(key: key);
+
   @override
   _ListviewCardsExamplePageState createState() =>
       _ListviewCardsExamplePageState();
@@ -36,12 +38,12 @@ class _ListviewCardsExamplePageState extends State<ListviewCardsExamplePage> {
   Widget _skeletonView() => ListView.builder(
         // padding: padding,
         physics: const NeverScrollableScrollPhysics(),
-        itemCount: 50,
+        itemCount: 12,
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.all(8.0),
           child: Container(
             padding: const EdgeInsets.all(8.0),
-            decoration: BoxDecoration(color: Colors.white),
+            decoration: const BoxDecoration(color: Colors.white),
             child: SkeletonItem(
                 child: Column(
               children: [
@@ -90,8 +92,8 @@ class _ListviewCardsExamplePageState extends State<ListviewCardsExamplePage> {
       );
 
   Widget _contentView() => ListView.builder(
-        padding: EdgeInsets.symmetric(horizontal: 8.0),
-        physics: NeverScrollableScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 8.0),
+        physics: const NeverScrollableScrollPhysics(),
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.symmetric(vertical: 8),
           child: Container(

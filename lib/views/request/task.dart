@@ -112,10 +112,12 @@ import 'package:intl/intl.dart';
 
 
 void main() {
-  runApp(TaskApp());
+  runApp(const TaskApp());
 }
 
 class TaskApp extends StatelessWidget {
+  const TaskApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -123,12 +125,14 @@ class TaskApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TaskAppPage(),
+      home: const TaskAppPage(),
     );
   }
 }
 
 class TaskAppPage extends StatefulWidget {
+  const TaskAppPage({Key? key}) : super(key: key);
+
   @override
   _MyHomePageState createState() {
     return _MyHomePageState();
@@ -145,7 +149,7 @@ class _MyHomePageState extends State<TaskAppPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Flutter Datepicker"),
+        title: const Text("Flutter Datepicker"),
       ),
       body: Center(
         child: Column(
@@ -158,7 +162,7 @@ class _MyHomePageState extends State<TaskAppPage> {
               onPressed: () {
                 _selectDate(context);
               },
-              child: Text("Choose Date"),
+              child:const Text("Choose Date"),
             ),
 
             Expanded(
@@ -167,7 +171,7 @@ class _MyHomePageState extends State<TaskAppPage> {
                 itemBuilder: (BuildContext context, int index) {
                   return Card(
                     child: ListTile(
-                      leading: Icon(Icons.delete),
+                      leading: const Icon(Icons.delete),
                       onTap: (){
                         _delete(days, days[index]);
                       },

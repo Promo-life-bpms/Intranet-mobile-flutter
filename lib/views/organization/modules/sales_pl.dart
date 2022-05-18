@@ -3,8 +3,9 @@ import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
 
-void main() => runApp( SalesPLDirectoryPage(directoryModel: [],));
+void main() => runApp( SalesPLDirectoryPage(directoryModel: const[],));
 
+// ignore: must_be_immutable
 class SalesPLDirectoryPage extends StatelessWidget {
    SalesPLDirectoryPage({Key? key, required this.directoryModel}) : super(key: key);
    late List<DirectoryModel>? directoryModel = [];

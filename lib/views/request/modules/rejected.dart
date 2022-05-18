@@ -3,8 +3,9 @@ import 'package:intranet_movil/model/request.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_request.dart';
 
-void main() => runApp( RejectedRequestPage(requestModel: [],));
+void main() => runApp( RejectedRequestPage(requestModel:const [],));
 
+// ignore: must_be_immutable
 class RejectedRequestPage extends StatelessWidget {
    RejectedRequestPage({Key? key, required this.requestModel}) : super(key: key);
    late List<RequestModel>? requestModel = [];
@@ -12,7 +13,7 @@ class RejectedRequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return requestModel == null || requestModel!.isEmpty
-        ? ListviewRequestPage()
+        ? const ListviewRequestPage()
         : Column(
             children: [
               Expanded(

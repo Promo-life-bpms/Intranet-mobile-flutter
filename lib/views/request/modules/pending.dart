@@ -3,8 +3,9 @@ import 'package:intranet_movil/model/request.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_request.dart';
 
-void main() => runApp( PendingRequestPage(requestModel: [],));
+void main() => runApp( PendingRequestPage(requestModel:const [],));
 
+// ignore: must_be_immutable
 class PendingRequestPage extends StatelessWidget {
    PendingRequestPage({Key? key, required this.requestModel}) : super(key: key);
    late List<RequestModel>? requestModel = [];
@@ -12,7 +13,7 @@ class PendingRequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  requestModel == null || requestModel!.isEmpty
-          ? ListviewRequestPage()
+          ? const ListviewRequestPage()
           : Column(
             children: [
               Expanded(
@@ -59,7 +60,7 @@ class PendingRequestPage extends StatelessWidget {
                                         ),
                                       ),
                                       Padding(
-                                        padding: EdgeInsets.only(
+                                        padding:const EdgeInsets.only(
                                             left: 16, bottom: 16),
                                         child: Row(
                                           children: [

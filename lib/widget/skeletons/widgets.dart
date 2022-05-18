@@ -7,6 +7,7 @@ part 'skeleton.dart';
 
 class SkeletonItem extends StatelessWidget {
   final Widget child;
+  // ignore: use_key_in_widget_constructors
   const SkeletonItem({Key? key, required this.child});
   @override
   Widget build(BuildContext context) {
@@ -77,11 +78,6 @@ class SkeletonLine extends StatelessWidget {
       child: Align(
         alignment: style.alignment,
         child: Padding(
-            // padding: style.randomLength
-            //     ? EdgeInsetsDirectional.only(
-            //         end: 0.0 +
-            //             Random().nextInt(
-            //                 (MediaQuery.of(context).size.width / 2).round()))
             padding: style.padding,
             child: LayoutBuilder(
               builder: (context, constraints) {
@@ -111,7 +107,7 @@ class SkeletonLine extends StatelessWidget {
 class SkeletonParagraph extends StatelessWidget {
   final SkeletonParagraphStyle style;
 
-  SkeletonParagraph({
+  const SkeletonParagraph({
     Key? key,
     this.style = const SkeletonParagraphStyle(),
   }) : super(key: key);
@@ -152,7 +148,7 @@ class SkeletonListTile extends StatelessWidget {
 
   // final SkeletonListTileStyle style;
 
-  SkeletonListTile({
+  const SkeletonListTile({
     Key? key,
     this.hasLeading = true,
     this.leadingStyle, //  = const SkeletonAvatarStyle(padding: EdgeInsets.all(0)),
@@ -223,7 +219,7 @@ class SkeletonListView extends StatelessWidget {
   final EdgeInsets? padding;
   final double? spacing;
 
-  SkeletonListView({
+  const SkeletonListView({
     Key? key,
     this.item,
     this.itemBuilder,
@@ -238,12 +234,12 @@ class SkeletonListView extends StatelessWidget {
     return SkeletonItem(
       child: ListView.builder(
         padding: padding,
-        physics: scrollable ? null : NeverScrollableScrollPhysics(),
+        physics: scrollable ? null :const NeverScrollableScrollPhysics(),
         itemCount: itemCount,
         itemBuilder: itemBuilder ??
             (context, index) =>
                 item ??
-                SkeletonListTile(
+               const SkeletonListTile(
                   hasSubtitle: true,
                 ),
       ),
