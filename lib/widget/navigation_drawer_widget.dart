@@ -248,7 +248,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) =>  const EmployeeMonthPage()
             ), 
-          ModalRoute.withName("/EmployyeMonthPage")
+          ModalRoute.withName("/EmployeeMonthPage")
           );
         break;
       case 7:
@@ -295,14 +295,3 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     }
   }
 }
-
-logout() async {
-    final prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-  }
-
-
- Future<String?> getToken() async {
-    final prefs = await SharedPreferences.getInstance();
-    return prefs.getString('token');
-  }

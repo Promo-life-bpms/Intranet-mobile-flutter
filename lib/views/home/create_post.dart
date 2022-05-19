@@ -59,7 +59,7 @@ class _HomeState extends State<CreatePostPage> {
                                 token,
                                 _contentPublication.text.toString()),
                           },
-                      child: Text("Publicar")),
+                      child: const Text("Publicar")),
                 ],
               ),
             )));

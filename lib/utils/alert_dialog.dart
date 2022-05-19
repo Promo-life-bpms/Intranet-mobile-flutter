@@ -451,7 +451,7 @@ class SuccessfulAlertDialog {
                                     MaterialPageRoute(
                                         builder: (context) =>
                                             const RequestMainPage()),
-                                    ModalRoute.withName("/Home")); 
+                                    ModalRoute.withName("/SuccessfulAlertDialog")); 
                               },
                               child: const Text('ACEPTAR'),
                             ),

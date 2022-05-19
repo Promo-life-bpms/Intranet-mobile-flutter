@@ -159,7 +159,7 @@ class _HomeState extends State<HomePage> {
                                       return Column(
                                         children: [
                                           Padding(
-                                              padding: EdgeInsets.all(8),
+                                              padding:const EdgeInsets.all(8),
                                               child: Column(
                                                 children: [
                                                   SizedBox(
@@ -497,7 +497,7 @@ class _HomeState extends State<HomePage> {
                                                         ),
                                                         child: const Icon(
                                                           Icons.favorite,
-                                                          color: Colors.black,
+                                                          color: ColorIntranetConstants.redLight,
                                                           size: 24,
                                                         ))
                                                     : Badge(
@@ -552,7 +552,6 @@ class _HomeState extends State<HomePage> {
     });
 
     if (response.statusCode == 200) {
-      print("Like");
       return true;
     }
     if (response.statusCode == 422) {
@@ -572,11 +571,9 @@ class _HomeState extends State<HomePage> {
     });
 
     if (response.statusCode == 200) {
-      print("Unlike");
       return true;
     }
     if (response.statusCode == 422) {
-      print(response.statusCode);
       return false;
     }
 

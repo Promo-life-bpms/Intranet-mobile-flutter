@@ -31,5 +31,6 @@ class ColorIntranetConstants{
   static const backgroundColorLight = Color(0XFFFFFFFF);
 
   static const backgroundCustomLight =Color(0xffF2F6FB);
+  static const redLight = Color(0xFFfc9990);
   
 }
