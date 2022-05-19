@@ -13,6 +13,7 @@ import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:badges/badges.dart';
+import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,7 +28,9 @@ class _HomeState extends State<HomePage> {
   late List<BrithdayModel>? _brithdayModel = [];
   late List<UserModel>? _userlModel = [];
   late List<PublicationModel>? _publicationModel = [];
-  late int total = 0;
+  late List<PublicationModel>? _publicationModelToLike = [];
+  bool isLike = false;
+  late String token = "";
 
   @override
   void initState() {
@@ -37,17 +40,19 @@ class _HomeState extends State<HomePage> {
 
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-
+    String? _token = prefs.getString('token');
+      if (_token != null || _token!.isNotEmpty) {
+        token = _token;
+      }
     _userlModel =
-        (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
+        (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
     _brithdayModel =
         (await ApiBrithdayService().getBrithday())!.cast<BrithdayModel>();
     _communiqueModel =
         (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
-    _publicationModel = (await ApiPublicationService().getPublication())!
+    _publicationModel = (await ApiPublicationService().getPublication(token.toString()))!
         .cast<PublicationModel>();
-
+    _publicationModelToLike=_publicationModel;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -81,7 +86,7 @@ class _HomeState extends State<HomePage> {
                               builder: (context) => const CreatePostPage()),
                         ),
                         child: Padding(
-                          padding: EdgeInsets.all(16),
+                          padding: const EdgeInsets.all(16),
                           child: Row(
                             children: [
                               SizedBox(
@@ -409,22 +414,22 @@ class _HomeState extends State<HomePage> {
                                               Container(
                                                   child: InkWell(
                                                 onTap: () {
-                                                  total = sendLike(
-                                                      _publicationModel![index]
-                                                          .likes);
-
-                                                  ScaffoldMessenger.of(context)
-                                                      .showSnackBar(
-                                                          SnackBar(
-                                                    content: Text(
-                                                        "$total"),
-                                                  ));
+                                                  setState(() {
+                                                    
+                                                    if(_publicationModelToLike![index].isLike ==false){
+                                                      _publicationModelToLike![index].likes =_publicationModelToLike![index].likes +1;
+                                                      _publicationModelToLike![index].isLike = true;
+                                                      postLike(token, _publicationModel![index].id.toString());
+                                                    }else{
+                                                      _publicationModelToLike![index].likes =_publicationModelToLike![index].likes -1;
+                                                      _publicationModelToLike![index].isLike =false;
+                                                      postUnlike(token, _publicationModel![index].id.toString());
+                                                    }
+                                                  });
+                                                  
                                                 },
-                                                child: total >
-                                                        _publicationModel![
-                                                                index]
-                                                            .likes
-                                                    ? Badge(
+                                                child: _publicationModelToLike![index].likes == _publicationModel![index].likes &&  _publicationModelToLike![index].isLike ==false? 
+                                                     Badge(
                                                         toAnimate: true,
                                                         position: BadgePosition
                                                             .bottomEnd(),
@@ -485,9 +490,47 @@ class _HomeState extends State<HomePage> {
     );
   }
 
-  sendLike(int like) {
-    total = like;
-    total ++;
-    return total;
+  Future postLike(String token, String publicationID) async {
+    String url =
+        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postLike;
+    final response = await http.post(Uri.parse(url), body: {
+      'token': token,
+      'publicationID': publicationID,
+    }, headers: {
+      'Accept': 'application/json',
+    });
+
+    if (response.statusCode == 200) {
+      print( "Like");
+      return true;
+    }
+    if (response.statusCode == 422) {
+      return false;
+    }
+
+    return false;
   }
+
+  Future postUnlike(String token, String publicationID) async {
+    String url =
+        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUnlike;
+    final response = await http.post(Uri.parse(url), body: {
+      'token': token,
+      'publicationID': publicationID,
+    }, headers: {
+      'Accept': 'application/json',
+    });
+
+    if (response.statusCode == 200) {
+      print("Unlike");
+      return true;
+    }
+    if (response.statusCode == 422) {
+      print(response.statusCode);
+      return false;
+    }
+
+    return false;
+  }
+
 }

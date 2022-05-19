@@ -5,10 +5,10 @@ import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/utils/constants.dart';
 
 class ApiPublicationService {
-  Future<List<PublicationModel>?> getPublication() async {
+  Future<List<PublicationModel>?> getPublication(String data) async {
     try {
       var url = Uri.parse(
-          ApiIntranetConstans.baseUrl + ApiIntranetConstans.getPublication);
+          ApiIntranetConstans.baseUrl + ApiIntranetConstans.getPublication+data);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         List<PublicationModel> _model = publicationModelFromJson(response.body);

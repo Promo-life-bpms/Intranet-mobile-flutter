@@ -14,7 +14,7 @@ class ProcessRequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  requestModel == null || requestModel!.isEmpty
-          ? const ListviewRequestPage()
+          ? const Text("no tienes solicitudes")
           : Column(
             children: [
               Expanded(

@@ -16,7 +16,7 @@ class PublicationModel {
     required this.contentPublication,
     required this.photoPublication,
     required this.likes,
- 
+    required this.isLike,
   });
 
   int id;
@@ -26,6 +26,7 @@ class PublicationModel {
   String contentPublication;
   String photoPublication;
   int likes;
+  bool isLike;
  
   factory PublicationModel.fromJson(Map<String, dynamic> json) =>
       PublicationModel(
@@ -36,6 +37,7 @@ class PublicationModel {
         contentPublication: json["contentPublication"],
         photoPublication: json["photoPublication"],
         likes: json["likes"],
+        isLike: json["isLike"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,5 +48,6 @@ class PublicationModel {
         "contentPublication": contentPublication,
         "photoPublication": photoPublication,
         "likes": likes,
+        "isLike":isLike,
       };
 }

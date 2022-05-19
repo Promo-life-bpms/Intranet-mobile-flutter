@@ -16,6 +16,9 @@ class ApiIntranetConstans {
   static String organizationEndpoint = '/api/organization/';
   static String postPublication = 'api/postPublications';
   static String getPublication = 'api/getPublications/';
+  static String postLike = 'api/postLike';
+  static String postUnlike = 'api/postUnlike';
+
 }
 
 class ColorIntranetConstants{
