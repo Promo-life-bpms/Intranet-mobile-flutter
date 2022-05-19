@@ -10,6 +10,7 @@ import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/home/create_post.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_publication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:badges/badges.dart';
@@ -41,18 +42,19 @@ class _HomeState extends State<HomePage> {
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
     String? _token = prefs.getString('token');
-      if (_token != null || _token!.isNotEmpty) {
-        token = _token;
-      }
+    if (_token != null || _token!.isNotEmpty) {
+      token = _token;
+    }
     _userlModel =
         (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
     _brithdayModel =
         (await ApiBrithdayService().getBrithday())!.cast<BrithdayModel>();
     _communiqueModel =
         (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
-    _publicationModel = (await ApiPublicationService().getPublication(token.toString()))!
-        .cast<PublicationModel>();
-    _publicationModelToLike=_publicationModel;
+    _publicationModel =
+        (await ApiPublicationService().getPublication(token.toString()))!
+            .cast<PublicationModel>();
+    _publicationModelToLike = _publicationModel;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -64,11 +66,7 @@ class _HomeState extends State<HomePage> {
         title: const Text(_title),
       ),
       body: _userlModel == null || _userlModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: ColorIntranetConstants.primaryColorNormal,
-              ),
-            )
+          ? ListviewPublication()
           : SingleChildScrollView(
               physics: const ScrollPhysics(),
               child: Container(
@@ -415,21 +413,56 @@ class _HomeState extends State<HomePage> {
                                                   child: InkWell(
                                                 onTap: () {
                                                   setState(() {
-                                                    
-                                                    if(_publicationModelToLike![index].isLike ==false){
-                                                      _publicationModelToLike![index].likes =_publicationModelToLike![index].likes +1;
-                                                      _publicationModelToLike![index].isLike = true;
-                                                      postLike(token, _publicationModel![index].id.toString());
-                                                    }else{
-                                                      _publicationModelToLike![index].likes =_publicationModelToLike![index].likes -1;
-                                                      _publicationModelToLike![index].isLike =false;
-                                                      postUnlike(token, _publicationModel![index].id.toString());
+                                                    if (_publicationModelToLike![
+                                                                index]
+                                                            .isLike ==
+                                                        false) {
+                                                      _publicationModelToLike![
+                                                                  index]
+                                                              .likes =
+                                                          _publicationModelToLike![
+                                                                      index]
+                                                                  .likes +
+                                                              1;
+                                                      _publicationModelToLike![
+                                                              index]
+                                                          .isLike = true;
+                                                      postLike(
+                                                          token,
+                                                          _publicationModel![
+                                                                  index]
+                                                              .id
+                                                              .toString());
+                                                    } else {
+                                                      _publicationModelToLike![
+                                                                  index]
+                                                              .likes =
+                                                          _publicationModelToLike![
+                                                                      index]
+                                                                  .likes -
+                                                              1;
+                                                      _publicationModelToLike![
+                                                              index]
+                                                          .isLike = false;
+                                                      postUnlike(
+                                                          token,
+                                                          _publicationModel![
+                                                                  index]
+                                                              .id
+                                                              .toString());
                                                     }
                                                   });
-                                                  
                                                 },
-                                                child: _publicationModelToLike![index].likes == _publicationModel![index].likes &&  _publicationModelToLike![index].isLike ==false? 
-                                                     Badge(
+                                                child: _publicationModelToLike![index]
+                                                                .likes ==
+                                                            _publicationModel![
+                                                                    index]
+                                                                .likes &&
+                                                        _publicationModelToLike![
+                                                                    index]
+                                                                .isLike ==
+                                                            false
+                                                    ? Badge(
                                                         toAnimate: true,
                                                         position: BadgePosition
                                                             .bottomEnd(),
@@ -491,8 +524,7 @@ class _HomeState extends State<HomePage> {
   }
 
   Future postLike(String token, String publicationID) async {
-    String url =
-        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postLike;
+    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postLike;
     final response = await http.post(Uri.parse(url), body: {
       'token': token,
       'publicationID': publicationID,
@@ -501,7 +533,7 @@ class _HomeState extends State<HomePage> {
     });
 
     if (response.statusCode == 200) {
-      print( "Like");
+      print("Like");
       return true;
     }
     if (response.statusCode == 422) {
@@ -512,8 +544,7 @@ class _HomeState extends State<HomePage> {
   }
 
   Future postUnlike(String token, String publicationID) async {
-    String url =
-        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUnlike;
+    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUnlike;
     final response = await http.post(Uri.parse(url), body: {
       'token': token,
       'publicationID': publicationID,
@@ -532,5 +563,4 @@ class _HomeState extends State<HomePage> {
 
     return false;
   }
-
 }

@@ -68,8 +68,7 @@ class _ListviewCardsExamplePageState extends State<ListviewAniversary> {
                               borderRadius: BorderRadius.circular(8),
                               minLength:
                                   MediaQuery.of(context).size.width / 4.5,
-                              maxLength:
-                                  MediaQuery.of(context).size.width / 4,
+                              maxLength: MediaQuery.of(context).size.width / 4,
                               alignment: Alignment.bottomLeft)),
                     ),
                     const SizedBox(
@@ -100,8 +99,7 @@ class _ListviewCardsExamplePageState extends State<ListviewAniversary> {
                               borderRadius: BorderRadius.circular(8),
                               minLength:
                                   MediaQuery.of(context).size.width / 4.5,
-                              maxLength:
-                                  MediaQuery.of(context).size.width / 4,
+                              maxLength: MediaQuery.of(context).size.width / 4,
                               alignment: Alignment.bottomLeft)),
                     ),
                     const SizedBox(
@@ -132,8 +130,7 @@ class _ListviewCardsExamplePageState extends State<ListviewAniversary> {
                               borderRadius: BorderRadius.circular(8),
                               minLength:
                                   MediaQuery.of(context).size.width / 4.5,
-                              maxLength:
-                                  MediaQuery.of(context).size.width / 4,
+                              maxLength: MediaQuery.of(context).size.width / 4,
                               alignment: Alignment.bottomLeft)),
                     ),
                     const SizedBox(
