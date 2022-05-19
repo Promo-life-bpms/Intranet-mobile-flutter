@@ -29,62 +29,75 @@ class AboutWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: Column(
-        children: <Widget>[
-          Card(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(
-                  width: double.infinity,
-                  height: 160.0,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 80, vertical: 20),
-                    child:  FittedBox(
-                      fit: BoxFit.contain,
-                      child: Image(
-                        image: AssetImage('lib/assets/promolife.png'),
-                      )),
-                    ),  
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            Card(
+              elevation: 4,
+              child: InkWell(
+                child: Column(
+                  children: <Widget>[
+                    const SizedBox(
+                      width: double.infinity,
+                      height: 160.0,
+                      child: Padding(
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 80, vertical: 20),
+                        child: FittedBox(
+                            fit: BoxFit.contain,
+                            child: Image(
+                              image: AssetImage('lib/assets/promolife.png'),
+                            )),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const PromolifePage()));
+                      },
+                      child: const Text('Ver mas'),
+                    ),
+                  ],
                 ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const PromolifePage()));
-                  },
-                  child: const Text('Ver mas'),
-                ),
-              ],
+                onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const PromolifePage())),
+              ),
             ),
-          ),
-          //Segunda card
-          Card(
-            child: Column(
-              children: <Widget>[
-                const SizedBox(
-                  width: double.infinity,
-                  height: 160.0,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 80, vertical: 20),
-                     child: FittedBox(
-                      fit: BoxFit.contain,
-                      child: Image(
-                        image: AssetImage('lib/assets/bhtrade.png'),
-                      )),
+            const Padding(padding: EdgeInsets.only(top: 8)),
+            //Segunda  card
+            Card(
+              elevation: 4,
+              child: InkWell(
+              child: Column(
+                children: <Widget>[
+                  const SizedBox(
+                    width: double.infinity,
+                    height: 160.0,
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 80, vertical: 20),
+                      child: FittedBox(
+                          fit: BoxFit.contain,
+                          child: Image(
+                            image: AssetImage('lib/assets/bhtrade.png'),
+                          )),
+                    ),
                   ),
-                 
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(
-                        MaterialPageRoute(builder: (context) => const BHPage()));
-                  },
-                  child: const Text('Ver más'),
-                ),
-              ],
-            ),
-          ),
-        ],
-      ),
+                  TextButton(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const BHPage()));
+                    },
+                    child: const Text('Ver más'),
+                  ),
+                ],
+              ),
+              onTap: ()=>Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const BHPage()))
+            )),
+          ],
+        ),
+      )
     );
   }
 }

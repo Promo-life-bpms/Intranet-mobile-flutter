@@ -27,82 +27,88 @@ class AboutWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       scrollDirection: Axis.vertical,
-      child: Column(
-        children: <Widget>[
-          Card(
-            shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: <Widget>[
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => const BrithdayPage()));      
+              },
+                child: Column(
+                  children: <Widget>[
+                    const SizedBox(
+                      width: double.infinity,
+                      height: 160.0,
+                      child: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+                        child: FittedBox(
+                          //fit: BoxFit.contain,
+                          child: Image(
+                            image: AssetImage('lib/assets/birthday.png'),
+                          ),
+                        ),
+                      ),
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => const BrithdayPage()));
+                      },
+                      child: const Text('Cumpleaños'),
+                    ),
+                  ],
+                ),
+              ),
             ),
-            clipBehavior: Clip.antiAlias,
-            child: InkWell(
-            onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const BrithdayPage()));      
-            },
-              child: Column(
+            const Padding(padding: EdgeInsets.only(top: 8)),
+
+            Card(
+              elevation: 4,
+              shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: InkWell(
+              onTap: (){
+                Navigator.of(context).push(MaterialPageRoute(
+                  builder: (context) => const AniversaryPage()));      
+              },
+                child: Column(
                 children: <Widget>[
                   const SizedBox(
                     width: double.infinity,
                     height: 160.0,
                     child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 0, vertical: 20),
+                      padding: EdgeInsets.symmetric(horizontal: 80),
                       child: FittedBox(
-                        //fit: BoxFit.contain,
-                        child: Image(
-                          image: AssetImage('lib/assets/birthday.png'),
-                        ),
-                      ),
+                          fit: BoxFit.contain,
+                          child: Image(
+                            image: AssetImage('lib/assets/aniversary.png'),
+                          )),
                     ),
                   ),
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const BrithdayPage()));
+                          builder: (context) => const AniversaryPage()));
                     },
-                    child: const Text('Cumpleaños'),
+                    child: const Text('Aniversarios'),
                   ),
                 ],
+                ),
               ),
             ),
-          ),
 
-          Card(
-            shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10.0),
-            ),
-            clipBehavior: Clip.antiAlias,
-            child: InkWell(
-            onTap: (){
-              Navigator.of(context).push(MaterialPageRoute(
-                builder: (context) => const AniversaryPage()));      
-            },
-              child: Column(
-              children: <Widget>[
-                const SizedBox(
-                  width: double.infinity,
-                  height: 160.0,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 80),
-                    child: FittedBox(
-                        fit: BoxFit.contain,
-                        child: Image(
-                          image: AssetImage('lib/assets/aniversary.png'),
-                        )),
-                  ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => const AniversaryPage()));
-                  },
-                  child: const Text('Aniversarios'),
-                ),
-              ],
-              ),
-            ),
-          ),
-
-        ],
+          ],
+        ),
       ),
     );
   }

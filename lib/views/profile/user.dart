@@ -3,6 +3,7 @@ import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserProfilePage extends StatefulWidget {
@@ -37,9 +38,7 @@ class _HomeState extends State<UserProfilePage> {
         title: const Text('Mi cuenta'),
       ),
       body: _userModel == null || _userModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(),
-            )
+          ? const ListviewProfile()
           : ListView.builder(
               padding: const EdgeInsets.all(0),
               itemCount: _userModel!.length,

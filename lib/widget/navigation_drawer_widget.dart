@@ -25,6 +25,7 @@ class NavigationDrawerWidget extends StatefulWidget {
 
 class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   late List<UserModel>? _userlModel = [];
+   static var _selectedDrawerItem = 0;
 
   @override
   void initState() {
@@ -35,12 +36,10 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
    void _getData() async {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
-
     _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
-   static var _selectedDrawerItem = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +188,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) => const HomePage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/HomePage")
           );
         break;
       case 1:
@@ -199,7 +198,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) =>  const AboutMainPage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/AboutPage")
           );
         break;
       case 2:
@@ -209,7 +208,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) =>  const OrganizationPage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/OrganizationPage")
           );
         break;
       case 3:
@@ -219,7 +218,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) => const  RequestMainPage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/RequestPage")
           );
         break;
       case 4:
@@ -229,7 +228,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) =>  const DirectoryPage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/DirectoryPage")
           );
         break;
       case 5:
@@ -239,7 +238,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) => const AniversaryHomePage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/AniversaryPage")
           );
         break;
       case 6:
@@ -249,7 +248,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) =>  const EmployeeMonthPage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/EmployyeMonthPage")
           );
         break;
       case 7:
@@ -259,7 +258,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) =>  const CommunicatePage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/CommuniquePage")
           );
         break;
       case 8:
@@ -269,7 +268,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) =>  const ManualPage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/ManualPage")
           );
         break;
       case 9:
@@ -279,7 +278,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) =>  const AccessPage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/AccesPage")
           );
         break;
       case 10:
@@ -289,7 +288,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             MaterialPageRoute(
               builder: (context) =>  const LogoutPage()
             ), 
-          ModalRoute.withName("/Home")
+          ModalRoute.withName("/LogoutPage")
           );
 
         break; 

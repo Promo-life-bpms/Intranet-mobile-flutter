@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/brithday.dart';
 import 'package:intranet_movil/model/communique.dart';
@@ -41,18 +42,19 @@ class _HomeState extends State<HomePage> {
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
     String? _token = prefs.getString('token');
-      if (_token != null || _token!.isNotEmpty) {
-        token = _token;
-      }
+    if (_token != null || _token!.isNotEmpty) {
+      token = _token;
+    }
     _userlModel =
         (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
     _brithdayModel =
         (await ApiBrithdayService().getBrithday())!.cast<BrithdayModel>();
     _communiqueModel =
         (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
-    _publicationModel = (await ApiPublicationService().getPublication(token.toString()))!
-        .cast<PublicationModel>();
-    _publicationModelToLike=_publicationModel;
+    _publicationModel =
+        (await ApiPublicationService().getPublication(token.toString()))!
+            .cast<PublicationModel>();
+    _publicationModelToLike = _publicationModel;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -234,21 +236,28 @@ class _HomeState extends State<HomePage> {
                                       FittedBox(
                                     fit: BoxFit.scaleDown,
                                     child: InkWell(
-                                      child: Image(
-                                        image: NetworkImage(
-                                            ApiIntranetConstans.baseUrl +
-                                                _communiqueModel![index].image),
+                                      child: CachedNetworkImage(
+                                        imageUrl: ApiIntranetConstans.baseUrl +
+                                            _communiqueModel![index].image,
+                                        placeholder: (context, url) =>
+                                            const CircularProgressIndicator(),
+                                        errorWidget: (context, url, error) =>
+                                            const Image(
+                                                image: AssetImage(
+                                                    "lib/assets/lost_connection.png")),
                                       ),
                                       onDoubleTap: () {
-                                        Navigator.of(context).push(
-                                            MaterialPageRoute(
-                                                builder: (context) => Image(
-                                                    image: NetworkImage(
-                                                        ApiIntranetConstans
-                                                                .baseUrl +
-                                                            _communiqueModel![
-                                                                    index]
-                                                                .image))));
+                                        Navigator.of(context).push(MaterialPageRoute(
+                                            builder: (context) => CachedNetworkImage(
+                                                imageUrl: ApiIntranetConstans
+                                                        .baseUrl +
+                                                    _communiqueModel![index]
+                                                        .image,
+                                                errorWidget: (context, url,
+                                                        error) =>
+                                                    const Image(
+                                                        image: AssetImage(
+                                                            "lib/assets/lost_connection.png")))));
                                       },
                                     ),
                                   ),
@@ -372,25 +381,34 @@ class _HomeState extends State<HomePage> {
                                             : SizedBox(
                                                 width: double.infinity,
                                                 child: InkWell(
-                                                  child: const Image(
-                                                    /* image: NetworkImage(
-                                                        ApiIntranetConstans
-                                                                .baseUrl +
-                                                            _publicationModel![
-                                                                    index]
-                                                                .photoPublication), */
-                                                    image: NetworkImage(
-                                                        "https://www.blogdelfotografo.com/wp-content/uploads/2020/04/fotografo-paisajes.jpg"),
+                                                  child: CachedNetworkImage(
+                                                    imageUrl: ApiIntranetConstans
+                                                            .baseUrl +
+                                                        _publicationModel![
+                                                                index]
+                                                            .photoPublication,
+                                                    placeholder: (context,
+                                                            url) =>
+                                                        const CircularProgressIndicator(),
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Image(
+                                                            image: AssetImage(
+                                                                "lib/assets/lost_connection.png")),
                                                   ),
                                                   onDoubleTap: () {
                                                     Navigator.of(context).push(MaterialPageRoute(
-                                                        builder: (context) => Image(
-                                                            image: NetworkImage(
-                                                                ApiIntranetConstans
-                                                                        .baseUrl +
-                                                                    _publicationModel![
-                                                                            index]
-                                                                        .photoPublication))));
+                                                        builder: (context) => CachedNetworkImage(
+                                                            imageUrl: ApiIntranetConstans
+                                                                    .baseUrl +
+                                                                _publicationModel![index]
+                                                                    .photoPublication,
+                                                            errorWidget: (context,
+                                                                    url,
+                                                                    error) =>
+                                                                const Image(
+                                                                    image:
+                                                                        AssetImage("lib/assets/lost_connection.png")))));
                                                   },
                                                 ),
                                               ),
@@ -411,25 +429,59 @@ class _HomeState extends State<HomePage> {
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
-                                              Container(
-                                                  child: InkWell(
+                                              InkWell(
                                                 onTap: () {
                                                   setState(() {
-                                                    
-                                                    if(_publicationModelToLike![index].isLike ==false){
-                                                      _publicationModelToLike![index].likes =_publicationModelToLike![index].likes +1;
-                                                      _publicationModelToLike![index].isLike = true;
-                                                      postLike(token, _publicationModel![index].id.toString());
-                                                    }else{
-                                                      _publicationModelToLike![index].likes =_publicationModelToLike![index].likes -1;
-                                                      _publicationModelToLike![index].isLike =false;
-                                                      postUnlike(token, _publicationModel![index].id.toString());
+                                                    if (_publicationModelToLike![
+                                                                index]
+                                                            .isLike ==
+                                                        false) {
+                                                      _publicationModelToLike![
+                                                                  index]
+                                                              .likes =
+                                                          _publicationModelToLike![
+                                                                      index]
+                                                                  .likes +
+                                                              1;
+                                                      _publicationModelToLike![
+                                                              index]
+                                                          .isLike = true;
+                                                      postLike(
+                                                          token,
+                                                          _publicationModel![
+                                                                  index]
+                                                              .id
+                                                              .toString());
+                                                    } else {
+                                                      _publicationModelToLike![
+                                                                  index]
+                                                              .likes =
+                                                          _publicationModelToLike![
+                                                                      index]
+                                                                  .likes -
+                                                              1;
+                                                      _publicationModelToLike![
+                                                              index]
+                                                          .isLike = false;
+                                                      postUnlike(
+                                                          token,
+                                                          _publicationModel![
+                                                                  index]
+                                                              .id
+                                                              .toString());
                                                     }
                                                   });
-                                                  
                                                 },
-                                                child: _publicationModelToLike![index].likes == _publicationModel![index].likes &&  _publicationModelToLike![index].isLike ==false? 
-                                                     Badge(
+                                                child: _publicationModelToLike![index]
+                                                                .likes ==
+                                                            _publicationModel![
+                                                                    index]
+                                                                .likes &&
+                                                        _publicationModelToLike![
+                                                                    index]
+                                                                .isLike ==
+                                                            false
+                                                    ? Badge(
                                                         toAnimate: true,
                                                         position: BadgePosition
                                                             .bottomEnd(),
@@ -467,7 +519,7 @@ class _HomeState extends State<HomePage> {
                                                           color: Colors.red,
                                                           size: 24,
                                                         )),
-                                              ))
+                                              )
                                             ],
                                           ),
                                         ),
@@ -491,8 +543,7 @@ class _HomeState extends State<HomePage> {
   }
 
   Future postLike(String token, String publicationID) async {
-    String url =
-        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postLike;
+    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postLike;
     final response = await http.post(Uri.parse(url), body: {
       'token': token,
       'publicationID': publicationID,
@@ -501,7 +552,7 @@ class _HomeState extends State<HomePage> {
     });
 
     if (response.statusCode == 200) {
-      print( "Like");
+      print("Like");
       return true;
     }
     if (response.statusCode == 422) {
@@ -512,8 +563,7 @@ class _HomeState extends State<HomePage> {
   }
 
   Future postUnlike(String token, String publicationID) async {
-    String url =
-        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUnlike;
+    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUnlike;
     final response = await http.post(Uri.parse(url), body: {
       'token': token,
       'publicationID': publicationID,
@@ -532,5 +582,4 @@ class _HomeState extends State<HomePage> {
 
     return false;
   }
-
 }

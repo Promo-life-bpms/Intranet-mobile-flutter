@@ -42,7 +42,8 @@ class _HomeState extends State<DirectoryPage> {
         ),
         body: _directoryModel == null || _directoryModel!.isEmpty
             ? const ListViewExample2Page()
-            : Column(
+            :
+             Column(
                 children: [
                   Padding(
                       padding: const EdgeInsets.symmetric(
@@ -89,6 +90,7 @@ class _HomeState extends State<DirectoryPage> {
                             itemCount: _directoryModel!.length,
                             itemBuilder: (context, index) {
                               return Card(
+                                elevation: 4,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),
@@ -158,6 +160,7 @@ class _HomeState extends State<DirectoryPage> {
                             itemCount: _directoryModelSearch!.length,
                             itemBuilder: (context, index) {
                               return Card(
+                                elevation: 4,
                                 shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(10.0),
                                 ),

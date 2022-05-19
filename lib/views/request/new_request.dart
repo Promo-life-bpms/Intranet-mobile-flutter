@@ -46,12 +46,6 @@ class _MyHomePageState extends State<RequestPage> {
     _getData();
   }
 
-  @override
-  void dispose() {
-    reason.dispose();
-    super.dispose();
-  }
-
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
     String? _token = prefs.getString('token');

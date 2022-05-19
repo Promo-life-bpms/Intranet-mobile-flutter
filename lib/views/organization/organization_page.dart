@@ -48,12 +48,14 @@ class _HomeState extends State<OrganizationPage> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primaryColor: ColorIntranetConstants.primaryColorLight, 
         primaryColorLight: ColorIntranetConstants.primaryColorLight,
         primaryColorDark: ColorIntranetConstants.primaryColorDark,
         backgroundColor: ColorIntranetConstants.backgroundColorDark,
         hoverColor: ColorIntranetConstants.primaryColorLight,
+        scaffoldBackgroundColor: ColorIntranetConstants.backgroundColorNormal,
         appBarTheme: const AppBarTheme(backgroundColor: ColorIntranetConstants.primaryColorLight) 
         ),
       home: DefaultTabController(

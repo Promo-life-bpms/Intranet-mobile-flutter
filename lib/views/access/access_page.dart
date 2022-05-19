@@ -45,43 +45,47 @@ class CardImageLinkWidget  extends StatelessWidget {
         padding: const EdgeInsets.all(8),
         itemCount: accessData.length,
         itemBuilder: (context, index) {
-          return Card(
-          child: Padding(
-          padding: const EdgeInsets.only(bottom: 20.0),
-            child: Column(
-              children: <Widget> [
-              SizedBox(
-                width: double.infinity,
-                height: 160.0,
-                child:FittedBox(
-                  fit: BoxFit.contain,
-                  child: Image(
-                      image: AssetImage(accessData[index].accImage),
-                    )
+          return Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Card(
+              elevation: 4,
+            child: Padding(
+            padding: const EdgeInsets.only(bottom: 20.0),
+              child: Column(
+                children: <Widget> [
+                SizedBox(
+                  width: double.infinity,
+                  height: 160.0,
+                  child:FittedBox(
+                    fit: BoxFit.contain,
+                    child: Image(
+                        image: AssetImage(accessData[index].accImage),
+                      )
+                  ),
                 ),
-              ),
-                Text(
-                accessData[index].accName,
-                style: const TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
-              ),
-              const  Padding( 
-                padding: EdgeInsets.only(bottom: 20.0),
-              ),
-              SizedBox(
-                width: 200,
-                height: 50, 
-                child: ElevatedButton(
-                  onPressed: () {
-                    LaunchToInternet.launchURL(accessData[index].accLink);
-                    },
-                  child: const Text('ABRIR'),
+                  Text(
+                  accessData[index].accName,
+                  style: const TextStyle(fontSize: 20.00,fontWeight: FontWeight.bold),
+                  textAlign: TextAlign.center,
                 ),
+                const  Padding( 
+                  padding: EdgeInsets.only(bottom: 20.0),
+                ),
+                SizedBox(
+                  width: 200,
+                  height: 50, 
+                  child: ElevatedButton(
+                    onPressed: () {
+                      LaunchToInternet.launchURL(accessData[index].accLink);
+                      },
+                    child: const Text('ABRIR'),
+                  ),
+                ),
+              ],
               ),
-            ],
             ),
-          ),
-        );
+        ),
+          );
       },
     );
   }

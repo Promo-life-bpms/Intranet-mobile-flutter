@@ -41,74 +41,83 @@ class _HomeState extends State<BrithdayPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Cumpleaños'),
-      ),
-      body: _brithdayModel == null || _brithdayModel!.isEmpty
-          ? const ListviewAniversary()
-          : Column(
-              children: [
-                Column(
+        appBar: AppBar(
+          title: const Text('Cumpleaños'),
+        ),
+        body: _brithdayModel == null || _brithdayModel!.isEmpty
+            ? const ListviewAniversary()
+            : SingleChildScrollView(
+                physics: const ScrollPhysics(),
+                scrollDirection: Axis.vertical,
+                child: Column(
                   children: [
-                    Container(
-                      padding: const EdgeInsets.all(8.0),
-                      width: 700,
-                      child: Lottie.asset("lib/assets/flags.json"),
+                    Column(
+                      children: [
+                        SizedBox(
+                          width: double.infinity,
+                          child: Lottie.asset("lib/assets/flags.json"),
+                        ),
+                      ],
+                    ),
+                    Column(
+                      children: [
+                        GridView.builder(
+                          primary: false,
+                          shrinkWrap: true,
+                          scrollDirection: Axis.vertical,
+                          padding: const EdgeInsets.all(0),
+                          itemCount: _brithdayModel!.length,
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            childAspectRatio: 0.8,
+                          ),
+                          itemBuilder: (BuildContext context, int index) {
+                            return Column(
+                              children: [
+                                SizedBox(
+                                  width: 80,
+                                  height: 80,
+                                  child: CircleAvatar(
+                                    backgroundImage: NetworkImage(
+                                        ApiIntranetConstans.baseUrl +
+                                            _brithdayModel![index]
+                                                .photo
+                                                .toString()),
+                                  ),
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.only(
+                                        left: 1, top: 10, right: 5, bottom: 4)),
+                                SizedBox(
+                                  width: 100,
+                                  height: 30,
+                                  child: Text(
+                                      _brithdayModel![index].name +
+                                          " " +
+                                          _brithdayModel![index].lastname,
+                                      style: const TextStyle(
+                                        fontSize: 12.00,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                      textAlign: TextAlign.center),
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 2)),
+                                Center(
+                                    child: Text(_brithdayModel![index].date,
+                                        style: const TextStyle(fontSize: 10.00),
+                                        textAlign: TextAlign.center)),
+                                const Padding(
+                                    padding: EdgeInsets.symmetric(vertical: 5)),
+                              ],
+                            );
+                          },
+                        ),
+                      ],
                     ),
                   ],
                 ),
-                Expanded(
-                  child: GridView.builder(
-                    padding: const EdgeInsets.all(0),
-                    itemCount: _brithdayModel!.length,
-                    gridDelegate:
-                        const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3,
-                      childAspectRatio: 0.8,
-                    ),
-                    itemBuilder: (BuildContext context, int index) {
-                      return Column(
-                        children: [
-                          SizedBox(
-                            width: 80,
-                            height: 80,
-                            child: CircleAvatar(
-                              backgroundImage: NetworkImage(
-                                  ApiIntranetConstans.baseUrl +
-                                      _brithdayModel![index].photo.toString()),
-                            ),
-                          ),
-                          const Padding(
-                              padding: EdgeInsets.only(
-                                  left: 1, top: 5, right: 5, bottom: 4)),
-                          SizedBox(
-                            width: 100,
-                            height: 30,
-                            child: Text(
-                                _brithdayModel![index].name +
-                                    " " +
-                                    _brithdayModel![index].lastname,
-                                style: const TextStyle(
-                                  fontSize: 12.00,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                                textAlign: TextAlign.center),
-                          ),
-                          const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 4)),
-                          Center(
-                              child: Text(_brithdayModel![index].date,
-                                  style: const TextStyle(fontSize: 10.00),
-                                  textAlign: TextAlign.center)),
-                          const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 5)),
-                        ],
-                      );
-                    },
-                  ),
-                ),
-              ],
-            ),
-    );
+              ));
   }
 }

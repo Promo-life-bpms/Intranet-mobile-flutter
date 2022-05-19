@@ -57,12 +57,14 @@ class _HomeState extends State<MyApp> {
   Widget build(BuildContext context) {
     return 
      MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Login',
        theme: ThemeData(
         primaryColor: ColorIntranetConstants.primaryColorLight, 
         primaryColorLight: ColorIntranetConstants.primaryColorLight,
         primaryColorDark: ColorIntranetConstants.primaryColorDark,
         backgroundColor: ColorIntranetConstants.backgroundColorDark,
+        scaffoldBackgroundColor: ColorIntranetConstants.backgroundColorNormal,
         hoverColor: ColorIntranetConstants.primaryColorLight,
         appBarTheme: const AppBarTheme(backgroundColor: ColorIntranetConstants.primaryColorLight) 
         ),

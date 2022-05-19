@@ -37,10 +37,11 @@ class _HomeState extends State<EmployeeMonthPage> {
       body: _monthEmployeeModel == null || _monthEmployeeModel!.isEmpty
           ? const ListviewEmploye()
           : ListView.builder(
-              padding: const EdgeInsets.all(8),
+              padding: const EdgeInsets.all(16),
               itemCount: _monthEmployeeModel!.length,
               itemBuilder: (context, index) {
                 return Card(
+                  elevation: 4,
                   child: Padding(
                     padding: const EdgeInsets.only(bottom: 20.0),
                     child: Column(

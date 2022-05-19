@@ -14,6 +14,7 @@ class Login extends StatelessWidget {
     const appTitle = 'Iniciar sesion';
 
     return const MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: appTitle,
       home: Scaffold(
         body: LoginForm(),

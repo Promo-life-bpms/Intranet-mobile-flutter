@@ -28,6 +28,7 @@ class StoreDirectoryPage extends StatelessWidget {
                   itemCount: directoryModel!.length,
                   itemBuilder: (context, index) {
                     return Card(
+                      elevation: 4,
                       shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       ),
