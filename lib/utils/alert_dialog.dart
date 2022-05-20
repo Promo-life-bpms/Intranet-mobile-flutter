@@ -445,13 +445,8 @@ class SuccessfulAlertDialog {
                                 onPrimary: Colors.white, // foreground
                               ),
                               onPressed: () {
-                                Navigator.of(context).pop();
-                                 Navigator.pushAndRemoveUntil(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) =>
-                                            const RequestMainPage()),
-                                    ModalRoute.withName("/SuccessfulAlertDialog")); 
+                                Navigator.pop(context);
+                                 
                               },
                               child: const Text('ACEPTAR'),
                             ),

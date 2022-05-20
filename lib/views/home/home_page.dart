@@ -11,6 +11,7 @@ import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/home/create_post.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_publication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:badges/badges.dart';
@@ -66,11 +67,7 @@ class _HomeState extends State<HomePage> {
         title: const Text(_title),
       ),
       body: _userlModel == null || _userlModel!.isEmpty
-          ? const Center(
-              child: CircularProgressIndicator(
-                color: ColorIntranetConstants.primaryColorNormal,
-              ),
-            )
+          ? const ListviewPublication()
           : SingleChildScrollView(
               physics: const ScrollPhysics(),
               child: Container(

@@ -63,7 +63,9 @@ class _HomeState extends State<UserProfilePage> {
                             height: 120.0,
                             child: OverflowBox(
                               child: CircleAvatar(
-                                backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl+ _userModel![0].photo),
+                                backgroundImage: NetworkImage(
+                                    ApiIntranetConstans.baseUrl +
+                                        _userModel![0].photo),
                               ),
                             ),
                           ),

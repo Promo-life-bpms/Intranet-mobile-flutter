@@ -18,7 +18,6 @@ class _ListviewCardsExamplePageState extends State<ListviewProfile> {
       _isLoading = !_isLoading;
     });
   }
-  
 
   @override
   Widget build(BuildContext context) {
