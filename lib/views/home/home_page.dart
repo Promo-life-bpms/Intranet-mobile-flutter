@@ -1,12 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/brithday.dart';
-import 'package:intranet_movil/model/comment.dart';
 import 'package:intranet_movil/model/communique.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_brithday.dart';
-import 'package:intranet_movil/services/api_comment.dart';
 import 'package:intranet_movil/services/api_communique.dart';
 import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
@@ -14,6 +12,7 @@ import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/home/create_post.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_publication.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:badges/badges.dart';
@@ -34,13 +33,13 @@ class _HomeState extends State<HomePage> {
   late List<PublicationModel>? _publicationModel = [];
   late List<PublicationModel>? _publicationModelToLike = [];
   bool isLike = false;
+  bool loadingComment = false;
   late String token = "";
 
   @override
   void initState() {
     super.initState();
     _getData();
-    
   }
 
   void _getData() async {
@@ -562,10 +561,13 @@ class _HomeState extends State<HomePage> {
                                               Padding(
                                                 padding: EdgeInsets.zero,
                                                 child: InkWell(
-                                                    onTap: () {  
-                                                      _settingModalBottomSheet(context, _publicationModel![index].comments);
+                                                    onTap: () {
+                                                      _settingModalBottomSheet(
+                                                          context,
+                                                          _publicationModel![
+                                                                  index]
+                                                              .comments);
                                                     },
-                                                        
                                                     child: Row(
                                                       children: const [
                                                         Icon(
@@ -646,24 +648,26 @@ class _HomeState extends State<HomePage> {
     return false;
   }
 
- _settingModalBottomSheet(context,List<Comments> comments) {
+  _settingModalBottomSheet(context, List<Comments> comments) {
     final _formKey = GlobalKey<FormState>();
-    final _contentComments = TextEditingController();                                                        
+    final _contentComments = TextEditingController();
+    late List<Comments> commentList = [];
+    setState(() {
+      commentList =comments;
+    });
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
+            borderRadius: BorderRadius.vertical(top: Radius.circular(8.0))),
         context: context,
         builder: (BuildContext bc) {
           return Column(
             children: [
-               comments[0].photo == "sin datos"?
-                const Center(child: Text("Sin comentarios"),)
-              : const Center(child: Text("Con comentarios"),),
+              const Padding(padding: EdgeInsets.only(top: 16)),
               Form(
                   key: _formKey,
                   child: Row(
                     children: [
-                      const Padding(padding: EdgeInsets.only(left: 8)),
+                      const Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
                       Expanded(
                         child: TextFormField(
                           decoration: InputDecoration(
@@ -686,17 +690,104 @@ class _HomeState extends State<HomePage> {
                           controller: _contentComments,
                         ),
                       ),
-                      Padding(padding: EdgeInsets.only(left: 8)),
+                      const Padding(padding: EdgeInsets.only(left: 8)),
                       IconButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            commentList.removeWhere((element) => element.userName == "sin datos");
+                            commentList.add(Comments(id: 1, userName: _userlModel![0].fullname, photo: _userlModel![0].photo, content: _contentComments.text));
+                          },
                           icon: const Icon(
                             Icons.send,
                             color: ColorIntranetConstants.primaryColorDark,
                           ))
                     ],
                   )),
+                  const Padding(padding: EdgeInsets.only(top: 16)),
+              commentList.length == 1 && commentList[0].content =="sin datos"
+                  ? 
+                    Column(
+                      children:  [
+                        const Padding(
+                          padding: EdgeInsets.only(top: 16),
+                          child: Text(
+                            "Sin comentarios",
+                            style: TextStyle(
+                                fontSize: 20),
+                          ),
+                        ),
+                        SizedBox(
+                            width: 200,
+                            child: Lottie.asset(
+                              "lib/assets/robot_blank_space.json",
+                            ),
+                          ),
+                      ],
+                    )
+                  : Container(
+                      child: Expanded(
+                        child: ListView.builder(
+                          padding: const EdgeInsets.only(left: 16, right: 16),
+                          itemCount: commentList.length,
+                          itemBuilder: (context, index) {
+                            return Row(
+                              children: [
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16.0, horizontal: 0.0),
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                            ApiIntranetConstans.baseUrl +
+                                                commentList[index]
+                                                    .photo
+                                                    .toString()), /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */
+                                      ),
+                                    )),
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 16)),
+                                Container(
+                                  decoration: const BoxDecoration(
+                                      color: ColorIntranetConstants
+                                          .backgroundColorNormal,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(16))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          commentList[index].userName,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 16.00,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const Padding(
+                                            padding: EdgeInsets.only(top: 8)),
+                                        Text(commentList[index].content,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 12.00,
+                                            )),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
+                            );
+                          },
+                        ),
+                      ),
+                    ),
             ],
           );
         });
-  } 
+  }
 }
