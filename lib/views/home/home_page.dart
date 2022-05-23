@@ -33,7 +33,6 @@ class _HomeState extends State<HomePage> {
   late List<UserModel>? _userlModel = [];
   late List<PublicationModel>? _publicationModel = [];
   late List<PublicationModel>? _publicationModelToLike = [];
-   late List<CommentModel> _commentModel = [];
   bool isLike = false;
   late String token = "";
 
@@ -61,19 +60,8 @@ class _HomeState extends State<HomePage> {
             .cast<PublicationModel>();
     _publicationModelToLike = _publicationModel;
 
-      _commentModel = (await ApiCommentService().getComment(
-        "27"))!.cast<CommentModel>(); 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
-
-  _getComment(data) async {
-  _commentModel = (await ApiCommentService().getComment(
-        data.toString()))!.cast<CommentModel>();
-        
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -575,7 +563,7 @@ class _HomeState extends State<HomePage> {
                                                 padding: EdgeInsets.zero,
                                                 child: InkWell(
                                                     onTap: () {  
-                                                                                     
+                                                      _settingModalBottomSheet(context, _publicationModel![index].comments);
                                                     },
                                                         
                                                     child: Row(
@@ -658,29 +646,9 @@ class _HomeState extends State<HomePage> {
     return false;
   }
 
-  /* Future getComment(data) async {
-  
-  setState(() async {
-    _commentModel = (await ApiCommentService().getComment(
-        data.toString()))!.cast<CommentModel>();
-            Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-
-  });
-  }
-
- _settingModalBottomSheet(context, id) {
+ _settingModalBottomSheet(context,List<Comments> comments) {
     final _formKey = GlobalKey<FormState>();
-    final _contentComments = TextEditingController();
-
-  setState(() {
-    if(_commentModel == null){
-      _getComment(id);
-    }
-    _getComment(id);
-
-  });
-  print(_commentModel);
-                                                        
+    final _contentComments = TextEditingController();                                                        
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
@@ -688,9 +656,9 @@ class _HomeState extends State<HomePage> {
         builder: (BuildContext bc) {
           return Column(
             children: [
-               _commentModel.isEmpty?
-                Center(child: CircularProgressIndicator(),)
-              :
+               comments[0].photo == "sin datos"?
+                const Center(child: Text("Sin comentarios"),)
+              : const Center(child: Text("Con comentarios"),),
               Form(
                   key: _formKey,
                   child: Row(
@@ -730,5 +698,5 @@ class _HomeState extends State<HomePage> {
             ],
           );
         });
-  } */
+  } 
 }
