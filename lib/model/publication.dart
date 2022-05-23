@@ -7,6 +7,11 @@ List<PublicationModel> publicationModelFromJson(String str) =>
 String publicationModelToJson(List<PublicationModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+Comments commentFromJson(String str) => Comments.fromJson(json.decode(str));
+
+String commentToJson(Comments data) => json.encode(data.toJson());
+
+
 class PublicationModel {
   PublicationModel({
     required this.id,
@@ -17,6 +22,7 @@ class PublicationModel {
     required this.photoPublication,
     required this.likes,
     required this.isLike,
+    required this.comments,
   });
 
   int id;
@@ -27,6 +33,7 @@ class PublicationModel {
   String photoPublication;
   int likes;
   bool isLike;
+  List<Comments> comments;
  
   factory PublicationModel.fromJson(Map<String, dynamic> json) =>
       PublicationModel(
@@ -38,6 +45,7 @@ class PublicationModel {
         photoPublication: json["photoPublication"],
         likes: json["likes"],
         isLike: json["isLike"],
+        comments: List<Comments>.from(json["comments"].map((x) => Comments.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -49,5 +57,35 @@ class PublicationModel {
         "photoPublication": photoPublication,
         "likes": likes,
         "isLike":isLike,
+        "comments":List<dynamic>.from(comments.map((x) => x.toJson())),
       };
+}
+
+
+class Comments {
+    int id;
+    String userName;
+    String photo;
+    String content;
+
+    Comments({
+        required this.id,
+        required this.userName,
+        required this.photo,
+        required this.content,
+    });
+
+    factory Comments.fromJson(Map<String, dynamic> json) => Comments(
+        id: json["id"],
+        userName: json["userName"],
+        photo: json["photo"],
+        content: json["content"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "id": id,
+        "userName": userName,
+        "photo": photo,
+        "content": content ,
+   };
 }

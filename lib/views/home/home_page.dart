@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/brithday.dart';
+import 'package:intranet_movil/model/comment.dart';
 import 'package:intranet_movil/model/communique.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_brithday.dart';
+import 'package:intranet_movil/services/api_comment.dart';
 import 'package:intranet_movil/services/api_communique.dart';
 import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
@@ -31,6 +33,7 @@ class _HomeState extends State<HomePage> {
   late List<UserModel>? _userlModel = [];
   late List<PublicationModel>? _publicationModel = [];
   late List<PublicationModel>? _publicationModelToLike = [];
+   late List<CommentModel> _commentModel = [];
   bool isLike = false;
   late String token = "";
 
@@ -38,6 +41,7 @@ class _HomeState extends State<HomePage> {
   void initState() {
     super.initState();
     _getData();
+    
   }
 
   void _getData() async {
@@ -56,8 +60,20 @@ class _HomeState extends State<HomePage> {
         (await ApiPublicationService().getPublication(token.toString()))!
             .cast<PublicationModel>();
     _publicationModelToLike = _publicationModel;
+
+      _commentModel = (await ApiCommentService().getComment(
+        "27"))!.cast<CommentModel>(); 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
+
+  _getComment(data) async {
+  _commentModel = (await ApiCommentService().getComment(
+        data.toString()))!.cast<CommentModel>();
+        
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  
 
   @override
   Widget build(BuildContext context) {
@@ -156,7 +172,7 @@ class _HomeState extends State<HomePage> {
                                       return Column(
                                         children: [
                                           Padding(
-                                              padding:const EdgeInsets.all(8),
+                                              padding: const EdgeInsets.all(8),
                                               child: Column(
                                                 children: [
                                                   SizedBox(
@@ -245,16 +261,19 @@ class _HomeState extends State<HomePage> {
                                       ),
                                       onDoubleTap: () {
                                         Navigator.of(context).push(MaterialPageRoute(
-                                            builder: (context) => CachedNetworkImage(
-                                                imageUrl: ApiIntranetConstans
-                                                        .baseUrl +
-                                                    _communiqueModel![index]
-                                                        .image,
-                                                errorWidget: (context, url,
-                                                        error) =>
-                                                    const Image(
-                                                        image: AssetImage(
-                                                            "lib/assets/lost_connection.png")))));
+                                            builder: (context) =>
+                                                CachedNetworkImage(
+                                                    imageUrl:
+                                                        ApiIntranetConstans
+                                                                .baseUrl +
+                                                            _communiqueModel![
+                                                                    index]
+                                                                .image,
+                                                    errorWidget: (context, url,
+                                                            error) =>
+                                                        const Image(
+                                                            image: AssetImage(
+                                                                "lib/assets/lost_connection.png")))));
                                       },
                                     ),
                                   ),
@@ -398,14 +417,15 @@ class _HomeState extends State<HomePage> {
                                                         builder: (context) => CachedNetworkImage(
                                                             imageUrl: ApiIntranetConstans
                                                                     .baseUrl +
-                                                                _publicationModel![index]
+                                                                _publicationModel![
+                                                                        index]
                                                                     .photoPublication,
                                                             errorWidget: (context,
                                                                     url,
                                                                     error) =>
                                                                 const Image(
-                                                                    image:
-                                                                        AssetImage("lib/assets/lost_connection.png")))));
+                                                                    image: AssetImage(
+                                                                        "lib/assets/lost_connection.png")))));
                                                   },
                                                 ),
                                               ),
@@ -422,101 +442,162 @@ class _HomeState extends State<HomePage> {
                                               horizontal: 16, vertical: 8),
                                           child: Row(
                                             mainAxisAlignment:
-                                                MainAxisAlignment.start,
+                                                MainAxisAlignment.spaceBetween,
                                             crossAxisAlignment:
                                                 CrossAxisAlignment.start,
                                             children: [
                                               InkWell(
-                                                onTap: () {
-                                                  setState(() {
-                                                    if (_publicationModelToLike![
-                                                                index]
-                                                            .isLike ==
-                                                        false) {
-                                                      _publicationModelToLike![
+                                                  onTap: () {
+                                                    setState(() {
+                                                      if (_publicationModelToLike![
                                                                   index]
-                                                              .likes =
-                                                          _publicationModelToLike![
-                                                                      index]
-                                                                  .likes +
-                                                              1;
-                                                      _publicationModelToLike![
-                                                              index]
-                                                          .isLike = true;
-                                                      postLike(
-                                                          token,
-                                                          _publicationModel![
-                                                                  index]
-                                                              .id
-                                                              .toString());
-                                                    } else {
-                                                      _publicationModelToLike![
-                                                                  index]
-                                                              .likes =
-                                                          _publicationModelToLike![
-                                                                      index]
-                                                                  .likes -
-                                                              1;
-                                                      _publicationModelToLike![
-                                                              index]
-                                                          .isLike = false;
-                                                      postUnlike(
-                                                          token,
-                                                          _publicationModel![
-                                                                  index]
-                                                              .id
-                                                              .toString());
-                                                    }
-                                                  });
-                                                },
-                                                child: _publicationModelToLike![index]
-                                                                .likes ==
-                                                            _publicationModel![
-                                                                    index]
-                                                                .likes &&
+                                                              .isLike ==
+                                                          false) {
                                                         _publicationModelToLike![
                                                                     index]
-                                                                .isLike ==
-                                                            false
-                                                    ? Badge(
-                                                        toAnimate: true,
-                                                        position: BadgePosition
-                                                            .bottomEnd(),
-                                                        badgeContent: Text(
-                                                          _publicationModel![
-                                                                  index]
-                                                              .likes
-                                                              .toString(),
-                                                          style:
-                                                              const TextStyle(
+                                                                .likes =
+                                                            _publicationModelToLike![
+                                                                        index]
+                                                                    .likes +
+                                                                1;
+                                                        _publicationModelToLike![
+                                                                index]
+                                                            .isLike = true;
+                                                        postLike(
+                                                            token,
+                                                            _publicationModel![
+                                                                    index]
+                                                                .id
+                                                                .toString());
+                                                      } else {
+                                                        _publicationModelToLike![
+                                                                    index]
+                                                                .likes =
+                                                            _publicationModelToLike![
+                                                                        index]
+                                                                    .likes -
+                                                                1;
+                                                        _publicationModelToLike![
+                                                                index]
+                                                            .isLike = false;
+                                                        postUnlike(
+                                                            token,
+                                                            _publicationModel![
+                                                                    index]
+                                                                .id
+                                                                .toString());
+                                                      }
+                                                    });
+                                                  },
+                                                  child: _publicationModelToLike![
+                                                                      index]
+                                                                  .likes ==
+                                                              _publicationModel![
+                                                                      index]
+                                                                  .likes &&
+                                                          _publicationModelToLike![
+                                                                      index]
+                                                                  .isLike ==
+                                                              false
+                                                      ? Row(
+                                                          children: [
+                                                            Badge(
+                                                                toAnimate: true,
+                                                                position:
+                                                                    BadgePosition
+                                                                        .bottomEnd(),
+                                                                badgeContent:
+                                                                    Text(
+                                                                  _publicationModel![
+                                                                          index]
+                                                                      .likes
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                                child:
+                                                                    const Icon(
+                                                                  Icons
+                                                                      .favorite,
+                                                                  color: ColorIntranetConstants
+                                                                      .redLight,
+                                                                  size: 24,
+                                                                )),
+                                                            const Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      left: 12),
+                                                              child: Text(
+                                                                  "Me gusta"),
+                                                            )
+                                                          ],
+                                                        )
+                                                      : Row(
+                                                          children: [
+                                                            Badge(
+                                                                toAnimate: true,
+                                                                position:
+                                                                    BadgePosition
+                                                                        .bottomEnd(),
+                                                                badgeContent:
+                                                                    Text(
+                                                                  _publicationModel![
+                                                                          index]
+                                                                      .likes
+                                                                      .toString(),
+                                                                  style: const TextStyle(
+                                                                      color: Colors
+                                                                          .white),
+                                                                ),
+                                                                child:
+                                                                    const Icon(
+                                                                  Icons
+                                                                      .favorite,
                                                                   color: Colors
-                                                                      .white),
-                                                        ),
-                                                        child: const Icon(
-                                                          Icons.favorite,
-                                                          color: ColorIntranetConstants.redLight,
-                                                          size: 24,
-                                                        ))
-                                                    : Badge(
-                                                        toAnimate: true,
-                                                        position: BadgePosition
-                                                            .bottomEnd(),
-                                                        badgeContent: Text(
-                                                          _publicationModel![
-                                                                  index]
-                                                              .likes
-                                                              .toString(),
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .white),
-                                                        ),
-                                                        child: const Icon(
-                                                          Icons.favorite,
-                                                          color: Colors.red,
-                                                          size: 24,
+                                                                      .red,
+                                                                  size: 24,
+                                                                )),
+                                                            const Padding(
+                                                              padding: EdgeInsets
+                                                                  .only(
+                                                                      left: 12),
+                                                              child: Text(
+                                                                "Me gusta",
+                                                                style: TextStyle(
+                                                                    color: Colors
+                                                                        .red),
+                                                              ),
+                                                            )
+                                                          ],
                                                         )),
-                                              )
+                                              Padding(
+                                                padding: EdgeInsets.zero,
+                                                child: InkWell(
+                                                    onTap: () {  
+                                                                                     
+                                                    },
+                                                        
+                                                    child: Row(
+                                                      children: const [
+                                                        Icon(
+                                                          Icons.mode_comment,
+                                                          color: ColorIntranetConstants
+                                                              .primaryColorNormal,
+                                                        ),
+                                                        Padding(
+                                                          padding:
+                                                              EdgeInsets.only(
+                                                                  left: 8),
+                                                          child:
+                                                              Text("Comentar"),
+                                                        )
+                                                      ],
+                                                    )),
+                                              ),
+                                              const Padding(
+                                                  padding: EdgeInsets.only(
+                                                      right: 64)),
                                             ],
                                           ),
                                         ),
@@ -576,4 +657,78 @@ class _HomeState extends State<HomePage> {
 
     return false;
   }
+
+  /* Future getComment(data) async {
+  
+  setState(() async {
+    _commentModel = (await ApiCommentService().getComment(
+        data.toString()))!.cast<CommentModel>();
+            Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+
+  });
+  }
+
+ _settingModalBottomSheet(context, id) {
+    final _formKey = GlobalKey<FormState>();
+    final _contentComments = TextEditingController();
+
+  setState(() {
+    if(_commentModel == null){
+      _getComment(id);
+    }
+    _getComment(id);
+
+  });
+  print(_commentModel);
+                                                        
+    showModalBottomSheet(
+        shape: const RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(10.0))),
+        context: context,
+        builder: (BuildContext bc) {
+          return Column(
+            children: [
+               _commentModel.isEmpty?
+                Center(child: CircularProgressIndicator(),)
+              :
+              Form(
+                  key: _formKey,
+                  child: Row(
+                    children: [
+                      const Padding(padding: EdgeInsets.only(left: 8)),
+                      Expanded(
+                        child: TextFormField(
+                          decoration: InputDecoration(
+                            enabledBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: const BorderSide(
+                                color: Colors.grey,
+                              ),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderRadius: BorderRadius.circular(15.0),
+                              borderSide: const BorderSide(
+                                color: Colors.blue,
+                              ),
+                            ),
+                            contentPadding: const EdgeInsets.all(15.0),
+                            hintText: 'Comentar',
+                          ),
+                          maxLines: 1,
+                          controller: _contentComments,
+                        ),
+                      ),
+                      Padding(padding: EdgeInsets.only(left: 8)),
+                      IconButton(
+                          onPressed: () {},
+                          icon: const Icon(
+                            Icons.send,
+                            color: ColorIntranetConstants.primaryColorDark,
+                          ))
+                    ],
+                  )),
+            ],
+          );
+        });
+  } */
 }
