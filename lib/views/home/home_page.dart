@@ -655,7 +655,10 @@ class _HomeState extends State<HomePage> {
   _settingModalBottomSheet(context, List<Comments> comments) {
     final _formKey = GlobalKey<FormState>();
     final _contentComments = TextEditingController();
-    List<Comments> _publicationComment = [];
+    late List<Comments> _publicationComment = [];
+    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
+
     setState(() {
       _publicationComment = comments;
     });
@@ -709,15 +712,13 @@ class _HomeState extends State<HomePage> {
                               postComment(
                                   token.toString(),
                                   comments[0].id.toString(),
-                                  _contentComments.text);
-
-                              setState(() {
+                                _contentComments.text);
                                 _publicationComment.add(Comments(
                                     id: 1,
                                     userName: _userlModel![0].fullname,
                                     photo: _userlModel![0].photo,
                                     content: _contentComments.text));
-                              });
+                              
                               _contentComments.clear();
 
                               FocusManager.instance.primaryFocus?.unfocus();
@@ -754,66 +755,73 @@ class _HomeState extends State<HomePage> {
                     )
                   : */
               Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(left: 16, right: 16),
-                  itemCount: _publicationComment.length,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: _publicationComment[index].content ==
-                              "sin datos"
-                          ? []
-                          : [
-                              Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0, horizontal: 0.0),
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                          ApiIntranetConstans.baseUrl +
-                                              _publicationComment[index]
-                                                  .photo
-                                                  .toString()), /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */
-                                    ),
-                                  )),
-                              const Padding(padding: EdgeInsets.only(left: 16)),
-                              Container(
-                                decoration: const BoxDecoration(
-                                    color: ColorIntranetConstants
-                                        .backgroundColorNormal,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(16))),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        _publicationComment[index].userName,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          fontSize: 16.00,
-                                          fontWeight: FontWeight.bold,
-                                        ),
+                child: RefreshIndicator(
+                  onRefresh: _refresh,
+                  key: _refreshIndicatorKey,
+                  child: ListView.builder(
+                     keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                    physics: const AlwaysScrollableScrollPhysics(),
+                    padding: const EdgeInsets.only(left: 16, right: 16),
+                    itemCount: _publicationComment.length,
+                    itemBuilder: (context, index) {
+                      return Row(
+                        children: _publicationComment[index].content ==
+                                "sin datos"
+                            ? []
+                            : [
+                                Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        vertical: 16.0, horizontal: 0.0),
+                                    child: SizedBox(
+                                      width: 50,
+                                      height: 50,
+                                      child: CircleAvatar(
+                                        backgroundImage: NetworkImage(
+                                            ApiIntranetConstans.baseUrl +
+                                                _publicationComment[index]
+                                                    .photo
+                                                    .toString()), /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */
                                       ),
-                                      const Padding(
-                                          padding: EdgeInsets.only(top: 8)),
-                                      Text(_publicationComment[index].content,
+                                    )),
+                                const Padding(
+                                    padding: EdgeInsets.only(left: 16)),
+                                Container(
+                                  decoration: const BoxDecoration(
+                                      color: ColorIntranetConstants
+                                          .backgroundColorNormal,
+                                      borderRadius: BorderRadius.all(
+                                          Radius.circular(16))),
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(12.0),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          _publicationComment[index].userName,
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: const TextStyle(
-                                            fontSize: 12.00,
-                                          )),
-                                    ],
+                                            fontSize: 16.00,
+                                            fontWeight: FontWeight.bold,
+                                          ),
+                                        ),
+                                        const Padding(
+                                            padding: EdgeInsets.only(top: 8)),
+                                        Text(_publicationComment[index].content,
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(
+                                              fontSize: 12.00,
+                                            )),
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
-                            ],
-                    );
-                  },
+                              ],
+                      );
+                    },
+                  ),
                 ),
               ),
             ],
@@ -839,5 +847,9 @@ class _HomeState extends State<HomePage> {
     }
 
     return false;
+  }
+
+  Future<void> _refresh(){
+    return Future.delayed(Duration(seconds: 1));
   }
 }
