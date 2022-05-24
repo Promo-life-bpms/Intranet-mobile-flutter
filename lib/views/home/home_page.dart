@@ -222,7 +222,6 @@ class _HomeState extends State<HomePage> {
                               ],
                             ),
                           ),
-                    const Padding(padding: EdgeInsets.only(top: 8)),
                     _communiqueModel == null || _communiqueModel!.isEmpty
                         ? const Padding(padding: EdgeInsets.zero)
                         : Container(
@@ -240,7 +239,7 @@ class _HomeState extends State<HomePage> {
                                         imageUrl: ApiIntranetConstans.baseUrl +
                                             _communiqueModel![index].image,
                                         placeholder: (context, url) =>
-                                            const CircularProgressIndicator(),
+                                            const Center( child: CircularProgressIndicator()) ,
                                         errorWidget: (context, url, error) =>
                                             const Image(
                                                 image: AssetImage(
@@ -392,7 +391,7 @@ class _HomeState extends State<HomePage> {
                                                             .photoPublication,
                                                     placeholder: (context,
                                                             url) =>
-                                                        const CircularProgressIndicator(),
+                                                        const Center( child: CircularProgressIndicator()),
                                                     errorWidget: (context, url,
                                                             error) =>
                                                         const Image(
@@ -651,7 +650,10 @@ class _HomeState extends State<HomePage> {
   _settingModalBottomSheet(context,  List<Comments> comments) {
     final _formKey = GlobalKey<FormState>();
     final _contentComments = TextEditingController();
-
+    late List<Comments> _publicationComment= [];
+    setState(() {
+      _publicationComment = comments;
+    });
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(8.0))),
@@ -700,11 +702,13 @@ class _HomeState extends State<HomePage> {
                              if (_contentComments.text.isNotEmpty) {
                                 postComment(token.toString(),comments[0].id.toString(), _contentComments.text);
                             
-                                FocusManager.instance.primaryFocus?.unfocus();
                                 setState(() {
                                   comments.add(Comments(id: 1, userName: _userlModel![0].fullname, photo: _userlModel![0].photo, content: _contentComments.text));
+                                });
                                   _contentComments.clear();
-                                }); 
+                                
+                                FocusManager.instance.primaryFocus?.unfocus();
+
                               }else{
                                 _formKey.currentState!.validate();
                               }
@@ -717,7 +721,7 @@ class _HomeState extends State<HomePage> {
                     ],
                   )),
                   const Padding(padding: EdgeInsets.only(top: 16)),
-                  comments.isEmpty || comments[0].content =="sin datos"
+                  _publicationComment.isEmpty || _publicationComment[0].content =="sin datos"
                   ? 
                     Column(
                       children:  [
@@ -740,7 +744,7 @@ class _HomeState extends State<HomePage> {
                   :  Expanded(
                     child: ListView.builder(
                       padding: const EdgeInsets.only(left: 16, right: 16),
-                      itemCount: comments.length,
+                      itemCount: _publicationComment.length,
                       itemBuilder: (context, index) {
                         return Row(
                           children: [
@@ -773,7 +777,7 @@ class _HomeState extends State<HomePage> {
                                       CrossAxisAlignment.start,
                                   children: [
                                     Text(
-                                      comments[index].userName,
+                                      _publicationComment[index].userName,
                                       maxLines: 1,
                                       overflow: TextOverflow.ellipsis,
                                       style: const TextStyle(
@@ -783,7 +787,7 @@ class _HomeState extends State<HomePage> {
                                     ),
                                     const Padding(
                                         padding: EdgeInsets.only(top: 8)),
-                                    Text(comments[index].content,
+                                    Text(_publicationComment[index].content,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(

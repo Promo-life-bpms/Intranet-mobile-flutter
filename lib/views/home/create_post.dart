@@ -12,7 +12,7 @@ class CreatePostPage extends StatefulWidget {
 
 class _HomeState extends State<CreatePostPage> {
   late String token = "";
- 
+
   final _formKey = GlobalKey<FormState>();
   final _contentPublication = TextEditingController();
 
@@ -34,6 +34,7 @@ class _HomeState extends State<CreatePostPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: Colors.white,
         appBar: AppBar(
           title: const Text('Crear publicación'),
         ),
@@ -42,24 +43,104 @@ class _HomeState extends State<CreatePostPage> {
             child: Form(
               key: _formKey,
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  TextFormField(
-                    decoration: const InputDecoration(
-                      hintText: '¿Qué estas pensando?',
+                  Container(
+                    color: Colors.white,
+                    child: Expanded(
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return 'Este campo no puede estar vacío';
+                          }
+                          return null;
+                        },
+                        decoration: InputDecoration(
+                          enabledBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: const BorderSide(
+                              color: Colors.grey,
+                            ),
+                          ),
+                          focusedBorder: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(4.0),
+                            borderSide: const BorderSide(
+                              color: Colors.blue,
+                            ),
+                          ),
+                          contentPadding: const EdgeInsets.all(15.0),
+                          hintText: '¿Qué estas pensando?',
+                        ),
+                        maxLines: 4,
+                        controller: _contentPublication,
+                      ),
                     ),
-                    maxLines: 4,
-                    controller: _contentPublication,
                   ),
-                  ElevatedButton(
-                      onPressed: () => {
-                            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-                              content: Text(token.toString()),
-                            )),
-                            postPublication(
-                                token,
-                                _contentPublication.text.toString()),
-                          },
-                      child: const Text("Publicar")),
+
+                  /*  InkWell(
+                    onTap: () {},
+                    child: Container(
+                        color: Colors.white,
+                        child: SizedBox(
+                            width: double.infinity,
+                            height: 40,
+                            child: Row(
+                              children: const [
+                                Padding(
+                                  padding: EdgeInsets.only(left: 16),
+                                  child: Icon(
+                                    Icons.camera_enhance,
+                                    color: ColorIntranetConstants
+                                        .primaryColorNormal,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(left: 16),
+                                  child: Text("Foto"),
+                                ),
+
+                                Padding(
+                                  padding: EdgeInsets.only(left: 16),
+                                  child: Text("PROXIMAMENTE"),
+                                ),
+                              ],
+                            ))),
+                  ),
+                  Padding(
+                      padding:
+                          const EdgeInsets.symmetric(horizontal: 4),
+                      child: Container(
+                        height: 2,
+                        color: ColorIntranetConstants.backgroundColorDark,
+                      )), */
+                  Padding(
+                    padding: const EdgeInsets.only(top: 16),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 60,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: ColorIntranetConstants
+                                .primaryColorNormal, // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          onPressed: () => {
+                                if (_contentPublication.text.isNotEmpty)
+                                  {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(SnackBar(
+                                      content: Text(token.toString()),
+                                    )),
+                                    postPublication(token,
+                                        _contentPublication.text.toString()),
+                                  }
+                                else
+                                  {_formKey.currentState!.validate()}
+                              },
+                          child: const Text("PUBLICAR")),
+                    ),
+                  )
                 ],
               ),
             )));

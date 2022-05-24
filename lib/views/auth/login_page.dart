@@ -75,7 +75,7 @@ class LoginFormState extends State<LoginForm> {
                     color: ColorIntranetConstants.backgroundColorNormal,
                   ),
                   child: Align(
-                    alignment: const Alignment(0, -30),
+                    alignment: const Alignment(0, -20),
                     child: Padding(
                       padding: const EdgeInsets.all(16.0),
                       child: SizedBox(
@@ -85,12 +85,48 @@ class LoginFormState extends State<LoginForm> {
                             child: Column(
                           children: [
                             SizedBox(
-                              width: 160,
-                              height: 160,
-                              child:
-                                  Lottie.asset("lib/assets/hello_robot.json"),
+                              width: double.infinity,
+                              height: 100,
+                              child:Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: const [
+                                  SizedBox(
+                                    width: 90,
+                                    height: 50,
+                                    child: FittedBox(
+                                      fit:BoxFit.contain,
+                                      child: Image(image: AssetImage("lib/assets/promolife.png")),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 90,
+                                    height: 50,
+                                    child: FittedBox(
+                                      fit:BoxFit.contain,
+                                      child: Image(image: AssetImage("lib/assets/bhtrade.png")),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 90,
+                                    height: 50,
+                                    child: FittedBox(
+                                      fit:BoxFit.contain,
+                                      child: Image(image: AssetImage("lib/assets/trademarket.png")),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 90,
+                                    height: 50,
+                                    child: FittedBox(
+                                      fit:BoxFit.contain,
+                                      child: Image(image: AssetImage("lib/assets/promodreams.png")),
+                                    ),
+                                  )
+                                
+                                ],
+                              )
+                                  
                             ),
-                            const Padding(padding: EdgeInsets.only(top: 20)),
                             Card(
                               child: Padding(
                                 padding: const EdgeInsets.all(16.0),
