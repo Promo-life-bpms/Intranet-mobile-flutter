@@ -9,7 +9,6 @@ class ApiCommentService {
     try {
       var url = Uri.parse(
           ApiIntranetConstans.baseUrl + ApiIntranetConstans.getComment+data);
-          print(url);
       var response = await http.get(url);
       if (response.statusCode == 200) {
         List<CommentModel> _model = commentModelFromJson(response.body);

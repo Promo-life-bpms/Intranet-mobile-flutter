@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/services/auth.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
 
 void main() => runApp(const Login());

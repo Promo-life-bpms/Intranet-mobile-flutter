@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:intranet_movil/services/auth.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/views/request/request_main_page.dart';
 import 'package:lottie/lottie.dart';
 
 class UserCardAlertDialog {
