@@ -12,7 +12,6 @@ import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/home/create_post.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_publication.dart';
-import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:badges/badges.dart';
@@ -35,6 +34,8 @@ class _HomeState extends State<HomePage> {
   bool isLike = false;
   bool loadingComment = false;
   late String token = "";
+
+  List<PublicationModel> _comments = [];
 
   @override
   void initState() {
@@ -239,7 +240,9 @@ class _HomeState extends State<HomePage> {
                                         imageUrl: ApiIntranetConstans.baseUrl +
                                             _communiqueModel![index].image,
                                         placeholder: (context, url) =>
-                                            const Center( child: CircularProgressIndicator()) ,
+                                            const Center(
+                                                child:
+                                                    CircularProgressIndicator()),
                                         errorWidget: (context, url, error) =>
                                             const Image(
                                                 image: AssetImage(
@@ -391,7 +394,9 @@ class _HomeState extends State<HomePage> {
                                                             .photoPublication,
                                                     placeholder: (context,
                                                             url) =>
-                                                        const Center( child: CircularProgressIndicator()),
+                                                        const Center(
+                                                            child:
+                                                                CircularProgressIndicator()),
                                                     errorWidget: (context, url,
                                                             error) =>
                                                         const Image(
@@ -647,10 +652,10 @@ class _HomeState extends State<HomePage> {
     return false;
   }
 
-  _settingModalBottomSheet(context,  List<Comments> comments) {
+  _settingModalBottomSheet(context, List<Comments> comments) {
     final _formKey = GlobalKey<FormState>();
     final _contentComments = TextEditingController();
-    late List<Comments> _publicationComment= [];
+    List<Comments> _publicationComment = [];
     setState(() {
       _publicationComment = comments;
     });
@@ -666,7 +671,9 @@ class _HomeState extends State<HomePage> {
                   key: _formKey,
                   child: Row(
                     children: [
-                      const Padding(padding: EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
+                      const Padding(
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
                       Expanded(
                         child: TextFormField(
                           validator: (value) {
@@ -697,22 +704,26 @@ class _HomeState extends State<HomePage> {
                       ),
                       const Padding(padding: EdgeInsets.only(left: 8)),
                       IconButton(
-                          onPressed: () {  
+                          onPressed: () {
+                            if (_contentComments.text.isNotEmpty) {
+                              postComment(
+                                  token.toString(),
+                                  comments[0].id.toString(),
+                                  _contentComments.text);
 
-                             if (_contentComments.text.isNotEmpty) {
-                                postComment(token.toString(),comments[0].id.toString(), _contentComments.text);
-                            
-                                setState(() {
-                                  comments.add(Comments(id: 1, userName: _userlModel![0].fullname, photo: _userlModel![0].photo, content: _contentComments.text));
-                                });
-                                  _contentComments.clear();
-                                
-                                FocusManager.instance.primaryFocus?.unfocus();
+                              setState(() {
+                                _publicationComment.add(Comments(
+                                    id: 1,
+                                    userName: _userlModel![0].fullname,
+                                    photo: _userlModel![0].photo,
+                                    content: _contentComments.text));
+                              });
+                              _contentComments.clear();
 
-                              }else{
-                                _formKey.currentState!.validate();
-                              }
-                                  
+                              FocusManager.instance.primaryFocus?.unfocus();
+                            } else {
+                              _formKey.currentState!.validate();
+                            }
                           },
                           icon: const Icon(
                             Icons.send,
@@ -720,8 +731,8 @@ class _HomeState extends State<HomePage> {
                           ))
                     ],
                   )),
-                  const Padding(padding: EdgeInsets.only(top: 16)),
-                  _publicationComment.isEmpty || _publicationComment[0].content =="sin datos"
+              const Padding(padding: EdgeInsets.only(top: 16)),
+              /*  _publicationComment[0].content =="sin datos"
                   ? 
                     Column(
                       children:  [
@@ -741,75 +752,77 @@ class _HomeState extends State<HomePage> {
                           ),
                       ],
                     )
-                  :  Expanded(
-                    child: ListView.builder(
-                      padding: const EdgeInsets.only(left: 16, right: 16),
-                      itemCount: _publicationComment.length,
-                      itemBuilder: (context, index) {
-                        return Row(
-                          children: [
-                            Padding(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 16.0, horizontal: 0.0),
-                                child: SizedBox(
-                                  width: 50,
-                                  height: 50,
-                                  child: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        ApiIntranetConstans.baseUrl +
-                                            comments[index]
-                                                .photo
-                                                .toString()), /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */
-                                  ),
-                                )),
-                            const Padding(
-                                padding: EdgeInsets.only(left: 16)),
-                            Container(
-                              decoration: const BoxDecoration(
-                                  color: ColorIntranetConstants
-                                      .backgroundColorNormal,
-                                  borderRadius: BorderRadius.all(
-                                      Radius.circular(16))),
-                              child: Padding(
-                                padding: const EdgeInsets.all(12.0),
-                                child: Column(
-                                  crossAxisAlignment:
-                                      CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      _publicationComment[index].userName,
-                                      maxLines: 1,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: const TextStyle(
-                                        fontSize: 16.00,
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                  : */
+              Expanded(
+                child: ListView.builder(
+                  padding: const EdgeInsets.only(left: 16, right: 16),
+                  itemCount: _publicationComment.length,
+                  itemBuilder: (context, index) {
+                    return Row(
+                      children: _publicationComment[index].content ==
+                              "sin datos"
+                          ? []
+                          : [
+                              Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0, horizontal: 0.0),
+                                  child: SizedBox(
+                                    width: 50,
+                                    height: 50,
+                                    child: CircleAvatar(
+                                      backgroundImage: NetworkImage(
+                                          ApiIntranetConstans.baseUrl +
+                                              _publicationComment[index]
+                                                  .photo
+                                                  .toString()), /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */
                                     ),
-                                    const Padding(
-                                        padding: EdgeInsets.only(top: 8)),
-                                    Text(_publicationComment[index].content,
+                                  )),
+                              const Padding(padding: EdgeInsets.only(left: 16)),
+                              Container(
+                                decoration: const BoxDecoration(
+                                    color: ColorIntranetConstants
+                                        .backgroundColorNormal,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(16))),
+                                child: Padding(
+                                  padding: const EdgeInsets.all(12.0),
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        _publicationComment[index].userName,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
-                                          fontSize: 12.00,
-                                        )),
-                                  ],
+                                          fontSize: 16.00,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                      const Padding(
+                                          padding: EdgeInsets.only(top: 8)),
+                                      Text(_publicationComment[index].content,
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(
+                                            fontSize: 12.00,
+                                          )),
+                                    ],
+                                  ),
                                 ),
                               ),
-                            ),
-                          ],
-                        );
-                      },
-                    ),
-                  ),
+                            ],
+                    );
+                  },
+                ),
+              ),
             ],
           );
         });
   }
 
   Future postComment(String token, String publicationID, String content) async {
-    String url =
-        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postComment;
+    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postComment;
     final response = await http.post(Uri.parse(url), body: {
       'token': token,
       'publicationID': publicationID,
