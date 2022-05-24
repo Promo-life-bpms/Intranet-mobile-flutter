@@ -38,7 +38,7 @@ class _HomeState extends State<UserProfilePage> {
         title: const Text('Mi cuenta'),
       ),
       body: _userModel == null || _userModel!.isEmpty
-          ? ListviewProfile()
+          ? const ListviewProfile()
           : ListView.builder(
               padding: const EdgeInsets.all(0),
               itemCount: _userModel!.length,

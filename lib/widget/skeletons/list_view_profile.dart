@@ -3,6 +3,8 @@ import 'package:intranet_movil/widget/skeletons/stylings.dart';
 import 'package:intranet_movil/widget/skeletons/widgets.dart';
 
 class ListviewProfile extends StatefulWidget {
+  const ListviewProfile({Key? key}) : super(key: key);
+
   @override
   _ListviewCardsExamplePageState createState() =>
       _ListviewCardsExamplePageState();
@@ -39,70 +41,68 @@ class _ListviewCardsExamplePageState extends State<ListviewProfile> {
         itemCount: 1,
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Container(
-            child: SkeletonItem(
-                child: Column(
-              children: [
-                Stack(
-                  overflow: Overflow.visible,
-                  children: <Widget>[
-                    Container(
-                      height: MediaQuery.of(context).size.height * .30,
-                      child: const SkeletonAvatar(
+          child: SkeletonItem(
+              child: Column(
+            children: [
+              Stack(
+                clipBehavior: Clip.none,
+                children: <Widget>[
+                  SizedBox(
+                    height: MediaQuery.of(context).size.height * .30,
+                    child: const SkeletonAvatar(
+                      style: SkeletonAvatarStyle(
+                        height: 190,
+                        width: double.infinity,
+                      ),
+                    ),
+                  ),
+                  Positioned(
+                    top: MediaQuery.of(context).size.height / 5,
+                    child: const SizedBox(
+                      width: 150,
+                      height: 150,
+                      child: SkeletonAvatar(
                         style: SkeletonAvatarStyle(
-                          height: 190,
-                          width: double.infinity,
+                          shape: BoxShape.circle,
                         ),
                       ),
                     ),
-                    Positioned(
-                      top: MediaQuery.of(context).size.height / 5,
-                      child: const SizedBox(
-                        width: 150,
-                        height: 150,
-                        child: SkeletonAvatar(
-                          style: SkeletonAvatarStyle(
-                            shape: BoxShape.circle,
-                          ),
-                        ),
-                      ),
-                      left: 100,
-                    ),
-                  ],
-                ),
-                const SizedBox(
-                  height: 95,
-                ),
-                SkeletonParagraph(
-                  style: SkeletonParagraphStyle(
-                      lines: 2,
-                      spacing: 6,
-                      lineStyle: SkeletonLineStyle(
-                          randomLength: true,
-                          height: 18,
-                          borderRadius: BorderRadius.circular(8),
-                          minLength: MediaQuery.of(context).size.width / 6,
-                          maxLength: MediaQuery.of(context).size.width / 2,
-                          alignment: Alignment.bottomCenter)),
-                ),
-                const SizedBox(
-                  height: 35,
-                ),
-                SkeletonParagraph(
-                  style: SkeletonParagraphStyle(
-                      lines: 3,
-                      spacing: 10,
-                      lineStyle: SkeletonLineStyle(
-                          randomLength: true,
-                          height: 12,
-                          borderRadius: BorderRadius.circular(8),
-                          minLength: MediaQuery.of(context).size.width / 6,
-                          maxLength: MediaQuery.of(context).size.width / 2,
-                          alignment: Alignment.bottomLeft)),
-                ),
-              ],
-            )),
-          ),
+                    left: 100,
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 95,
+              ),
+              SkeletonParagraph(
+                style: SkeletonParagraphStyle(
+                    lines: 2,
+                    spacing: 6,
+                    lineStyle: SkeletonLineStyle(
+                        randomLength: true,
+                        height: 18,
+                        borderRadius: BorderRadius.circular(8),
+                        minLength: MediaQuery.of(context).size.width / 6,
+                        maxLength: MediaQuery.of(context).size.width / 2,
+                        alignment: Alignment.bottomCenter)),
+              ),
+              const SizedBox(
+                height: 35,
+              ),
+              SkeletonParagraph(
+                style: SkeletonParagraphStyle(
+                    lines: 3,
+                    spacing: 10,
+                    lineStyle: SkeletonLineStyle(
+                        randomLength: true,
+                        height: 12,
+                        borderRadius: BorderRadius.circular(8),
+                        minLength: MediaQuery.of(context).size.width / 6,
+                        maxLength: MediaQuery.of(context).size.width / 2,
+                        alignment: Alignment.bottomLeft)),
+              ),
+            ],
+          )),
         ),
       );
 
