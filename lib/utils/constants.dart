@@ -19,6 +19,8 @@ class ApiIntranetConstans {
   static String postLike = 'api/postLike';
   static String postUnlike = 'api/postUnlike';
   static String getComment = 'api/showComments/';
+  static String postComment = 'api/postComment';
+
 
 }
 
