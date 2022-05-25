@@ -213,6 +213,7 @@ class _HomeState extends State<HomePage> {
                                                               .center)),
                                                 ],
                                               )),
+                                              
                                         ],
                                       );
                                     },
@@ -221,6 +222,7 @@ class _HomeState extends State<HomePage> {
                               ],
                             ),
                           ),
+                         const Padding(padding: EdgeInsets.only(top: 8)),
                     _communiqueModel == null || _communiqueModel!.isEmpty
                         ? const Padding(padding: EdgeInsets.zero)
                         : Container(

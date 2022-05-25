@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -129,11 +130,18 @@ class _HomeState extends State<CreatePostPage> {
                                 if (_contentPublication.text.isNotEmpty)
                                   {
                                     ScaffoldMessenger.of(context)
-                                        .showSnackBar(SnackBar(
-                                      content: Text(token.toString()),
+                                        .showSnackBar(const SnackBar(
+                                      content: Text(
+                                          "Publicación creada satisfactoriamente"),
                                     )),
                                     postPublication(token,
                                         _contentPublication.text.toString()),
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomePage()),
+                                        ModalRoute.withName("/HomePage"))
                                   }
                                 else
                                   {_formKey.currentState!.validate()}
