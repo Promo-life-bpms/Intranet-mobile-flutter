@@ -72,7 +72,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.home),
-              title: const Text('Inicio'),
+              title: const Text(StringIntranetConstants.homePage),
               selected: (_selectedDrawerItem == 0),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
@@ -81,7 +81,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.info),
-              title: const Text('Acerca de'),
+              title: const Text(StringIntranetConstants.aboutPage),
               selected: (_selectedDrawerItem == 1),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
@@ -90,7 +90,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.chat_rounded),
-              title: const Text('Organigrama'),
+              title: const Text(StringIntranetConstants.organizationPage),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               selected: (_selectedDrawerItem == 2),
               onTap: () {
@@ -99,7 +99,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.edit),
-              title: const Text('Solicitudes'),
+              title: const Text(StringIntranetConstants.requestPage),
               selected: (_selectedDrawerItem == 3),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
@@ -108,7 +108,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.contact_mail),
-              title: const Text('Directorio'),
+              title: const Text(StringIntranetConstants.directoryPage),
               selected: (_selectedDrawerItem == 4),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
@@ -117,7 +117,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.celebration),
-              title: const Text('Cumpleaños y Aniversarios'),
+              title: const Text(StringIntranetConstants.aniversaryBirthdayPage),
               selected: (_selectedDrawerItem == 5),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
@@ -126,7 +126,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.emoji_events),
-              title: const Text('Empleado del Mes'),
+              title: const Text(StringIntranetConstants.monthPage),
               selected: (_selectedDrawerItem == 6),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
@@ -135,7 +135,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.notifications),
-              title: const Text('Comunicados'),
+              title: const Text(StringIntranetConstants.communiquePage),
               selected: (_selectedDrawerItem == 7),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
@@ -144,7 +144,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.library_books),
-              title: const Text('Manuales'),
+              title: const Text(StringIntranetConstants.manualPage),
               selected: (_selectedDrawerItem == 8),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
@@ -153,7 +153,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.public),
-              title: const Text('Accesos'),
+              title: const Text(StringIntranetConstants.accessPage),
               selected: (_selectedDrawerItem == 9),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {
@@ -162,7 +162,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
             ListTile(
               leading: const Icon(Icons.exit_to_app),
-              title: const Text('Salir'),
+              title: const Text(StringIntranetConstants.logoutPage),
               selected: (_selectedDrawerItem == 10),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               onTap: () {

@@ -11,13 +11,12 @@ class BrithdayPage extends StatefulWidget {
 
   @override
   _HomeState createState() => _HomeState();
-  static const String _title = 'Cumpleaños';
 
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text(_title),
+        title: const Text(StringIntranetConstants.aniversaryBirthdayBirthdayPage),
       ),
     );
   }

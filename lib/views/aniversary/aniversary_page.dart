@@ -12,13 +12,12 @@ class AniversaryPage extends StatefulWidget {
 
   @override
   _HomeState createState() => _HomeState();
-  static const String _title = 'Aniversarios';
 
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text(_title),
+        title: const Text(StringIntranetConstants.aniversaryBirthdayPage),
       ),
     );
   }
@@ -43,7 +42,7 @@ class _HomeState extends State<AniversaryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text('Aniversarios'),
+          title: const Text(StringIntranetConstants.aniversaryBirthdayAniversaryPage),
         ),
         body: _aniversaryModel == null || _aniversaryModel!.isEmpty
             ? const ListviewAniversary()

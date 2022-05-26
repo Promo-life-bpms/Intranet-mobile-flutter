@@ -32,7 +32,7 @@ class _HomeState extends State<EmployeeMonthPage> {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text("Empleado del Mes"),
+        title: const Text(StringIntranetConstants.monthPage),
       ),
       body: _monthEmployeeModel == null || _monthEmployeeModel!.isEmpty
           ? const ListviewEmploye()

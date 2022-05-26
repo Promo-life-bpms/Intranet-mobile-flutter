@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/access.dart';
+import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/utils/internet.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
@@ -17,14 +18,13 @@ class _State extends State<AccessPage> {
   final List<String> accessImage = <String>['lib/assets/course.png', 'lib/assets/odoo.png','lib/assets/evaluacion.png', 'lib/assets/nom.png', 'lib/assets/cotizador.png', 'lib/assets/tickets.png','lib/assets/powerbi.png'];
   final List<String> accessLink = <String>['https://dev-cursos.promolife.lat/loginEmail?email=admin@admin.com&password=password', 'https://promolife.vde-suite.com:8030/web/login', 'https://evaluacion.promolife.lat/login', 'https://plataforma.nom-035.net/', 'https://promolife.lat/login/?redirect_to=https%3A%2F%2Fpromolife.lat%2F','https://tdesign.promolife.lat/','https://app.powerbi.com/singleSignOn?ru=https:%2f%2fapp.powerbi.com%2f%3fnoSignUpCheck%3d1'];
 
-  static const String _title = 'Accesos';
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text(_title),
+        title: const Text(StringIntranetConstants.accessPage),
       ),
       body: CardImageLinkWidget(
         accessData : List<AccessData>.generate(accessName.length, (index) => AccessData(accessName[index], accessImage[index],accessLink[index])),            

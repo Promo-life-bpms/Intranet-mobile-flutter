@@ -35,7 +35,6 @@ class _HomeState extends State<RequestMainPage> {
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
-  static const String _title = 'Solicitudes';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -60,19 +59,19 @@ class _HomeState extends State<RequestMainPage> {
                 indicatorColor: Colors.white,
                 tabs: const [
                   Tab(
-                    child: Text('Pendientes'),
+                    child: Text(StringIntranetConstants.requestPendingPage),
                   ),
                   Tab(
-                    child: Text('En proceso'),
+                    child: Text(StringIntranetConstants.requestProcessPage),
                   ),
                   Tab(
-                    child: Text('Aprobadas'),
+                    child: Text(StringIntranetConstants.requestProcessPage),
                   ),
                   Tab(
-                    child: Text('Rechazadas'),
+                    child: Text(StringIntranetConstants.requestRejectedPage),
                   ),
                 ]),
-            title: const Text(_title),
+            title: const Text(StringIntranetConstants.requestPage),
           ),
           body: TabBarView(
             children: [

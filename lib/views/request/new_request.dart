@@ -63,7 +63,7 @@ class _MyHomePageState extends State<RequestPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text("Crear solicitud"),
+          title: const Text(StringIntranetConstants.requestCreatePage),
         ),
         body: _userlModel == null || _userlModel!.isEmpty
             ? const Center(

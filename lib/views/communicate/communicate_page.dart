@@ -32,7 +32,7 @@ class _HomeState extends State<CommunicatePage> {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text('Comunicados'),
+        title: const Text(StringIntranetConstants.communiquePage),
       ),
       body: _communiqueModel == null || _communiqueModel!.isEmpty
           ? const ListviewCardsExamplePage()

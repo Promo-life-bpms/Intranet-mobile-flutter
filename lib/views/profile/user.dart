@@ -35,7 +35,7 @@ class _HomeState extends State<UserProfilePage> {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text('Mi cuenta'),
+        title: const Text(StringIntranetConstants.profilePage),
       ),
       body: _userModel == null || _userModel!.isEmpty
           ? const ListviewProfile()

@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/utils/constants.dart';
 import 'package:lottie/lottie.dart';
 
 class BHPage extends StatelessWidget {
   const BHPage({Key? key}) : super(key: key);
 
-  static const String _title = 'Acerca de BH Trademarket';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(_title),
+        title: const Text(StringIntranetConstants.aboutBHPage),
       ),
       body: const BHWidget(),
     );

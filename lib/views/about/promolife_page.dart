@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/utils/constants.dart';
 import 'package:lottie/lottie.dart';
 
 void main() => runApp(const PromolifePage());
@@ -6,13 +7,11 @@ void main() => runApp(const PromolifePage());
 class PromolifePage extends StatelessWidget {
   const PromolifePage({Key? key}) : super(key: key);
 
-  static const String _title = 'Acerca de Promolife';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text(_title),
+        title: const Text(StringIntranetConstants.aboutPLPage),
       ),
       body: const PromolifeWidget(),
     );

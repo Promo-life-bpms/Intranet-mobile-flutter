@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/aniversary/aniversary_page.dart';
 import 'package:intranet_movil/views/aniversary/birthday_page.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
@@ -6,14 +7,12 @@ import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 class AniversaryHomePage extends StatelessWidget {
   const AniversaryHomePage({Key? key}) : super(key: key);
 
-  static const String _title = 'Aniversarios y Cumpleaños';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text(_title),
+        title: const Text(StringIntranetConstants.aniversaryBirthdayPage),
       ),
       body: const AboutWidget(),
     );

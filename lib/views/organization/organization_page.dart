@@ -43,8 +43,6 @@ class _HomeState extends State<OrganizationPage> {
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
-
-  static const String _title = 'Organigrama';
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -68,23 +66,23 @@ class _HomeState extends State<OrganizationPage> {
               unselectedLabelColor: Colors.white.withOpacity(0.3),
               indicatorColor: Colors.white,
               tabs: const [
-                  Tab(child: Text('Direccion'),),
-                  Tab(child: Text('Recursos Humanos'),),
-                  Tab(child: Text('Administración'),),
-                  Tab(child: Text('Ventas BH'),),
-                  Tab(child: Text('Ventas PL'),),
-                  Tab(child: Text('Importaciones'),),
-                  Tab(child: Text('Diseno'),),
-                  Tab(child: Text('Sistemas'),),
-                  Tab(child: Text('Operaciones'),),
-                  Tab(child: Text('Tecnología e Innovación'),),
-                  Tab(child: Text('Cancún'),),
-                  Tab(child: Text('Marketing'),),
-                  Tab(child: Text('Comunicación'),),
-                  Tab(child: Text('Logística'),),
-                  Tab(child: Text('Almacen'),),
+                  Tab(child: Text(StringIntranetConstants.organizationDirectoryPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationRHPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationManagementPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationSalesBHPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationSalesPLPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationImportPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationDesingPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationSystemPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationOperationPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationTechnologyPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationCancunPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationMarketingPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationCommunicationPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationLogisticPage),),
+                  Tab(child: Text(StringIntranetConstants.organizationStorePage),),
                 ]),
-            title: const Text(_title),
+            title: const Text(StringIntranetConstants.organizationPage),
           ),
           body: TabBarView(
             children: [

@@ -10,11 +10,10 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const appTitle = 'Iniciar sesion';
 
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: appTitle,
+      title: StringIntranetConstants.loginPage,
       home: Scaffold(
         body: LoginForm(),
       ),

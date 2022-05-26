@@ -5,6 +5,7 @@ import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/utils/user_card_alert_dialog.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_custom.dart';
 
@@ -38,7 +39,7 @@ class _HomeState extends State<DirectoryPage> {
     return Scaffold(
         drawer: const NavigationDrawerWidget(),
         appBar: AppBar(
-          title: const Text('Directorio'),
+          title: const Text(StringIntranetConstants.directoryPage),
         ),
         body: _directoryModel == null || _directoryModel!.isEmpty
             ? const ListViewExample2Page()

@@ -25,7 +25,6 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomeState extends State<HomePage> {
-  static const String _title = 'Inicio';
   late List<CommuniqueModel>? _communiqueModel = [];
   late List<BrithdayModel>? _brithdayModel = [];
   late List<UserModel>? _userlModel = [];
@@ -66,7 +65,7 @@ class _HomeState extends State<HomePage> {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text(_title),
+        title: const Text(StringIntranetConstants.homePage),
       ),
       body: _userlModel == null || _userlModel!.isEmpty
           ? const ListviewPublication()
@@ -656,8 +655,6 @@ class _HomeState extends State<HomePage> {
     final _formKey = GlobalKey<FormState>();
     final _contentComments = TextEditingController();
     late List<Comments> _publicationComment = [];
-    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
 
     setState(() {
       _publicationComment = comments;

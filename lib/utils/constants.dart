@@ -20,9 +20,52 @@ class ApiIntranetConstans {
   static String postUnlike = 'api/postUnlike';
   static String getComment = 'api/showComments/';
   static String postComment = 'api/postComment';
-
-
 }
+
+class StringIntranetConstants{
+  static const homePage = "Inicio";
+  static const aboutPage = "Acerca de";
+  static const organizationPage = "Organigrama";
+  static const requestPage = "Solicitudes";
+  static const directoryPage = "Directorio";
+  static const aniversaryBirthdayPage = "Cumpleaños y Aniversarios";
+  static const monthPage = "Empleado del Mes";
+  static const communiquePage = "Comunicados";
+  static const manualPage = "Manuales";
+  static const accessPage = "Accesos";
+  static const logoutPage = "Cerrar sesión";
+  static const profilePage = "Mi cuenta";
+  static const loginPage = "Iniciar sesión";
+
+  static const requestCreatePage = "Crear solicitud";
+  static const requestApprovedPage = "Aprobadas";
+  static const requestPendingPage = "Pendientes";
+  static const requestProcessPage = "En proceso";
+  static const requestRejectedPage = "Rechazadas";
+
+  static const organizationCancunPage = "Cancún";
+  static const organizationCommunicationPage = "Comunicación";
+  static const organizationDesingPage = "Diseño";
+  static const organizationDirectoryPage = "Dirección";
+  static const organizationImportPage = "Importaciones";
+  static const organizationLogisticPage ="Logística";
+  static const organizationManagementPage= "Administración";
+  static const organizationMarketingPage = "Marketing";
+  static const organizationOperationPage = "Operaciones";
+  static const organizationRHPage="Recursos Humanos";
+  static const organizationSalesBHPage = "Ventas BH";
+  static const organizationSalesPLPage = "Ventas PL";
+  static const organizationStorePage = "Almacén";
+  static const organizationSystemPage = "Sistemas";
+  static const organizationTechnologyPage ="Tecnología e Innovación";
+
+  static const aboutBHPage = "Acerca de BH ";
+  static const aboutPLPage = "Acerca de Promolife";
+
+  static const aniversaryBirthdayAniversaryPage ="Aniversarios";
+  static const aniversaryBirthdayBirthdayPage = "Cumpleaños";
+} 
+
 
 class ColorIntranetConstants{
   static const primaryColorDark = Color(0XFF1A346B);

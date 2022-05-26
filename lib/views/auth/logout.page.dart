@@ -1,6 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/utils/alert_dialog.dart';
+import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:lottie/lottie.dart';
 
@@ -17,7 +18,7 @@ class _LogoutState extends State<LogoutPage> {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text('Cerrar sesión'),
+        title: const Text(StringIntranetConstants.logoutPage),
       ),
       body: const AccessWidget(),
     );

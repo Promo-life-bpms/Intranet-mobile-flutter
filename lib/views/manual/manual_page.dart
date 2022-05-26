@@ -32,7 +32,7 @@ class _HomeState extends State<ManualPage> {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text('Manuales'),
+        title: const Text(StringIntranetConstants.manualPage),
       ),
       body: _manualModel == null || _manualModel!.isEmpty
           ? const ListviewCardsExamplePage()

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/about/bh_page.dart';
 import 'package:intranet_movil/views/about/promolife_page.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
@@ -8,14 +9,12 @@ void main() => runApp(const AboutMainPage());
 class AboutMainPage extends StatelessWidget {
   const AboutMainPage({Key? key}) : super(key: key);
 
-  static const String _title = 'Acerca de';
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text(_title),
+        title: const Text(StringIntranetConstants.aboutPage),
       ),
       body: const AboutWidget(),
     );
