@@ -10,6 +10,7 @@ import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/home/create_post.dart';
+import 'package:intranet_movil/widget/containers/publications.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_publication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -212,7 +213,6 @@ class _HomeState extends State<HomePage> {
                                                               .center)),
                                                 ],
                                               )),
-                                              
                                         ],
                                       );
                                     },
@@ -221,7 +221,7 @@ class _HomeState extends State<HomePage> {
                               ],
                             ),
                           ),
-                         const Padding(padding: EdgeInsets.only(top: 8)),
+                    const Padding(padding: EdgeInsets.only(top: 8)),
                     _communiqueModel == null || _communiqueModel!.isEmpty
                         ? const Padding(padding: EdgeInsets.zero)
                         : Container(
@@ -288,320 +288,62 @@ class _HomeState extends State<HomePage> {
                                 padding: const EdgeInsets.all(0),
                                 itemCount: _publicationModel!.length,
                                 itemBuilder: (context, index) {
-                                  return Container(
-                                    color: Colors.white,
-                                    child: Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.only(
-                                              left: 16,
-                                              top: 16,
-                                              bottom: 0,
-                                              right: 16),
-                                          child: Column(
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Row(
-                                                children: [
-                                                  SizedBox(
-                                                    width: 40,
-                                                    height: 40,
-                                                    child: CircleAvatar(
-                                                      backgroundImage: NetworkImage(
-                                                          ApiIntranetConstans
-                                                                  .baseUrl +
-                                                              _publicationModel![
-                                                                      index]
-                                                                  .photo),
-                                                    ),
-                                                  ),
-                                                  const Padding(
-                                                      padding: EdgeInsets.only(
-                                                          left: 16)),
-                                                  Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
-                                                    children: [
-                                                      Text(
-                                                        _publicationModel![
-                                                                index]
-                                                            .userName,
-                                                        style: const TextStyle(
-                                                          fontSize: 12.00,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                        textAlign:
-                                                            TextAlign.left,
-                                                      ),
-                                                      Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .only(
-                                                                left: 0,
-                                                                top: 4),
-                                                        child: Text(
-                                                            _publicationModel![
-                                                                    index]
-                                                                .created,
-                                                            style:
-                                                                const TextStyle(
-                                                                    fontSize:
-                                                                        10.00),
-                                                            textAlign:
-                                                                TextAlign.left),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ],
-                                              ),
-                                              Padding(
-                                                padding: const EdgeInsets.only(
-                                                    left: 0,
-                                                    top: 10,
-                                                    bottom: 10),
-                                                child: Text(
-                                                  _publicationModel![index]
-                                                      .contentPublication,
-                                                  style: const TextStyle(
-                                                    fontSize: 12.00,
-                                                  ),
-                                                  textAlign: TextAlign.justify,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                        _publicationModel![index]
-                                                        .photoPublication ==
-                                                    "sin foto" ||
+                                  return PublicationContainer(
+                                      publicationData: [
+                                        PublicationModel(
+                                            id: _publicationModel![index].id,
+                                            photo:
+                                                _publicationModel![index].photo,
+                                            userName: _publicationModel![index]
+                                                .userName,
+                                            created: _publicationModel![index]
+                                                .created,
+                                            contentPublication:
                                                 _publicationModel![index]
-                                                        .photoPublication ==
-                                                    "no photo"
-                                            ? const Padding(
-                                                padding: EdgeInsets.zero)
-                                            : SizedBox(
-                                                width: double.infinity,
-                                                child: InkWell(
-                                                  child: CachedNetworkImage(
-                                                    imageUrl: ApiIntranetConstans
-                                                            .baseUrl +
-                                                        _publicationModel![
-                                                                index]
-                                                            .photoPublication,
-                                                    placeholder: (context,
-                                                            url) =>
-                                                        const Center(
-                                                            child:
-                                                                CircularProgressIndicator()),
-                                                    errorWidget: (context, url,
-                                                            error) =>
-                                                        const Image(
-                                                            image: AssetImage(
-                                                                "lib/assets/lost_connection.png")),
-                                                  ),
-                                                  onDoubleTap: () {
-                                                    Navigator.of(context).push(MaterialPageRoute(
-                                                        builder: (context) => CachedNetworkImage(
-                                                            imageUrl: ApiIntranetConstans
-                                                                    .baseUrl +
-                                                                _publicationModel![
-                                                                        index]
-                                                                    .photoPublication,
-                                                            errorWidget: (context,
-                                                                    url,
-                                                                    error) =>
-                                                                const Image(
-                                                                    image: AssetImage(
-                                                                        "lib/assets/lost_connection.png")))));
-                                                  },
-                                                ),
-                                              ),
-                                        Padding(
-                                            padding: const EdgeInsets.only(
-                                                top: 12, left: 16, right: 16),
-                                            child: Container(
-                                              height: 2,
-                                              color: ColorIntranetConstants
-                                                  .backgroundColorDark,
-                                            )),
-                                        Padding(
-                                          padding: const EdgeInsets.symmetric(
-                                              horizontal: 16, vertical: 8),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              InkWell(
-                                                  onTap: () {
-                                                    setState(() {
-                                                      if (_publicationModelToLike![
-                                                                  index]
-                                                              .isLike ==
-                                                          false) {
-                                                        _publicationModelToLike![
-                                                                    index]
-                                                                .likes =
-                                                            _publicationModelToLike![
-                                                                        index]
-                                                                    .likes +
-                                                                1;
-                                                        _publicationModelToLike![
-                                                                index]
-                                                            .isLike = true;
-                                                        postLike(
-                                                            token,
-                                                            _publicationModel![
-                                                                    index]
-                                                                .id
-                                                                .toString());
-                                                      } else {
-                                                        _publicationModelToLike![
-                                                                    index]
-                                                                .likes =
-                                                            _publicationModelToLike![
-                                                                        index]
-                                                                    .likes -
-                                                                1;
-                                                        _publicationModelToLike![
-                                                                index]
-                                                            .isLike = false;
-                                                        postUnlike(
-                                                            token,
-                                                            _publicationModel![
-                                                                    index]
-                                                                .id
-                                                                .toString());
-                                                      }
-                                                    });
-                                                  },
-                                                  child: _publicationModelToLike![
-                                                                      index]
-                                                                  .likes ==
-                                                              _publicationModel![
-                                                                      index]
-                                                                  .likes &&
-                                                          _publicationModelToLike![
-                                                                      index]
-                                                                  .isLike ==
-                                                              false
-                                                      ? Row(
-                                                          children: [
-                                                            Badge(
-                                                                toAnimate: true,
-                                                                position:
-                                                                    BadgePosition
-                                                                        .bottomEnd(),
-                                                                badgeContent:
-                                                                    Text(
-                                                                  _publicationModel![
-                                                                          index]
-                                                                      .likes
-                                                                      .toString(),
-                                                                  style: const TextStyle(
-                                                                      color: Colors
-                                                                          .white),
-                                                                ),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons
-                                                                      .favorite,
-                                                                  color: ColorIntranetConstants
-                                                                      .redLight,
-                                                                  size: 24,
-                                                                )),
-                                                            const Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      left: 12),
-                                                              child: Text(
-                                                                  "Me gusta"),
-                                                            )
-                                                          ],
-                                                        )
-                                                      : Row(
-                                                          children: [
-                                                            Badge(
-                                                                toAnimate: true,
-                                                                position:
-                                                                    BadgePosition
-                                                                        .bottomEnd(),
-                                                                badgeContent:
-                                                                    Text(
-                                                                  _publicationModel![
-                                                                          index]
-                                                                      .likes
-                                                                      .toString(),
-                                                                  style: const TextStyle(
-                                                                      color: Colors
-                                                                          .white),
-                                                                ),
-                                                                child:
-                                                                    const Icon(
-                                                                  Icons
-                                                                      .favorite,
-                                                                  color: Colors
-                                                                      .red,
-                                                                  size: 24,
-                                                                )),
-                                                            const Padding(
-                                                              padding: EdgeInsets
-                                                                  .only(
-                                                                      left: 12),
-                                                              child: Text(
-                                                                "Me gusta",
-                                                                style: TextStyle(
-                                                                    color: Colors
-                                                                        .red),
-                                                              ),
-                                                            )
-                                                          ],
-                                                        )),
-                                              Padding(
-                                                padding: EdgeInsets.zero,
-                                                child: InkWell(
-                                                    onTap: () {
-                                                      _settingModalBottomSheet(
-                                                          context,
-                                                          _publicationModel![
-                                                                  index]
-                                                              .comments);
-                                                    },
-                                                    child: Row(
-                                                      children: const [
-                                                        Icon(
-                                                          Icons.mode_comment,
-                                                          color: ColorIntranetConstants
-                                                              .primaryColorNormal,
-                                                        ),
-                                                        Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                                  left: 8),
-                                                          child:
-                                                              Text("Comentar"),
-                                                        )
-                                                      ],
-                                                    )),
-                                              ),
-                                              const Padding(
-                                                  padding: EdgeInsets.only(
-                                                      right: 64)),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          height: 8,
-                                          color: ColorIntranetConstants
-                                              .backgroundColorDark,
-                                        )
+                                                    .contentPublication,
+                                            photoPublication:
+                                                _publicationModel![index]
+                                                    .photoPublication,
+                                            likes:
+                                                _publicationModel![index].likes,
+                                            isLike: isLike,
+                                            comments: _publicationModel![index]
+                                                .comments)
                                       ],
-                                    ),
-                                  );
+                                      publicationToLikeData: [
+                                        PublicationModel(
+                                            id: _publicationModel![index].id,
+                                            photo:
+                                                _publicationModel![index].photo,
+                                            userName: _publicationModel![index]
+                                                .userName,
+                                            created: _publicationModel![index]
+                                                .created,
+                                            contentPublication:
+                                                _publicationModel![index]
+                                                    .contentPublication,
+                                            photoPublication:
+                                                _publicationModel![index]
+                                                    .photoPublication,
+                                            likes:
+                                                _publicationModel![index].likes,
+                                            isLike: isLike,
+                                            comments: _publicationModel![index]
+                                                .comments)
+                                      ],
+                                      token: token,
+                                      userlModelData: [
+                                        UserModel(
+                                            id: _userlModel![0].id,
+                                            fullname: _userlModel![0].fullname,
+                                            email: _userlModel![0].email,
+                                            photo: _userlModel![0].photo,
+                                            department:
+                                                _userlModel![0].department,
+                                            position: _userlModel![0].position,
+                                            daysAvailables:
+                                                _userlModel![0].daysAvailables)
+                                      ]);
                                 },
                               ),
                             ],
@@ -612,214 +354,4 @@ class _HomeState extends State<HomePage> {
             ),
     );
   }
-
-  Future postLike(String token, String publicationID) async {
-    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postLike;
-    final response = await http.post(Uri.parse(url), body: {
-      'token': token,
-      'publicationID': publicationID,
-    }, headers: {
-      'Accept': 'application/json',
-    });
-
-    if (response.statusCode == 200) {
-      return true;
-    }
-    if (response.statusCode == 422) {
-      return false;
-    }
-
-    return false;
-  }
-
-  Future postUnlike(String token, String publicationID) async {
-    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUnlike;
-    final response = await http.post(Uri.parse(url), body: {
-      'token': token,
-      'publicationID': publicationID,
-    }, headers: {
-      'Accept': 'application/json',
-    });
-
-    if (response.statusCode == 200) {
-      return true;
-    }
-    if (response.statusCode == 422) {
-      return false;
-    }
-
-    return false;
-  }
-
-  _settingModalBottomSheet(context, List<Comments> comments) {
-    final _formKey = GlobalKey<FormState>();
-    final _contentComments = TextEditingController();
-    late List<Comments> _publicationComment = [];
-
-    setState(() {
-      _publicationComment = comments;
-    });
-    showModalBottomSheet(
-        shape: const RoundedRectangleBorder(
-            borderRadius: BorderRadius.vertical(top: Radius.circular(8.0))),
-        context: context,
-        builder: (BuildContext bc) {
-          return Column(
-            children: [
-              const Padding(padding: EdgeInsets.only(top: 16)),
-              Form(
-                  key: _formKey,
-                  child: Row(
-                    children: [
-                      const Padding(
-                          padding:
-                              EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
-                      Expanded(
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'Este campo no puede estar vacío';
-                            }
-                            return null;
-                          },
-                          decoration: InputDecoration(
-                            enabledBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              borderSide: const BorderSide(
-                                color: Colors.grey,
-                              ),
-                            ),
-                            focusedBorder: OutlineInputBorder(
-                              borderRadius: BorderRadius.circular(15.0),
-                              borderSide: const BorderSide(
-                                color: Colors.blue,
-                              ),
-                            ),
-                            contentPadding: const EdgeInsets.all(15.0),
-                            hintText: 'Comentar',
-                          ),
-                          maxLines: 1,
-                          controller: _contentComments,
-                        ),
-                      ),
-                      const Padding(padding: EdgeInsets.only(left: 8)),
-                      IconButton(
-                          onPressed: () {
-                            if (_contentComments.text.isNotEmpty) {
-                              postComment(
-                                  token.toString(),
-                                  comments[0].id.toString(),
-                                _contentComments.text);
-                                _publicationComment.add(Comments(
-                                    id: 1,
-                                    userName: _userlModel![0].fullname,
-                                    photo: _userlModel![0].photo,
-                                    content: _contentComments.text));
-                              
-                              _contentComments.clear();
-
-                              FocusManager.instance.primaryFocus?.unfocus();
-                            } else {
-                              _formKey.currentState!.validate();
-                            }
-                          },
-                          icon: const Icon(
-                            Icons.send,
-                            color: ColorIntranetConstants.primaryColorDark,
-                          ))
-                    ],
-                  )),
-              const Padding(padding: EdgeInsets.only(top: 16)),
-             
-              Expanded(
-                child: ListView.builder(
-                   keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  padding: const EdgeInsets.only(left: 16, right: 16),
-                  itemCount: _publicationComment.length,
-                  itemBuilder: (context, index) {
-                    return Row(
-                      children: _publicationComment[index].content ==
-                              "sin datos"
-                          ? []
-                          : [
-                              Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0, horizontal: 0.0),
-                                  child: SizedBox(
-                                    width: 50,
-                                    height: 50,
-                                    child: CircleAvatar(
-                                      backgroundImage: NetworkImage(
-                                          ApiIntranetConstans.baseUrl +
-                                              _publicationComment[index]
-                                                  .photo
-                                                  .toString()), /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + _directoryModel![index].photo.toString()), */
-                                    ),
-                                  )),
-                              const Padding(
-                                  padding: EdgeInsets.only(left: 16)),
-                              Container(
-                                decoration: const BoxDecoration(
-                                    color: ColorIntranetConstants
-                                        .backgroundColorNormal,
-                                    borderRadius: BorderRadius.all(
-                                        Radius.circular(16))),
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        _publicationComment[index].userName,
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(
-                                          fontSize: 16.00,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                      const Padding(
-                                          padding: EdgeInsets.only(top: 8)),
-                                      Text(_publicationComment[index].content,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 12.00,
-                                          )),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                    );
-                  },
-                ),
-              ),
-            ],
-          );
-        });
-  }
-
-  Future postComment(String token, String publicationID, String content) async {
-    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postComment;
-    final response = await http.post(Uri.parse(url), body: {
-      'token': token,
-      'publicationID': publicationID,
-      'content': content,
-    }, headers: {
-      'Accept': 'application/json',
-    });
-
-    if (response.statusCode == 200) {
-      return true;
-    }
-    if (response.statusCode == 422) {
-      return false;
-    }
-
-    return false;
-  }
-
 }
