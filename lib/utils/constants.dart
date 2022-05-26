@@ -66,7 +66,35 @@ class StringIntranetConstants{
   static const aniversaryBirthdayBirthdayPage = "Cumpleaños";
 } 
 
-
+class ListIntranetConstants{
+  final List<String> accessName = <String>[
+    'CURSOS',
+    'ODDO',
+    'EVALUACIÓN 360',
+    'NOM 035',
+    'Cotizador',
+    'Sistema de Tickets',
+    'Power BI'
+  ];
+  final List<String> accessImage = <String>[
+    'lib/assets/course.png',
+    'lib/assets/odoo.png',
+    'lib/assets/evaluacion.png',
+    'lib/assets/nom.png',
+    'lib/assets/cotizador.png',
+    'lib/assets/tickets.png',
+    'lib/assets/powerbi.png'
+  ];
+  final List<String> accessLink = <String>[
+    'https://dev-cursos.promolife.lat/loginEmail?email=admin@admin.com&password=password',
+    'https://promolife.vde-suite.com:8030/web/login',
+    'https://evaluacion.promolife.lat/login',
+    'https://plataforma.nom-035.net/',
+    'https://promolife.lat/login/?redirect_to=https%3A%2F%2Fpromolife.lat%2F',
+    'https://tdesign.promolife.lat/',
+    'https://app.powerbi.com/singleSignOn?ru=https:%2f%2fapp.powerbi.com%2f%3fnoSignUpCheck%3d1'
+  ];
+}
 class ColorIntranetConstants{
   static const primaryColorDark = Color(0XFF1A346B);
   static const primaryColorNormal = Color(0XFF006EAD);

@@ -26,7 +26,7 @@ class HomePage extends StatefulWidget {
 
 class _HomeState extends State<HomePage> {
   late List<CommuniqueModel>? _communiqueModel = [];
-  late List<BrithdayModel>? _brithdayModel = [];
+  late List<BirthdayModel>? _brithdayModel = [];
   late List<UserModel>? _userlModel = [];
   late List<PublicationModel>? _publicationModel = [];
   late List<PublicationModel>? _publicationModelToLike = [];
@@ -49,7 +49,7 @@ class _HomeState extends State<HomePage> {
     _userlModel =
         (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
     _brithdayModel =
-        (await ApiBrithdayService().getBrithday())!.cast<BrithdayModel>();
+        (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
     _communiqueModel =
         (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
     _publicationModel =

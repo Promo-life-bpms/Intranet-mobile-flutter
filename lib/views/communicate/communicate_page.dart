@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/communique.dart';
 import 'package:intranet_movil/services/api_communique.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/widget/cards/communique_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_cards.dart';
 
@@ -41,56 +42,14 @@ class _HomeState extends State<CommunicatePage> {
               itemCount: _communiqueModel!.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 4,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            height: 320.0,
-                            child: FittedBox(
-                                fit: BoxFit.contain,
-                                child: Image(
-                                  image: NetworkImage(
-                                      ApiIntranetConstans.baseUrl +
-                                          _communiqueModel![index].image),
-                                )),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 20.0),
-                          ),
-                          Text(
-                            _communiqueModel![index].title,
-                            style: const TextStyle(
-                              fontSize: 20.00,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 20.0),
-                          ),
-                          SizedBox(
-                            width: 200,
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (context) => Image(
-                                        image: NetworkImage(ApiIntranetConstans
-                                                .baseUrl +
-                                            _communiqueModel![index].image))));
-                              },
-                              child: const Text('VER MAS'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                    padding: const EdgeInsets.all(8.0),
+                    child: CommuniqueCard(commuiqueData: [
+                      CommuniqueModel(
+                          id: _communiqueModel![index].id,
+                          title: _communiqueModel![index].title,
+                          image: _communiqueModel![index].image,
+                          description: _communiqueModel![index].description)
+                    ]));
               },
             ),
     );

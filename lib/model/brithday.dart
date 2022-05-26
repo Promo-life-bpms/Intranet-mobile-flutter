@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-List<BrithdayModel> brithdayModelFromJson(String str) =>
-    List<BrithdayModel>.from(
-        json.decode(str).map((x) => BrithdayModel.fromJson(x)));
+List<BirthdayModel> brithdayModelFromJson(String str) =>
+    List<BirthdayModel>.from(
+        json.decode(str).map((x) => BirthdayModel.fromJson(x)));
 
-String brithdayModelToJson(List<BrithdayModel> data) =>
+String brithdayModelToJson(List<BirthdayModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-class BrithdayModel {
-  BrithdayModel({
+class BirthdayModel {
+  BirthdayModel({
     required this.id,
     required this.name,
     required this.lastname,
@@ -22,7 +22,7 @@ class BrithdayModel {
   String photo;
   String date;
 
-  factory BrithdayModel.fromJson(Map<String, dynamic> json) => BrithdayModel(
+  factory BirthdayModel.fromJson(Map<String, dynamic> json) => BirthdayModel(
         id: json["id"],
         name: json["name"],
         lastname: json["lastname"],

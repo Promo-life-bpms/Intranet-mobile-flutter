@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/aniversary.dart';
 import 'package:intranet_movil/services/api_aniversary.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/widget/grids/aniversary_grid.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_aniversary.dart';
 
@@ -42,7 +43,8 @@ class _HomeState extends State<AniversaryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: const Text(StringIntranetConstants.aniversaryBirthdayAniversaryPage),
+          title: const Text(
+              StringIntranetConstants.aniversaryBirthdayAniversaryPage),
         ),
         body: _aniversaryModel == null || _aniversaryModel!.isEmpty
             ? const ListviewAniversary()
@@ -73,45 +75,14 @@ class _HomeState extends State<AniversaryPage> {
                             childAspectRatio: 0.8,
                           ),
                           itemBuilder: (BuildContext context, int index) {
-                            return Column(
-                              children: [
-                                SizedBox(
-                                  width: 80,
-                                  height: 80,
-                                  child: CircleAvatar(
-                                    backgroundImage: NetworkImage(
-                                        ApiIntranetConstans.baseUrl +
-                                            _aniversaryModel![index]
-                                                .photo
-                                                .toString()),
-                                  ),
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 1, top: 10, right: 5, bottom: 4)),
-                                SizedBox(
-                                  width: 100,
-                                  height: 30,
-                                  child: Text(
-                                      _aniversaryModel![index].name +
-                                          " " +
-                                          _aniversaryModel![index].lastname,
-                                      style: const TextStyle(
-                                        fontSize: 12.00,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                      textAlign: TextAlign.center),
-                                ),
-                                const Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 2)),
-                                Center(
-                                    child: Text(_aniversaryModel![index].date,
-                                        style: const TextStyle(fontSize: 10.00),
-                                        textAlign: TextAlign.center)),
-                                const Padding(
-                                    padding: EdgeInsets.symmetric(vertical: 5)),
-                              ],
-                            );
+                            return AniversaryGrid(aniversaryData: [
+                              AniversaryModel(
+                                  id: _aniversaryModel![index].id,
+                                  name: _aniversaryModel![index].name,
+                                  lastname: _aniversaryModel![index].lastname,
+                                  photo: _aniversaryModel![index].photo,
+                                  date: _aniversaryModel![index].date)
+                            ]);
                           },
                         ),
                       ],

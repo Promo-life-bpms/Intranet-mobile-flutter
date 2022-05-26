@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/request.dart';
-import 'package:intranet_movil/widget/alert/request_detail_alert_dialog.dart';
+import 'package:intranet_movil/widget/alerts/request_detail_alert_dialog.dart';
 
 void main() => runApp(ProcessRequestPage(
       requestModel: const [],

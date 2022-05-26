@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/employee.dart';
 import 'package:intranet_movil/services/api_employee.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/widget/cards/employee_month_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_employe.dart';
 
@@ -40,81 +41,14 @@ class _HomeState extends State<EmployeeMonthPage> {
               padding: const EdgeInsets.all(16),
               itemCount: _monthEmployeeModel!.length,
               itemBuilder: (context, index) {
-                return Card(
-                  elevation: 4,
-                  child: Padding(
-                    padding: const EdgeInsets.only(bottom: 20.0),
-                    child: Column(
-                      children: [
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 20.0),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(
-                              left: 12, top: 0, right: 12, bottom: 0),
-                          child: SizedBox(
-                            width: double.infinity,
-                            child: Text(
-                              "¡Gracias por tu compromiso y dedicación!",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                  color: Color.fromRGBO(96, 125, 139, 1),
-                                  fontSize: 25.0,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 20.0),
-                        ),
-                        SizedBox(
-                          width: double.infinity,
-                          height: 320.0,
-                          child: FittedBox(
-                              fit: BoxFit.contain,
-                              child: Image(
-                                image: NetworkImage(
-                                    ApiIntranetConstans.baseUrl +
-                                        _monthEmployeeModel![index].photo),
-                              )),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 20.0),
-                        ),
-                        Text(
-                          _monthEmployeeModel![index].name,
-                          style: const TextStyle(
-                            fontSize: 20.00,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 20.0),
-                        ),
-                        Text(
-                          _monthEmployeeModel![index].position,
-                          style: const TextStyle(
-                            fontSize: 20.00,
-                          ),
-                        ),
-                        const Padding(
-                          padding: EdgeInsets.only(bottom: 20.0),
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const <Widget>[
-                            Icon(
-                              Icons.star,
-                              color: Color.fromARGB(255, 28, 47, 56),
-                              size: 24,
-                            ),
-                          ],
-                        ),
-                        Text(_monthEmployeeModel![index].star),
-                      ],
-                    ),
-                  ),
-                );
+                return EmployeeMonthCard(employeeMonthData: [
+                  MonthEmployeeModel(
+                      id: _monthEmployeeModel![index].id,
+                      name: _monthEmployeeModel![index].name,
+                      position: _monthEmployeeModel![index].position,
+                      star: _monthEmployeeModel![index].star,
+                      photo: _monthEmployeeModel![index].photo)
+                ]);
               },
             ),
     );

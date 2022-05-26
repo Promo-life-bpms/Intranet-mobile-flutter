@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/manual.dart';
 import 'package:intranet_movil/services/api_manual.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/services/internet.dart';
+import 'package:intranet_movil/widget/cards/manual_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_cards.dart';
 
@@ -41,51 +41,14 @@ class _HomeState extends State<ManualPage> {
               itemCount: _manualModel!.length,
               itemBuilder: (context, index) {
                 return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Card(
-                    elevation: 8,
-                    child: Padding(
-                      padding: const EdgeInsets.only(bottom: 20.0),
-                      child: Column(
-                        children: [
-                          SizedBox(
-                            width: double.infinity,
-                            height: 160.0,
-                            child: FittedBox(
-                                fit: BoxFit.contain,
-                                child: Image(
-                                  image: NetworkImage(
-                                      ApiIntranetConstans.baseUrl +
-                                          _manualModel![index].img),
-                                )),
-                          ),
-                          Text(
-                            _manualModel![index].name,
-                            style: const TextStyle(
-                              fontSize: 20.00,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          const Padding(
-                            padding: EdgeInsets.only(bottom: 20.0),
-                          ),
-                          SizedBox(
-                            width: 200,
-                            height: 50,
-                            child: ElevatedButton(
-                              onPressed: () {
-                                LaunchToInternet.launchURL(
-                                    ApiIntranetConstans.baseUrl +
-                                        _manualModel![index].file);
-                              },
-                              child: const Text('ABRIR'),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                );
+                    padding: const EdgeInsets.all(8.0),
+                    child: ManualCard(manualData: [
+                      ManualModel(
+                          id: _manualModel![index].id,
+                          name: _manualModel![index].name,
+                          file: _manualModel![index].file,
+                          img: _manualModel![index].img)
+                    ]));
               },
             ),
     );

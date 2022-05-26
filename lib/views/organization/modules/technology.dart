@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/widget/alert/user_card_alert_dialog.dart';
+import 'package:intranet_movil/widget/cards/user_info_card.dart';
 
-void main() => runApp( TechnologyDirectoryPage(directoryModel: const [],));
-
-// ignore: must_be_immutable
-class TechnologyDirectoryPage extends StatelessWidget {
-   TechnologyDirectoryPage({Key? key, required this.directoryModel}) : super(key: key);
-   late List<DirectoryModel>? directoryModel = [];
-
+class TechnologyDirectoryPage extends StatefulWidget {
+  const TechnologyDirectoryPage({Key? key, required this.directoryModel}) : super(key: key);
+  final List<DirectoryModel>? directoryModel;
 
   @override
+  State<TechnologyDirectoryPage> createState() => _TechnologyDirectoryPageState();
+}
+
+class _TechnologyDirectoryPageState extends State<TechnologyDirectoryPage> {
+  @override
   Widget build(BuildContext context) {
-    return  directoryModel == null || directoryModel!.isEmpty
+    return  widget.directoryModel == null || widget.directoryModel!.isEmpty
           ? const Center(
             child: CircularProgressIndicator(color: ColorIntranetConstants.primaryColorNormal,),
           )
@@ -24,60 +25,17 @@ class TechnologyDirectoryPage extends StatelessWidget {
               Expanded(
                 child: ListView.builder(
                   padding: const EdgeInsets.only(left:16, right: 16),
-                  itemCount: directoryModel!.length,
+                  itemCount: widget.directoryModel!.length,
                   itemBuilder: (context, index) {
-                    return Card(
-                      elevation: 4,
-                      shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      ),
-                      clipBehavior: Clip.antiAlias,
-                      child: InkWell(
-                        onTap: (){
-                          UserCardAlertDialog.showFullDialog(
-                            context,
-                            directoryModel![index].fullname.toString(),
-                            directoryModel![index].email,
-                            ApiIntranetConstans.baseUrl + directoryModel![index].photo, 
-                            directoryModel![index].department,
-                            directoryModel![index].position );
-                        },
-                        child: Row(
-                        children: [
-                          Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 24.0),
-                            child: SizedBox(
-                              width: 50,
-                              height: 50,
-                              child:CircleAvatar(
-                              backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + directoryModel![index].photo.toString()),
-                              /*  backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl + directoryModel![index].photo.toString()), */                          ),
-                            )    
-                          ),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                  directoryModel![index].fullname,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold,),
-                              ),
-                              const Padding(
-                                padding: EdgeInsets.only(top:8)
-                              ),
-                              Text(
-                                  directoryModel![index].position,
-                                  maxLines: 1,
-                                  overflow: TextOverflow.ellipsis,
-                                  style: const TextStyle(fontSize: 12.00,)
-                              ),  
-                            ],
-                          ),        
-                        ],
-                        ),
-                      ),
-                    );
+                    return UserInfoCard(userData: [
+                      DirectoryModel(
+                          id: widget.directoryModel![index].id,
+                          fullname: widget.directoryModel![index].fullname,
+                          email: widget.directoryModel![index].email,
+                          photo: widget.directoryModel![index].photo,
+                          department: widget.directoryModel![index].department,
+                          position: widget.directoryModel![index].position)
+                    ]);
                   },
                 ),
               )
