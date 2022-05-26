@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
-import 'package:intranet_movil/utils/alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/utils/user_card_alert_dialog.dart';
+import 'package:intranet_movil/widget/alert/user_card_alert_dialog.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 
 void main() => runApp( OrganizationDirectoryPage(directoryModel: const [],));

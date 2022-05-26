@@ -1,6 +1,6 @@
 
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/utils/alert_dialog.dart';
+import 'package:intranet_movil/widget/alert/logout_alert_dialog.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:lottie/lottie.dart';

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_user.dart';
-import 'package:intranet_movil/services/auth.dart';
+import 'package:intranet_movil/services/api_auth.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/auth/login_page.dart';
 import 'package:intranet_movil/views/home/home_page.dart';
