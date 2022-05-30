@@ -1,42 +1,45 @@
 // This is a Custom TextField Widget
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/model/access.dart';
+import 'package:intranet_movil/model/manual.dart';
 import 'package:intranet_movil/services/internet.dart';
+import 'package:intranet_movil/utils/constants.dart';
 
-class AccessCard extends StatefulWidget {
-  const AccessCard({Key? key,required this.accessData})
-      : super(key: key);
+class ManualCard extends StatefulWidget {
+  const ManualCard({Key? key, required this.manualData}) : super(key: key);
 
-  final List<AccessData> accessData;
+  final List<ManualModel> manualData;
 
   @override
-  State<AccessCard> createState() => _AccessCardState();
+  State<ManualCard> createState() => _ManualCardState();
 }
 
-class _AccessCardState extends State<AccessCard> {
-
+class _ManualCardState extends State<ManualCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-        elevation: 4,
+    return Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: Card(
+        elevation: 8,
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20.0),
           child: Column(
-            children: <Widget>[
+            children: [
               SizedBox(
                 width: double.infinity,
                 height: 160.0,
                 child: FittedBox(
                     fit: BoxFit.contain,
                     child: Image(
-                      image: AssetImage(widget.accessData[0].accImage),
+                      image: NetworkImage(
+                          ApiIntranetConstans.baseUrl + widget.manualData[0].img),
                     )),
               ),
               Text(
-                widget.accessData[0].accName,
+                widget.manualData[0].name,
                 style: const TextStyle(
-                    fontSize: 20.00, fontWeight: FontWeight.bold),
-                textAlign: TextAlign.center,
+                  fontSize: 20.00,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
               const Padding(
                 padding: EdgeInsets.only(bottom: 20.0),
@@ -46,14 +49,16 @@ class _AccessCardState extends State<AccessCard> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    LaunchToInternet.launchURL(widget.accessData[0].accLink);
+                    LaunchToInternet.launchURL(
+                        ApiIntranetConstans.baseUrl + widget.manualData[0].file);
                   },
                   child: const Text('ABRIR'),
                 ),
               ),
             ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
-

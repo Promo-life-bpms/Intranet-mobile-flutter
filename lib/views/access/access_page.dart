@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/access.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/widget/cards/access_card.dart';
+import 'package:intranet_movil/views/access/widget/access_widget.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 void main() => runApp(const AccessPage());
@@ -49,13 +49,10 @@ class CardImageLinkWidget extends StatelessWidget {
       padding: const EdgeInsets.all(8),
       itemCount: accessData.length,
       itemBuilder: (context, index) {
-        return Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: AccessCard(accessData: [
-            AccessData(accessData[index].accName, accessData[index].accImage,
-                accessData[index].accLink)
-          ]),
-        );
+        return AccessCard(accessData: [
+          AccessData(accessData[index].accName, accessData[index].accImage,
+              accessData[index].accLink)
+        ]);
       },
     );
   }

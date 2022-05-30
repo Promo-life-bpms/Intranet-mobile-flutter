@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/widget/cards/user_info_card.dart';
+import 'package:intranet_movil/views/directory/widget/directory_builder.dart';
+import 'package:intranet_movil/views/directory/widget/user_info_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_custom.dart';
 
@@ -83,44 +84,30 @@ class _HomeState extends State<DirectoryPage> {
                         },
                       )),
                   _directoryModelSearch!.isEmpty
-                      ? Expanded(
-                          child: ListView.builder(
-                            padding: const EdgeInsets.only(left: 16, right: 16),
-                            itemCount: _directoryModel!.length,
-                            itemBuilder: (context, index) {
-                              return UserInfoCard(userData: [
-                                DirectoryModel(
-                                    id: _directoryModel![index].id,
-                                    fullname: _directoryModel![index].fullname,
-                                    email: _directoryModel![index].email,
-                                    photo: _directoryModel![index].photo,
-                                    department:
-                                        _directoryModel![index].department,
-                                    position: _directoryModel![index].position)
-                              ]);
-                            },
-                          ),
-                        )
-                      : Expanded(
-                          child: ListView.builder(
-                            padding: const EdgeInsets.only(left: 16, right: 16),
-                            itemCount: _directoryModelSearch!.length,
-                            itemBuilder: (context, index) {
-                              return UserInfoCard(userData: [
-                                DirectoryModel(
-                                    id: _directoryModelSearch![index].id,
-                                    fullname:
-                                        _directoryModelSearch![index].fullname,
-                                    email: _directoryModelSearch![index].email,
-                                    photo: _directoryModelSearch![index].photo,
-                                    department: _directoryModelSearch![index]
-                                        .department,
-                                    position:
-                                        _directoryModelSearch![index].position)
-                              ]);
-                            },
-                          ),
-                        ),
+                      ? DirectoryBuilder(
+                          directoryData: List<DirectoryModel>.generate(
+                              _directoryModel!.length,
+                              (index) => DirectoryModel(
+                                  id: _directoryModel![index].id,
+                                  fullname: _directoryModel![index].fullname,
+                                  email: _directoryModel![index].email,
+                                  photo: _directoryModel![index].photo,
+                                  department:
+                                      _directoryModel![index].department,
+                                  position: _directoryModel![index].position)))
+                      : DirectoryBuilder(
+                          directoryData: List<DirectoryModel>.generate(
+                              _directoryModelSearch!.length,
+                              (index) => DirectoryModel(
+                                  id: _directoryModelSearch![index].id,
+                                  fullname:
+                                      _directoryModelSearch![index].fullname,
+                                  email: _directoryModelSearch![index].email,
+                                  photo: _directoryModelSearch![index].photo,
+                                  department:
+                                      _directoryModelSearch![index].department,
+                                  position:
+                                      _directoryModelSearch![index].position)))
                 ],
               ));
   }

@@ -38,13 +38,38 @@ class _UserInfoCardCardState extends State<UserInfoCard> {
                 padding: const EdgeInsets.symmetric(
                     vertical: 16.0, horizontal: 24.0),
                 child: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: CircleAvatar(
-                    backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl +
+                    width: 50,
+                    height: 50,
+                    child: widget.userData[0].photo == "img/default_user.png"
+                        ? const CircleAvatar(
+                            backgroundColor:
+                                ColorIntranetConstants.backgroundColorNormal,
+                          )
+                        : /* ClipOval(
+                            child: SizedBox.fromSize(
+                              size: const Size.fromRadius(48), // Image radius
+                              child: Image.network(
+                                ApiIntranetConstans.baseUrl +
+                                    widget.userData[0].photo.toString(),
+                                fit: BoxFit.cover,
+                                errorBuilder: (BuildContext context,
+                                    Object exception, StackTrace? stackTrace) {
+                                  return const CircleAvatar(
+                                    backgroundColor: ColorIntranetConstants
+                                        .backgroundColorNormal,
+                                  );
+                                },
+                              ),
+                            ),
+                          ) */
+
+                     CircleAvatar(
+                      backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl +
                         widget.userData[0].photo.toString()),
-                  ),
-                )),
+                        backgroundColor: ColorIntranetConstants.backgroundColorNormal,
+                        
+                      ) 
+                    )),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [

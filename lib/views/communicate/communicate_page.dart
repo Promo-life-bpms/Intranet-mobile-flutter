@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/communique.dart';
 import 'package:intranet_movil/services/api_communique.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/widget/cards/communique_card.dart';
+import 'package:intranet_movil/views/communicate/widget/communique_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_cards.dart';
 
@@ -41,15 +41,13 @@ class _HomeState extends State<CommunicatePage> {
               padding: const EdgeInsets.all(8),
               itemCount: _communiqueModel!.length,
               itemBuilder: (context, index) {
-                return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: CommuniqueCard(commuiqueData: [
-                      CommuniqueModel(
-                          id: _communiqueModel![index].id,
-                          title: _communiqueModel![index].title,
-                          image: _communiqueModel![index].image,
-                          description: _communiqueModel![index].description)
-                    ]));
+                return CommuniqueCard(commuiqueData: [
+                  CommuniqueModel(
+                      id: _communiqueModel![index].id,
+                      title: _communiqueModel![index].title,
+                      image: _communiqueModel![index].image,
+                      description: _communiqueModel![index].description)
+                ]);
               },
             ),
     );

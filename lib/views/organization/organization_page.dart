@@ -90,7 +90,7 @@ class _HomeState extends State<OrganizationPage> {
               RHDirectoryPage(directoryModel:  _directoryModel?.where((i) => i.department =="Recursos Humanos").toList()),
               ManagementDirectoryPage(directoryModel:  _directoryModel?.where((i) => i.department =="Administracion").toList()),
               SalesBHDirectoryPage(directoryModel:  _directoryModel?.where((i) => i.department =="Ventas BH").toList()),
-              SalesPLDirectoryPage(directoryModel:  _directoryModel?.where((i) => i.department =="Ventas BH").toList()),
+              SalesPLDirectoryPage(directoryModel:  _directoryModel?.where((i) => i.department =="Ventas PL").toList()),
               ImportsDirectoryPage(directoryModel:  _directoryModel?.where((i) => i.department =="Importaciones").toList()),
               DesignDirectoryPage(directoryModel:  _directoryModel?.where((i) => i.department =="Diseno").toList()),
               SystemsDirectoryPage(directoryModel:  _directoryModel?.where((i) => i.department =="Sistemas").toList()),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/manual.dart';
 import 'package:intranet_movil/services/api_manual.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/widget/cards/manual_card.dart';
+import 'package:intranet_movil/views/manual/widget/manual_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_cards.dart';
 
@@ -40,15 +40,13 @@ class _HomeState extends State<ManualPage> {
               padding: const EdgeInsets.all(8),
               itemCount: _manualModel!.length,
               itemBuilder: (context, index) {
-                return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: ManualCard(manualData: [
-                      ManualModel(
-                          id: _manualModel![index].id,
-                          name: _manualModel![index].name,
-                          file: _manualModel![index].file,
-                          img: _manualModel![index].img)
-                    ]));
+                return ManualCard(manualData: [
+                  ManualModel(
+                      id: _manualModel![index].id,
+                      name: _manualModel![index].name,
+                      file: _manualModel![index].file,
+                      img: _manualModel![index].img)
+                ]);
               },
             ),
     );

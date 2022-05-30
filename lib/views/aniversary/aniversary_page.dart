@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/aniversary.dart';
 import 'package:intranet_movil/services/api_aniversary.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/widget/grids/aniversary_grid.dart';
+import 'package:intranet_movil/views/aniversary/widget/aniversary_builder.dart';
+import 'package:intranet_movil/views/aniversary/widget/flags_widget.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_aniversary.dart';
-
-import 'package:lottie/lottie.dart';
 
 class AniversaryPage extends StatefulWidget {
   const AniversaryPage({Key? key}) : super(key: key);
@@ -18,7 +17,7 @@ class AniversaryPage extends StatefulWidget {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
-        title: const Text(StringIntranetConstants.aniversaryBirthdayPage),
+        title: const Text(StringIntranetConstants.aniversaryBirthdayAniversaryPage),
       ),
     );
   }
@@ -52,41 +51,17 @@ class _HomeState extends State<AniversaryPage> {
                 physics: const ScrollPhysics(),
                 child: Column(
                   children: [
-                    Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
-                          width: 750,
-                          child: Lottie.asset("lib/assets/flags.json"),
-                        ),
-                      ],
-                    ),
-                    Column(
-                      children: [
-                        GridView.builder(
-                          shrinkWrap: true,
-                          primary: false,
-                          scrollDirection: Axis.vertical,
-                          padding: const EdgeInsets.all(0),
-                          itemCount: _aniversaryModel!.length,
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 3,
-                            childAspectRatio: 0.8,
-                          ),
-                          itemBuilder: (BuildContext context, int index) {
-                            return AniversaryGrid(aniversaryData: [
-                              AniversaryModel(
-                                  id: _aniversaryModel![index].id,
-                                  name: _aniversaryModel![index].name,
-                                  lastname: _aniversaryModel![index].lastname,
-                                  photo: _aniversaryModel![index].photo,
-                                  date: _aniversaryModel![index].date)
-                            ]);
-                          },
-                        ),
-                      ],
-                    ),
+                    const FlagsWidget(),
+                    AniversaryBuilder(
+                      aniversaryData: List<AniversaryModel>.generate(
+                          _aniversaryModel!.length,
+                          (index) => AniversaryModel(
+                              id: _aniversaryModel![index].id,
+                              name: _aniversaryModel![index].name,
+                              lastname: _aniversaryModel![index].lastname,
+                              photo: _aniversaryModel![index].photo,
+                              date: _aniversaryModel![index].date)),
+                    )
                   ],
                 ),
               ));

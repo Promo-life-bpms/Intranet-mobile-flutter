@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/brithday.dart';
 import 'package:intranet_movil/model/communique.dart';
@@ -9,14 +8,15 @@ import 'package:intranet_movil/services/api_communique.dart';
 import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/views/home/create_post.dart';
+import 'package:intranet_movil/views/home/widget/birthday_title_card.dart';
+import 'package:intranet_movil/views/home/widget/carrousel_item_card.dart';
+import 'package:intranet_movil/views/home/widget/publication_card.dart';
+import 'package:intranet_movil/views/home/widget/user_birthday_card.dart';
 import 'package:intranet_movil/widget/containers/publications.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_publication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:badges/badges.dart';
-import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -27,11 +27,11 @@ class HomePage extends StatefulWidget {
 
 class _HomeState extends State<HomePage> {
   late List<CommuniqueModel>? _communiqueModel = [];
-  late List<BirthdayModel>? _brithdayModel = [];
-  late List<UserModel>? _userlModel = [];
+  late List<BirthdayModel>? _birthdayModel = [];
+  late List<UserModel>? _userModel = [];
   late List<PublicationModel>? _publicationModel = [];
-  late List<PublicationModel>? _publicationModelToLike = [];
-  bool isLike = false;
+/*   late List<PublicationModel>? _publicationModelToLike = [];
+ */  bool isLike = false;
   bool loadingComment = false;
   late String token = "";
 
@@ -47,17 +47,17 @@ class _HomeState extends State<HomePage> {
     if (_token != null || _token!.isNotEmpty) {
       token = _token;
     }
-    _userlModel =
+    _userModel =
         (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
-    _brithdayModel =
+    _birthdayModel =
         (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
     _communiqueModel =
         (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
     _publicationModel =
         (await ApiPublicationService().getPublication(token.toString()))!
             .cast<PublicationModel>();
-    _publicationModelToLike = _publicationModel;
-
+/*     _publicationModelToLike = _publicationModel;
+ */
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -68,7 +68,7 @@ class _HomeState extends State<HomePage> {
       appBar: AppBar(
         title: const Text(StringIntranetConstants.homePage),
       ),
-      body: _userlModel == null || _userlModel!.isEmpty
+      body: _userModel == null || _userModel!.isEmpty
           ? const ListviewPublication()
           : SingleChildScrollView(
               physics: const ScrollPhysics(),
@@ -76,68 +76,10 @@ class _HomeState extends State<HomePage> {
                 color: ColorIntranetConstants.backgroundColorDark,
                 child: Column(
                   children: [
-                    Container(
-                      color: Colors.white,
-                      width: double.infinity,
-                      height: 80,
-                      child: InkWell(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => const CreatePostPage()),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(16),
-                          child: Row(
-                            children: [
-                              SizedBox(
-                                width: 40,
-                                height: 40,
-                                child: CircleAvatar(
-                                  backgroundImage: NetworkImage(
-                                      ApiIntranetConstans.baseUrl +
-                                          _userlModel![0].photo),
-                                ),
-                              ),
-                              const Padding(padding: EdgeInsets.only(left: 24)),
-                              Expanded(
-                                child: Container(
-                                  width: double.infinity,
-                                  decoration: BoxDecoration(
-                                      border: Border.all(
-                                          color: const Color.fromARGB(
-                                              115, 92, 92, 92)),
-                                      borderRadius: const BorderRadius.all(
-                                          Radius.circular(20))),
-                                  child: const Padding(
-                                    padding: EdgeInsets.all(12),
-                                    child: Text(
-                                      "¿Qué estás pensando?",
-                                      textAlign: TextAlign.left,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
+                    PublicationCard(userData: [UserModel(id: _userModel![0].id, fullname: _userModel![0].fullname, email: _userModel![0].email, photo: _userModel![0].photo, department: _userModel![0].department, position: _userModel![0].position, daysAvailables: _userModel![0].daysAvailables)]),
                     const Padding(padding: EdgeInsets.only(top: 8)),
-                    Container(
-                      padding: const EdgeInsets.only(top: 16),
-                      color: Colors.white,
-                      child: const Center(
-                        child: Text(
-                          "Cumpleaños del Mes",
-                          style: TextStyle(
-                            fontSize: 18.00,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                    ),
-                    _brithdayModel == null || _brithdayModel!.isEmpty
+                    const BirthdayTitleCard(),
+                    _birthdayModel == null || _birthdayModel!.isEmpty
                         ? const Padding(padding: EdgeInsets.zero)
                         : Container(
                             padding: const EdgeInsets.only(top: 16, bottom: 16),
@@ -152,69 +94,10 @@ class _HomeState extends State<HomePage> {
                                     shrinkWrap: true,
                                     scrollDirection: Axis.horizontal,
                                     padding: const EdgeInsets.all(0),
-                                    itemCount: _brithdayModel!.length,
+                                    itemCount: _birthdayModel!.length,
                                     itemBuilder:
                                         (BuildContext context, int index) {
-                                      return Column(
-                                        children: [
-                                          Padding(
-                                              padding: const EdgeInsets.all(8),
-                                              child: Column(
-                                                children: [
-                                                  SizedBox(
-                                                    width: 60,
-                                                    height: 60,
-                                                    child: CircleAvatar(
-                                                      radius: 20,
-                                                      backgroundImage: NetworkImage(
-                                                          ApiIntranetConstans
-                                                                  .baseUrl +
-                                                              _brithdayModel![
-                                                                      index]
-                                                                  .photo
-                                                                  .toString()),
-                                                    ),
-                                                  ),
-                                                  const Padding(
-                                                      padding: EdgeInsets.only(
-                                                          top: 4)),
-                                                  SizedBox(
-                                                    width: 120,
-                                                    child: Center(
-                                                      child: Text(
-                                                          _brithdayModel![index]
-                                                                  .name +
-                                                              " " +
-                                                              _brithdayModel![
-                                                                      index]
-                                                                  .lastname,
-                                                          style:
-                                                              const TextStyle(
-                                                            fontSize: 12.00,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                          ),
-                                                          textAlign:
-                                                              TextAlign.center,
-                                                          maxLines: 2,
-                                                          overflow: TextOverflow
-                                                              .ellipsis),
-                                                    ),
-                                                  ),
-                                                  Center(
-                                                      child: Text(
-                                                          _brithdayModel![index]
-                                                              .date,
-                                                          style:
-                                                              const TextStyle(
-                                                                  fontSize:
-                                                                      10.00),
-                                                          textAlign: TextAlign
-                                                              .center)),
-                                                ],
-                                              )),
-                                        ],
-                                      );
+                                      return UserBirthdayCard (birthdayData: [BirthdayModel(id: _birthdayModel![index].id, name: _birthdayModel![index].name, lastname: _birthdayModel![index].lastname, photo: _birthdayModel![index].photo, date: _birthdayModel![index].date)]);
                                     },
                                   ),
                                 )),
@@ -234,36 +117,7 @@ class _HomeState extends State<HomePage> {
                                           int pageViewIndex) =>
                                       FittedBox(
                                     fit: BoxFit.scaleDown,
-                                    child: InkWell(
-                                      child: CachedNetworkImage(
-                                        imageUrl: ApiIntranetConstans.baseUrl +
-                                            _communiqueModel![index].image,
-                                        placeholder: (context, url) =>
-                                            const Center(
-                                                child:
-                                                    CircularProgressIndicator()),
-                                        errorWidget: (context, url, error) =>
-                                            const Image(
-                                                image: AssetImage(
-                                                    "lib/assets/lost_connection.png")),
-                                      ),
-                                      onDoubleTap: () {
-                                        Navigator.of(context).push(MaterialPageRoute(
-                                            builder: (context) =>
-                                                CachedNetworkImage(
-                                                    imageUrl:
-                                                        ApiIntranetConstans
-                                                                .baseUrl +
-                                                            _communiqueModel![
-                                                                    index]
-                                                                .image,
-                                                    errorWidget: (context, url,
-                                                            error) =>
-                                                        const Image(
-                                                            image: AssetImage(
-                                                                "lib/assets/lost_connection.png")))));
-                                      },
-                                    ),
+                                    child: CarrouselItemCard(communiqueData: [CommuniqueModel(id: _communiqueModel![index].id, title: _communiqueModel![index].title, image: _communiqueModel![index].image, description: _communiqueModel![index].description)])
                                   ),
                                   options: CarouselOptions(
                                     height: 350,
@@ -334,15 +188,15 @@ class _HomeState extends State<HomePage> {
                                       token: token,
                                       userlModelData: [
                                         UserModel(
-                                            id: _userlModel![0].id,
-                                            fullname: _userlModel![0].fullname,
-                                            email: _userlModel![0].email,
-                                            photo: _userlModel![0].photo,
+                                            id: _userModel![0].id,
+                                            fullname: _userModel![0].fullname,
+                                            email: _userModel![0].email,
+                                            photo: _userModel![0].photo,
                                             department:
-                                                _userlModel![0].department,
-                                            position: _userlModel![0].position,
+                                                _userModel![0].department,
+                                            position: _userModel![0].position,
                                             daysAvailables:
-                                                _userlModel![0].daysAvailables)
+                                                _userModel![0].daysAvailables)
                                       ]);
                                 },
                               ),
