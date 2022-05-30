@@ -5,7 +5,7 @@ import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 
 class MarketingDirectoryPage extends StatefulWidget {
   const MarketingDirectoryPage({Key? key, required this.directoryModel}) : super(key: key);
-  final List<DirectoryModel>? directoryModel;
+  final List<DirectoryModel> directoryModel;
 
   @override
   State<MarketingDirectoryPage> createState() => _MarketingDirectoryPageState();
@@ -14,18 +14,8 @@ class MarketingDirectoryPage extends StatefulWidget {
 class _MarketingDirectoryPageState extends State<MarketingDirectoryPage> {
   @override
   Widget build(BuildContext context) {
-    return  widget.directoryModel == null || widget.directoryModel!.isEmpty
-          ? 
-          const ListviewCompanyPage()
-          : OrganizationBuilder(
-            directoryData: List<DirectoryModel>.generate(
-                widget.directoryModel!.length,
-                (index) => DirectoryModel(
-                    id: widget.directoryModel![index].id,
-                    fullname: widget.directoryModel![index].fullname,
-                    email: widget.directoryModel![index].email,
-                    photo: widget.directoryModel![index].photo,
-                    department: widget.directoryModel![index].department,
-                    position: widget.directoryModel![index].position)));
+    return widget.directoryModel.isEmpty
+        ? const ListviewCompanyPage()
+        : OrganizationBuilder(directoryData: widget.directoryModel);
   }
 }

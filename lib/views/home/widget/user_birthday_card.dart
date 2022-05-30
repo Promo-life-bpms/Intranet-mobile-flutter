@@ -22,14 +22,15 @@ class _UserBirthdayCardState extends State<UserBirthdayCard> {
             child: Column(
               children: [
                 SizedBox(
-                  width: 60,
-                  height: 60,
-                  child: CircleAvatar(
-                    radius: 20,
-                    backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl +
-                        widget.birthdayData[0].toString()),
-                  ),
-                ),
+                    width: 60,
+                    height: 60,
+                    child: CircleAvatar(
+                      backgroundImage: NetworkImage(
+                          ApiIntranetConstans.baseUrl +
+                              widget.birthdayData[0].photo.toString()),
+                      backgroundColor:
+                          ColorIntranetConstants.backgroundColorNormal,
+                    )),
                 const Padding(padding: EdgeInsets.only(top: 4)),
                 SizedBox(
                   width: 120,

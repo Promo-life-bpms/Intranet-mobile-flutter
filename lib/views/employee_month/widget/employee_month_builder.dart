@@ -10,10 +10,10 @@ class EmployeeMonthBuilder extends StatefulWidget {
 
   @override
   State<EmployeeMonthBuilder> createState() =>
-      _EmployeeMonthBuilderBuilderState();
+      _EmployeeMonthBuilderState();
 }
 
-class _EmployeeMonthBuilderBuilderState extends State<EmployeeMonthBuilder> {
+class _EmployeeMonthBuilderState extends State<EmployeeMonthBuilder> {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(

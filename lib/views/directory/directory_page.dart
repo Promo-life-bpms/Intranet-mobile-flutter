@@ -5,7 +5,6 @@ import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/directory/widget/directory_builder.dart';
-import 'package:intranet_movil/views/directory/widget/user_info_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_custom.dart';
 
