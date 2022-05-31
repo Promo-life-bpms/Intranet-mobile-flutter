@@ -86,10 +86,10 @@ class LoginFormState extends State<LoginForm> {
                               width: double.infinity,
                               height: 100,
                               child:Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                mainAxisAlignment: MainAxisAlignment.spaceAround,
                                 children: const [
                                   SizedBox(
-                                    width: 90,
+                                    width: 60,
                                     height: 50,
                                     child: FittedBox(
                                       fit:BoxFit.contain,
@@ -97,7 +97,7 @@ class LoginFormState extends State<LoginForm> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 90,
+                                    width: 50,
                                     height: 50,
                                     child: FittedBox(
                                       fit:BoxFit.contain,
@@ -105,7 +105,7 @@ class LoginFormState extends State<LoginForm> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 90,
+                                    width: 50,
                                     height: 50,
                                     child: FittedBox(
                                       fit:BoxFit.contain,
@@ -113,7 +113,7 @@ class LoginFormState extends State<LoginForm> {
                                     ),
                                   ),
                                   SizedBox(
-                                    width: 90,
+                                    width: 50,
                                     height: 50,
                                     child: FittedBox(
                                       fit:BoxFit.contain,

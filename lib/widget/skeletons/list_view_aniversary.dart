@@ -25,12 +25,7 @@ class _ListviewCardsExamplePageState extends State<ListviewAniversary> {
       body: Container(
         child: _isLoading ? _skeletonView() : const ListviewAniversary(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _toggleLoading,
-        child: Icon(
-          _isLoading ? Icons.hourglass_full : Icons.hourglass_bottom,
-        ),
-      ),
+      
     );
   }
 

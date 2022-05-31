@@ -24,12 +24,6 @@ class _ListviewProfilePageState extends State<ListviewPublication> {
       body: Container(
         child: _isLoading ? _skeletonView() : const ListviewPublication(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _toggleLoading,
-        child: Icon(
-          _isLoading ? Icons.hourglass_full : Icons.hourglass_bottom,
-        ),
-      ),
     );
   }
 

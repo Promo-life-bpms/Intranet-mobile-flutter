@@ -26,12 +26,6 @@ class _ListviewCardsExamplePageState extends State<ListviewCardsExamplePage> {
       body: Container(
         child: _isLoading ? _skeletonView() : const ListviewCardsExamplePage(),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _toggleLoading,
-        child: Icon(
-          _isLoading ? Icons.hourglass_full : Icons.hourglass_bottom,
-        ),
-      ),
     );
   }
 

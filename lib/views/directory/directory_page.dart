@@ -6,6 +6,7 @@ import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/directory/widget/directory_builder.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_custom.dart';
 
 class DirectoryPage extends StatefulWidget {
@@ -41,7 +42,7 @@ class _HomeState extends State<DirectoryPage> {
           title: const Text(StringIntranetConstants.directoryPage),
         ),
         body: _directoryModel == null || _directoryModel!.isEmpty
-            ? const ListViewExample2Page()
+            ? const ListviewCompanyPage()
             : Column(
                 children: [
                   Padding(
