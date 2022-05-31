@@ -9,13 +9,7 @@ class ListviewPublication extends StatefulWidget {
 }
 
 class _ListviewProfilePageState extends State<ListviewPublication> {
-  bool _isLoading = true;
-
-  void _toggleLoading() {
-    setState(() {
-      _isLoading = !_isLoading;
-    });
-  }
+  final bool _isLoading = true;
 
   @override
   Widget build(BuildContext context) {

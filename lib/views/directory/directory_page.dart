@@ -7,7 +7,6 @@ import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/directory/widget/directory_builder.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
-import 'package:intranet_movil/widget/skeletons/list_view_custom.dart';
 
 class DirectoryPage extends StatefulWidget {
   const DirectoryPage({Key? key}) : super(key: key);

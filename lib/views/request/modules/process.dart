@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/request.dart';
 import 'package:intranet_movil/widget/alerts/request_detail_alert_dialog.dart';
+import 'package:intranet_movil/widget/skeletons/list_view_request.dart';
 
 void main() => runApp(ProcessRequestPage(
       requestModel: const [],
@@ -14,7 +15,7 @@ class ProcessRequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return requestModel == null || requestModel!.isEmpty
-        ? const Text("no tienes solicitudes")
+        ? const  ListviewRequestPage()
         : Column(
             children: [
               Expanded(

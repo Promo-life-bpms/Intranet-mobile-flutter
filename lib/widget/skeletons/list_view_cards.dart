@@ -11,13 +11,8 @@ class ListviewCardsExamplePage extends StatefulWidget {
 }
 
 class _ListviewCardsExamplePageState extends State<ListviewCardsExamplePage> {
-  bool _isLoading = true;
+  final bool _isLoading = true;
 
-  void _toggleLoading() {
-    setState(() {
-      _isLoading = !_isLoading;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {

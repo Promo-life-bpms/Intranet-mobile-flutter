@@ -36,7 +36,7 @@ class _UserInfoCardCardState extends State<UserInfoCard> {
           children: [
             Padding(
                 padding: const EdgeInsets.symmetric(
-                    vertical: 16.0, horizontal: 24.0),
+                    vertical: 16.0, horizontal: 16.0),
                 child: SizedBox(
                     width: 50,
                     height: 50,
@@ -70,26 +70,48 @@ class _UserInfoCardCardState extends State<UserInfoCard> {
                         
                       ) 
                     )),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  widget.userData[0].fullname,
-                  maxLines: 1,
-                  overflow: TextOverflow.ellipsis,
-                  style: const TextStyle(
-                    fontSize: 16.00,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                const Padding(padding: EdgeInsets.only(top: 8)),
-                Text(widget.userData[0].position,
-                    maxLines: 1,
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /* Row(
+                    children: [
+                      SizedBox(
+                        width: double.maxFinite,
+                        child:  Text(
+                    widget.userData[0].fullname,
                     overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
                     style: const TextStyle(
-                      fontSize: 12.00,
-                    )),
-              ],
+                      fontSize: 16.00,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                      )
+                     
+                    ],
+                  ), */
+            
+                  Text(
+                    widget.userData[0].fullname,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 1,
+                    style: const TextStyle(
+                      fontSize: 16.00,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  
+                  
+                  const Padding(padding: EdgeInsets.only(top: 8)),
+                  Text(widget.userData[0].position,
+                     
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(
+                        fontSize: 12.00,
+                      )),
+                ],
+              ),
             ),
           ],
         ),

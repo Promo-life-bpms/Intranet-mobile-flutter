@@ -11,13 +11,7 @@ class ListviewEmploye extends StatefulWidget {
 }
 
 class _ListviewCardsExamplePageState extends State<ListviewEmploye> {
-  bool _isLoading = true;
-
-  void _toggleLoading() {
-    setState(() {
-      _isLoading = !_isLoading;
-    });
-  }
+  final bool _isLoading = true;
 
   @override
   Widget build(BuildContext context) {
