@@ -23,7 +23,7 @@ class _ListviewCardsExamplePageState extends State<ListviewBanner> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        child: _isLoading ? _skeletonView() : _contentView(),
+        child: _isLoading ? _skeletonView() : const ListviewBanner(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleLoading,
@@ -146,19 +146,6 @@ class _ListviewCardsExamplePageState extends State<ListviewBanner> {
                 ),
               ],
             ))),
-          ),
-        ),
-      );
-
-  Widget _contentView() => ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Container(
-            color: Colors.white,
-            height: doubleInRange(MediaQuery.of(context).size.height / 8,
-                MediaQuery.of(context).size.height / 2),
           ),
         ),
       );

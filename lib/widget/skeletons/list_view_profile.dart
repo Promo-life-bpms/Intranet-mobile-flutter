@@ -24,7 +24,7 @@ class _ListviewCardsExamplePageState extends State<ListviewProfile> {
     return Scaffold(
       backgroundColor: const Color.fromARGB(255, 255, 255, 255),
       body: Container(
-        child: _isLoading ? _skeletonView() : _contentView(),
+        child: _isLoading ? _skeletonView() : const ListviewProfile(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleLoading,
@@ -82,7 +82,7 @@ class _ListviewCardsExamplePageState extends State<ListviewProfile> {
                 height: 95,
               ),
               Padding(
-                padding:const EdgeInsets.only(left: 16),
+                padding: const EdgeInsets.only(left: 16),
                 child: Column(
                   children: [
                     SkeletonParagraph(
@@ -117,28 +117,6 @@ class _ListviewCardsExamplePageState extends State<ListviewProfile> {
               )
             ],
           )),
-        ),
-      );
-
-  Widget _contentView() => ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Container(
-            color: Colors.white,
-            height: doubleInRange(MediaQuery.of(context).size.height / 8,
-                MediaQuery.of(context).size.height / 2),
-            child: const Center(
-              child: Text(
-                "CONTENT",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
         ),
       );
 }

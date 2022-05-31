@@ -24,7 +24,7 @@ class _ListviewCardsExamplePageState extends State<ListviewCompanyPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: Container(
-        child: _isLoading ? _skeletonView() : _contentView(),
+        child: _isLoading ? _skeletonView() : const ListviewCompanyPage(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleLoading,
@@ -51,12 +51,12 @@ class _ListviewCardsExamplePageState extends State<ListviewCompanyPage> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const  SkeletonAvatar(
+                const SkeletonAvatar(
                   style: SkeletonAvatarStyle(
                       shape: BoxShape.circle, height: 48, width: 48),
                 ),
                 Padding(
-                    padding:const EdgeInsets.all(8),
+                    padding: const EdgeInsets.all(8),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.start,
                       crossAxisAlignment: CrossAxisAlignment.start,
@@ -80,28 +80,6 @@ class _ListviewCardsExamplePageState extends State<ListviewCompanyPage> {
                     ))
               ],
             )),
-          ),
-        ),
-      );
-
-  Widget _contentView() => ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Container(
-            color: Colors.white,
-            height: doubleInRange(MediaQuery.of(context).size.height / 8,
-                MediaQuery.of(context).size.height / 2),
-            child: const Center(
-              child: Text(
-                "CONTENT",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
           ),
         ),
       );

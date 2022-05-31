@@ -24,7 +24,7 @@ class _ListviewCardsExamplePageState extends State<ListviewRequestPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: Container(
-        child: _isLoading ? _skeletonView() : _contentView(),
+        child: _isLoading ? _skeletonView() : const ListviewRequestPage(),
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: _toggleLoading,
@@ -42,13 +42,14 @@ class _ListviewCardsExamplePageState extends State<ListviewRequestPage> {
         itemBuilder: (context, index) => Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           child: Container(
-            decoration: const BoxDecoration(color:Colors.white ,
+            decoration: const BoxDecoration(
+                color: Colors.white,
                 borderRadius: BorderRadius.all(Radius.circular(10))),
             padding: const EdgeInsets.all(8.0),
             child: SkeletonItem(
                 child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SkeletonParagraph(
                   style: SkeletonParagraphStyle(
@@ -65,53 +66,29 @@ class _ListviewCardsExamplePageState extends State<ListviewRequestPage> {
                 const SizedBox(
                   height: 8,
                 ),
-                Padding(padding: const EdgeInsets.all(8),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    SkeletonLine(
-                      style: SkeletonLineStyle(
-                          height: 16,
-                          width: 80,
-                          borderRadius: BorderRadius.circular(5),
-                          alignment: Alignment.bottomCenter),
-                    ),
-                    SkeletonLine(
-                      style: SkeletonLineStyle(
-                          height: 16,
-                          width:  200,
-                          borderRadius: BorderRadius.circular(5),
-                          alignment: Alignment.bottomCenter),
-                    )
-                  ],
-                )
-                
-                )
-                
+                Padding(
+                    padding: const EdgeInsets.all(8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        SkeletonLine(
+                          style: SkeletonLineStyle(
+                              height: 16,
+                              width: 80,
+                              borderRadius: BorderRadius.circular(5),
+                              alignment: Alignment.bottomCenter),
+                        ),
+                        SkeletonLine(
+                          style: SkeletonLineStyle(
+                              height: 16,
+                              width: 200,
+                              borderRadius: BorderRadius.circular(5),
+                              alignment: Alignment.bottomCenter),
+                        )
+                      ],
+                    ))
               ],
             )),
-          ),
-        ),
-      );
-
-  Widget _contentView() => ListView.builder(
-        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.symmetric(vertical: 8),
-          child: Container(
-            color: Colors.white,
-            height: doubleInRange(MediaQuery.of(context).size.height / 8,
-                MediaQuery.of(context).size.height / 2),
-            child: const Center(
-              child: Text(
-                "CONTENT",
-                style: TextStyle(
-                  fontSize: 20,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
           ),
         ),
       );
