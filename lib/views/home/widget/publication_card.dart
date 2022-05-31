@@ -48,7 +48,7 @@ class _PublicationCardState extends State<PublicationCard> {
                   child: const Padding(
                     padding: EdgeInsets.all(12),
                     child: Text(
-                      "¿Qué estás pensando?",
+                      StringIntranetConstants.homeThink,
                       textAlign: TextAlign.left,
                     ),
                   ),

@@ -37,7 +37,7 @@ class _HomeState extends State<CreatePostPage> {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text('Crear publicación'),
+          title: const Text(StringIntranetConstants.homeCreatePost),
         ),
         body: SingleChildScrollView(
             physics: const ScrollPhysics(),
@@ -53,7 +53,7 @@ class _HomeState extends State<CreatePostPage> {
                       child: TextFormField(
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Este campo no puede estar vacío';
+                            return StringIntranetConstants.emptyError;
                           }
                           return null;
                         },
@@ -71,50 +71,13 @@ class _HomeState extends State<CreatePostPage> {
                             ),
                           ),
                           contentPadding: const EdgeInsets.all(15.0),
-                          hintText: '¿Qué estas pensando?',
+                          hintText: StringIntranetConstants.homeThink,
                         ),
                         maxLines: 4,
                         controller: _contentPublication,
                       ),
                     ),
                   ),
-
-                  /*  InkWell(
-                    onTap: () {},
-                    child: Container(
-                        color: Colors.white,
-                        child: SizedBox(
-                            width: double.infinity,
-                            height: 40,
-                            child: Row(
-                              children: const [
-                                Padding(
-                                  padding: EdgeInsets.only(left: 16),
-                                  child: Icon(
-                                    Icons.camera_enhance,
-                                    color: ColorIntranetConstants
-                                        .primaryColorNormal,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(left: 16),
-                                  child: Text("Foto"),
-                                ),
-
-                                Padding(
-                                  padding: EdgeInsets.only(left: 16),
-                                  child: Text("PROXIMAMENTE"),
-                                ),
-                              ],
-                            ))),
-                  ),
-                  Padding(
-                      padding:
-                          const EdgeInsets.symmetric(horizontal: 4),
-                      child: Container(
-                        height: 2,
-                        color: ColorIntranetConstants.backgroundColorDark,
-                      )), */
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: SizedBox(
@@ -132,7 +95,7 @@ class _HomeState extends State<CreatePostPage> {
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(const SnackBar(
                                       content: Text(
-                                          "Publicación creada satisfactoriamente"),
+                                          StringIntranetConstants.homeSuccessfulPost),
                                     )),
                                     postPublication(token,
                                         _contentPublication.text.toString()),
@@ -141,7 +104,7 @@ class _HomeState extends State<CreatePostPage> {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 const HomePage()),
-                                        ModalRoute.withName("/HomePage"))
+                                        ModalRoute.withName("/HomePost"))
                                   }
                                 else
                                   {_formKey.currentState!.validate()}

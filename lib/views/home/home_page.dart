@@ -88,7 +88,7 @@ class _HomeState extends State<HomePage> {
                     const Padding(padding: EdgeInsets.only(top: 8)),
                     //Publicaciones
                     _publicationModel == null || _publicationModel!.isEmpty
-                        ? const CircularProgressIndicator()
+                        ? const Text(StringIntranetConstants.homePublicationEmpty,textAlign: TextAlign.left,)
                         : PublicationBuilder(publicationData: _publicationModel!, userData: _userModel!, isLike: isLike, token: token)
                   ],
                 ),

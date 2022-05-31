@@ -64,6 +64,13 @@ class StringIntranetConstants{
 
   static const aniversaryBirthdayAniversaryPage ="Aniversarios";
   static const aniversaryBirthdayBirthdayPage = "Cumpleaños";
+
+  static const homePublicationEmpty = "Sin publicaciones disponibles";
+  static const homeCreatePost = "Crear publicación";
+  static const homeThink = "¿Qué esta pensando?";
+  static const homeSuccessfulPost = "Publicación creada satisfactoriamente";
+
+  static const emptyError ="Este campo no puede estar vacío";
 } 
 
 class ListIntranetConstants{
