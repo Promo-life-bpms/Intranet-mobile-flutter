@@ -19,6 +19,7 @@ class RequestPage extends StatefulWidget {
 class _MyHomePageState extends State<RequestPage> {
   String date = "";
   int maxDays = 0;
+  int daysToShow = 0;
   List<String> days = [];
   List<String> daysToSend = [];
 
@@ -57,6 +58,7 @@ class _MyHomePageState extends State<RequestPage> {
     _userlModel =
         (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
     maxDays = _userlModel![0].daysAvailables;
+    daysToShow = maxDays;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -162,7 +164,7 @@ class _MyHomePageState extends State<RequestPage> {
                             )
                           : const Padding(padding: EdgeInsets.only(top: 8)),
                       const Padding(padding: EdgeInsets.only(top: 24)),
-                      days.length >= maxDays
+                      days.length >= maxDays && dropdownvalue == 'Solicitar vacaciones'
                           ? const Center(
                               child: Text(
                                 "No puedes seleccionar mas dias",
@@ -182,8 +184,9 @@ class _MyHomePageState extends State<RequestPage> {
                                 onPressed: () {
                                   _selectDate(context);
                                 },
-                                child: Text(
-                                    "SELECCIONAR DIAS ($maxDays) DISPONIBLES "),
+                                child: dropdownvalue != 'Solicitar vacaciones'?
+                                const Text("SELECCIONAR DÍA ")
+                                  : Text("SELECCIONAR DIAS ($daysToShow) DISPONIBLES "),
                               ),
                             ),
                       ListView.builder(
@@ -225,6 +228,7 @@ class _MyHomePageState extends State<RequestPage> {
                       ),
                       const Padding(padding: EdgeInsets.only(top: 16)),
                       TextFormField(
+                        maxLength: 250,
                         maxLines: 4,
                         decoration: const InputDecoration(
                             border: OutlineInputBorder(
@@ -291,6 +295,7 @@ class _MyHomePageState extends State<RequestPage> {
         days.add(formattedDate);
         String formattedDate2 = DateFormat('ddMMyyyy').format(selected);
         daysToSend.add(formattedDate2);
+        daysToShow = daysToShow -1;
       });
     }
   }
@@ -299,6 +304,8 @@ class _MyHomePageState extends State<RequestPage> {
     setState(() {
       days.remove(selected);
       daysToSend.remove(selectedToSend);
+      daysToShow = daysToShow +1;
+
     });
   }
 

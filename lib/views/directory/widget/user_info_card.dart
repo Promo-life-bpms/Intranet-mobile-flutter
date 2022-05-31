@@ -45,24 +45,7 @@ class _UserInfoCardCardState extends State<UserInfoCard> {
                             backgroundColor:
                                 ColorIntranetConstants.backgroundColorNormal,
                           )
-                        : /* ClipOval(
-                            child: SizedBox.fromSize(
-                              size: const Size.fromRadius(48), // Image radius
-                              child: Image.network(
-                                ApiIntranetConstans.baseUrl +
-                                    widget.userData[0].photo.toString(),
-                                fit: BoxFit.cover,
-                                errorBuilder: (BuildContext context,
-                                    Object exception, StackTrace? stackTrace) {
-                                  return const CircleAvatar(
-                                    backgroundColor: ColorIntranetConstants
-                                        .backgroundColorNormal,
-                                  );
-                                },
-                              ),
-                            ),
-                          ) */
-
+                        : 
                      CircleAvatar(
                       backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl +
                         widget.userData[0].photo.toString()),
@@ -74,24 +57,6 @@ class _UserInfoCardCardState extends State<UserInfoCard> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  /* Row(
-                    children: [
-                      SizedBox(
-                        width: double.maxFinite,
-                        child:  Text(
-                    widget.userData[0].fullname,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 16.00,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                      )
-                     
-                    ],
-                  ), */
-            
                   Text(
                     widget.userData[0].fullname,
                     overflow: TextOverflow.ellipsis,
@@ -101,8 +66,6 @@ class _UserInfoCardCardState extends State<UserInfoCard> {
                       fontWeight: FontWeight.bold,
                     ),
                   ),
-                  
-                  
                   const Padding(padding: EdgeInsets.only(top: 8)),
                   Text(widget.userData[0].position,
                      
