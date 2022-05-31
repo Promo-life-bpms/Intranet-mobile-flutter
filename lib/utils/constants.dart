@@ -70,6 +70,8 @@ class StringIntranetConstants{
   static const homeThink = "¿Qué esta pensando?";
   static const homeSuccessfulPost = "Publicación creada satisfactoriamente";
 
+  static const publicationPostCommentSuccesful="Comentario enviado satisfactoriamente";
+
   static const emptyError ="Este campo no puede estar vacío";
 } 
 

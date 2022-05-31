@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
-import 'package:intranet_movil/widget/containers/publications.dart';
+import 'package:intranet_movil/views/home/widget/publications.dart';
 
 class PublicationBuilder extends StatefulWidget {
   const PublicationBuilder(

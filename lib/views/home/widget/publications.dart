@@ -261,11 +261,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
   _settingModalBottomSheet(context, List<Comments> comments) {
     final _formKey = GlobalKey<FormState>();
     final _contentComments = TextEditingController();
-    late List<Comments> _publicationComment = [];
+    late List<Comments> _publicationComment = comments;
 
-    setState(() {
-      _publicationComment = comments;
-    });
     showModalBottomSheet(
         shape: const RoundedRectangleBorder(
             borderRadius: BorderRadius.vertical(top: Radius.circular(8.0))),
@@ -313,15 +310,23 @@ class _PublicationContainerState extends State<PublicationContainer> {
                       IconButton(
                           onPressed: () {
                             if (_contentComments.text.isNotEmpty) {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                                content:
+                                    Text(StringIntranetConstants.publicationPostCommentSuccesful),
+                              ));
                               postComment(
                                   widget.token.toString(),
                                   comments[0].id.toString(),
                                   _contentComments.text);
-                              _publicationComment.add(Comments(
-                                  id: 1,
-                                  userName: widget.userlModelData[0].fullname,
-                                  photo: widget.userlModelData[0].photo,
-                                  content: _contentComments.text));
+                              setState(() {
+                                _publicationComment.add(Comments(
+                                    id: 1,
+                                    userName: widget.userlModelData[0].fullname,
+                                    photo: widget.userlModelData[0].photo,
+                                    content: _contentComments.text));
+                              });
 
                               _contentComments.clear();
 
