@@ -27,7 +27,7 @@ class PublicationContainer extends StatefulWidget {
 
 class _PublicationContainerState extends State<PublicationContainer> {
   late List<PublicationModel> publicationToLikeData = widget.publicationData;
-
+  bool isLike=false;
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -126,24 +126,27 @@ class _PublicationContainerState extends State<PublicationContainer> {
                 InkWell(
                     onTap: () {
                       setState(() {
-                        if (widget.publicationToLikeData[0].isLike == false) {
-                          widget.publicationToLikeData[0].likes =
-                              widget.publicationToLikeData[0].likes + 1;
-                          widget.publicationToLikeData[0].isLike = true;
+                        if (widget.publicationData[0].isLike == false) {
+                          setState(() {
+                              widget.publicationData[0].likes =
+                              widget.publicationData[0].likes + 1;
+                              widget.publicationData[0].isLike = true;
+                          });                        
                           postLike(widget.token.toString(),
                               widget.publicationToLikeData[0].id.toString());
                         } else {
-                          widget.publicationToLikeData[0].likes =
-                              widget.publicationToLikeData[0].likes - 1;
-                          widget.publicationToLikeData[0].isLike = false;
+                          setState(() {
+                              widget.publicationData[0].likes =
+                              widget.publicationData[0].likes - 1;
+                              widget.publicationData[0].isLike = false;
+
+                          });
                           postUnlike(widget.token.toString(),
                               widget.publicationToLikeData[0].id.toString());
                         }
                       });
                     },
-                    child: widget.publicationToLikeData[0].likes ==
-                                widget.publicationData[0].likes &&
-                            widget.publicationToLikeData[0].isLike == false
+                    child: widget.publicationData[0].isLike == false
                         ? Row(
                             children: [
                               Badge(
