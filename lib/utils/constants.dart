@@ -20,6 +20,7 @@ class ApiIntranetConstans {
   static String postUnlike = 'api/postUnlike';
   static String getComment = 'api/showComments/';
   static String postComment = 'api/postComment';
+  static String getEmployeeProfile = 'api/getProfile/';
 }
 
 class StringIntranetConstants{

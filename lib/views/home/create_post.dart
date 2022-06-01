@@ -74,6 +74,7 @@ class _HomeState extends State<CreatePostPage> {
                           hintText: StringIntranetConstants.homeThink,
                         ),
                         maxLines: 4,
+                        maxLength: 250,
                         controller: _contentPublication,
                       ),
                     ),

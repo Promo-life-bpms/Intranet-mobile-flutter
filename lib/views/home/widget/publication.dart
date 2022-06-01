@@ -6,6 +6,7 @@ import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:intranet_movil/views/profile/employee_profile.dart';
 
 class PublicationContainer extends StatefulWidget {
   const PublicationContainer(
@@ -47,7 +48,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
               children: [
                 Row(
                   children: [
-                    SizedBox(
+                    InkWell(
+                      child:  SizedBox(
                       width: 40,
                       height: 40,
                       child: CircleAvatar(
@@ -55,12 +57,19 @@ class _PublicationContainerState extends State<PublicationContainer> {
                             ApiIntranetConstans.baseUrl +
                                 widget.publicationData[0].photo),
                       ),
+                      ),
+                      onTap: (){
+                        Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) =>  EmployeeProfilePage(employeeID: widget.publicationData[0].userId,employeeName: widget.publicationData[0].userName,)));
+                      },
                     ),
+                   
                     const Padding(padding: EdgeInsets.only(left: 16)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        InkWell(
+                          child: Text(
                           widget.publicationData[0].userName,
                           style: const TextStyle(
                             fontSize: 12.00,
@@ -68,6 +77,12 @@ class _PublicationContainerState extends State<PublicationContainer> {
                           ),
                           textAlign: TextAlign.left,
                         ),
+                          onTap: (){
+                            Navigator.of(context)
+                          .push(MaterialPageRoute(builder: (context) =>  EmployeeProfilePage(employeeID: widget.publicationData[0].userId,employeeName: widget.publicationData[0].userName,)));
+                          },
+                        ),
+                        
                         Padding(
                           padding: const EdgeInsets.only(left: 0, top: 4),
                           child: Text(widget.publicationData[0].created,

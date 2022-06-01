@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/model/employee_profile.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
+import 'package:intranet_movil/services/api_employee_profile.dart';
 import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
@@ -8,21 +10,24 @@ import 'package:intranet_movil/views/home/widget/publication_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class UserProfilePage extends StatefulWidget {
-  const UserProfilePage({Key? key}) : super(key: key);
+class EmployeeProfilePage extends StatefulWidget {
+  const EmployeeProfilePage({Key? key, required this.employeeID, required this.employeeName}) : super(key: key);
+  final int employeeID;
+  final String employeeName;
 
   @override
-  _HomeState createState() => _HomeState();
+  _EmployeeProfileState createState() => _EmployeeProfileState();
 }
 
-class _HomeState extends State<UserProfilePage> {
+class _EmployeeProfileState extends State<EmployeeProfilePage> {
   late List<UserModel>? _userModel = [];
   late List<PublicationModel>? _publicationModel = [];
+  late List<EmployeeProfileModel>? _employeeProfileModel = [];
+
   late List<PublicationModel>? _publicationModelToLike = [];
   bool isLike = false;
   late String token = "";
 
-/*  _directoryModel!.where((i) => i.department =="Direccion").toList() */
   @override
   void initState() {
     super.initState();
@@ -40,7 +45,12 @@ class _HomeState extends State<UserProfilePage> {
     _publicationModel =
         (await ApiPublicationService().getPublication(_token.toString()))!
             .cast<PublicationModel>();
+    _employeeProfileModel = 
+        (await ApiEmployeeProfileService().getEmployeeProfile(widget.employeeID.toString()))!
+            .cast<EmployeeProfileModel>();
+    _publicationModel = _publicationModel!.where((i) => i.userId == widget.employeeID).toList();
     _publicationModelToLike = _publicationModel;
+
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -49,9 +59,9 @@ class _HomeState extends State<UserProfilePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title: const Text(StringIntranetConstants.profilePage),
+        title:  Text(widget.employeeName),
       ),
-      body: _userModel == null || _userModel!.isEmpty
+      body: _userModel == null || _userModel!.isEmpty || _employeeProfileModel == null || _employeeProfileModel!.isEmpty
           ? const ListviewProfile()
           : SingleChildScrollView(
               physics: const ScrollPhysics(),
@@ -63,7 +73,7 @@ class _HomeState extends State<UserProfilePage> {
                      primary: false,
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(0),
-                    itemCount: _userModel!.length,
+                    itemCount: _employeeProfileModel!.length,
                     itemBuilder: (context, index) {
                       return Column(
                         children: [
@@ -86,7 +96,7 @@ class _HomeState extends State<UserProfilePage> {
                                   child: CircleAvatar(
                                     backgroundImage: NetworkImage(
                                         ApiIntranetConstans.baseUrl +
-                                            _userModel![0].photo),
+                                            _employeeProfileModel![0].photo),
                                   ),
                                 ),
                               ),
@@ -98,7 +108,7 @@ class _HomeState extends State<UserProfilePage> {
                           Column(
                             children: [
                               Text(
-                                _userModel![0].fullname,
+                                _employeeProfileModel![0].fullname,
                                 style: const TextStyle(
                                   fontSize: 20.00,
                                   fontWeight: FontWeight.bold,
@@ -108,7 +118,7 @@ class _HomeState extends State<UserProfilePage> {
                                 padding: EdgeInsets.only(top: 14.0),
                               ),
                               Text(
-                                _userModel![0].position,
+                                _employeeProfileModel![0].position,
                                 style: const TextStyle(fontSize: 16.00),
                               ),
                               const Padding(
@@ -125,7 +135,7 @@ class _HomeState extends State<UserProfilePage> {
                                         const Padding(
                                             padding: EdgeInsets.only(
                                                 right: 8.0)),
-                                        Text(_userModel![0].department)
+                                        Text(_employeeProfileModel![0].department)
                                       ],
                                     ),
                                     const Padding(
@@ -137,7 +147,7 @@ class _HomeState extends State<UserProfilePage> {
                                         const Padding(
                                             padding: EdgeInsets.only(
                                                 right: 8.0)),
-                                        Text(_userModel![0].position)
+                                        Text(_employeeProfileModel![0].position)
                                       ],
                                     ),
                                     const Padding(
@@ -149,7 +159,7 @@ class _HomeState extends State<UserProfilePage> {
                                         const Padding(
                                             padding: EdgeInsets.only(
                                                 right: 8.0)),
-                                        Text(_userModel![0].email)
+                                        Text(_employeeProfileModel![0].email)
                                       ],
                                     ),
                                   ],
@@ -173,8 +183,8 @@ class _HomeState extends State<UserProfilePage> {
                           textAlign: TextAlign.left,
                         )
                       : PublicationBuilder(
-                          publicationData: _publicationModel!.where((i) => i.userId ==_userModel![0].id).toList(),
-                          publicationToLikeData: _publicationModelToLike!.where((i) => i.userId ==_userModel![0].id).toList(),
+                          publicationData: _publicationModel!,
+                          publicationToLikeData: _publicationModelToLike!,
                           userData: _userModel!,
                           isLike: isLike,
                           token: token)

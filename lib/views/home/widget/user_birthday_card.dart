@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/brithday.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/profile/employee_profile.dart';
 
 class UserBirthdayCard extends StatefulWidget {
   const UserBirthdayCard({Key? key, required this.birthdayData})
@@ -21,7 +22,8 @@ class _UserBirthdayCardState extends State<UserBirthdayCard> {
             padding: const EdgeInsets.all(8),
             child: Column(
               children: [
-                SizedBox(
+                InkWell(
+                  child: SizedBox(
                     width: 60,
                     height: 60,
                     child: CircleAvatar(
@@ -31,6 +33,12 @@ class _UserBirthdayCardState extends State<UserBirthdayCard> {
                       backgroundColor:
                           ColorIntranetConstants.backgroundColorNormal,
                     )),
+                    onTap: (){
+                      Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) =>  EmployeeProfilePage(employeeID: widget.birthdayData[0].id,employeeName: widget.birthdayData[0].name + " "+widget.birthdayData[0].lastname,)));
+                    },
+                ),
+                
                 const Padding(padding: EdgeInsets.only(top: 4)),
                 SizedBox(
                   width: 120,
