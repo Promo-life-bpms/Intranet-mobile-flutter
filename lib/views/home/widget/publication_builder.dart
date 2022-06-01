@@ -1,17 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
-import 'package:intranet_movil/views/home/widget/publications.dart';
+import 'package:intranet_movil/views/home/widget/publication.dart';
 
 class PublicationBuilder extends StatefulWidget {
   const PublicationBuilder(
       {Key? key,
       required this.publicationData,
+      required this.publicationToLikeData,
       required this.userData,
       required this.isLike,
       required this.token})
       : super(key: key);
   final List<PublicationModel> publicationData;
+  final List<PublicationModel> publicationToLikeData;
   final List<UserModel> userData;
   final bool isLike;
   final String token;
@@ -42,21 +44,21 @@ class _PublicationBuilderState extends State<PublicationBuilder> {
                   photoPublication:
                       widget.publicationData[index].photoPublication,
                   likes: widget.publicationData[index].likes,
-                  isLike: widget.isLike,
+                  isLike: widget.publicationData[index].isLike,
                   comments: widget.publicationData[index].comments)
             ], publicationToLikeData: [
               PublicationModel(
-                  id: widget.publicationData[index].id,
-                  photo: widget.publicationData[index].photo,
-                  userName: widget.publicationData[index].userName,
-                  created: widget.publicationData[index].created,
+                  id: widget.publicationToLikeData[index].id,
+                  photo: widget.publicationToLikeData[index].photo,
+                  userName: widget.publicationToLikeData[index].userName,
+                  created: widget.publicationToLikeData[index].created,
                   contentPublication:
-                      widget.publicationData[index].contentPublication,
+                      widget.publicationToLikeData[index].contentPublication,
                   photoPublication:
-                      widget.publicationData[index].photoPublication,
-                  likes: widget.publicationData[index].likes,
-                  isLike: widget.isLike,
-                  comments: widget.publicationData[index].comments)
+                      widget.publicationToLikeData[index].photoPublication,
+                  likes: widget.publicationToLikeData[index].likes,
+                  isLike: widget.publicationToLikeData[index].isLike,
+                  comments: widget.publicationToLikeData[index].comments)
             ], token: widget.token, userlModelData: widget.userData);
           },
         ),

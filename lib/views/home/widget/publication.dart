@@ -27,7 +27,12 @@ class PublicationContainer extends StatefulWidget {
 
 class _PublicationContainerState extends State<PublicationContainer> {
   late List<PublicationModel> publicationToLikeData = widget.publicationData;
-  bool isLike=false;
+  bool isLike = false;
+  @override
+  void initState() {
+    isLike= widget.publicationData[0].isLike;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -126,62 +131,83 @@ class _PublicationContainerState extends State<PublicationContainer> {
                 InkWell(
                     onTap: () {
                       setState(() {
-                        if (widget.publicationData[0].isLike == false) {
-                          setState(() {
-                              widget.publicationData[0].likes =
-                              widget.publicationData[0].likes + 1;
-                              widget.publicationData[0].isLike = true;
-                          });                        
-                          postLike(widget.token.toString(),
-                              widget.publicationToLikeData[0].id.toString());
+                        if (widget.publicationToLikeData[0].isLike == false) {
+                          widget.publicationToLikeData[0].likes =
+                              widget.publicationToLikeData[0].likes + 1;
+                          widget.publicationToLikeData[0].isLike = true;
+                          isLike=true;
+                          postLike(widget.token,
+                              widget.publicationData[0].id.toString());
                         } else {
-                          setState(() {
-                              widget.publicationData[0].likes =
-                              widget.publicationData[0].likes - 1;
-                              widget.publicationData[0].isLike = false;
-
-                          });
-                          postUnlike(widget.token.toString(),
-                              widget.publicationToLikeData[0].id.toString());
+                          widget.publicationToLikeData[0].likes =
+                              widget.publicationToLikeData[0].likes - 1;
+                          widget.publicationToLikeData[0].isLike = false;
+                          isLike=false;
+                          postUnlike(widget.token,
+                              widget.publicationData[0].id.toString());
                         }
                       });
                     },
-                    child:
-                         Row(
+                    child: widget.publicationToLikeData[0].likes ==
+                                widget.publicationData[0].likes &&
+                            widget.publicationToLikeData[0].isLike == false 
+                        ? Row(
                             children: [
                               Badge(
                                   toAnimate: true,
                                   position: BadgePosition.bottomEnd(),
                                   badgeContent: Text(
-                                    widget.publicationData[0].likes.toString(),
+                                    widget.publicationToLikeData[0].likes
+                                        .toString(),
                                     style: const TextStyle(color: Colors.white),
                                   ),
-                                  child: widget.publicationData[0].isLike == false?
-                                   const Icon(
+                                  child: 
+                                  isLike==false? const Icon(
                                     Icons.favorite,
                                     color: ColorIntranetConstants.redLight,
                                     size: 24,
-                                  )
-                                  :
+                                  ):
                                   const Icon(
                                     Icons.favorite,
-                                    color:  Colors.red,
+                                    color: Colors.red,
                                     size: 24,
-                                  )
                                   ),
-                              widget.publicationData[0].isLike == false?
+                                  ),
                               const Padding(
                                 padding: EdgeInsets.only(left: 12),
                                 child: Text("Me gusta"),
                               )
-                              :
-                              const Padding(
-                                padding: EdgeInsets.only(left: 12),
-                                child: Text("Me gusta", style: TextStyle(color: Colors.red),),
-                              )
                             ],
                           )
-                ),
+                        : Row(
+                            children: [
+                              Badge(
+                                  toAnimate: true,
+                                  position: BadgePosition.bottomEnd(),
+                                  badgeContent: Text(
+                                    widget.publicationToLikeData[0].likes
+                                        .toString(),
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                  child:isLike==false? const Icon(
+                                    Icons.favorite,
+                                    color: ColorIntranetConstants.redLight,
+                                    size: 24,
+                                  ):
+                                  const Icon(
+                                    Icons.favorite,
+                                    color: Colors.red,
+                                    size: 24,
+                                  ),),
+                              const Padding(
+                                padding: EdgeInsets.only(left: 12),
+                                child: Text(
+                                  "Me gusta",
+                                  style: TextStyle(color: Colors.red),
+                                ),
+                              )
+                            ],
+                          )),
                 Padding(
                   padding: EdgeInsets.zero,
                   child: InkWell(
@@ -308,8 +334,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
                               Navigator.pop(context);
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
-                                content:
-                                    Text(StringIntranetConstants.publicationPostCommentSuccesful),
+                                content: Text(StringIntranetConstants
+                                    .publicationPostCommentSuccesful),
                               ));
                               postComment(
                                   widget.token.toString(),
