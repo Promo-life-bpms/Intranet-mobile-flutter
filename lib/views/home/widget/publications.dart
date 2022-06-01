@@ -146,8 +146,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
                         }
                       });
                     },
-                    child: widget.publicationData[0].isLike == false
-                        ? Row(
+                    child:
+                         Row(
                             children: [
                               Badge(
                                   toAnimate: true,
@@ -156,40 +156,32 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                     widget.publicationData[0].likes.toString(),
                                     style: const TextStyle(color: Colors.white),
                                   ),
-                                  child: const Icon(
+                                  child: widget.publicationData[0].isLike == false?
+                                   const Icon(
                                     Icons.favorite,
                                     color: ColorIntranetConstants.redLight,
                                     size: 24,
-                                  )),
+                                  )
+                                  :
+                                  const Icon(
+                                    Icons.favorite,
+                                    color:  Colors.red,
+                                    size: 24,
+                                  )
+                                  ),
+                              widget.publicationData[0].isLike == false?
                               const Padding(
                                 padding: EdgeInsets.only(left: 12),
                                 child: Text("Me gusta"),
                               )
-                            ],
-                          )
-                        : Row(
-                            children: [
-                              Badge(
-                                  toAnimate: true,
-                                  position: BadgePosition.bottomEnd(),
-                                  badgeContent: Text(
-                                    widget.publicationData[0].likes.toString(),
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                  child: const Icon(
-                                    Icons.favorite,
-                                    color: Colors.red,
-                                    size: 24,
-                                  )),
+                              :
                               const Padding(
                                 padding: EdgeInsets.only(left: 12),
-                                child: Text(
-                                  "Me gusta",
-                                  style: TextStyle(color: Colors.red),
-                                ),
+                                child: Text("Me gusta", style: TextStyle(color: Colors.red),),
                               )
                             ],
-                          )),
+                          )
+                ),
                 Padding(
                   padding: EdgeInsets.zero,
                   child: InkWell(
