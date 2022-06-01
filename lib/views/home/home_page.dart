@@ -84,23 +84,21 @@ class _HomeState extends State<HomePage> {
                     _brithdayModel == null || _brithdayModel!.isEmpty
                         ? const Padding(padding: EdgeInsets.zero)
                         : BirthdayHomeBuilder(birthdayData: _brithdayModel!),
+                    const Padding(padding: EdgeInsets.only(top: 8)),
                     //Comunicados
                     _communiqueModel == null || _communiqueModel!.isEmpty
                         ? const Padding(padding: EdgeInsets.zero)
                         : CarouselHomeBuilder(
                             communiqueData: _communiqueModel!),
                     const Padding(padding: EdgeInsets.only(top: 8)),
-
                     //Publicaciones
                     _publicationModel == null || _publicationModel!.isEmpty
                         ? const Text(StringIntranetConstants.homePublicationEmpty,textAlign: TextAlign.left,)
                         : PublicationBuilder(publicationData: _publicationModel!, publicationToLikeData:_publicationModelToLike! , userData: _userlModel!, isLike: isLike, token: token)
-
                   ],
                 ),
               ),
             ),
     );
   }
-
 }
