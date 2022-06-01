@@ -16,6 +16,7 @@ class _LogoutState extends State<LogoutPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
         title: const Text(StringIntranetConstants.logoutPage),

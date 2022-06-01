@@ -77,7 +77,7 @@ class RequestDetailAlertDialog {
                             ),
                             Expanded(
                               child: Text(
-                              typeRequest,
+                              payment,
                               overflow: TextOverflow.ellipsis,
                               style: const TextStyle(fontSize: 16.00),
                               ),

@@ -36,6 +36,7 @@ class _PublicationBuilderState extends State<PublicationBuilder> {
             return PublicationContainer(publicationData: [
               PublicationModel(
                   id: widget.publicationData[index].id,
+                  userId: widget.publicationData[index].userId,
                   photo: widget.publicationData[index].photo,
                   userName: widget.publicationData[index].userName,
                   created: widget.publicationData[index].created,
@@ -49,6 +50,7 @@ class _PublicationBuilderState extends State<PublicationBuilder> {
             ], publicationToLikeData: [
               PublicationModel(
                   id: widget.publicationToLikeData[index].id,
+                  userId: widget.publicationToLikeData[index].userId,
                   photo: widget.publicationToLikeData[index].photo,
                   userName: widget.publicationToLikeData[index].userName,
                   created: widget.publicationToLikeData[index].created,

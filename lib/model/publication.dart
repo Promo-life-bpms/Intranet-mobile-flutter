@@ -15,6 +15,7 @@ String commentToJson(Comments data) => json.encode(data.toJson());
 class PublicationModel {
   PublicationModel({
     required this.id,
+    required this.userId,
     required this.photo,
     required this.userName,
     required this.created,
@@ -26,6 +27,7 @@ class PublicationModel {
   });
 
   int id;
+  int userId;
   String photo;
   String userName;
   String created;
@@ -38,6 +40,7 @@ class PublicationModel {
   factory PublicationModel.fromJson(Map<String, dynamic> json) =>
       PublicationModel(
         id: json["id"],
+        userId: json["userId"],
         photo: json["photo"],
         userName: json["userName"],
         created: json["created"],
@@ -50,6 +53,7 @@ class PublicationModel {
 
   Map<String, dynamic> toJson() => {
         "id": id,
+        "userId":userId,
         "photo": photo,
         "userName": userName,
         "created": created,
