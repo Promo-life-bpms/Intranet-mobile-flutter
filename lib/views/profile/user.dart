@@ -4,6 +4,7 @@ import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/views/home/widget/publication_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -50,6 +51,10 @@ class _HomeState extends State<UserProfilePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(StringIntranetConstants.profilePage),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const HomePage()))),
       ),
       body: _userModel == null || _userModel!.isEmpty
           ? const ListviewProfile()

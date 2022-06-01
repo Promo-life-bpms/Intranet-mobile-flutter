@@ -6,12 +6,15 @@ import 'package:intranet_movil/services/api_employee_profile.dart';
 import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/views/home/widget/publication_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class EmployeeProfilePage extends StatefulWidget {
-  const EmployeeProfilePage({Key? key, required this.employeeID, required this.employeeName}) : super(key: key);
+  const EmployeeProfilePage(
+      {Key? key, required this.employeeID, required this.employeeName})
+      : super(key: key);
   final int employeeID;
   final String employeeName;
 
@@ -45,10 +48,11 @@ class _EmployeeProfileState extends State<EmployeeProfilePage> {
     _publicationModel =
         (await ApiPublicationService().getPublication(_token.toString()))!
             .cast<PublicationModel>();
-    _employeeProfileModel = 
-        (await ApiEmployeeProfileService().getEmployeeProfile(widget.employeeID.toString()))!
-            .cast<EmployeeProfileModel>();
-    _publicationModel = _publicationModel!.where((i) => i.userId == widget.employeeID).toList();
+    _employeeProfileModel = (await ApiEmployeeProfileService()
+            .getEmployeeProfile(widget.employeeID.toString()))!
+        .cast<EmployeeProfileModel>();
+    _publicationModel =
+        _publicationModel!.where((i) => i.userId == widget.employeeID).toList();
     _publicationModelToLike = _publicationModel;
 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
@@ -59,18 +63,23 @@ class _EmployeeProfileState extends State<EmployeeProfilePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
-        title:  Text(widget.employeeName),
+        title: Text(widget.employeeName),
+        leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const HomePage()))),
       ),
-      body: _userModel == null || _userModel!.isEmpty || _employeeProfileModel == null || _employeeProfileModel!.isEmpty
+      body: _userModel == null ||
+              _userModel!.isEmpty ||
+              _employeeProfileModel == null ||
+              _employeeProfileModel!.isEmpty
           ? const ListviewProfile()
           : SingleChildScrollView(
               physics: const ScrollPhysics(),
               child: Column(
-                
                 children: [
-
                   ListView.builder(
-                     primary: false,
+                    primary: false,
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(0),
                     itemCount: _employeeProfileModel!.length,
@@ -82,8 +91,7 @@ class _EmployeeProfileState extends State<EmployeeProfilePage> {
                             height: 200.0,
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(
-                                    "lib/assets/background.jpg"),
+                                image: AssetImage("lib/assets/background.jpg"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -125,40 +133,38 @@ class _EmployeeProfileState extends State<EmployeeProfilePage> {
                                 padding: EdgeInsets.only(top: 36.0),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 24.0),
+                                padding: const EdgeInsets.only(left: 24.0),
                                 child: Column(
                                   children: [
                                     Row(
                                       children: [
                                         const Icon(Icons.house),
                                         const Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 8.0)),
-                                        Text(_employeeProfileModel![0].department)
+                                            padding:
+                                                EdgeInsets.only(right: 8.0)),
+                                        Text(_employeeProfileModel![0]
+                                            .department)
                                       ],
                                     ),
                                     const Padding(
-                                        padding:
-                                            EdgeInsets.only(top: 12.0)),
+                                        padding: EdgeInsets.only(top: 12.0)),
                                     Row(
                                       children: [
                                         const Icon(Icons.work),
                                         const Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 8.0)),
+                                            padding:
+                                                EdgeInsets.only(right: 8.0)),
                                         Text(_employeeProfileModel![0].position)
                                       ],
                                     ),
                                     const Padding(
-                                        padding:
-                                            EdgeInsets.only(top: 12.0)),
+                                        padding: EdgeInsets.only(top: 12.0)),
                                     Row(
                                       children: [
                                         const Icon(Icons.mail),
                                         const Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 8.0)),
+                                            padding:
+                                                EdgeInsets.only(right: 8.0)),
                                         Text(_employeeProfileModel![0].email)
                                       ],
                                     ),
