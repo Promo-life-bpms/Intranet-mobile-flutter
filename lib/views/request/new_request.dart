@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_user.dart';
-import 'package:intranet_movil/widget/alerts/successful_alert_dialog.dart';
-import 'package:intranet_movil/widget/alerts/wrong_alert_dialog.dart';
+import 'package:intranet_movil/services/post_request.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:http/http.dart' as http;
 
 class RequestPage extends StatefulWidget {
   const RequestPage({Key? key}) : super(key: key);
@@ -263,7 +261,8 @@ class _MyHomePageState extends State<RequestPage> {
                                     selectedTime.format(context),
                                     daysToSend.toString(),
                                     reason.text,
-                                    (maxDays - days.length).toString());
+                                    (maxDays - days.length).toString(),
+                                    context);
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
@@ -322,39 +321,7 @@ class _MyHomePageState extends State<RequestPage> {
     }
   }
 
-  Future postRequest(
-      String token,
-      String typeRequest,
-      String payment,
-      String start,
-      String daysToSend,
-      String reason,
-      String daysAvailables) async {
-    String url =
-        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postRequestEndpoint;
-    final response = await http.post(Uri.parse(url), body: {
-      'token': token,
-      'typeRequest': typeRequest,
-      'payment': payment,
-      'start': start,
-      'days': daysToSend,
-      'reason': reason,
-      'daysAvailables': daysAvailables,
-    }, headers: {
-      'Accept': 'application/json',
-    });
-
-    if (response.statusCode == 200) {
-      SuccessfulAlertDialog.showAlertDialog(context);
-      return true;
-    }
-
-    if (response.statusCode == 500) {
-      WrongAlertDialog.showAlertDialog(context);
-      return false;
-    }
-    return false;
-  }
+ 
 }
 
 class DaysTo {

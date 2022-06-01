@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/brithday.dart';
 import 'package:intranet_movil/model/communique.dart';
@@ -8,9 +7,6 @@ import 'package:intranet_movil/services/api_brithday.dart';
 import 'package:intranet_movil/services/api_communique.dart';
 import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
-import 'package:intranet_movil/services/post_comment.dart';
-import 'package:intranet_movil/services/post_like.dart';
-import 'package:intranet_movil/services/post_unlike.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/home/widget/birthday_home_builder.dart';
 import 'package:intranet_movil/views/home/widget/birthday_title_card.dart';
@@ -20,8 +16,6 @@ import 'package:intranet_movil/views/home/widget/publication_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_publication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:badges/badges.dart';
-import 'package:http/http.dart' as http;
 
 class HomePage extends StatefulWidget {
   const HomePage({Key? key}) : super(key: key);
