@@ -39,6 +39,7 @@ class _CommuniqueCardState extends State<CommuniqueCard> {
               ),
               Text(
                 widget.commuiqueData[0].title,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 20.00,
                   fontWeight: FontWeight.bold,
