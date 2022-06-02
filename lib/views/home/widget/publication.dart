@@ -123,7 +123,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                     onDoubleTap: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => CachedNetworkImage(
-                              imageUrl: ApiIntranetConstans.baseUrl +
+                              imageUrl: ApiIntranetConstans.baseUrl + "storage/"+
                                   widget.publicationData[0].photoPublication,
                               errorWidget: (context, url, error) => const Image(
                                   image: AssetImage(
