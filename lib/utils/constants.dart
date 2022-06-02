@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class ApiIntranetConstans {
-  static String baseUrl = 'https://intranet.kaths.com.mx/';
+  static String baseUrl = 'https://dev-intranet.promolife.lat/';
 
   static String loginEndpoint = 'api/login' ;
   static String getUser = 'api/getUser/' ;

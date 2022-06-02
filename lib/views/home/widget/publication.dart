@@ -54,7 +54,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                       height: 40,
                       child: CircleAvatar(
                         backgroundImage: NetworkImage(
-                            ApiIntranetConstans.baseUrl +
+                            ApiIntranetConstans.baseUrl + 
                                 widget.publicationData[0].photo),
                       ),
                       ),
@@ -113,7 +113,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                   width: double.infinity,
                   child: InkWell(
                     child: CachedNetworkImage(
-                      imageUrl: ApiIntranetConstans.baseUrl +
+                      imageUrl: ApiIntranetConstans.baseUrl + "storage/"+
                           widget.publicationData[0].photoPublication,
                       placeholder: (context, url) =>
                           const Center(child: CircularProgressIndicator()),

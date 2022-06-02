@@ -18,6 +18,7 @@ class _ListviewCardsExamplePageState extends State<ListviewCompanyPage> {
     return Scaffold(
       backgroundColor: Colors.grey[300],
       body: Container(
+        padding: const EdgeInsets.only(top: 18),
         child: _isLoading ? _skeletonView() : const ListviewCompanyPage(),
       ),
     );
