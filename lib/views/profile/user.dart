@@ -9,6 +9,7 @@ import 'package:intranet_movil/views/home/widget/publication_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({Key? key}) : super(key: key);
 
@@ -23,7 +24,6 @@ class _HomeState extends State<UserProfilePage> {
   bool isLike = false;
   late String token = "";
 
-/*  _directoryModel!.where((i) => i.department =="Direccion").toList() */
   @override
   void initState() {
     super.initState();
@@ -51,10 +51,6 @@ class _HomeState extends State<UserProfilePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text(StringIntranetConstants.profilePage),
-        leading: IconButton(
-            icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const HomePage()))),
       ),
       body: _userModel == null || _userModel!.isEmpty
           ? const ListviewProfile()

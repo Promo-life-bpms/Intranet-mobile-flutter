@@ -16,10 +16,12 @@ class SuccessfulAlertDialog {
         pageBuilder: (BuildContext buildContext, Animation animation,
             Animation secondaryAnimation) {
           return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
                 padding: const EdgeInsets.symmetric(
-                    vertical: 100.0, horizontal: 16.0),
+                    vertical: 16.0, horizontal: 16.0),
                 child: Card(
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
