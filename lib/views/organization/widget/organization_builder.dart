@@ -1,4 +1,3 @@
-// This is a Custom TextField Widget
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/views/directory/widget/user_info_card.dart';

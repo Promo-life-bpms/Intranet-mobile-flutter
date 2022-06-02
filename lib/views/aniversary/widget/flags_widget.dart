@@ -1,4 +1,3 @@
-// This is a Custom TextField Widget
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 

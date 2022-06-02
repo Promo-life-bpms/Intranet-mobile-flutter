@@ -1,4 +1,3 @@
-// This is a Custom TextField Widget
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/manual.dart';
 import 'package:intranet_movil/services/internet.dart';
@@ -36,6 +35,7 @@ class _ManualCardState extends State<ManualCard> {
               ),
               Text(
                 widget.manualData[0].name,
+                textAlign: TextAlign.center,
                 style: const TextStyle(
                   fontSize: 20.00,
                   fontWeight: FontWeight.bold,
