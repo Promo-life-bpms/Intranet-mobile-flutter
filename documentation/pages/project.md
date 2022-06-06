@@ -210,7 +210,7 @@ La estructura de las otras clases es la misma que la anterior especificada, camb
 <details>
 	<summary>/utils</summary>
 
-Carpeta que almacena porciónes de código que puede ser utilziadas en cualquier parte de la aplicación.
+Carpeta que almacena porciónes de código que puede ser utilizadas en cualquier parte de la aplicación.
 
 **constants.dart**
 
@@ -336,6 +336,520 @@ En este archivo se incluyeron las principales constantes de la aplicación, sien
     static const backgroundCustomLight =Color(0xffF2F6FB);
     static const redLight = Color(0xFFfc9990);
     
+    }
+
+```
+
+</details>
+
+<details>
+	<summary>/views</summary>
+    
+Esta carpeta almacena los módulos principales de toda la aplicación, se encuentra separada de la siguiente manera:
+
+</details>
+
+<details>
+	<summary>/widget</summary>
+    
+Esta carpeta almacena widgets globales de la aplicación, es decir, widgets que se pueden utilizar en mas de un módulo, solo si cumplen con los requisitos para su uso. 
+
+**navigation_drawer_widget.dart**
+
+```dart
+    
+    class NavigationDrawerWidget extends StatefulWidget {
+    const NavigationDrawerWidget({Key? key}) : super(key: key);
+
+    @override
+    _NavigationDrawerWidgetState createState() => _NavigationDrawerWidgetState();
+    }
+
+    class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
+    late List<UserModel>? _userlModel = [];
+    static var _selectedDrawerItem = 0;
+
+    @override
+    void initState() {
+        super.initState();
+        _getData();
+    }
+
+    void _getData() async {
+        final prefs = await SharedPreferences.getInstance();
+        String? token = prefs.getString('token');
+        _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
+        Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    }
+
+
+    @override
+    Widget build(BuildContext context) {
+        return Drawer(
+        child: Material(
+            child: ListView(
+            children: <Widget>[
+                _userlModel == null || _userlModel!.isEmpty
+                ? UserAccountsDrawerHeader(
+                accountName: const Text("Obteniendo nombre ..."),
+                accountEmail: const Text("Obteniendo email ..."),
+                currentAccountPicture: CircleAvatar(
+                    child: InkWell(
+                    onTap: ()=>Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => const UserProfilePage())),
+                    ),
+                    backgroundColor: ColorIntranetConstants.primaryColorLight,
+                ),
+                )
+                :UserAccountsDrawerHeader(
+                accountName: Text(_userlModel![0].fullname),
+                accountEmail: Text(_userlModel![0].email),
+                currentAccountPicture: CircleAvatar(
+                    child: InkWell(
+                    onTap: ()=>Navigator.of(context)
+                    .push(MaterialPageRoute(builder: (context) => const UserProfilePage())),
+                    ),
+                    backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl+_userlModel![0].photo),
+                ),
+                ),
+                ListTile(
+                leading: const Icon(Icons.home),
+                title: const Text(StringIntranetConstants.homePage),
+                selected: (_selectedDrawerItem == 0),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                onTap: () {
+                    selectedItem(context, 0);
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.info),
+                title: const Text(StringIntranetConstants.aboutPage),
+                selected: (_selectedDrawerItem == 1),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                onTap: () {
+                    selectedItem(context, 1);
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.chat_rounded),
+                title: const Text(StringIntranetConstants.organizationPage),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                selected: (_selectedDrawerItem == 2),
+                onTap: () {
+                    selectedItem(context, 2);
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.edit),
+                title: const Text(StringIntranetConstants.requestPage),
+                selected: (_selectedDrawerItem == 3),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                onTap: () {
+                    selectedItem(context, 3);
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.contact_mail),
+                title: const Text(StringIntranetConstants.directoryPage),
+                selected: (_selectedDrawerItem == 4),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                onTap: () {
+                    selectedItem(context, 4);
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.celebration),
+                title: const Text(StringIntranetConstants.aniversaryBirthdayPage),
+                selected: (_selectedDrawerItem == 5),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                onTap: () {
+                    selectedItem(context, 5);
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.emoji_events),
+                title: const Text(StringIntranetConstants.monthPage),
+                selected: (_selectedDrawerItem == 6),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                onTap: () {
+                    selectedItem(context, 6);
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.notifications),
+                title: const Text(StringIntranetConstants.communiquePage),
+                selected: (_selectedDrawerItem == 7),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                onTap: () {
+                    selectedItem(context, 7);
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.library_books),
+                title: const Text(StringIntranetConstants.manualPage),
+                selected: (_selectedDrawerItem == 8),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                onTap: () {
+                    selectedItem(context, 8);
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.public),
+                title: const Text(StringIntranetConstants.accessPage),
+                selected: (_selectedDrawerItem == 9),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                onTap: () {
+                    selectedItem(context, 9);
+                },
+                ),
+                ListTile(
+                leading: const Icon(Icons.exit_to_app),
+                title: const Text(StringIntranetConstants.logoutPage),
+                selected: (_selectedDrawerItem == 10),
+                selectedColor: ColorIntranetConstants.primaryColorLight,
+                onTap: () {
+                    selectedItem(context, 10);
+                },
+                ),
+            ],
+            ),
+        ),
+        );
+        
+        
+    }
+
+    selectedItem(BuildContext context, int index) {
+        Navigator.of(context).pop();
+
+        switch (index) {
+        case 0:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) => const HomePage()
+                ), 
+            ModalRoute.withName("/HomePage")
+            );
+            break;
+        case 1:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) =>  const AboutMainPage()
+                ), 
+            ModalRoute.withName("/AboutPage")
+            );
+            break;
+        case 2:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) =>  const OrganizationPage()
+                ), 
+            ModalRoute.withName("/OrganizationPage")
+            );
+            break;
+        case 3:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) => const  RequestMainPage()
+                ), 
+            ModalRoute.withName("/RequestPage")
+            );
+            break;
+        case 4:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) =>  const DirectoryPage()
+                ), 
+            ModalRoute.withName("/DirectoryPage")
+            );
+            break;
+        case 5:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) => const AniversaryHomePage()
+                ), 
+            ModalRoute.withName("/AniversaryPage")
+            );
+            break;
+        case 6:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) =>  const EmployeeMonthPage()
+                ), 
+            ModalRoute.withName("/EmployeeMonthPage")
+            );
+            break;
+        case 7:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) =>  const CommunicatePage()
+                ), 
+            ModalRoute.withName("/CommuniquePage")
+            );
+            break;
+        case 8:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) =>  const ManualPage()
+                ), 
+            ModalRoute.withName("/ManualPage")
+            );
+            break;
+        case 9:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) =>  const AccessPage()
+                ), 
+            ModalRoute.withName("/AccesPage")
+            );
+            break;
+        case 10:
+            _selectedDrawerItem = index;
+            Navigator.pushAndRemoveUntil(
+                context, 
+                MaterialPageRoute(
+                builder: (context) =>  const LogoutPage()
+                ), 
+            ModalRoute.withName("/LogoutPage")
+            );
+
+            break; 
+        }
+    }
+    }
+
+```
+
+**/skeletons/list_view_cards.dart**
+
+Los archivos dentro de la carpeta de skeletons son loaders que se activan cuando una pantalla se encuentra cargando u obteniendo información.
+[`Documentación`](https://pub.dev/packages/skeletons).
+
+```dart
+ 
+    class ListviewCardsExamplePage extends StatefulWidget {
+    const ListviewCardsExamplePage({Key? key}) : super(key: key);
+
+    @override
+    _ListviewCardsExamplePageState createState() =>
+        _ListviewCardsExamplePageState();
+    }
+
+    class _ListviewCardsExamplePageState extends State<ListviewCardsExamplePage> {
+    final bool _isLoading = true;
+
+
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+        backgroundColor: Colors.grey[300],
+        body: Container(
+            child: _isLoading ? _skeletonView() : const ListviewCardsExamplePage(),
+        ),
+        );
+    }
+
+    Widget _skeletonView() => ListView.builder(
+            // padding: padding,
+            physics: const NeverScrollableScrollPhysics(),
+            itemCount: 12,
+            itemBuilder: (context, index) => Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Container(
+                padding: const EdgeInsets.all(8.0),
+                decoration: const BoxDecoration(color: Colors.white),
+                child: SkeletonItem(
+                    child: Column(
+                children: [
+                    const SizedBox(
+                    height: 12,
+                    ),
+                    const SkeletonAvatar(
+                    style: SkeletonAvatarStyle(
+                        height: 310,
+                        width: double.infinity,
+                    ),
+                    ),
+                    const SizedBox(
+                    height: 12,
+                    ),
+                    SkeletonParagraph(
+                    style: SkeletonParagraphStyle(
+                        lines: 1,
+                        spacing: 2,
+                        lineStyle: SkeletonLineStyle(
+                            randomLength: true,
+                            height: 20,
+                            borderRadius: BorderRadius.circular(8),
+                            minLength: MediaQuery.of(context).size.width / 2,
+                            alignment: Alignment.bottomCenter)),
+                    ),
+                    const SizedBox(
+                    height: 8,
+                    ),
+                    Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                        SkeletonLine(
+                        style: SkeletonLineStyle(
+                            height: 50,
+                            width: 110,
+                            borderRadius: BorderRadius.circular(5),
+                            alignment: Alignment.bottomCenter),
+                        )
+                    ],
+                    )
+                ],
+                )),
+            ),
+            ),
+        );
+    }
+
+```
+
+**/alerts/user_card_alert_dialog.dart**
+
+Este archivo muestra un alert con la información del usuario.
+
+```dart
+
+    class UserCardAlertDialog {
+    static showFullDialog(
+        BuildContext context,
+        String fullname,
+        String email,
+        String photo,
+        String department,
+        String position,
+    ) {
+        showGeneralDialog(
+            context: context,
+            barrierDismissible: true,
+            barrierLabel:
+                MaterialLocalizations.of(context).modalBarrierDismissLabel,
+            transitionDuration: const Duration(milliseconds: 200),
+            pageBuilder: (BuildContext buildContext, Animation animation,
+                Animation secondaryAnimation) {
+            return Padding(
+                padding:
+                    const EdgeInsets.symmetric(vertical: 32.0, horizontal: 16.0),
+                child: Card(
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                ),
+                child: SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Column(
+                    children: [
+                        Container(
+                        width: double.infinity,
+                        height: 200.0,
+                        decoration: const BoxDecoration(
+                            image: DecorationImage(
+                            image: AssetImage("lib/assets/background.jpg"),
+                            fit: BoxFit.cover,
+                            ),
+                        ),
+                        child: Align(
+                            alignment: const Alignment(0, 2.5),
+                            child: SizedBox(
+                            width: 120.0,
+                            height: 120.0,
+                            child: OverflowBox(
+                                child: CircleAvatar(
+                                backgroundImage: NetworkImage(photo),
+                                ),
+                            ),
+                            ),
+                        ),
+                        ),
+                        const Padding(
+                        padding: EdgeInsets.only(top: 80.0),
+                        ),
+                        Column(
+                        children: [
+                            Text(
+                            fullname,
+                            style: const TextStyle(
+                                fontSize: 20.00,
+                                fontWeight: FontWeight.bold,
+                            ),
+                            ),
+                            const Padding(
+                            padding: EdgeInsets.only(top: 14.0),
+                            ),
+                            Text(
+                            position,
+                            style: const TextStyle(fontSize: 16.00),
+                            ),
+                            const Padding(
+                            padding: EdgeInsets.only(top: 36.0),
+                            ),
+                            Padding(
+                            padding: const EdgeInsets.only(left: 24.0),
+                            child: Column(
+                                children: [
+                                Row(
+                                    children: [
+                                    const Icon(Icons.house),
+                                    const Padding(
+                                        padding: EdgeInsets.only(right: 8.0)),
+                                    Text(department)
+                                    ],
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.only(top: 12.0)),
+                                Row(
+                                    children: [
+                                    const Icon(Icons.work),
+                                    const Padding(
+                                        padding: EdgeInsets.only(right: 8.0)),
+                                    Text(position)
+                                    ],
+                                ),
+                                const Padding(
+                                    padding: EdgeInsets.only(top: 12.0)),
+                                Row(
+                                    children: [
+                                    const Icon(Icons.mail),
+                                    const Padding(
+                                        padding: EdgeInsets.only(right: 8.0)),
+                                    Text(email)
+                                    ],
+                                ),
+                                ],
+                            ),
+                            ),
+                        ],
+                        ),
+                    ],
+                    ),
+                ),
+                ),
+            );
+            });
+    }
     }
 
 ```

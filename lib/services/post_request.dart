@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
-import 'package:intranet_movil/widget/alerts/successful_alert_dialog.dart';
-import 'package:intranet_movil/widget/alerts/wrong_alert_dialog.dart';
+import 'package:intranet_movil/views/request/widget/successful_alert_dialog.dart';
+import 'package:intranet_movil/views/request/widget/wrong_alert_dialog.dart';
+
 
  Future postRequest(
       String token,
