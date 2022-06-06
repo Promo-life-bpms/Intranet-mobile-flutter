@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/aniversary.dart';
-import 'package:intranet_movil/model/brithday.dart';
+import 'package:intranet_movil/model/birthday.dart';
 import 'package:intranet_movil/views/aniversary/widget/aniversary_grid.dart';
 
 class BirthdayBuilder extends StatefulWidget {

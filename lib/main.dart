@@ -26,9 +26,6 @@ class _HomeState extends State<MyApp> {
   late List<UserModel>? _userModel = [];
   late String? _token = "";
 
-  late String? email;
-  late String? fullname;
-
   @override
   void initState() {
     super.initState();
@@ -40,12 +37,6 @@ class _HomeState extends State<MyApp> {
     _token = prefs.getString('token');
     _userModel =
         (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
-    if (_userModel != null || _userModel!.isNotEmpty) {
-      await prefs.setString('fullname', _userModel![0].fullname);
-      await prefs.setString('email', _userModel![0].email);
-      await prefs.setString(
-          'photo', ApiIntranetConstans.baseUrl + _userModel![0].photo);
-    }
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 

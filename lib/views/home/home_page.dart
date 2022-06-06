@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/model/brithday.dart';
+import 'package:intranet_movil/model/birthday.dart';
 import 'package:intranet_movil/model/communique.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';

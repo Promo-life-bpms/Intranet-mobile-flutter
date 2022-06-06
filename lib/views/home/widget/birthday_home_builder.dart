@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/model/brithday.dart';
+import 'package:intranet_movil/model/birthday.dart';
 import 'package:intranet_movil/views/home/widget/user_birthday_card.dart';
 
 class BirthdayHomeBuilder extends StatefulWidget {
