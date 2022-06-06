@@ -82,7 +82,6 @@ Utilizado para llenar datos de una lista estática
 Utilizado para consumir datos desde internet, del endpoint de aniversarios.
 
 ```dart
-    import 'dart:convert';
 
     List<AniversaryModel> aniversaryModelFromJson(String str) =>
         List<AniversaryModel>.from(
@@ -217,7 +216,6 @@ Carpeta que almacena porciónes de código que puede ser utilizadas en cualquier
 En este archivo se incluyeron las principales constantes de la aplicación, siendo en su mayoria textos.
 
 ```dart
-    import 'package:flutter/material.dart';
 
     class ApiIntranetConstans {
     static String baseUrl = 'https://dev-intranet.promolife.lat/';
@@ -941,5 +939,5 @@ class _HomeState extends State<MyApp> {
 
 </details>
 
-
+[`Volver al Inicio`](https://github.com/Oscar-CR/Intranet-mobile-flutter)
 

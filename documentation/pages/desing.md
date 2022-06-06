@@ -15,4 +15,4 @@
 ### [`Proyecto en Figma`](https://www.figma.com/file/GRZ3sCyIaGJ2Z0OfPbi92c/Intranet-Mockups-%26-Wireframes?node-id=0%3A1)
 
 
-[`Volver al Inicio`](/README.md)
+[`Volver al Inicio`](https://github.com/Oscar-CR/Intranet-mobile-flutter)

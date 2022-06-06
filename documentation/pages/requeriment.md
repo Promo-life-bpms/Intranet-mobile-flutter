@@ -19,4 +19,4 @@
 | IDE o Editor         | Android Studio / X Code / VS Code      |
 
 
-[`Volver al Inicio`](/README.md)
+[`Volver al Inicio`](https://github.com/Oscar-CR/Intranet-mobile-flutter)
