@@ -45,7 +45,7 @@
     - main.dart
 
 
-# Código 
+# Generalidades de las carpetas 
 
 ##  /lib
 
@@ -343,7 +343,58 @@ En este archivo se incluyeron las principales constantes de la aplicación, sien
 <details>
 	<summary>/views</summary>
     
-Esta carpeta almacena los módulos principales de toda la aplicación, se encuentra separada de la siguiente manera:
+Esta carpeta almacena los principales módulos de toda la aplicación, se encuentra separada de acuerdo a su funciónalidad. 
+
+Los módulos contienen una subcarpeta llamada /widget, la cual contiene widgets utilizados en el archivo principal del módulo, separando las funcionalidades.
+
+**/about**
+
+Muestra información acerca de las empresas BH y Promolife, se encuentra didivido en 3 archivos:
+
+**/access**
+
+Muestra accesos directos a las diferentes plataformas y sistemas que cuenta la empresa.
+
+**/aniversary**
+
+Carpeta que almacena los modulos de cumpleaños y aniversarios.
+
+**/auth**
+
+Carpeta que almanena los módulos de inicio y cierre de sesión.
+
+**/communicate**
+
+Carpeta que almacena el módulo de los comunicados.
+
+**/directory**
+
+Carpeta que almacena el módulo del directorio.
+
+**/employee-month**
+
+Carpeta que almacena el módulo de los empleados del mes.
+
+**/home**
+
+Carpeta que almacena el módulo de Home o Inicio.
+
+**/manual**
+
+Carpeta que almacena el módulo de los manuales.
+
+
+**/organization**
+
+Carpeta que almacena el módulo del organigrama.
+
+**/profile**
+
+Carpeta que almacena el módulo de perfil de usuario
+
+**/request**
+
+Carpeta que almacena el módulo de las solcitudes.
 
 </details>
 
