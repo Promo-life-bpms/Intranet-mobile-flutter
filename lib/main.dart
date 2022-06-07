@@ -46,6 +46,7 @@ class _HomeState extends State<MyApp> {
      MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Login',
+      //Tema custom de la aplicacion
        theme: ThemeData(
         primaryColor: ColorIntranetConstants.primaryColorLight, 
         primaryColorLight: ColorIntranetConstants.primaryColorLight,
@@ -59,6 +60,7 @@ class _HomeState extends State<MyApp> {
         body:  
         _userModel == null || _userModel!.isEmpty 
         ?Center(
+          //Widget que valida si esta autenticado o no
             child: Consumer<AuthProvider>(
               builder: (context, auth, child) {
                 switch (auth.isAuthenticated) {

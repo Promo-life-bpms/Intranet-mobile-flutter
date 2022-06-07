@@ -30,6 +30,7 @@ class AboutWidget extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
+            // Widget de los cumpleaños
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(
@@ -69,6 +70,7 @@ class AboutWidget extends StatelessWidget {
             ),
             const Padding(padding: EdgeInsets.only(top: 8)),
 
+            //Widget de los aniversarios
             Card(
               elevation: 4,
               shape: RoundedRectangleBorder(

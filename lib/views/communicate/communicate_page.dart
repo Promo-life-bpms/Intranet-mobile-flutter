@@ -36,7 +36,7 @@ class _HomeState extends State<CommunicatePage> {
         title: const Text(StringIntranetConstants.communiquePage),
       ),
       body: _communiqueModel == null || _communiqueModel!.isEmpty
-          ? const ListviewCardsExamplePage()
+          ? const ListviewCardsExamplePage() //Skeleton
           : ListView.builder(
               padding: const EdgeInsets.all(8),
               itemCount: _communiqueModel!.length,

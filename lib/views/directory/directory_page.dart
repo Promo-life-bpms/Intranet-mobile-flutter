@@ -44,6 +44,7 @@ class _HomeState extends State<DirectoryPage> {
             ? const ListviewCompanyPage()
             : Column(
                 children: [
+                  //Widget de barra de busqueda
                   Padding(
                       padding: const EdgeInsets.symmetric(
                           vertical: 16.0, horizontal: 24.0),
@@ -71,6 +72,7 @@ class _HomeState extends State<DirectoryPage> {
                         onChanged: (string) {
                           _debouncer.run(() {
                             setState(() {
+                              //Filtrado de usuarios por nombre completo
                               _directoryModelSearch = _directoryModel
                                   ?.where(
                                     (u) => (u.fullname.toLowerCase().contains(
@@ -83,6 +85,7 @@ class _HomeState extends State<DirectoryPage> {
                         },
                       )),
                   _directoryModelSearch!.isEmpty
+                      //Builder del Directorio, que muestra todos los empleados cuando el usuario no realizó ninguna busqueda
                       ? DirectoryBuilder(
                           directoryData: List<DirectoryModel>.generate(
                               _directoryModel!.length,

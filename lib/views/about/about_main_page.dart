@@ -32,6 +32,7 @@ class AboutWidget extends StatelessWidget {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: <Widget>[
+            // Card perteneciente a PL
             Card(
               elevation: 4,
               child: InkWell(

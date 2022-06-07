@@ -25,7 +25,7 @@ class NavigationDrawerWidget extends StatefulWidget {
 
 class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   late List<UserModel>? _userlModel = [];
-   static var _selectedDrawerItem = 0;
+  static var _selectedDrawerItem = 0;
 
   @override
   void initState() {
@@ -34,13 +34,14 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   }
 
    void _getData() async {
+     //Obtiene el token (si existe) y lo valida enviando una peticion GET al servidor, devuelviendo la información del usuario
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
-
+  //Widget de la barra lateral
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -48,7 +49,8 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         child: ListView(
           children: <Widget>[
             _userlModel == null || _userlModel!.isEmpty
-            ? UserAccountsDrawerHeader(
+            ? // Si la información del usuario no esta disponible, se muestra este widget hasta que la obtenga
+            UserAccountsDrawerHeader(
               accountName: const Text("Obteniendo nombre ..."),
               accountEmail: const Text("Obteniendo email ..."),
               currentAccountPicture: CircleAvatar(
@@ -69,7 +71,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                 ),
                 backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl+_userlModel![0].photo),
               ),
-            ),
+            ), 
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text(StringIntranetConstants.homePage),
@@ -179,7 +181,6 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
   selectedItem(BuildContext context, int index) {
     Navigator.of(context).pop();
-
     switch (index) {
       case 0:
         _selectedDrawerItem = index;

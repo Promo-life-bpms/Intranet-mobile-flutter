@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/model/about.dart';
 
 class ApiIntranetConstans {
   static String baseUrl = 'https://dev-intranet.promolife.lat/';
@@ -74,6 +75,17 @@ class StringIntranetConstants{
   static const publicationPostCommentSuccesful="Comentario enviado satisfactoriamente";
 
   static const emptyError ="Este campo no puede estar vacío";
+
+  static const aboutPLWhatIs="¿Que es Promo Life?";
+  static const aboutPLDescription ="PROMOTIONAL GLOBAL SUPPLIER. Más de una década importando, fabricando y distribuyendo productos promocionales y regalos corporativos para las marcas más prestigiosas. Expertos asesores, socios estratégicos y facilitadores para la adquisición del producto exacto para cada campaña externa o interna de las empresas AAA.";
+  static const aboutPLHistory = "Historia";
+  static const aboutPLHistoryDescription = "En 2011 se constituye Promo Life S de RL de CV, sumando la experiencia de los socios en la importación y comercialización de productos promocionales disponibles en México. Hemos crecido año con año sin detenernos, teniendo cada vez más clientes, presencia en el mercado y un equipo de colaboradores más robusto y profesionalizando cada vez más nuestra dinámica de trabajo.";
+  static const aboutPLValuesCode = "Código de valores";
+
+  static const aboutBHWhatIs="¿Qué es BH Trade Market?";
+  static const aboutBHDescription ="Más de una década importando, fabricando y distribuyendo productos promocionales y regalos corporativos para las marcas más prestigiosas. Expertos asesores, socios estratégicos y facilitadores para la adquisición del producto exacto para cada campaña externa o interna de las empresas AAA.";
+
+
 } 
 
 class ListIntranetConstants{
@@ -95,6 +107,7 @@ class ListIntranetConstants{
     'lib/assets/tickets.png',
     'lib/assets/powerbi.png'
   ];
+
   final List<String> accessLink = <String>[
     'https://dev-cursos.promolife.lat/loginEmail?email=admin@admin.com&password=password',
     'https://promolife.vde-suite.com:8030/web/login',
@@ -104,6 +117,15 @@ class ListIntranetConstants{
     'https://tdesign.promolife.lat/',
     'https://app.powerbi.com/singleSignOn?ru=https:%2f%2fapp.powerbi.com%2f%3fnoSignUpCheck%3d1'
   ];
+
+  final List<AboutData> aboutPL = [
+    const AboutData('Lealtad','Es sin duda una de las cualidades más respetables de un ser humano, en especial cuando se trata de una relación de pareja o de una amistad ya que ayuda a mantener un lazo fuerte y generar confianza en el otro.', 'lib/assets/lealtad.json'),
+    const AboutData('Confianza', 'Nos referimos a la posibilidad  de creer en que otra persona, o un grupo de ellas, actuarán de la manera adecuada en nuestra ausencia, es decir, que no nos defraudarán o nos engañarán, ni necesitan tampoco nuestra supervisión y vigilancia.', 'lib/assets/confianza.json'),
+    const AboutData('Honestidad', 'Es la virtud humana consistente en el amor a la justicia y la verdad por encima del beneficio personal o de la convivencia','lib/assets/honestidad.json'),
+    const AboutData('Trabajo en equipo', 'Incluye aquellas labores que se realizan de manera compartida y organizada, en las que cada quien asume una parte y todos tienen el mismo objetivo en común. Se trata de una forma de organización del trabajo basada en el compañerismo.', 'lib/assets/te.json'),
+    const AboutData('Productividad', 'Es un tipo de comportamiento de tipo anticipatorio, que no requiere de un estímulo externo para iniciar una acción o emprender un cambio.', 'lib/assets/productividad.json')
+    ];
+
 }
 class ColorIntranetConstants{
   static const primaryColorDark = Color(0XFF1A346B);
