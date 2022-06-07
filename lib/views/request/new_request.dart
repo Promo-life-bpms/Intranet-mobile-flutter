@@ -14,16 +14,28 @@ class RequestPage extends StatefulWidget {
   }
 }
 
+//El usuario puede crear una solicitud de 3 diferentes tipos, la primera denominada "Salir durante la jornada" muestra un widget extra para colocar la fecha de salida. 
+//La segunda "Faltar a sus labores"  al igual que  "Solicitar vacaciones", remueve dicho widget. 
+//La tercer tipo de solicitud cambia el texto del botón para seleccionar dias, mostrando al usuario la cantidad de dias disponibles que tiene para solicitar vacaciones, las otras 2  (Salir durante la jornada,Faltar a sus labores) no lo muestra.
+//Cuando el usuario alcanza el maximo de dias disponibles de vacaciones en el tipo de solicitud "Solicitar vacaciones", no se le permite agregar mas dias.
+//El usuario puede agregar y eliminar los dias del calendario.
+
 class _MyHomePageState extends State<RequestPage> {
+
   String date = "";
   int maxDays = 0;
   int daysToShow = 0;
+  //Lista  de dias  para mostrar localmente con formato yyyy-MM-dd
   List<String> days = [];
+  //Lista de dias para enviar con formato ddMMyyyy
   List<String> daysToSend = [];
-
+  String dropdownvalue = 'Salir durante la jornada';
+  late String payment = "Descontar Tiempo/Dia";
+  TimeOfDay selectedTime = TimeOfDay.now();
+  DateTime selectedDate = DateTime.now();
+  
   final reason = TextEditingController();
   late String token = "";
-
   final _formKey = GlobalKey<FormState>();
 
   var typeRequest = [
@@ -31,12 +43,6 @@ class _MyHomePageState extends State<RequestPage> {
     'Faltar a sus labores',
     'Solicitar vacaciones',
   ];
-
-  String dropdownvalue = 'Salir durante la jornada';
-  late String payment = "Descontar Tiempo/Dia";
-  TimeOfDay selectedTime = TimeOfDay.now();
-  DateTime selectedDate = DateTime.now();
-  var df = DateFormat("hh:mm");
 
   late List<UserModel>? _userlModel = [];
 
@@ -49,12 +55,12 @@ class _MyHomePageState extends State<RequestPage> {
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
     String? _token = prefs.getString('token');
+    //Asigna el token a una variable para posteriormente enviarlo en la solicitud
     if (_token != null || _token!.isNotEmpty) {
       token = _token;
     }
-
-    _userlModel =
-        (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
+    _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
+    //Obtiene el total de dias disponibles del endpoint y lo asigna  a la variable maxDays, mismo que sera utilizado en la variable daysToShow
     maxDays = _userlModel![0].daysAvailables;
     daysToShow = maxDays;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
@@ -99,6 +105,7 @@ class _MyHomePageState extends State<RequestPage> {
                             }).toList(),
                             onChanged: (String? newValue) {
                               setState(() {
+                                //De acuerdo al valor del dropdown, seran las opciones que se muestren al usuario
                                 dropdownvalue = newValue!;
                                 if (dropdownvalue ==
                                         "Salir durante la jornada" ||
@@ -279,6 +286,7 @@ class _MyHomePageState extends State<RequestPage> {
                 )));
   }
 
+  //Calendario
   _selectDate(BuildContext context) async {
     final DateTime? selected = await showDatePicker(
       context: context,
@@ -294,6 +302,7 @@ class _MyHomePageState extends State<RequestPage> {
         days.add(formattedDate);
         String formattedDate2 = DateFormat('ddMMyyyy').format(selected);
         daysToSend.add(formattedDate2);
+        //resta la cantidad de dias dis´ponibles
         daysToShow = daysToShow -1;
       });
     }
@@ -301,6 +310,7 @@ class _MyHomePageState extends State<RequestPage> {
 
   _delete(days, selected, selectedToSend) async {
     setState(() {
+      //remueve el valor mostrado al usuario de ambas listas
       days.remove(selected);
       daysToSend.remove(selectedToSend);
       daysToShow = daysToShow +1;
@@ -308,6 +318,7 @@ class _MyHomePageState extends State<RequestPage> {
     });
   }
 
+  //Hora
   _selectTime(BuildContext context) async {
     final TimeOfDay? timeOfDay = await showTimePicker(
       context: context,

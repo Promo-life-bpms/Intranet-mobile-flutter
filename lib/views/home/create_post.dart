@@ -116,7 +116,7 @@ class _HomeState extends State<CreatePostPage> {
                                 else
                                   {_formKey.currentState!.validate()}
                               },
-                          child: const Text("PUBLICAR")),
+                          child: const Text(StringIntranetConstants.buttonPost)),
                     ),
                   )
                 ],

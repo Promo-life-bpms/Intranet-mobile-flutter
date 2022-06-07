@@ -36,7 +36,7 @@ class SuccessfulAlertDialog {
                             padding: EdgeInsets.all(16),
                             child: Center(
                               child: Text(
-                                "¡Solicitud enviada!",
+                                StringIntranetConstants.successfulAlertTitle,
                                 style: TextStyle(
                                     fontSize: 28, fontWeight: FontWeight.bold),
                               ),
@@ -56,7 +56,7 @@ class SuccessfulAlertDialog {
                             padding: EdgeInsets.all(16),
                             child: Center(
                               child: Text(
-                                "Tu solicitud ha sido procesada con exito",
+                                StringIntranetConstants.successfulAlertDescription,
                                 style: TextStyle(fontSize: 16),
                               ),
                             ),

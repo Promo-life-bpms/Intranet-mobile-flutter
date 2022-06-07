@@ -31,7 +31,7 @@ class WrongAlertDialog {
                         padding: EdgeInsets.all(16),
                         child: Center(
                           child: Text(
-                            "Algo salio mal",
+                            StringIntranetConstants.wrongAlertDescription,
                             style: TextStyle(
                                 fontSize: 28, fontWeight: FontWeight.bold),
                           ),
@@ -53,7 +53,7 @@ class WrongAlertDialog {
                         padding: EdgeInsets.all(16),
                         child: Center(
                           child: Text(
-                            "Revisa los datos de tu solicitud e intenta nuevamente",
+                            StringIntranetConstants.wrongAlertDescription,
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
@@ -72,7 +72,7 @@ class WrongAlertDialog {
                               onPressed: () {
                                 Navigator.pop(context);
                               },
-                              child: const Text('ACEPTAR'),
+                              child: const Text(StringIntranetConstants.buttonAcept),
                             ),
                           )),
                     ],

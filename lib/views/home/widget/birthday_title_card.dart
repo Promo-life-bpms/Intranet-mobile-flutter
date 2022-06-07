@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/utils/constants.dart';
 
 class BirthdayTitleCard extends StatefulWidget {
   const BirthdayTitleCard({Key? key})
@@ -17,7 +18,7 @@ class _BirthdayTitleCardState extends State<BirthdayTitleCard> {
       color: Colors.white,
       child: const Center(
         child: Text(
-          "Cumpleaños del Mes",
+          StringIntranetConstants.homeBirthdayTitle,
           style: TextStyle(
             fontSize: 18.00,
             fontWeight: FontWeight.bold,

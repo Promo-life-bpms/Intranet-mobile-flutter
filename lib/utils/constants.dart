@@ -85,7 +85,15 @@ class StringIntranetConstants{
   static const aboutBHWhatIs="¿Qué es BH Trade Market?";
   static const aboutBHDescription ="Más de una década importando, fabricando y distribuyendo productos promocionales y regalos corporativos para las marcas más prestigiosas. Expertos asesores, socios estratégicos y facilitadores para la adquisición del producto exacto para cada campaña externa o interna de las empresas AAA.";
 
+  static const successfulAlertTitle ="¡Solicitud enviada!";
+  static const successfulAlertDescription ="Tu solicitud ha sido procesada con exito";
+  static const wrongAlertTitle = "Revisa los datos de tu solicitud e intenta nuevamente";
+  static const wrongAlertDescription = "Revisa los datos de tu solicitud e intenta nuevamente";
 
+  static const buttonAcept="ACEPTAR";
+  static const buttonPost="PUBLICAR";
+
+  static const homeBirthdayTitle = "Cumpleaños del Mes";
 } 
 
 class ListIntranetConstants{
