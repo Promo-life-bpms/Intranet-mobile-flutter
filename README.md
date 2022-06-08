@@ -2,6 +2,30 @@
 
 <img src="./documentation/img/intranet.png" alt="intranet">
 
+<br>
+
+## Requisitos
+
+### Hardware
+
+| Caracteristica      | Requisito |
+| ----------- | ----------- |
+| Procesador    | 4 nucleos   |
+| Arquitectura  | 64 bits     |
+| RAM           | 8-16 GB     |
+| Almacenamiento| 12GB        |
+
+
+### Software
+
+| Caracteristica      | Requisito |
+| ----------- | ----------- |
+| Sistema Operativo    | Windows/Linux/Mac   |
+| Flutter SDK  | 2.16 - 3.0    |
+| IDE o Editor         | Android Studio / X Code / VS Code      |
+
+<br>
+
 ## Instalación
 
 Clonar el repositorio
@@ -21,8 +45,4 @@ flutter run
 
 ## Documentación
 
-- [`Diseño`](./documentation/pages/desing.md)
-
-- [`Requisitos previos`](./documentation/pages/requeriment.md)
-
-- [`Proyecto`](./documentation/pages/project.md)
+- [`doc`](./documentation/pages/documentation.md)
