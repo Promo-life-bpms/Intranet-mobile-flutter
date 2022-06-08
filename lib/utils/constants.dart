@@ -19,7 +19,6 @@ class ApiIntranetConstans {
   static String getPublication = 'api/getPublications/';
   static String postLike = 'api/postLike';
   static String postUnlike = 'api/postUnlike';
-  static String getComment = 'api/showComments/';
   static String postComment = 'api/postComment';
   static String getEmployeeProfile = 'api/getProfile/';
 }

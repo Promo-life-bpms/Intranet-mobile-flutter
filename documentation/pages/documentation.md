@@ -1511,6 +1511,8 @@ public function birthday()
 
 <details>
 	<summary>communicateEndpoint</summary>
+    Ruta de tipo GET que muestra los comunicados generados en la intranet web.
+
 
 ```dart
 static String communicateEndpoint = 'api/communicate/';
@@ -1534,6 +1536,7 @@ public function communicate()
 
 <details>
 	<summary>directoryEndponit</summary>
+    Ruta de tipo GET que muestra todos los empleados de la intranet web
 
 ```dart
 static String directoryEndponit = 'api/directory/';
@@ -1541,18 +1544,59 @@ static String directoryEndponit = 'api/directory/';
 
 Ruta asociada en la intranet web
 ```php
-
+Route::get('/directory', [APIController::class, 'directory'])->name('api.directory');
 ```
 
 Función asociada a la ruta 
 ```php
+public function directory()
+    {   
+        //Primer se obtienen todos los usuarios de la intranet
+        $user = User::all();
+        $data = [];
+        $directory = ModelsDirectory::all();
+        $directory_data = [];
 
+        //A cada usuario se asigna un arreglo con los datos del directorio que tienen disponible
+        foreach ($user as $usr) {
+            foreach ($directory as $dir) {
+                if ($usr->id == $dir->user_id) {
+                    array_push($directory_data, (object)[
+                        'type' => $dir->type,
+                        'data' => $dir->data,
+                        'company' => $dir->companyName->name_company,
+                    ]);
+                }
+            }
+            //Se valida que las imagenes no sean nulas o vacias y se da un valor por default
+            $image = '';
+            if ($usr->image == null) {
+                $image = "img/default_user.png";
+            } else {
+                $image = $usr->image;
+            }   
+            //Finalmente se crea un objet con todas los datos del usuario
+            array_push($data, (object)[
+                'id' => $usr->id,
+                'fullname' => $usr->name . " " . $usr->lastname,
+                'email' => $usr->email,
+                'photo' => $image,
+                'department' => $usr->employee->position->department->name,
+                'position' => $usr->employee->position->name,
+                'data' =>  $directory_data,
+            ]);
+            $directory_data = [];
+        }
+        //Envia el objeto de los datos
+        return $data;
+    }
 ```
 
 </details>
 
 <details>
 	<summary>organizationEndpoint</summary>
+    Ruta de tipo GET que muestra los empleados de la intranet, de acuerdo al id del departamente al que pertenecen
 
 ```dart
 static String organizationEndpoint = '/api/organization/';
@@ -1560,12 +1604,40 @@ static String organizationEndpoint = '/api/organization/';
 
 Ruta asociada en la intranet web
 ```php
-
+Route::get('/organization/{id}', [APIController::class, 'organization'])->name('api.organization');
 ```
 
 Función asociada a la ruta 
 ```php
-
+public function organization($id)
+    {
+        //Obtiene a todos los usuarios de la intranet
+        $user = User::all();
+        $data = [];
+        foreach ($user as $usr) {
+            //Valida si el id del departamente es igual al recibido 
+            if ($usr->employee->position->department->id == $id) {
+                $image = '';
+                //Asigna un valor enc aso de tener imagenes nulas o vacias
+                if ($usr->image == null) {
+                    $image = "img/default_user.png";
+                } else {
+                    $image = $usr->image;
+                }
+                //Envia los datos en un objeto
+                array_push($data, (object)[
+                    'id' => $usr->id,
+                    'name' => $usr->name,
+                    'lastname' => $usr->lastname,
+                    'photo' => $image,
+                    'department' => $usr->employee->position->department->name,
+                    'position' => $usr->employee->position->name,
+                ]);
+            }
+        }
+        //retorna los empleados que pertenecen al departamento especificado
+        return $data;
+    }
 ```
 
 
@@ -1573,6 +1645,7 @@ Función asociada a la ruta
 
 <details>
 	<summary>postPublication</summary>
+    Ruta de tipo POST que envia las publicaciones generadas por los usuarios de la intranet movil al backend web.
 
 ```dart
 static String postPublication = 'api/postPublications';
@@ -1580,18 +1653,36 @@ static String postPublication = 'api/postPublications';
 
 Ruta asociada en la intranet web
 ```php
-
+Route::post('/postPublications', [APIController::class, 'postPublications'])->name('api.postPublications');
 ```
 
 Función asociada a la ruta 
 ```php
+public function postPublications(Request $request)
+    {
+        //Valida que el token de la solicutud recibida sea valido (que pertenezca a un usuario)    
+        $token = DB::table('personal_access_tokens')->where('token', $request->token)->first();
+        $user_id = $token->tokenable_id;
 
+        if($user_id!=null || $user_id !=[]){
+            //Crea un nuevo registro de publicación en labase de datos con la información recibida
+            $data = new Publications();
+            $data->id = $request->id;
+            $data->user_id = $user_id;
+            $data->content_publication = $request->contentPublication;
+            $data->photo_public = "sin foto";
+            $data->save();
+    
+            return $token;
+        }
+    }
 ```
 
 </details>
 
 <details>
 	<summary>getPublication</summary>
+    Ruta de tipo GET que obtiene todas las publicaciones generadas por los usuarios, los status de like son individuales para cada consulta
 
 ```dart
 static String getPublication = 'api/getPublications/';
@@ -1599,11 +1690,117 @@ static String getPublication = 'api/getPublications/';
 
 Ruta asociada en la intranet web
 ```php
-
+Route::get('/getPublications/{hashedToken}', [APIController::class, 'getPublications'])->name('api.getPublications');
 ```
 
 Función asociada a la ruta 
 ```php
+public function getPublications($hashedToken)
+    {
+        //Valida el token de usuario 
+        $token = DB::table('personal_access_tokens')->where('token', $hashedToken)->first();
+        $user_id = $token->tokenable_id;
+        //Obtiene todas las publicaciones generadas
+        $publications = Publications::orderBy("created_at", "desc")->get();
+        $data = [];
+        $likes = DB::table('likes')->get();
+        $comments = Comment::all();
+
+        foreach ($publications as $pub) {
+            //Para cada publicacion obtiene la diferencia de tiempo de la hora de creación y la hora actual
+            $created = $pub->created_at->diffForHumans(null, false, false, 1);;
+            $fullname = "";
+            $totalLikes = 0;
+            $photo = "";
+            $isLike =false;
+            $user= User::all()->where('id', $pub->user_id);
+            $publi_comments= [];
+            //Se debe determinar si el usuario le ha dado like a la publicación, por lo que se hace la valicación y se cuenta el total de likes.
+            foreach ($likes as $like) {
+                if ($like->publication_id == $pub->id) {
+                    $totalLikes = $totalLikes + 1;
+                    if($like->user_id == $user_id){
+                        
+                        $isLike = true;
+                    }
+                }
+                
+            }
+            //Se hace una concatenación de nombres y apellidos
+            foreach($user as $usr){
+                $fullname = $usr->name . " " . $usr->lastname;
+
+                $image = '';
+                if ($usr->image == null) {
+                    $image = "img/default_user.png";
+                } else {
+                    $image = $usr->image;
+                }
+            }
+
+            //Por cada publicación se debe conocer el total de comentarios que tiene, asi como la persona que lo hizo.
+            foreach($comments as $com){
+
+                if($com->publication_id == $pub->id){
+                    //Se busca el usuario que hizo el comentario mediante su id
+                    $comment_user = User::all()->where('id',$com->user_id);
+                    foreach($comment_user as $com_user){
+                       //se concatena el nombres y apellidos
+                        $com_fullname = $com_user->name . " " . $com_user->lastname;
+                        // Se valida si la imagen de usuario existe
+                        $com_image = '';
+                        if ($com_user->image == null) {
+                            $com_image = "img/default_user.png";
+                        } else {
+                            $com_image = $com_user->image;
+                            
+                        }
+                        //Se genera un objeto con todos los comentarios de la publicación
+                        array_push($publi_comments, (object)[
+
+                            'id' => $com->publication_id,
+                            'userName' => $com_fullname,
+                            'photo' => $com_image,
+                            'content' => $com->content,
+                        ]);
+                    }
+                  
+                    
+                }
+            }
+            //A nivel publicación se valida que la imaegn no sea nula
+            if ($pub->photo_public == "") {
+                $photo = "no photo";
+            } else {
+                $photo = $pub->photo_public;
+            }
+            //En caso de que no se tengan comentarios, se crea un objeto especificandolo, mismo que sera utilizado en la app movil
+            if($publi_comments == []){
+                array_push($publi_comments, (object)[
+
+                    'id' => $pub->id,
+                    'userName' => "sin datos",
+                    'photo' => "sin datos",
+                    'content' => "sin datos",
+                ]);
+            }
+            //Finalmente se crea el objeto de la publcicación con el objeto de comentarios anidado
+            array_push($data, (object)[
+                'id' => $pub->id,
+                'userId' => $pub->user_id,
+                'photo' => $image,
+                'userName' => $fullname,
+                'created' => $created,
+                'contentPublication' => $pub->content_publication,
+                'photoPublication' => $photo,
+                'likes' => $totalLikes,
+                'isLike'=>$isLike,
+                'comments'=>$publi_comments,
+            ]);
+        }
+        //Se retorna los datos
+        return  $data;
+    }
 
 ```
 
@@ -1611,6 +1808,7 @@ Función asociada a la ruta
 
 <details>
 	<summary>postLike</summary>
+    Ruta de tipo POST que genera un registro en la tabla likes de la publicacion especificada.
 
 ```dart
 static String postLike = 'api/postLike';
@@ -1618,18 +1816,28 @@ static String postLike = 'api/postLike';
 
 Ruta asociada en la intranet web
 ```php
-
+Route::post('/postLike', [APIController::class, 'postLike'])->name('api.postLike');
 ```
 
 Función asociada a la ruta 
 ```php
-
+public function postLike(Request $request){
+    //Se obtiene el id del usuario en base al token
+    $token = DB::table('personal_access_tokens')->where('token', $request->token)->first();
+    $user_id = $token->tokenable_id;
+    //se genera un nuevo registro en la base de datos
+    $like = new Like();
+    $like->user_id = $user_id;
+    $like->publication_id = $request->publicationID;
+    $like->save();
+    }
 ```
 
 </details>
 
 <details>
 	<summary>postUnlike</summary>
+    Ruta de tipo POST que elimina un registro en la tabla likes de la publicacion especificada
 
 ```dart
 static String postUnlike = 'api/postUnlike';
@@ -1637,37 +1845,26 @@ static String postUnlike = 'api/postUnlike';
 
 Ruta asociada en la intranet web
 ```php
-
+Route::post('/postUnlike', [APIController::class, 'postUnlike'])->name('api.postUnlike');
 ```
 
 Función asociada a la ruta 
 ```php
-
-```
-
-</details>
-
-<details>
-	<summary>getComment</summary>
-
-```dart
-static String getComment = 'api/showComments/';
-```
-
-Ruta asociada en la intranet web
-```php
-
-```
-
-Función asociada a la ruta 
-```php
-
+public function postUnlike(Request $request)
+    {
+        //Se obtiene el id del usuario en base al token
+        $token = DB::table('personal_access_tokens')->where('token', $request->token)->first();
+        $user_id = $token->tokenable_id;    
+        //Se elimina el registro de la tabla likes que pertenezca al id del usuario y al id de la publicación.
+        DB::table('likes')->where('user_id',  $user_id)->where('publication_id',$request->publicationID)->delete();
+    }
 ```
 
 </details>
 
 <details>
 	<summary>postComment</summary>
+    Ruta de tipo POST que crea un registro de comentario dentro del proyecto web.
 
 ```dart
 static String postComment = 'api/postComment';
@@ -1675,18 +1872,34 @@ static String postComment = 'api/postComment';
 
 Ruta asociada en la intranet web
 ```php
-
+Route::post('/postComment', [APIController::class, 'postComment'])->name('api.postComment');
 ```
 
 Función asociada a la ruta 
 ```php
-
+public function postComment(Request $request)
+    {
+        //Se obtiene el id del usuario en base al token
+        $token = DB::table('personal_access_tokens')->where('token', $request->token)->first();
+        $user_id = $token->tokenable_id;    
+        //se valida si el id de usario es valido y se crea un nuevo registro en la tabla de comentarios
+        if($user_id!=null || $user_id !=[]){
+            $comment = new Comment();
+            $comment->user_id =$user_id;
+            $comment->publication_id = $request->publicationID;
+            $comment->content =$request->content;
+            $comment->save();
+        
+            return true;
+        }
+    }
 ```
 
 </details>
 
 <details>
 	<summary>getEmployeeProfile</summary>
+    Ruta de tipo POST que retorna la información del usuario de acuerdo a su id, ademas de las publicaciones y comentarios de las mismas, en un objeto anidado.
     
 ```dart
 static String getEmployeeProfile = 'api/getProfile/';
@@ -1694,12 +1907,162 @@ static String getEmployeeProfile = 'api/getProfile/';
 
 Ruta asociada en la intranet web
 ```php
-
+Route::get('/getProfile/{id}', [APIController::class, 'getProfile'])->name('api.getProfile');
 ```
 
 Función asociada a la ruta 
 ```php
+public function getProfile($id){
+        //obtiene la información de usuario de acuerdo al id especificado en la petición
+        $user = User::all()->where('id',$id);
+        $publications = Publications::all()->where('user_id',$id);
+        $likes = DB::table('likes')->get();
+        $comments = Comment::all();
+        $data = [];
+        $user_publication = [];
+        
+        foreach ($user as $usr) {
+            //Valida que la imagen de perfil no sea nula o vacia
+            $image = '';
+            if ($usr->image == null) {
+                $image = "img/default_user.png";
+            } else {
+                $image = $usr->image;
+            }
+             //En caso de no tener comentarios, se genera uno para evitar objetos vacios, en acso contrario se crea un objeto con la información del usuario y el comentario.
+            if(count($publications)==0 ){
+                $publi_comments= [];
+               
+                array_push($publi_comments, (object)[
+        
+                    'id' => "sin datos",
+                    'userName' => "sin datos",
+                    'photo' => "sin datos",
+                    'content' => "sin datos",
+                ]);
+            
+            array_push($user_publication, (object)[
+                'id' => "sin datos",
+                'userId' => "sin datos",
+                'photo' => "sin datos",
+                'userName' => "sin datos",
+                'created' => "sin datos",
+                'contentPublication' => "sin datos",
+                'photoPublication' => "sin datos",
+                'likes' => "sin datos",
+                'isLike'=>"sin datos",
+                'comments'=>$publi_comments,
+                
+            ]);
+            }else{
+                foreach ($publications as $pub) {
 
+                    $created = $pub->created_at->diffForHumans(null, false, false, 1);;
+                    $fullname = "";
+                    $totalLikes = 0;
+                    $photo = "";
+                    $isLike =false;
+                    $user= User::all()->where('id', $pub->user_id);
+                    $publi_comments= [];
+        
+                    foreach ($likes as $like) {
+                        if ($like->publication_id == $pub->id) {
+                            $totalLikes = $totalLikes + 1;
+                            if($like->user_id == $id){
+                                
+                                $isLike = true;
+                            }
+                        }
+                        
+                    }
+        
+                    foreach($user as $usr){
+                        $fullname = $usr->name . " " . $usr->lastname;
+        
+                        $image = '';
+                        if ($usr->image == null) {
+                            $image = "img/default_user.png";
+                        } else {
+                            $image = $usr->image;
+                        }
+                    }
+        
+                    foreach($comments as $com){
+        
+                        if($com->publication_id == $pub->id){
+                           
+                            $comment_user = User::all()->where('id',$com->user_id);
+                            foreach($comment_user as $com_user){
+                               
+                                $com_fullname = $com_user->name . " " . $com_user->lastname;
+                                
+                                $com_image = '';
+                                if ($com_user->image == null) {
+                                    $com_image = "img/default_user.png";
+                                } else {
+                                    $com_image = $com_user->image;
+                                    
+                                }
+        
+                                array_push($publi_comments, (object)[
+        
+                                    'id' => $com->publication_id,
+                                    'userName' => $com_fullname,
+                                    'photo' => $com_image,
+                                    'content' => $com->content,
+                                ]);
+                            }
+                          
+                            
+                        }
+                    }
+                    if ($pub->photo_public == "") {
+                        $photo = "no photo";
+                    } else {
+                        $photo = $pub->photo_public;
+                    }
+        
+                    if($publi_comments == []){
+                        array_push($publi_comments, (object)[
+        
+                            'id' => $pub->id,
+                            'userName' => "sin datos",
+                            'photo' => "sin datos",
+                            'content' => "sin datos",
+                        ]);
+                    }
+                    array_push($user_publication, (object)[
+                        'id' => $pub->id,
+                        'userId' => $pub->user_id,
+                        'photo' => $image,
+                        'userName' => $fullname,
+                        'created' => $created,
+                        'contentPublication' => $pub->content_publication,
+                        'photoPublication' => $photo,
+                        'likes' => $totalLikes,
+                        'isLike'=>$isLike,
+                        'comments'=>$publi_comments,
+                        
+                    ]);
+                }
+        
+    
+            }
+            //Finalmente se crear el objeto con la finrmación y objetos requeridos
+            array_push($data, (object)[
+                'id' => $usr->id,
+                'fullname' => $usr->name . " " . $usr->lastname,
+                'email' => $usr->email,
+                'photo' => $image,
+                'department' => $usr->employee->position->department->name,
+                'position' => $usr->employee->position->name,
+                'publications' =>$user_publication,
+            ]);
+        }
+        //Se retorna el objeto con la información del usuario
+        return $data;
+
+    }
 ```
 
 </details>
