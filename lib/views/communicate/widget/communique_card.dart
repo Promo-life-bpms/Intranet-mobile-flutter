@@ -24,15 +24,18 @@ class _CommuniqueCardState extends State<CommuniqueCard> {
           child: Column(
             children: [
               SizedBox(
-                width: double.infinity,
-                height: 320.0,
-                child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: Image(
-                      image: NetworkImage(ApiIntranetConstans.baseUrl +
-                          widget.commuiqueData[0].image),
-                    )),
-              ),
+                  width: double.infinity,
+                  height: 320.0,
+                  child: widget.commuiqueData[0].image == "/img/communique.svg"
+                      ? const Image(
+                          image: AssetImage('lib/assets/communique.png'),
+                          fit: BoxFit.contain,
+                        )
+                      : Image(
+                          image: NetworkImage(ApiIntranetConstans.baseUrl +
+                              widget.commuiqueData[0].image),
+                          fit: BoxFit.contain,
+                        )),
               const Padding(
                 padding: EdgeInsets.only(bottom: 20.0),
               ),
@@ -52,12 +55,24 @@ class _CommuniqueCardState extends State<CommuniqueCard> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    Navigator.of(context).push(MaterialPageRoute(
-                        builder: (context) => Image(
-                            image: NetworkImage(ApiIntranetConstans.baseUrl +
-                                widget.commuiqueData[0].image))));
+                    if (widget.commuiqueData[0].image ==
+                        "/img/communique.svg") {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const Image(
+                                image: AssetImage('lib/assets/communique.png'),
+                                fit: BoxFit.contain,
+                              )));
+                    } else {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Image(
+                                image: NetworkImage(
+                                    ApiIntranetConstans.baseUrl +
+                                        widget.commuiqueData[0].image),
+                                fit: BoxFit.contain,
+                              )));
+                    }
                   },
-                  child: const Text('VER MAS'),
+                  child: const Text(StringIntranetConstants.buttonViewMore),
                 ),
               ),
             ],

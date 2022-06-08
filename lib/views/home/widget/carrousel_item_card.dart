@@ -17,20 +17,34 @@ class _CarrouselItemCardState extends State<CarrouselItemCard> {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      child: CachedNetworkImage(
-        imageUrl: ApiIntranetConstans.baseUrl + widget.communiqueData[0].image,
-        placeholder: (context, url) =>
-            const Center(child: CircularProgressIndicator()),
-        errorWidget: (context, url, error) =>
-            const Image(image: AssetImage("lib/assets/lost_connection.png")),
-      ),
+      child: widget.communiqueData[0].image == "/img/communique.svg"
+          ? const Image(
+              image: AssetImage('lib/assets/communique.png'),
+              fit: BoxFit.contain,
+            )
+          : CachedNetworkImage(
+              imageUrl:
+                  ApiIntranetConstans.baseUrl + widget.communiqueData[0].image,
+              placeholder: (context, url) =>
+                  const Center(child: CircularProgressIndicator()),
+              errorWidget: (context, url, error) => const Image(
+                  image: AssetImage("lib/assets/lost_connection.png")),
+            ),
       onDoubleTap: () {
-        Navigator.of(context).push(MaterialPageRoute(
-            builder: (context) => CachedNetworkImage(
-                imageUrl: ApiIntranetConstans.baseUrl +
-                    widget.communiqueData[0].image,
-                errorWidget: (context, url, error) => const Image(
-                    image: AssetImage("lib/assets/lost_connection.png")))));
+        if (widget.communiqueData[0].image == "/img/communique.svg") {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => const Image(
+                    image: AssetImage('lib/assets/communique.png'),
+                    fit: BoxFit.contain,
+                  )));
+        } else {
+          Navigator.of(context).push(MaterialPageRoute(
+              builder: (context) => CachedNetworkImage(
+                  imageUrl: ApiIntranetConstans.baseUrl +
+                      widget.communiqueData[0].image,
+                  errorWidget: (context, url, error) => const Image(
+                      image: AssetImage("lib/assets/lost_connection.png")))));
+        }
       },
     );
   }

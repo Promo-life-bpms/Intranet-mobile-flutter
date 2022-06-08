@@ -92,6 +92,7 @@ class StringIntranetConstants{
 
   static const buttonAcept="ACEPTAR";
   static const buttonPost="PUBLICAR";
+  static const buttonViewMore="VER MAS";
 
   static const homeBirthdayTitle = "Cumpleaños del Mes";
 } 
