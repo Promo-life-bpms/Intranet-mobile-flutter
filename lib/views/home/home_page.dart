@@ -3,7 +3,7 @@ import 'package:intranet_movil/model/birthday.dart';
 import 'package:intranet_movil/model/communique.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
-import 'package:intranet_movil/services/api_brithday.dart';
+import 'package:intranet_movil/services/api_birthday.dart';
 import 'package:intranet_movil/services/api_communique.dart';
 import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';

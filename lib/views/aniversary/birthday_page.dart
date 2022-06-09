@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/birthday.dart';
-import 'package:intranet_movil/services/api_brithday.dart';
+import 'package:intranet_movil/services/api_birthday.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/aniversary/widget/birthday_builder.dart';
 import 'package:intranet_movil/views/aniversary/widget/flags_widget.dart';

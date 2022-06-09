@@ -14,7 +14,6 @@ class DirectoryModel {
       required this.photo, 
       required this.department,
       required this.position,
-      /* required this.data,   */
   });
 
   int id;
@@ -23,7 +22,6 @@ class DirectoryModel {
   String photo; 
   String department;
   String position;
-/*   Data? data;  */ 
 
   factory DirectoryModel.fromJson(Map<String, dynamic> json) => DirectoryModel(
         id: json["id"],
@@ -32,7 +30,6 @@ class DirectoryModel {
         photo: json["photo"], 
         department: json["department"],
         position: json["position"],
-       /*  data: Data.fromJson(json["data"]),  */
       );
 
   Map<String, dynamic> toJson() => {
@@ -42,7 +39,6 @@ class DirectoryModel {
         "photo": photo, 
         "department": department,
         "position": position,
-       /*  "data": data?.toJson(),   */
       };
 }
 
