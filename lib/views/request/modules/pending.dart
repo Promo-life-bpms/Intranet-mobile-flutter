@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/request.dart';
+import 'package:intranet_movil/views/request/modules/no_request.dart';
 import 'package:intranet_movil/views/request/widget/request_detail_alert_dialog.dart';
-import 'package:intranet_movil/widget/skeletons/list_view_request.dart';
 
 void main() => runApp( PendingRequestPage(requestModel:const [],));
 
@@ -13,7 +13,7 @@ class PendingRequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return  requestModel == null || requestModel!.isEmpty
-          ? const ListviewRequestPage()
+          ? const NoRequest()
           : Column(
             children: [
               Expanded(

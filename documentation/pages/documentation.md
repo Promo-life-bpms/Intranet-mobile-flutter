@@ -799,8 +799,7 @@ Este archivo muestra un alert con la información del usuario.
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(10.0),
                 ),
-                child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
+                child: const NoRequest()
                     child: Column(
                     children: [
                         Container(
