@@ -65,7 +65,7 @@ class _HomeState extends State<RequestMainPage> {
                     child: Text(StringIntranetConstants.requestProcessPage),
                   ),
                   Tab(
-                    child: Text(StringIntranetConstants.requestProcessPage),
+                    child: Text(StringIntranetConstants.requestApprovedPage),
                   ),
                   Tab(
                     child: Text(StringIntranetConstants.requestRejectedPage),
