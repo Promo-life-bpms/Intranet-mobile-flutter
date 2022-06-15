@@ -20,7 +20,7 @@ class AniversaryModel {
   String name;
   String lastname;
   String photo;
-  String date;
+  int date;
 
   factory AniversaryModel.fromJson(Map<String, dynamic> json) =>
       AniversaryModel(

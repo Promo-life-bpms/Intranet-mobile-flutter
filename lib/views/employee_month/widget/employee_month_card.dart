@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/employee.dart';
 import 'package:intranet_movil/utils/constants.dart';
@@ -27,7 +28,8 @@ class _EmployeeMonthCardState extends State<EmployeeMonthCard> {
                 padding: EdgeInsets.only(bottom: 20.0),
               ),
               const Padding(
-                padding: EdgeInsets.only(left: 12, top: 0, right: 12, bottom: 0),
+                padding:
+                    EdgeInsets.only(left: 12, top: 0, right: 12, bottom: 0),
                 child: SizedBox(
                   width: double.infinity,
                   child: Text(
@@ -48,9 +50,11 @@ class _EmployeeMonthCardState extends State<EmployeeMonthCard> {
                 height: 320.0,
                 child: FittedBox(
                     fit: BoxFit.contain,
-                    child: Image(
-                      image: NetworkImage(ApiIntranetConstans.baseUrl +
-                          widget.employeeMonthData[0].photo),
+                    child: CachedNetworkImage(
+                      imageUrl: ApiIntranetConstans.baseUrl +
+                          widget.employeeMonthData[0].photo,
+                      errorWidget: (context, url, error) => const Image(
+                          image: AssetImage("lib/assets/default_user.png")),
                     )),
               ),
               const Padding(

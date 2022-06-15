@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/aniversary.dart';
 import 'package:intranet_movil/model/birthday.dart';
 import 'package:intranet_movil/views/aniversary/widget/aniversary_grid.dart';
+import 'package:intranet_movil/views/aniversary/widget/birthday_grid.dart';
 
 class BirthdayBuilder extends StatefulWidget {
   const BirthdayBuilder({Key? key, required this.brithdayData})
@@ -28,13 +29,13 @@ class _AniversaryBuilderState extends State<BirthdayBuilder> {
             childAspectRatio: 0.8,
           ),
           itemBuilder: (BuildContext context, int index) {
-            return AniversaryGrid(aniversaryData: [
-              AniversaryModel(
+            return BirthdayGrid(birthdayData: [
+              BirthdayModel(
                   id: widget.brithdayData[index].id,
                   name: widget.brithdayData[index].name,
                   lastname: widget.brithdayData[index].lastname,
                   photo: widget.brithdayData[index].photo,
-                  date: widget.brithdayData[index].date)
+                  date:  widget.brithdayData[index].date)
             ]);
           },
         ),

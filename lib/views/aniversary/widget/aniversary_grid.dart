@@ -42,9 +42,15 @@ class _AniversaryGridState extends State<AniversaryGrid> {
         ),
         const Padding(padding: EdgeInsets.symmetric(vertical: 2)),
         Center(
-            child: Text(widget.aniversaryData[0].date,
-                style: const TextStyle(fontSize: 10.00),
-                textAlign: TextAlign.center)),
+            child: widget.aniversaryData[0].date == 1
+                ? Text(
+                    widget.aniversaryData[0].date.toString() + " " + StringIntranetConstants.aniversaryYear,
+                    style: const TextStyle(fontSize: 12.00),
+                    textAlign: TextAlign.center)
+                : Text(
+                    widget.aniversaryData[0].date.toString() + " " + StringIntranetConstants.aniversaryYears,
+                    style: const TextStyle(fontSize: 12.00),
+                    textAlign: TextAlign.center)),
         const Padding(padding: EdgeInsets.symmetric(vertical: 5)),
       ],
     );

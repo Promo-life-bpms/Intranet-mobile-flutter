@@ -65,6 +65,8 @@ class StringIntranetConstants{
 
   static const aniversaryBirthdayAniversaryPage ="Aniversarios";
   static const aniversaryBirthdayBirthdayPage = "Cumpleaños";
+  static const aniversaryYear = "año";
+  static const aniversaryYears = "años";
 
   static const homePublicationEmpty = "Sin publicaciones disponibles";
   static const homeCreatePost = "Crear publicación";
@@ -98,9 +100,9 @@ class StringIntranetConstants{
 
 class ListIntranetConstants{
   final List<String> accessName = <String>[
-    'CURSOS',
-    'ODDO',
-    'EVALUACIÓN 360',
+    'Cursos',
+    'Odoo',
+    'Evaluación 360',
     'NOM 035',
     'Cotizador',
     'Sistema de Tickets',
