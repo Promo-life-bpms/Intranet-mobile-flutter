@@ -6,6 +6,12 @@ List<UserModel> userModelFromJson(String str) =>
 String userModelToJson(List<UserModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+Expiration commentFromJson(String str) => Expiration.fromJson(json.decode(str));
+
+String commentToJson(Expiration data) => json.encode(data.toJson());
+
+
+
 class UserModel {
   UserModel({
     required this.id,
@@ -15,6 +21,7 @@ class UserModel {
     required this.department,
     required this.position,
     required this.daysAvailables,
+    required this.expiration,
   });
 
   int id;
@@ -24,6 +31,7 @@ class UserModel {
   String department;
   String position;
   int daysAvailables;
+  List<Expiration> expiration;
 
   factory UserModel.fromJson(Map<String, dynamic> json) => UserModel(
         id: json["id"],
@@ -33,6 +41,7 @@ class UserModel {
         department: json["department"],
         position: json["position"],
         daysAvailables: json["daysAvailables"],
+        expiration: List<Expiration>.from(json["expiration"].map((x) => Expiration.fromJson(x))),
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,7 +52,26 @@ class UserModel {
         "department": department,
         "position": position,
         "daysAvailables":daysAvailables, 
+        "expiration":List<dynamic>.from(expiration.map((x) => x.toJson())),
       };
 }
 
+class Expiration {
+    String daysAvailables;
+    String cutoffDate;
 
+    Expiration({
+        required this.daysAvailables,
+        required this.cutoffDate,
+    });
+
+    factory Expiration.fromJson(Map<String, dynamic> json) => Expiration(
+        daysAvailables: json["daysAvailables"],
+        cutoffDate: json["cutoffDate"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "daysAvailables": daysAvailables,
+        "cutoffDate": cutoffDate,
+   };
+}

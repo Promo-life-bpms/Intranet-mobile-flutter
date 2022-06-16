@@ -222,6 +222,35 @@ class _MyHomePageState extends State<RequestPage> {
                               ),
                             );
                           }),
+
+                          //Dias de expiracion
+                          dropdownvalue == 'Solicitar vacaciones' 
+                           ?
+                          ListView.builder(
+                          padding: const  EdgeInsets.only(top: 8),
+                          physics: const NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: _userlModel![0].expiration.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(4.0),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.start,
+                                children: [
+                                  const Text( "Tienes "),
+                                  Text( _userlModel![0].expiration[index].daysAvailables, style:const  TextStyle(fontWeight: FontWeight.bold),),
+                                  const Text( " dias disponibles hasta el "),
+                                  Text(_userlModel![0].expiration[index].cutoffDate, style:const  TextStyle(fontWeight: FontWeight.bold)),
+                                ],
+                              ),
+                            );
+                          })
+
+                           :
+                           const Padding(padding: EdgeInsets.zero),
+                         
+
                       const Padding(padding: EdgeInsets.only(top: 24)),
                       const Text(
                         "Motivo",
