@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/views/directory/widget/directory_builder.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
@@ -38,6 +39,20 @@ class _HomeState extends State<DirectoryPage> {
     return Scaffold(
         drawer: const NavigationDrawerWidget(),
         appBar: AppBar(
+          actions: [
+          Padding(
+              padding:const  EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
+                },
+                child: const Image(
+                  image: AssetImage('lib/assets/chat.png'),
+                ),
+              ),
+            ),
+        ],
           title: const Text(StringIntranetConstants.directoryPage),
         ),
         body: _directoryModel == null || _directoryModel!.isEmpty

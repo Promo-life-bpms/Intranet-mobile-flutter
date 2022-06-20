@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/manual.dart';
 import 'package:intranet_movil/services/api_manual.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/views/manual/widget/manual_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_cards.dart';
@@ -32,6 +33,20 @@ class _HomeState extends State<ManualPage> {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
+        actions: [
+          Padding(
+              padding:const  EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
+                },
+                child: const Image(
+                  image: AssetImage('lib/assets/chat.png'),
+                ),
+              ),
+            ),
+        ],
         title: const Text(StringIntranetConstants.manualPage),
       ),
       body: _manualModel == null || _manualModel!.isEmpty

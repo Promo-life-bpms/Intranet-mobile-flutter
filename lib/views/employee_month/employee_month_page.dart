@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/employee.dart';
 import 'package:intranet_movil/services/api_employee.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/views/employee_month/widget/employee_month_builder.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_employe.dart';
@@ -33,6 +34,20 @@ class _HomeState extends State<EmployeeMonthPage> {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
+        actions: [
+          Padding(
+              padding:const  EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
+                },
+                child: const Image(
+                  image: AssetImage('lib/assets/chat.png'),
+                ),
+              ),
+            ),
+        ],
         title: const Text(StringIntranetConstants.monthPage),
       ),
       body: _monthEmployeeModel == null || _monthEmployeeModel!.isEmpty

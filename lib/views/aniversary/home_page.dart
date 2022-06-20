@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/aniversary/aniversary_page.dart';
 import 'package:intranet_movil/views/aniversary/birthday_page.dart';
+import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 class AniversaryHomePage extends StatelessWidget {
@@ -12,6 +13,20 @@ class AniversaryHomePage extends StatelessWidget {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
+        actions: [
+          Padding(
+              padding:const  EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
+                },
+                child: const Image(
+                  image: AssetImage('lib/assets/chat.png'),
+                ),
+              ),
+            ),
+        ],
         title: const Text(StringIntranetConstants.aniversaryBirthdayPage),
       ),
       body: const AboutWidget(),

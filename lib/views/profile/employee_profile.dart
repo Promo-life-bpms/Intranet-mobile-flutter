@@ -6,6 +6,7 @@ import 'package:intranet_movil/services/api_employee_profile.dart';
 import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/views/home/widget/publication_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_profile.dart';
@@ -63,6 +64,21 @@ class _EmployeeProfileState extends State<EmployeeProfilePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        actions: [
+          Padding(
+              padding:const  EdgeInsets.only(right: 20.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
+                },
+                child: const Icon(
+                  Icons.chat_rounded,
+                  size: 24.0,
+                ),
+              ),
+            ),
+        ],
         title: Text(widget.employeeName),
         leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),

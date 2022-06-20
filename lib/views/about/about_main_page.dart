@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/about/bh_page.dart';
 import 'package:intranet_movil/views/about/promolife_page.dart';
+import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 void main() => runApp(const AboutMainPage());
@@ -14,6 +15,20 @@ class AboutMainPage extends StatelessWidget {
     return Scaffold(
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
+        actions: [
+          Padding(
+              padding:const  EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
+                },
+                child: const Image(
+                  image: AssetImage('lib/assets/chat.png'),
+                ),
+              ),
+            ),
+        ],
         title: const Text(StringIntranetConstants.aboutPage),
       ),
       body: const AboutWidget(),

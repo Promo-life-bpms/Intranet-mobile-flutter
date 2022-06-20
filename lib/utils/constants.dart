@@ -96,6 +96,10 @@ class StringIntranetConstants{
   static const buttonViewMore="VER MAS";
 
   static const homeBirthdayTitle = "Cumpleaños del Mes";
+  
+  static const chatPage = "Mis mensajes";
+  static const chat = "Mensajes";
+  static const chatUsers = "Usuarios";
 } 
 
 class ListIntranetConstants{

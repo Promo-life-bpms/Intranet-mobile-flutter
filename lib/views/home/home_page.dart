@@ -8,6 +8,7 @@ import 'package:intranet_movil/services/api_communique.dart';
 import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/views/home/widget/birthday_home_builder.dart';
 import 'package:intranet_movil/views/home/widget/birthday_title_card.dart';
 import 'package:intranet_movil/views/home/widget/carousel_home_builder.dart';
@@ -67,6 +68,20 @@ class _HomeState extends State<HomePage> {
       drawer: const NavigationDrawerWidget(),
       appBar: AppBar(
         title: const Text(_title),
+        actions: [
+          Padding(
+              padding:const  EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context)
+                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
+                },
+                child: const Image(
+                  image: AssetImage('lib/assets/chat.png'),
+                ),
+              ),
+            ),
+        ],
       ),
       body: _userlModel == null || _userlModel!.isEmpty
           ? const ListviewPublication()
@@ -93,8 +108,16 @@ class _HomeState extends State<HomePage> {
                     const Padding(padding: EdgeInsets.only(top: 8)),
                     //Publicaciones
                     _publicationModel == null || _publicationModel!.isEmpty
-                        ? const Text(StringIntranetConstants.homePublicationEmpty,textAlign: TextAlign.left,)
-                        : PublicationBuilder(publicationData: _publicationModel!, publicationToLikeData:_publicationModelToLike! , userData: _userlModel!, isLike: isLike, token: token)
+                        ? const Text(
+                            StringIntranetConstants.homePublicationEmpty,
+                            textAlign: TextAlign.left,
+                          )
+                        : PublicationBuilder(
+                            publicationData: _publicationModel!,
+                            publicationToLikeData: _publicationModelToLike!,
+                            userData: _userlModel!,
+                            isLike: isLike,
+                            token: token)
                   ],
                 ),
               ),

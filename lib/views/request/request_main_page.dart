@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/request.dart';
 import 'package:intranet_movil/services/api_request.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/views/request/modules/approved.dart';
 import 'package:intranet_movil/views/request/modules/pending.dart';
 import 'package:intranet_movil/views/request/modules/process.dart';
@@ -53,6 +54,20 @@ class _HomeState extends State<RequestMainPage> {
         child: Scaffold(
           drawer: const NavigationDrawerWidget(),
           appBar: AppBar(
+            actions: [
+              Padding(
+                  padding:const  EdgeInsets.only(right: 8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => const ChatPage()));
+                    },
+                    child: const Image(
+                      image: AssetImage('lib/assets/chat.png'),
+                    ),
+                  ),
+                ),
+            ],
             bottom: TabBar(
                 isScrollable: true,
                 unselectedLabelColor: Colors.white.withOpacity(0.3),
