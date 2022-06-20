@@ -61,7 +61,7 @@ class _ChatPageState extends State<ChatPage> {
           body: TabBarView(
             children: [
               MessagesChatPage(directoryModel: _directoryModel!),
-              UserChatPage(directoryModel: _directoryModel!),
+              const UserChatPage(),
             ],
           ),
         ),

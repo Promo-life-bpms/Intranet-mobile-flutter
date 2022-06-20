@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
-import 'package:intranet_movil/views/directory/widget/user_info_card.dart';
+import 'package:intranet_movil/views/chat/widget/user_chat_card.dart';
 
-class OrganizationBuilder extends StatefulWidget {
-  const OrganizationBuilder({Key? key, required this.directoryData})
+class UserChatBuilder extends StatefulWidget {
+  const UserChatBuilder({Key? key, required this.directoryData})
       : super(key: key);
   final List<DirectoryModel> directoryData;
 
   @override
-  State<OrganizationBuilder> createState() =>
-      _OrganizationBuilderBuilderState();
+  State<UserChatBuilder> createState() =>
+      _UserChatBuilderState();
 }
 
-class _OrganizationBuilderBuilderState extends State<OrganizationBuilder> {
+class _UserChatBuilderState extends State<UserChatBuilder> {
   @override
   Widget build(BuildContext context) {
     return  Column(
@@ -23,7 +23,7 @@ class _OrganizationBuilderBuilderState extends State<OrganizationBuilder> {
                   padding: const EdgeInsets.only(left: 16, right: 16),
                   itemCount: widget.directoryData.length,
                   itemBuilder: (context, index) {
-                    return UserInfoCard(userData: [
+                    return UserChatCard(userData: [
                       DirectoryModel(
                           id: widget.directoryData[index].id,
                           fullname: widget.directoryData[index].fullname,

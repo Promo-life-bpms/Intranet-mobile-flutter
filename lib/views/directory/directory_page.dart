@@ -109,22 +109,20 @@ class _HomeState extends State<DirectoryPage> {
                                   fullname: _directoryModel![index].fullname,
                                   email: _directoryModel![index].email,
                                   photo: _directoryModel![index].photo,
-                                  department:
-                                      _directoryModel![index].department,
-                                  position: _directoryModel![index].position)))
+                                  department:_directoryModel![index].department,
+                                  position: _directoryModel![index].position,
+                                  onlineStatus: _directoryModel![index].onlineStatus)))
                       : DirectoryBuilder(
                           directoryData: List<DirectoryModel>.generate(
                               _directoryModelSearch!.length,
                               (index) => DirectoryModel(
                                   id: _directoryModelSearch![index].id,
-                                  fullname:
-                                      _directoryModelSearch![index].fullname,
+                                  fullname:_directoryModelSearch![index].fullname,
                                   email: _directoryModelSearch![index].email,
                                   photo: _directoryModelSearch![index].photo,
-                                  department:
-                                      _directoryModelSearch![index].department,
-                                  position:
-                                      _directoryModelSearch![index].position)))
+                                  department: _directoryModelSearch![index].department,
+                                  position: _directoryModelSearch![index].position,
+                                  onlineStatus: _directoryModel![index].onlineStatus)))
                 ],
               ));
   }

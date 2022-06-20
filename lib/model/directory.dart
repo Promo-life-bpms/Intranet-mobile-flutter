@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'dart:ffi';
+
 List<DirectoryModel> directoryModelFromJson(String str) =>
     List<DirectoryModel>.from(json.decode(str).map((x) => DirectoryModel.fromJson(x)));
 
@@ -14,6 +16,7 @@ class DirectoryModel {
       required this.photo, 
       required this.department,
       required this.position,
+      required this.onlineStatus
   });
 
   int id;
@@ -22,6 +25,7 @@ class DirectoryModel {
   String photo; 
   String department;
   String position;
+  bool onlineStatus;
 
   factory DirectoryModel.fromJson(Map<String, dynamic> json) => DirectoryModel(
         id: json["id"],
@@ -30,6 +34,7 @@ class DirectoryModel {
         photo: json["photo"], 
         department: json["department"],
         position: json["position"],
+        onlineStatus: json["onlineStatus"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -39,6 +44,7 @@ class DirectoryModel {
         "photo": photo, 
         "department": department,
         "position": position,
+        "onlineStatus":onlineStatus,
       };
 }
 
