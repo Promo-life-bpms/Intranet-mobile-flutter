@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/services/api_directory.dart';
-import 'package:intranet_movil/views/directory/widget/directory_builder.dart';
+import 'package:intranet_movil/views/chat/widget/user_chat_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 
 class UserChatPage extends StatefulWidget {
@@ -79,7 +79,7 @@ class _UserChatPageState extends State<UserChatPage> {
                   )),
               _directoryModelSearch!.isEmpty
                   //Builder del Directorio, que muestra todos los empleados cuando el usuario no realizó ninguna busqueda
-                  ? DirectoryBuilder(
+                  ? UserChatBuilder(
                       directoryData: List<DirectoryModel>.generate(
                           _directoryModel!.length,
                           (index) => DirectoryModel(
@@ -90,7 +90,7 @@ class _UserChatPageState extends State<UserChatPage> {
                               department: _directoryModel![index].department,
                               position: _directoryModel![index].position,
                               onlineStatus: _directoryModel![index].onlineStatus)))
-                  : DirectoryBuilder(
+                  : UserChatBuilder(
                       directoryData: List<DirectoryModel>.generate(
                           _directoryModelSearch!.length,
                           (index) => DirectoryModel(

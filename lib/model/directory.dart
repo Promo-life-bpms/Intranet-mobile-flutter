@@ -1,7 +1,5 @@
 import 'dart:convert';
 
-import 'dart:ffi';
-
 List<DirectoryModel> directoryModelFromJson(String str) =>
     List<DirectoryModel>.from(json.decode(str).map((x) => DirectoryModel.fromJson(x)));
 

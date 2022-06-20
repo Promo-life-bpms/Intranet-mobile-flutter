@@ -1,19 +1,17 @@
-import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/model/directory.dart';
+import 'package:intranet_movil/model/message.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/widget/alerts/user_card_alert_dialog.dart';
 
-class UserChatCard extends StatefulWidget {
-  const UserChatCard({Key? key, required this.userData}) : super(key: key);
+class MessageChatCard extends StatefulWidget {
+  const MessageChatCard({Key? key, required this.messageData}) : super(key: key);
 
-  final List<DirectoryModel> userData;
+  final List<MessageModel> messageData;
 
   @override
-  State<UserChatCard> createState() => _UserChatCardState();
+  State<MessageChatCard> createState() => _MessageChatCardState();
 }
 
-class _UserChatCardState extends State<UserChatCard> {
+class _MessageChatCardState extends State<MessageChatCard> {
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -24,13 +22,7 @@ class _UserChatCardState extends State<UserChatCard> {
       clipBehavior: Clip.antiAlias,
       child: InkWell(
         onTap: () {
-          UserCardAlertDialog.showFullDialog(
-              context,
-              widget.userData[0].fullname.toString(),
-              widget.userData[0].email,
-              ApiIntranetConstans.baseUrl + widget.userData[0].photo,
-              widget.userData[0].department,
-              widget.userData[0].position);
+          
         },
         child: Row(
           children: [
@@ -40,39 +32,25 @@ class _UserChatCardState extends State<UserChatCard> {
                 child: SizedBox(
                   width: 50,
                   height: 50,
-                  child: widget.userData[0].photo == "img/default_user.png"
-                      ? Badge(
-                          toAnimate: true,
-                          position: BadgePosition.bottomStart(),
-                          badgeColor: widget.userData[0].onlineStatus == true?
-                              Colors.green
-                              :Colors.red,
-                          child: const CircleAvatar(
+                  child: widget.messageData[0].photo == "img/default_user.png"?
+                        const CircleAvatar(
                             backgroundColor:
                                 ColorIntranetConstants.backgroundColorNormal,
-                          ),
-                        )
-                      : Badge(
-                          toAnimate: true,
-                          position: BadgePosition.bottomStart(),
-                          badgeColor: widget.userData[0].onlineStatus == true?
-                              Colors.green
-                              :Colors.red,
-                          child: CircleAvatar(
+                          )
+                      : CircleAvatar(
                             backgroundImage: NetworkImage(
                                 ApiIntranetConstans.baseUrl +
-                                    widget.userData[0].photo.toString()),
+                                    widget.messageData[0].photo.toString()),
                             backgroundColor:
                                 ColorIntranetConstants.backgroundColorNormal,
                           ),
-                        ),
                 )),
             Expanded(
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    widget.userData[0].fullname,
+                    widget.messageData[0].fullname,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 1,
                     style: const TextStyle(
@@ -81,7 +59,7 @@ class _UserChatCardState extends State<UserChatCard> {
                     ),
                   ),
                   const Padding(padding: EdgeInsets.only(top: 8)),
-                  Text(widget.userData[0].position,
+                  Text(widget.messageData[0].conversation.last.message,
                       overflow: TextOverflow.ellipsis,
                       style: const TextStyle(
                         fontSize: 12.00,

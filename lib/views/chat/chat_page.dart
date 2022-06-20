@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
+import 'package:intranet_movil/model/message.dart';
 import 'package:intranet_movil/services/api_directory.dart';
+import 'package:intranet_movil/services/api_message.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/chat/modules/messages_chat.dart';
 import 'package:intranet_movil/views/chat/modules/users_chat.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatPage extends StatefulWidget {
   const ChatPage({Key? key}) : super(key: key);
@@ -14,6 +17,7 @@ class ChatPage extends StatefulWidget {
 
 class _ChatPageState extends State<ChatPage> {
   late List<DirectoryModel>? _directoryModel = [];
+  late List<MessageModel>? _messageModel = [];
 
 
   @override
@@ -23,6 +27,11 @@ class _ChatPageState extends State<ChatPage> {
     }
 
   void _getData() async {
+
+    final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+     _messageModel = (await ApiMessageService().getMessages(token.toString()))!.cast<MessageModel>();
+   
     _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
@@ -58,10 +67,10 @@ class _ChatPageState extends State<ChatPage> {
             ),
             title: const Text(StringIntranetConstants.chatPage),
           ),
-          body: TabBarView(
+          body: const TabBarView(
             children: [
-              MessagesChatPage(directoryModel: _directoryModel!),
-              const UserChatPage(),
+              MessagesChatPage(),
+               UserChatPage(),
             ],
           ),
         ),

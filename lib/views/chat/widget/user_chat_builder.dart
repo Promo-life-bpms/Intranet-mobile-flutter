@@ -13,30 +13,25 @@ class UserChatBuilder extends StatefulWidget {
 }
 
 class _UserChatBuilderState extends State<UserChatBuilder> {
-  @override
+   @override
   Widget build(BuildContext context) {
-    return  Column(
-            children: [
-              const Padding(padding: EdgeInsets.only(top: 20)),
-              Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.only(left: 16, right: 16),
-                  itemCount: widget.directoryData.length,
-                  itemBuilder: (context, index) {
-                    return UserChatCard(userData: [
-                      DirectoryModel(
-                          id: widget.directoryData[index].id,
-                          fullname: widget.directoryData[index].fullname,
-                          email: widget.directoryData[index].email,
-                          photo: widget.directoryData[index].photo,
-                          department: widget.directoryData[index].department,
-                          position: widget.directoryData[index].position,
-                          onlineStatus: widget.directoryData[index].onlineStatus)
-                    ]);
-                  },
-                ),
-              )
-            ],
-          );
+    return Expanded(
+      child: ListView.builder(
+        padding: const EdgeInsets.only(left: 16, right: 16),
+        itemCount: widget.directoryData.length,
+        itemBuilder: (context, index) {
+          return UserChatCard(userData: [
+            DirectoryModel(
+                id: widget.directoryData[index].id,
+                fullname: widget.directoryData[index].fullname,
+                email: widget.directoryData[index].email,
+                photo: widget.directoryData[index].photo,
+                department: widget.directoryData[index].department,
+                position: widget.directoryData[index].position,
+                onlineStatus: widget.directoryData[index].onlineStatus)
+          ]);
+        },
+      ),
+    );
   }
 }
