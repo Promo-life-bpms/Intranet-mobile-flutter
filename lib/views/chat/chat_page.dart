@@ -46,7 +46,7 @@ class _ChatPageState extends State<ChatPage> {
           body: const TabBarView(
             children: [
               MessagesChatPage(),
-               UserChatPage(),
+              UserChatPage(),
             ],
           ),
         ),

@@ -1,11 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
+import 'package:intranet_movil/model/message.dart';
+import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/views/chat/widget/user_chat_card.dart';
 
 class UserChatBuilder extends StatefulWidget {
-  const UserChatBuilder({Key? key, required this.directoryData})
+  const UserChatBuilder({Key? key, required this.directoryData, required this.messageData, required this.userModelData})
       : super(key: key);
   final List<DirectoryModel> directoryData;
+  final List<MessageModel> messageData;
+  final List<UserModel> userModelData;
+
 
   @override
   State<UserChatBuilder> createState() =>
@@ -29,7 +34,8 @@ class _UserChatBuilderState extends State<UserChatBuilder> {
                 department: widget.directoryData[index].department,
                 position: widget.directoryData[index].position,
                 onlineStatus: widget.directoryData[index].onlineStatus)
-          ]);
+          ],messageData: widget.messageData,
+          userModelData: widget.userModelData);
         },
       ),
     );

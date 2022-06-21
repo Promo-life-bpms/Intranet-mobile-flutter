@@ -2,9 +2,13 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
+import 'package:intranet_movil/model/message.dart';
+import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_directory.dart';
+import 'package:intranet_movil/services/api_message.dart';
 import 'package:intranet_movil/views/chat/widget/user_chat_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class UserChatPage extends StatefulWidget {
   const UserChatPage({Key? key}) : super(key: key);
@@ -16,6 +20,10 @@ class UserChatPage extends StatefulWidget {
 class _UserChatPageState extends State<UserChatPage> {
   late List<DirectoryModel>? _directoryModel = [];
   late List<DirectoryModel>? _directoryModelSearch = [];
+  late List<MessageModel>? _messageModel = [];
+  late List<UserModel>? _userlModel = [];
+
+
   final _debouncer = Debouncer();
 
   @override
@@ -26,8 +34,11 @@ class _UserChatPageState extends State<UserChatPage> {
   }
 
   void _getData() async {
-    _directoryModel =
-        (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+     final prefs = await SharedPreferences.getInstance();
+    String? token = prefs.getString('token');
+     _messageModel = (await ApiMessageService().getMessages(token.toString()))!.cast<MessageModel>();
+    _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+    _messageModel = (await ApiMessageService().getMessages(token.toString()))!.cast<MessageModel>();
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -89,7 +100,9 @@ class _UserChatPageState extends State<UserChatPage> {
                               photo: _directoryModel![index].photo,
                               department: _directoryModel![index].department,
                               position: _directoryModel![index].position,
-                              onlineStatus: _directoryModel![index].onlineStatus)))
+                              onlineStatus: _directoryModel![index].onlineStatus)),
+                              messageData: _messageModel!,
+                              userModelData: _userlModel!)
                   : UserChatBuilder(
                       directoryData: List<DirectoryModel>.generate(
                           _directoryModelSearch!.length,
@@ -100,7 +113,9 @@ class _UserChatPageState extends State<UserChatPage> {
                               photo: _directoryModelSearch![index].photo,
                               department: _directoryModelSearch![index].department,
                               position:_directoryModelSearch![index].position,
-                              onlineStatus: _directoryModel![index].onlineStatus)))
+                              onlineStatus: _directoryModel![index].onlineStatus)),
+                              messageData: _messageModel!,
+                              userModelData: _userlModel!)
                                   
             ],
           );

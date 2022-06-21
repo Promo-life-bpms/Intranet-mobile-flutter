@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/message.dart';
+import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/views/chat/modules/create_chat.dart';
+import 'package:intranet_movil/views/chat/modules/chat.dart';
 
 class MessageChatCard extends StatefulWidget {
-  const MessageChatCard({Key? key, required this.messageData}) : super(key: key);
+  const MessageChatCard({Key? key, required this.messageData, required this.userData}) : super(key: key);
 
   final List<MessageModel> messageData;
+  final List<UserModel> userData;
 
   @override
   State<MessageChatCard> createState() => _MessageChatCardState();
@@ -19,7 +21,7 @@ class _MessageChatCardState extends State<MessageChatCard> {
       onTap: () {
        
         Navigator.of(context)
-                   .push(MaterialPageRoute(builder: (context) =>  CreateChatPage(messageModel: widget.messageData)));
+                   .push(MaterialPageRoute(builder: (context) =>  ChatUserPage(messageModel: widget.messageData, userData: widget.userData)));
        
       },
       child: widget.messageData[0].conversation.last.created=="no data"?
