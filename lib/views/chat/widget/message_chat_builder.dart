@@ -17,7 +17,7 @@ class _MessageChatBuilderState extends State<MessageChatBuilder> {
   Widget build(BuildContext context) {
     return Expanded(
       child: ListView.builder(
-        padding: const EdgeInsets.only(left: 16, right: 16),
+        padding: const EdgeInsets.only(left: 8, right: 16),
         itemCount: widget.messageData.length,
         itemBuilder: (context, index) {
           return MessageChatCard(messageData: [MessageModel(id: widget.messageData[index].id, fullname: widget.messageData[index].fullname, email: widget.messageData[index].email, photo: widget.messageData[index].photo, department: widget.messageData[index].department, position: widget.messageData[index].position, conversation: widget.messageData[index].conversation)]  );

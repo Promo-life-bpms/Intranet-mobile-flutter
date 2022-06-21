@@ -55,12 +55,14 @@ class Conversation {
     int transmitterID;
     int receiverID;
     String message;
+    String created;
 
     Conversation({
         required this.id,
         required this.transmitterID,
         required this.receiverID,
         required this.message,
+        required this.created,
     });
 
     factory Conversation.fromJson(Map<String, dynamic> json) => Conversation(
@@ -68,6 +70,7 @@ class Conversation {
         transmitterID: json["transmitterID"],
         receiverID: json["receiverID"],
         message: json["message"],
+        created: json["created"],
     );
 
     Map<String, dynamic> toJson() => {
@@ -75,5 +78,6 @@ class Conversation {
         "transmitterID": transmitterID,
         "receiverID": receiverID,
         "message": message,
+        "created_at":created,
    };
 }

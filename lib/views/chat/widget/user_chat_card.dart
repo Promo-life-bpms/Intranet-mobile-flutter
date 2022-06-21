@@ -16,81 +16,69 @@ class UserChatCard extends StatefulWidget {
 class _UserChatCardState extends State<UserChatCard> {
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(10.0),
-      ),
-      clipBehavior: Clip.antiAlias,
-      child: InkWell(
-        onTap: () {
-          UserCardAlertDialog.showFullDialog(
-              context,
-              widget.userData[0].fullname.toString(),
-              widget.userData[0].email,
-              ApiIntranetConstans.baseUrl + widget.userData[0].photo,
-              widget.userData[0].department,
-              widget.userData[0].position);
-        },
-        child: Row(
-          children: [
-            Padding(
-                padding: const EdgeInsets.symmetric(
-                    vertical: 16.0, horizontal: 16.0),
-                child: SizedBox(
-                  width: 50,
-                  height: 50,
-                  child: widget.userData[0].photo == "img/default_user.png"
-                      ? Badge(
-                          toAnimate: true,
-                          position: BadgePosition.bottomStart(),
-                          badgeColor: widget.userData[0].onlineStatus == true?
-                              Colors.green
-                              :Colors.red,
-                          child: const CircleAvatar(
-                            backgroundColor:
-                                ColorIntranetConstants.backgroundColorNormal,
-                          ),
-                        )
-                      : Badge(
-                          toAnimate: true,
-                          position: BadgePosition.bottomStart(),
-                          badgeColor: widget.userData[0].onlineStatus == true?
-                              Colors.green
-                              :Colors.red,
-                          child: CircleAvatar(
-                            backgroundImage: NetworkImage(
-                                ApiIntranetConstans.baseUrl +
-                                    widget.userData[0].photo.toString()),
-                            backgroundColor:
-                                ColorIntranetConstants.backgroundColorNormal,
-                          ),
+    return InkWell(
+      onTap: () {
+        
+      },
+      child: Row(
+        children: [
+          Padding(
+              padding: const EdgeInsets.symmetric(
+                  vertical: 16.0, horizontal: 8.0),
+              child: SizedBox(
+                width: 50,
+                height: 50,
+                child: widget.userData[0].photo == "img/default_user.png"
+                    ? Badge(
+                        toAnimate: true,
+                        position: BadgePosition.bottomEnd(),
+                        badgeColor: widget.userData[0].onlineStatus == true?
+                            Colors.green
+                            :Colors.red,
+                        child: const CircleAvatar(
+                          backgroundColor:
+                              ColorIntranetConstants.backgroundColorNormal,
                         ),
-                )),
-            Expanded(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    widget.userData[0].fullname,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: const TextStyle(
-                      fontSize: 16.00,
-                      fontWeight: FontWeight.bold,
-                    ),
+                      )
+                    : Badge(
+                        toAnimate: true,
+                        position: BadgePosition.bottomEnd(),
+                        badgeColor: widget.userData[0].onlineStatus == true?
+                            Colors.green
+                            :Colors.red,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              ApiIntranetConstans.baseUrl +
+                                  widget.userData[0].photo.toString()),
+                          backgroundColor:
+                              ColorIntranetConstants.backgroundColorNormal,
+                        ),
+                      ),
+              )),
+              const Padding(padding: EdgeInsets.only(left: 20)),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  widget.userData[0].fullname,
+                  overflow: TextOverflow.ellipsis,
+                  maxLines: 1,
+                  style: const TextStyle(
+                    fontSize: 16.00,
+                    fontWeight: FontWeight.bold,
                   ),
-                  const Padding(padding: EdgeInsets.only(top: 8)),
-                  Text(widget.userData[0].position,
-                      overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(
-                        fontSize: 12.00,
-                      )),
-                ],
-              ),
+                ),
+                const Padding(padding: EdgeInsets.only(top: 8)),
+                Text(widget.userData[0].position,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 12.00,
+                    )),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

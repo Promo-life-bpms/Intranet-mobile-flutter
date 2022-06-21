@@ -1,12 +1,9 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/model/message.dart';
-import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/services/api_message.dart';
 import 'package:intranet_movil/views/chat/widget/message_chat_builder.dart';
-import 'package:intranet_movil/views/chat/widget/user_chat_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -44,7 +41,7 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
         ? const ListviewCompanyPage()
         : Column(
             children: [
-                MessageChatBuilder(messageData: _messageModel!)        
+                MessageChatBuilder(messageData: _messageModel!.reversed.toList())        
             ],
           );
   }
