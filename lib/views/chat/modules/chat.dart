@@ -27,12 +27,18 @@ class _ChatUserPageState extends State<ChatUserPage> {
   final _formKey = GlobalKey<FormState>();
   final message = TextEditingController();
   late List<ConversationModel> _conversationModel = [];
+  
+
+    ScrollController _scrollController =  ScrollController();
+
 
   @override
   void initState() {
     super.initState();
     _getData();
+        
   }
+
 
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
@@ -60,6 +66,15 @@ class _ChatUserPageState extends State<ChatUserPage> {
     if (response.statusCode == 200) {
       List<ConversationModel> _model = conversationModelFromJson(response.body);
       _conversationModel = _model;
+
+      setState(() {
+        _scrollController.animateTo(
+            _scrollController.position.viewportDimension +_scrollController.position.viewportDimension,
+            curve: Curves.linear,
+            duration: const Duration(milliseconds: 300),
+          );
+      });
+      
 
       return _model;
     }
@@ -91,6 +106,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
                   )
                 : Expanded(
                     child: ListView.builder(
+                    controller: _scrollController,
                     padding:
                         const EdgeInsets.only(left: 16, right: 16, top: 16),
                     itemCount: _conversationModel.length,
@@ -155,8 +171,6 @@ class _ChatUserPageState extends State<ChatUserPage> {
                         FocusManager.instance.primaryFocus?.unfocus();
                         setState(() {
                           final now = DateTime.now();
-                          print(widget.conversationUserID.toString());
-                          print(token);
                           postConversation(token, widget.conversationUserID.toString(), message.text);
 
                           _conversationModel.add(ConversationModel(
@@ -167,6 +181,14 @@ class _ChatUserPageState extends State<ChatUserPage> {
                               created: "${now.hour}:${now.minute }"));
 
                           message.clear();
+
+                             _scrollController.animateTo(
+                            _scrollController.position.maxScrollExtent ,
+                              curve: Curves.easeOut,
+                              duration: const Duration(milliseconds: 300),
+                            );
+                        
+                         
                         });
                       } else {
                         _formKey.currentState!.validate();
