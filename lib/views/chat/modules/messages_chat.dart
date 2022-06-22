@@ -5,7 +5,7 @@ import 'package:intranet_movil/model/message.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_message.dart';
 import 'package:intranet_movil/services/api_user.dart';
-import 'package:intranet_movil/views/chat/widget/message_chat_builder.dart';
+import 'package:intranet_movil/views/chat/widget/messages/message_chat_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

@@ -19,9 +19,12 @@ class _MessageChatCardState extends State<MessageChatCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
+
+        widget.messageData.where((i) => i.id == 1 ).toList();
+        print(widget.messageData.where((i) => i.id == 1 ).toList());
        
         Navigator.of(context)
-                   .push(MaterialPageRoute(builder: (context) =>  ChatUserPage(messageModel: widget.messageData, userData: widget.userData)));
+                   .push(MaterialPageRoute(builder: (context) =>  ChatUserPage(messageModel: widget.messageData.where((i) => i.id == 1 ).toList(), userData: widget.userData)));
        
       },
       child: widget.messageData[0].conversation.last.created=="no data"?
