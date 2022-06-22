@@ -3,7 +3,6 @@ import 'package:intranet_movil/model/conversation.dart';
 import 'package:intranet_movil/services/post_conversation.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/chat/chat_page.dart';
-import 'package:intranet_movil/views/chat/modules/messages_chat.dart';
 import 'package:intranet_movil/views/chat/widget/my_message.dart';
 import 'package:intranet_movil/views/chat/widget/other_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -29,7 +28,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
   late List<ConversationModel> _conversationModel = [];
   
 
-    ScrollController _scrollController =  ScrollController();
+  final ScrollController _scrollController =  ScrollController();
 
 
   @override
@@ -71,7 +70,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
         _scrollController.animateTo(
             _scrollController.position.viewportDimension +_scrollController.position.viewportDimension,
             curve: Curves.linear,
-            duration: const Duration(milliseconds: 300),
+            duration: const Duration(milliseconds: 400),
           );
       });
       
