@@ -42,7 +42,7 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
         ? const ListviewCompanyPage()
         : Column(
             children: [
-                MessageChatBuilder(messageData: _messageModel!.reversed.toList(), userData: _userlModel!)        
+                MessageChatBuilder(messageData: _messageModel!.reversed.toList(), userID: _userlModel![0].id)        
             ],
           );
   }

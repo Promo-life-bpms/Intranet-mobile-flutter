@@ -4,10 +4,10 @@ import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/views/chat/widget/messages/message_chat_card.dart';
 
 class MessageChatBuilder extends StatefulWidget {
-  const MessageChatBuilder({Key? key, required this.messageData, required this.userData})
+  const MessageChatBuilder({Key? key, required this.messageData, required this.userID})
       : super(key: key);
   final List<MessageModel> messageData;
-  final List<UserModel> userData;
+  final int userID;
 
   @override
   State<MessageChatBuilder> createState() =>
@@ -23,7 +23,8 @@ class _MessageChatBuilderState extends State<MessageChatBuilder> {
         itemCount: widget.messageData.length,
         itemBuilder: (context, index) {
           return MessageChatCard(messageData: [MessageModel(id: widget.messageData[index].id, fullname: widget.messageData[index].fullname, email: widget.messageData[index].email, photo: widget.messageData[index].photo, department: widget.messageData[index].department, position: widget.messageData[index].position, conversation: widget.messageData[index].conversation)],
-          userData: [UserModel(id: widget.userData[0].id, fullname: widget.userData[0].fullname, email: widget.userData[0].email, photo: widget.userData[0].photo, department: widget.userData[0].department, position:widget.userData[0]. position, daysAvailables: widget.userData[0].daysAvailables, expiration: widget.userData[0].expiration)] );
+          userID: widget.userID ,
+          conversationUserID: widget.messageData[index].id);
         },
       ),
     );

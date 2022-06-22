@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/message.dart';
-import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/views/chat/modules/chat.dart';
+import 'package:intranet_movil/views/chat/modules/new_chat.dart';
 
 class MessageChatCard extends StatefulWidget {
-  const MessageChatCard({Key? key, required this.messageData, required this.userData}) : super(key: key);
-
+  const MessageChatCard({Key? key,required this.messageData , required this.userID, required this.conversationUserID}) : super(key: key);
   final List<MessageModel> messageData;
-  final List<UserModel> userData;
+  final int userID;
+  final int conversationUserID;
+
 
   @override
   State<MessageChatCard> createState() => _MessageChatCardState();
@@ -19,13 +19,10 @@ class _MessageChatCardState extends State<MessageChatCard> {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-
-        widget.messageData.where((i) => i.id == 1 ).toList();
-        print(widget.messageData.where((i) => i.id == 1 ).toList());
-       
-        Navigator.of(context)
-                   .push(MaterialPageRoute(builder: (context) =>  ChatUserPage(messageModel: widget.messageData.where((i) => i.id == 1 ).toList(), userData: widget.userData)));
-       
+        Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => NewChatUserPage(conversationUserID: widget.conversationUserID, userID: widget.userID)),
+      );
       },
       child: widget.messageData[0].conversation.last.created=="no data"?
           const Padding(padding: EdgeInsets.zero)
