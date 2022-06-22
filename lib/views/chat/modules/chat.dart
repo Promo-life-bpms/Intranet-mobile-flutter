@@ -1,17 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/conversation.dart';
+import 'package:intranet_movil/services/post_conversation.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/chat/chat_page.dart';
+import 'package:intranet_movil/views/chat/modules/messages_chat.dart';
 import 'package:intranet_movil/views/chat/widget/my_message.dart';
 import 'package:intranet_movil/views/chat/widget/other_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class ChatUserPage extends StatefulWidget {
-  const ChatUserPage({Key? key, required this.conversationUserID, required this.userID})
+  const ChatUserPage(
+      {Key? key, required this.conversationUserID, required this.userID, required this.conversationUserName })
       : super(key: key);
 
   final int conversationUserID;
-  final int userID ;
+  final int userID;
+  final String conversationUserName;
 
   @override
   _ChatUserPageState createState() => _ChatUserPageState();
@@ -41,46 +46,66 @@ class _ChatUserPageState extends State<ChatUserPage> {
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
-Future postUserMessages(String token, String conversationUserID) async {
-    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUserMessages;
-  
+  Future postUserMessages(String token, String conversationUserID) async {
+    String url =
+        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUserMessages;
+
     final response = await http.post(Uri.parse(url), body: {
       'token': token,
       'conversationUserID': conversationUserID,
     }, headers: {
       'Accept': 'application/json',
     });
-    
+
     if (response.statusCode == 200) {
       List<ConversationModel> _model = conversationModelFromJson(response.body);
       _conversationModel = _model;
 
       return _model;
     }
-   
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: const Text("Prueba"),
+          leading: IconButton(
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () => Navigator.of(context).push(
+                MaterialPageRoute(builder: (context) => const ChatPage()))),
+          title: Text(widget.conversationUserName),
         ),
-        body: 
-        Column(
+        body: Column(
           children: [
-            Expanded(
-                child: ListView.builder(
-              padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-              itemCount: _conversationModel.length,
-              itemBuilder: (context, index) {
-                return  _conversationModel[index].transmitterID.toInt() == widget.userID 
-                    ?  MyMessageItem(conversation: _conversationModel[index].message)
-                    :  OtherMessageItem(conversation: _conversationModel[index].message);
-              },
-            )),
+            _conversationModel.length == 1 &&
+                    _conversationModel[0].created == "no data"
+                ? Expanded(
+                    child: Center(
+                      child: Padding(
+                        padding: const EdgeInsets.only(left: 12, right: 12),
+                        child: Text(StringIntranetConstants.emptyChat+ widget.conversationUserName, 
+                        textAlign: TextAlign.center,style: const TextStyle(fontSize: 14, height: 1.5),),
+                      ),
+                    ),
+                  )
+                : Expanded(
+                    child: ListView.builder(
+                    padding:
+                        const EdgeInsets.only(left: 16, right: 16, top: 16),
+                    itemCount: _conversationModel.length,
+                    itemBuilder: (context, index) {
+                      //Primero validamos si es de tipo emisor o receptor
+                      return _conversationModel[index].transmitterID.toInt() == widget.userID ? 
+                          MyMessageItem(
+                              conversation: _conversationModel[index].message, 
+                              created: _conversationModel[index].created,)
+                          : 
+                          OtherMessageItem(
+                              conversation: _conversationModel[index].message,
+                              created: _conversationModel[index].created,);
+                    },
+                  )),
             Row(
               children: [
                 Expanded(
@@ -128,6 +153,21 @@ Future postUserMessages(String token, String conversationUserID) async {
                     onPressed: () {
                       if (message.text.isNotEmpty) {
                         FocusManager.instance.primaryFocus?.unfocus();
+                        setState(() {
+                          final now = DateTime.now();
+                          print(widget.conversationUserID.toString());
+                          print(token);
+                          postConversation(token, widget.conversationUserID.toString(), message.text);
+
+                          _conversationModel.add(ConversationModel(
+                              id: widget.userID,
+                              transmitterID: widget.userID,
+                              receiverID: widget.conversationUserID,
+                              message: message.text,
+                              created: "${now.hour}:${now.minute }"));
+
+                          message.clear();
+                        });
                       } else {
                         _formKey.currentState!.validate();
                       }
@@ -135,7 +175,6 @@ Future postUserMessages(String token, String conversationUserID) async {
                     icon: const Icon(Icons.send))
               ],
             )
-           
           ],
         ));
   }

@@ -29,7 +29,8 @@ class _UserChatCardState extends State<UserChatCard> {
           MaterialPageRoute(
               builder: (context) => ChatUserPage(
                   conversationUserID: widget.conversationUserID,
-                  userID: widget.userID)),
+                  userID: widget.userID,
+                  conversationUserName:widget.userData[0].fullname ,)),
         );
       },
       child: Row(

@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/utils/constants.dart';
 
 class OtherMessageItem extends StatefulWidget {
-  const OtherMessageItem({Key? key, required this.conversation})
-      : super(key: key);
+  const OtherMessageItem({Key? key, required this.conversation, required this.created}): super(key: key);
 
   final String conversation;
+    final String created;
 
   @override
   State<OtherMessageItem> createState() => _OtherMessageItemState();
@@ -14,7 +14,11 @@ class OtherMessageItem extends StatefulWidget {
 class _OtherMessageItemState extends State<OtherMessageItem> {
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return 
+    widget.created == "no data"?
+     const Padding(padding: EdgeInsets.zero)
+    :
+    Row(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Container(

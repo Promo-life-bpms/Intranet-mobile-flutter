@@ -23,6 +23,7 @@ class ApiIntranetConstans {
   static String getEmployeeProfile = 'api/getProfile/';
   static String getUserMessages = 'api/getUserMessages/';
   static String postUserMessages = 'api/postUserMessages';
+  static String postConversation = 'api/postConversation';
 
 
 }
@@ -104,6 +105,8 @@ class StringIntranetConstants{
   static const chatPage = "Mis mensajes";
   static const chat = "Mensajes";
   static const chatUsers = "Usuarios";
+  static const emptyChat = "Inicia una conversación con ";
+
 } 
 
 class ListIntranetConstants{
