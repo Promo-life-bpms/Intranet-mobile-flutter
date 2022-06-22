@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/message.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/views/chat/modules/new_chat.dart';
+import 'package:intranet_movil/views/chat/modules/chat.dart';
 
 class MessageChatCard extends StatefulWidget {
   const MessageChatCard({Key? key,required this.messageData , required this.userID, required this.conversationUserID}) : super(key: key);
@@ -21,7 +21,7 @@ class _MessageChatCardState extends State<MessageChatCard> {
       onTap: () {
         Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => NewChatUserPage(conversationUserID: widget.conversationUserID, userID: widget.userID)),
+        MaterialPageRoute(builder: (context) => ChatUserPage(conversationUserID: widget.conversationUserID, userID: widget.userID)),
       );
       },
       child: widget.messageData[0].conversation.last.created=="no data"?

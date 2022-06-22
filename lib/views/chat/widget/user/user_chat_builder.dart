@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
-import 'package:intranet_movil/views/chat/widget/chat/user_chat_card.dart';
+import 'package:intranet_movil/views/chat/widget/user/user_chat_card.dart';
 
 class UserChatBuilder extends StatefulWidget {
   const UserChatBuilder({Key? key, required this.directoryData, required this.userID})

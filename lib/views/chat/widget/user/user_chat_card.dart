@@ -2,10 +2,15 @@ import 'package:badges/badges.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/views/chat/modules/new_chat.dart';
+import 'package:intranet_movil/views/chat/modules/chat.dart';
 
 class UserChatCard extends StatefulWidget {
-  const UserChatCard({Key? key,required this.userData, required this.userID, required this.conversationUserID}) : super(key: key);
+  const UserChatCard(
+      {Key? key,
+      required this.userData,
+      required this.userID,
+      required this.conversationUserID})
+      : super(key: key);
   final List<DirectoryModel> userData;
   final int userID;
   final int conversationUserID;
@@ -17,20 +22,21 @@ class UserChatCard extends StatefulWidget {
 class _UserChatCardState extends State<UserChatCard> {
   @override
   Widget build(BuildContext context) {
-        return InkWell(
-          onTap: () {
-            print("tabbbbbbbbbbbbbbbbbbbbbbb");
-              Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => NewChatUserPage(conversationUserID: widget.conversationUserID, userID: widget.userID)),
-      );
-         
+    return InkWell(
+      onTap: () {
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+              builder: (context) => ChatUserPage(
+                  conversationUserID: widget.conversationUserID,
+                  userID: widget.userID)),
+        );
       },
       child: Row(
         children: [
           Padding(
-              padding: const EdgeInsets.symmetric(
-                  vertical: 16.0, horizontal: 8.0),
+              padding:
+                  const EdgeInsets.symmetric(vertical: 16.0, horizontal: 8.0),
               child: SizedBox(
                 width: 50,
                 height: 50,
@@ -38,9 +44,9 @@ class _UserChatCardState extends State<UserChatCard> {
                     ? Badge(
                         toAnimate: true,
                         position: BadgePosition.bottomEnd(),
-                        badgeColor: widget.userData[0].onlineStatus == true?
-                            Colors.green
-                            :Colors.red,
+                        badgeColor: widget.userData[0].onlineStatus == true
+                            ? Colors.green
+                            : Colors.red,
                         child: const CircleAvatar(
                           backgroundColor:
                               ColorIntranetConstants.backgroundColorNormal,
@@ -49,9 +55,9 @@ class _UserChatCardState extends State<UserChatCard> {
                     : Badge(
                         toAnimate: true,
                         position: BadgePosition.bottomEnd(),
-                        badgeColor: widget.userData[0].onlineStatus == true?
-                            Colors.green
-                            :Colors.red,
+                        badgeColor: widget.userData[0].onlineStatus == true
+                            ? Colors.green
+                            : Colors.red,
                         child: CircleAvatar(
                           backgroundImage: NetworkImage(
                               ApiIntranetConstans.baseUrl +
@@ -61,7 +67,7 @@ class _UserChatCardState extends State<UserChatCard> {
                         ),
                       ),
               )),
-              const Padding(padding: EdgeInsets.only(left: 20)),
+          const Padding(padding: EdgeInsets.only(left: 20)),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,

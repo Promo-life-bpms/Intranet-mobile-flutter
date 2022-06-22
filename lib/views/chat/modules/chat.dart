@@ -1,24 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:intranet_movil/model/message.dart';
-import 'package:intranet_movil/model/user_model.dart';
+import 'package:intranet_movil/model/conversation.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class ChatUserPage extends StatefulWidget {
-  const ChatUserPage({Key? key, required this.messageModel, required this.userData})
+  const ChatUserPage({Key? key, required this.conversationUserID, required this.userID})
       : super(key: key);
 
-  final List<MessageModel> messageModel;
-  final List<UserModel> userData;
+  final int conversationUserID;
+  final int userID ;
 
   @override
-  _ChatPageState createState() => _ChatPageState();
+  _ChatUserPageState createState() => _ChatUserPageState();
 }
 
-class _ChatPageState extends State<ChatUserPage> {
+class _ChatUserPageState extends State<ChatUserPage> {
   late String token = "";
   final _formKey = GlobalKey<FormState>();
   final message = TextEditingController();
+  late List<ConversationModel> _conversationModel = [];
 
   @override
   void initState() {
@@ -29,21 +30,41 @@ class _ChatPageState extends State<ChatUserPage> {
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
     String? _token = prefs.getString('token');
-
-
     if (_token != null || _token!.isNotEmpty) {
       token = _token;
+
+      postUserMessages(token, widget.conversationUserID.toString());
     }
 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
+
+Future postUserMessages(String token, String conversationUserID) async {
+    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUserMessages;
+  
+    final response = await http.post(Uri.parse(url), body: {
+      'token': token,
+      'conversationUserID': conversationUserID,
+    }, headers: {
+      'Accept': 'application/json',
+    });
+    
+    if (response.statusCode == 200) {
+      List<ConversationModel> _model = conversationModelFromJson(response.body);
+      _conversationModel = _model;
+
+      return _model;
+    }
+   
+  }
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: AppBar(
-          title: Text(widget.messageModel[0].fullname),
+          title: const Text("Prueba"),
         ),
         body: 
         Column(
@@ -51,10 +72,10 @@ class _ChatPageState extends State<ChatUserPage> {
             Expanded(
                 child: ListView.builder(
               padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
-              itemCount: widget.messageModel[0].conversation.length,
+              itemCount: _conversationModel.length,
               itemBuilder: (context, index) {
-                return  widget.messageModel[0].conversation[index]
-                            .transmitterID == widget.userData[0].id
+                return  _conversationModel[index]
+                            .transmitterID.toInt() == widget.userID
                        
                     ? Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -68,8 +89,7 @@ class _ChatPageState extends State<ChatUserPage> {
                                 ),
                               ),
                               padding: const EdgeInsets.all(12),
-                              child: Text(widget.messageModel[0]
-                                  .conversation[index].message, style: const TextStyle(color:Colors.white)))
+                              child: Text(_conversationModel[index].message, style: const TextStyle(color:Colors.white)))
                         ],
                       )
                     :  Row(
@@ -84,8 +104,7 @@ class _ChatPageState extends State<ChatUserPage> {
                                 ),
                               ),
                               padding: const EdgeInsets.all(12),
-                              child: Text(widget.messageModel[0]
-                                  .conversation[index].message, style: const TextStyle(color:Colors.black)))
+                              child: Text(_conversationModel[index].message, style: const TextStyle(color:Colors.black)))
                       ],
                     );
               },
