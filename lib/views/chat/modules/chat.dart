@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/conversation.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/chat/widget/my_message.dart';
+import 'package:intranet_movil/views/chat/widget/other_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -74,39 +76,9 @@ Future postUserMessages(String token, String conversationUserID) async {
               padding: const EdgeInsets.only(left: 16, right: 16, top: 16),
               itemCount: _conversationModel.length,
               itemBuilder: (context, index) {
-                return  _conversationModel[index]
-                            .transmitterID.toInt() == widget.userID
-                       
-                    ? Row(
-                        mainAxisAlignment: MainAxisAlignment.end,
-                        children: [
-                          Container(
-                              decoration: const BoxDecoration(
-                                color:
-                                    ColorIntranetConstants.primaryColorNormal,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(12.0),
-                                ),
-                              ),
-                              padding: const EdgeInsets.all(12),
-                              child: Text(_conversationModel[index].message, style: const TextStyle(color:Colors.white)))
-                        ],
-                      )
-                    :  Row(
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Container(
-                              decoration: const BoxDecoration(
-                                color:
-                                    ColorIntranetConstants.backgroundColorDark,
-                                borderRadius: BorderRadius.all(
-                                  Radius.circular(12.0),
-                                ),
-                              ),
-                              padding: const EdgeInsets.all(12),
-                              child: Text(_conversationModel[index].message, style: const TextStyle(color:Colors.black)))
-                      ],
-                    );
+                return  _conversationModel[index].transmitterID.toInt() == widget.userID 
+                    ?  MyMessageItem(conversation: _conversationModel[index].message)
+                    :  OtherMessageItem(conversation: _conversationModel[index].message);
               },
             )),
             Row(
