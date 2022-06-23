@@ -13,8 +13,6 @@ Future postConversation(String token, String receiverID, String message) async {
       'Accept': 'application/json',
     });
 
-    print(response.statusCode);
-  print(response);
     if (response.statusCode == 200) {
       return true;
     }
