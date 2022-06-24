@@ -26,20 +26,31 @@ class _ChatUserPageState extends State<ChatUserPage> {
   final _formKey = GlobalKey<FormState>();
   final message = TextEditingController();
   late List<ConversationModel> _conversationModel = [];
-  
+
 
   final ScrollController _scrollController =  ScrollController();
-
 
   @override
   void initState() {
     super.initState();
-    _getData();
+     _getData();
         
   }
 
+  Stream<List<ConversationModel>> _chat() async* {
 
-  void _getData() async {
+    while(true){
+      
+      await Future<void>.delayed(const Duration(seconds: 3));
+      List<ConversationModel> chatStream =[ConversationModel(id: 1, transmitterID: 1, receiverID: 1, message: "message", created: "created")];
+      yield chatStream;
+    }
+
+  }
+
+
+
+   _getData() async {
     final prefs = await SharedPreferences.getInstance();
     String? _token = prefs.getString('token');
     if (_token != null || _token!.isNotEmpty) {
@@ -90,7 +101,34 @@ class _ChatUserPageState extends State<ChatUserPage> {
                 MaterialPageRoute(builder: (context) => const ChatPage()))),
           title: Text(widget.conversationUserName),
         ),
-        body: Column(
+        body: Padding(
+        padding: const EdgeInsets.all(30),
+        child: StreamBuilder(
+          stream: _chat(),
+          builder: (context, AsyncSnapshot<List<ConversationModel>> snapshot) {
+         
+            if (snapshot.hasData) {
+              _conversationModel.add(ConversationModel(id: snapshot.data!.last.id, transmitterID: snapshot.data!.last.transmitterID, receiverID: snapshot.data!.last.receiverID, message: snapshot.data!.last.message, created: snapshot.data!.last.created));
+       
+              return ListView.builder(
+                itemCount: _conversationModel.length,
+                itemBuilder: (context, index) {
+                      //Primero validamos si es de tipo emisor o receptor
+                      return _conversationModel[index].transmitterID.toInt() == widget.userID ? 
+                          MyMessageItem(
+                              conversation: _conversationModel[index].message, 
+                              created: _conversationModel[index].created,)
+                          : 
+                          OtherMessageItem(
+                              conversation: _conversationModel[index].message,
+                              created: _conversationModel[index].created,);
+                    },
+              );
+            }
+            return const LinearProgressIndicator();
+          },
+        ),
+      ),/* Column(
           children: [
             _conversationModel.length == 1 &&
                     _conversationModel[0].created == "no data"
@@ -197,6 +235,6 @@ class _ChatUserPageState extends State<ChatUserPage> {
               ],
             )
           ],
-        ));
+        ) */);
   }
 }
