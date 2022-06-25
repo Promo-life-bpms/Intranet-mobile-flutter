@@ -40,6 +40,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
     _getData();
   }
 
+  //Widget Stream que se ejecuta cada 3 segundos
   Stream<List<ConversationModel>> _chat() async* {
     while (true) {
       await Future<void>.delayed(const Duration(seconds: 3));
@@ -48,6 +49,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
     }
   }
 
+  //Datos del chat que se obtienen al iniciar la pantalla de chat
   _getData() async {
     final prefs = await SharedPreferences.getInstance();
     String? _token = prefs.getString('token');
@@ -59,9 +61,9 @@ class _ChatUserPageState extends State<ChatUserPage> {
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
+  //Se envia una petición de tipo POST y se captura la respuesta con los chats de ambas personas involucradas
   Future postUserMessages(String token, String conversationUserID) async {
-    String url =
-        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUserMessages;
+    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUserMessages;
 
     final response = await http.post(Uri.parse(url), body: {
       'token': token,
@@ -78,9 +80,9 @@ class _ChatUserPageState extends State<ChatUserPage> {
     }
   }
 
+  //Se realiza el mismo proceso, que la funcion anterior, pero esta será consultada en el owidget Stream
   Future postUserMessages2(String token, String conversationUserID) async {
-    String url =
-        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUserMessages;
+    String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUserMessages;
 
     final response = await http.post(Uri.parse(url), body: {
       'token': token,
@@ -102,8 +104,8 @@ class _ChatUserPageState extends State<ChatUserPage> {
     }
   }
 
-
- Future<void> newMessageNotification() async {
+  //Función utilizada para enviar una notificación cada que recibe un mensaje el usuario
+  Future<void> newMessageNotification() async {
     await  _player.setAsset('lib/assets/message.mp3');
     _player.play();
   }
@@ -194,7 +196,18 @@ class _ChatUserPageState extends State<ChatUserPage> {
                     itemCount: _conversationModel.length,
                     itemBuilder: (context, index) {
                       //Primero validamos si es de tipo emisor o receptor
-                      return _conversationModel[index].transmitterID.toInt() ==
+                      return _conversationModel.length == 1 && _conversationModel[0].created == "no data"?
+                        Expanded(
+                          child: Center(
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 12, right: 12),
+                              child: Text(StringIntranetConstants.emptyChat+ widget.conversationUserName, 
+                              textAlign: TextAlign.center,style: const TextStyle(fontSize: 14, height: 1.5),),
+                            ),
+                          ),
+                        )
+                      :                   
+                      _conversationModel[index].transmitterID.toInt() ==
                               widget.userID
                           ? MyMessageItem(
                               conversation: _conversationModel[index].message,
