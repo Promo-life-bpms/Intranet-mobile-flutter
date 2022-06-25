@@ -31,7 +31,7 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
 
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
-     _messageModel = (await ApiMessageService().getMessages(token.toString()))!.cast<MessageModel>();
+    _messageModel = (await ApiMessageService().getMessages(token.toString()))!.cast<MessageModel>();
     _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
