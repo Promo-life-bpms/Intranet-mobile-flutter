@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/conversation.dart';
-import 'package:intranet_movil/services/post_conversation.dart';
 import 'package:intranet_movil/utils/constants.dart';
-import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/views/chat/widget/my_message.dart';
 import 'package:intranet_movil/views/chat/widget/other_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,6 +24,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
   final _formKey = GlobalKey<FormState>();
   final message = TextEditingController();
   late List<ConversationModel> _conversationModel = [];
+    late List<ConversationModel> _conversationModel2 = [];
 
 
   final ScrollController _scrollController =  ScrollController();
@@ -38,11 +37,20 @@ class _ChatUserPageState extends State<ChatUserPage> {
   }
 
   Stream<List<ConversationModel>> _chat() async* {
-
     while(true){
-      
+     
       await Future<void>.delayed(const Duration(seconds: 3));
-      List<ConversationModel> chatStream =[ConversationModel(id: 1, transmitterID: 1, receiverID: 1, message: "message", created: "created")];
+
+      /*  setState(() {
+         
+         postUserMessages(token, widget.conversationUserID.toString());
+      });
+       */
+
+     
+
+       postUserMessages2(token, widget.conversationUserID.toString());
+      List<ConversationModel> chatStream =[ConversationModel(id: 1, transmitterID: 1, receiverID: 1, message: "asda", created: "created")];
       yield chatStream;
     }
 
@@ -70,6 +78,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
       'token': token,
       'conversationUserID': conversationUserID,
     }, headers: {
+
       'Accept': 'application/json',
     });
 
@@ -90,6 +99,47 @@ class _ChatUserPageState extends State<ChatUserPage> {
     }
   }
 
+
+   _getData2() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? _token = prefs.getString('token');
+    if (_token != null || _token!.isNotEmpty) {
+      token = _token;
+
+      postUserMessages2(token, widget.conversationUserID.toString());
+    }
+
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  Future postUserMessages2(String token, String conversationUserID) async {
+    String url =
+        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postUserMessages;
+
+    final response = await http.post(Uri.parse(url), body: {
+      'token': token,
+      'conversationUserID': conversationUserID,
+    }, headers: {
+
+      'Accept': 'application/json',
+    });
+
+    if (response.statusCode == 200) {
+      print(response.statusCode);
+
+      print("NEW DATA "+_conversationModel2.length.toString());
+      print("OLD DATA "+_conversationModel.length.toString());
+
+      
+      List<ConversationModel> _model = conversationModelFromJson(response.body);
+      _conversationModel2 = _model;
+
+      return _model;
+    }
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -97,8 +147,14 @@ class _ChatUserPageState extends State<ChatUserPage> {
         appBar: AppBar(
           leading: IconButton(
             icon: const Icon(Icons.arrow_back, color: Colors.white),
-            onPressed: () => Navigator.of(context).push(
-                MaterialPageRoute(builder: (context) => const ChatPage()))),
+            onPressed: () {
+              void dispose() {
+                _chat();
+                super.dispose();
+              }
+              Navigator.pop(context);
+            } ,
+          ),
           title: Text(widget.conversationUserName),
         ),
         body: Padding(
@@ -106,9 +162,40 @@ class _ChatUserPageState extends State<ChatUserPage> {
         child: StreamBuilder(
           stream: _chat(),
           builder: (context, AsyncSnapshot<List<ConversationModel>> snapshot) {
-         
+            print(snapshot.connectionState);
+           
             if (snapshot.hasData) {
-              _conversationModel.add(ConversationModel(id: snapshot.data!.last.id, transmitterID: snapshot.data!.last.transmitterID, receiverID: snapshot.data!.last.receiverID, message: snapshot.data!.last.message, created: snapshot.data!.last.created));
+              /* if(_conversationModel.length == _conversationModel2.length){
+                print("IGUAL");
+
+              }else{
+                print("DIFERENTE"+ _conversationModel.length.toString()+ _conversationModel2.length.toString());
+                int diff = _conversationModel2.length - _conversationModel.length;
+                int initialValue= _conversationModel.length;
+                int sumador = 0;
+                for(int i = 0; i < diff; i++){
+                sumador = sumador + 1;
+                /* _conversationModel.add(ConversationModel(id: snapshot.data![initialValue+sumador].id, transmitterID: snapshot.data![initialValue+sumador].transmitterID, receiverID: snapshot.data![initialValue+sumador].receiverID, message: snapshot.data![initialValue+sumador].message, created:snapshot.data![initialValue+sumador].created));  */
+_conversationModel.add(ConversationModel(id: 1, transmitterID: 1, receiverID: 1, message: "test", created:"test")); 
+                } 
+
+                print(_conversationModel);
+              } */
+
+             
+
+              if(_conversationModel2.length>_conversationModel.length){
+                  int diff = _conversationModel2.length - _conversationModel.length;
+                  int initialValue= _conversationModel.length;
+                  int sumador = 1;
+                  for(int i =0; i<=diff; i++)           //for loop to print 1-10 numbers  
+                    {  
+                          _conversationModel.add(ConversationModel(id: _conversationModel2[initialValue+sumador-1].id, transmitterID: _conversationModel2[initialValue+sumador-1].transmitterID, receiverID: _conversationModel2[initialValue+sumador-1].receiverID, message: _conversationModel2[initialValue+sumador-1].message, created:_conversationModel2[initialValue+sumador-1].created));  
+        //to print the number  
+                      sumador = sumador +1;
+                    }  
+              }
+              
        
               return ListView.builder(
                 itemCount: _conversationModel.length,
