@@ -5,6 +5,7 @@ import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/chat/widget/my_message.dart';
 import 'package:intranet_movil/views/chat/widget/other_message.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:http/http.dart' as http;
 
 class ChatUserPage extends StatefulWidget {
@@ -30,6 +31,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
   late List<ConversationModel> _conversationModel = [];
   late List<ConversationModel> _conversationModel2 = [];
   final ScrollController _scrollController = ScrollController();
+   final _player = AudioPlayer();
   bool isDown = false;
 
   @override
@@ -100,6 +102,12 @@ class _ChatUserPageState extends State<ChatUserPage> {
     }
   }
 
+
+ Future<void> newMessageNotification() async {
+    await  _player.setAsset('lib/assets/message.mp3');
+    _player.play();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -121,6 +129,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
                             _scrollController.position.extentInside * 5000,
                         curve: Curves.linear,
                         duration: const Duration(milliseconds: 400));
+                        
                   });
                 } else {
                   setState(() {
@@ -167,6 +176,9 @@ class _ChatUserPageState extends State<ChatUserPage> {
                           created: snapshot
                               .data![initialValue + sumador - 1].created));
                       sumador = sumador + 1;
+
+                      newMessageNotification();
+                   
                     }
 
                     _scrollController.animateTo(
