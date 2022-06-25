@@ -50,8 +50,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
      
 
        postUserMessages2(token, widget.conversationUserID.toString());
-      List<ConversationModel> chatStream =[ConversationModel(id: 1, transmitterID: 1, receiverID: 1, message: "asda", created: "created")];
-      yield chatStream;
+        yield _conversationModel2;
     }
 
   }
@@ -165,32 +164,15 @@ class _ChatUserPageState extends State<ChatUserPage> {
             print(snapshot.connectionState);
            
             if (snapshot.hasData) {
-              /* if(_conversationModel.length == _conversationModel2.length){
-                print("IGUAL");
-
-              }else{
-                print("DIFERENTE"+ _conversationModel.length.toString()+ _conversationModel2.length.toString());
-                int diff = _conversationModel2.length - _conversationModel.length;
-                int initialValue= _conversationModel.length;
-                int sumador = 0;
-                for(int i = 0; i < diff; i++){
-                sumador = sumador + 1;
-                /* _conversationModel.add(ConversationModel(id: snapshot.data![initialValue+sumador].id, transmitterID: snapshot.data![initialValue+sumador].transmitterID, receiverID: snapshot.data![initialValue+sumador].receiverID, message: snapshot.data![initialValue+sumador].message, created:snapshot.data![initialValue+sumador].created));  */
-_conversationModel.add(ConversationModel(id: 1, transmitterID: 1, receiverID: 1, message: "test", created:"test")); 
-                } 
-
-                print(_conversationModel);
-              } */
-
-             
-
-              if(_conversationModel2.length>_conversationModel.length){
-                  int diff = _conversationModel2.length - _conversationModel.length;
+              
+              print("SNAPSHOT DATA " + snapshot.data!.length.toString());
+              if(snapshot.data!.length>_conversationModel.length){
+                  int diff = snapshot.data!.length - _conversationModel.length;
                   int initialValue= _conversationModel.length;
                   int sumador = 1;
-                  for(int i =0; i<=diff; i++)           //for loop to print 1-10 numbers  
+                  for(int i =0; i<diff; i++)           //for loop to print 1-10 numbers  
                     {  
-                          _conversationModel.add(ConversationModel(id: _conversationModel2[initialValue+sumador-1].id, transmitterID: _conversationModel2[initialValue+sumador-1].transmitterID, receiverID: _conversationModel2[initialValue+sumador-1].receiverID, message: _conversationModel2[initialValue+sumador-1].message, created:_conversationModel2[initialValue+sumador-1].created));  
+                          _conversationModel.add(ConversationModel(id: snapshot.data![initialValue+sumador-1].id, transmitterID: snapshot.data![initialValue+sumador-1].transmitterID, receiverID: snapshot.data![initialValue+sumador-1].receiverID, message: snapshot.data![initialValue+sumador-1].message, created:snapshot.data![initialValue+sumador-1].created));  
         //to print the number  
                       sumador = sumador +1;
                     }  
