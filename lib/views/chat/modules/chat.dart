@@ -52,7 +52,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
       token = _token;
       postUserMessages(token, widget.conversationUserID.toString());
     }
-
+   
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -144,8 +144,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
                       _conversationModel.add(ConversationModel(
                           id: snapshot.data![initialValue + sumador - 1].id,
                           transmitterID: snapshot
-                              .data![initialValue + sumador - 1]
-                              .transmitterID,
+                              .data![initialValue + sumador - 1].transmitterID,
                           receiverID: snapshot
                               .data![initialValue + sumador - 1].receiverID,
                           message: snapshot
@@ -154,15 +153,20 @@ class _ChatUserPageState extends State<ChatUserPage> {
                               .data![initialValue + sumador - 1].created));
                       sumador = sumador + 1;
                     }
+
+                    _scrollController.animateTo(
+                      _scrollController.position.extentInside +_scrollController.position.extentInside *5000,
+                      curve: Curves.linear,
+                      duration: const Duration(milliseconds: 400),
+                    );
                   }
                   return ListView.builder(
+                    controller: _scrollController,
                     padding: const EdgeInsets.all(16),
                     itemCount: _conversationModel.length,
                     itemBuilder: (context, index) {
                       //Primero validamos si es de tipo emisor o receptor
-                      return _conversationModel[index]
-                                  .transmitterID
-                                  .toInt() ==
+                      return _conversationModel[index].transmitterID.toInt() ==
                               widget.userID
                           ? MyMessageItem(
                               conversation: _conversationModel[index].message,
@@ -175,7 +179,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
                     },
                   );
                 }
-                return const LinearProgressIndicator();
+                return const Center(child: CircularProgressIndicator(),);
               },
             ),
           ),
@@ -224,14 +228,13 @@ class _ChatUserPageState extends State<ChatUserPage> {
               ),
               IconButton(
                   onPressed: () {
+                  
                     if (message.text.isNotEmpty) {
                       FocusManager.instance.primaryFocus?.unfocus();
                       setState(() {
                         final now = DateTime.now();
-                        postConversation(
-                            token,
-                            widget.conversationUserID.toString(),
-                            message.text);
+                        postConversation(token,
+                            widget.conversationUserID.toString(), message.text);
 
                         _conversationModel.add(ConversationModel(
                             id: widget.userID,
