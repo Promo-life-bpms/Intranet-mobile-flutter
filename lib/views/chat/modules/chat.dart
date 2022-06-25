@@ -30,6 +30,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
   late List<ConversationModel> _conversationModel = [];
   late List<ConversationModel> _conversationModel2 = [];
   final ScrollController _scrollController = ScrollController();
+  bool isDown = false;
 
   @override
   void initState() {
@@ -52,7 +53,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
       token = _token;
       postUserMessages(token, widget.conversationUserID.toString());
     }
-   
+
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -71,14 +72,6 @@ class _ChatUserPageState extends State<ChatUserPage> {
       List<ConversationModel> _model = conversationModelFromJson(response.body);
       _conversationModel = _model;
 
-      setState(() {
-        _scrollController.animateTo(
-          _scrollController.position.viewportDimension +
-              _scrollController.position.viewportDimension,
-          curve: Curves.linear,
-          duration: const Duration(milliseconds: 400),
-        );
-      });
       return _model;
     }
   }
@@ -113,11 +106,33 @@ class _ChatUserPageState extends State<ChatUserPage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () {
-            Navigator.pop(context);
-          },
-        ),
+            icon: const Icon(Icons.arrow_back, color: Colors.white),
+            onPressed: () {
+              Navigator.pop(context);
+            }),
+        actions: [
+          IconButton(
+              onPressed: () {
+                if (isDown == false) {
+                  setState(() {
+                    isDown = true;
+                    _scrollController.animateTo(
+                        _scrollController.position.extentInside +
+                            _scrollController.position.extentInside * 5000,
+                        curve: Curves.linear,
+                        duration: const Duration(milliseconds: 400));
+                  });
+                } else {
+                  setState(() {
+                    isDown = false;
+                    _scrollController.animateTo(0,
+                        curve: Curves.linear,
+                        duration: const Duration(milliseconds: 400));
+                  });
+                }
+              },
+              icon: const Icon(Icons.swap_vert)),
+        ],
         title: Text(widget.conversationUserName),
       ),
       body: Column(
@@ -155,7 +170,8 @@ class _ChatUserPageState extends State<ChatUserPage> {
                     }
 
                     _scrollController.animateTo(
-                      _scrollController.position.extentInside +_scrollController.position.extentInside *5000,
+                      _scrollController.position.extentInside +
+                          _scrollController.position.extentInside * 5000,
                       curve: Curves.linear,
                       duration: const Duration(milliseconds: 400),
                     );
@@ -179,7 +195,9 @@ class _ChatUserPageState extends State<ChatUserPage> {
                     },
                   );
                 }
-                return const Center(child: CircularProgressIndicator(),);
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
               },
             ),
           ),
@@ -228,7 +246,6 @@ class _ChatUserPageState extends State<ChatUserPage> {
               ),
               IconButton(
                   onPressed: () {
-                  
                     if (message.text.isNotEmpty) {
                       FocusManager.instance.primaryFocus?.unfocus();
                       setState(() {
