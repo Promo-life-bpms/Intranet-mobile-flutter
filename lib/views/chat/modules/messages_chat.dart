@@ -19,7 +19,9 @@ class MessagesChatPage extends StatefulWidget {
 class _MessagesChatPageState extends State<MessagesChatPage> {
 
   late List<MessageModel>? _messageModel = [];
+  late List<MessageModel> _messageModel2 = [];
   late List<UserModel>? _userlModel = [];
+  late String token = "";
   
   @override
   void initState() {
@@ -27,13 +29,44 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
     _getData();
     }
 
+  Stream<List<MessageModel>> _conversationStream() async* {
+    while (true) {
+      await Future<void>.delayed(const Duration(seconds: 5));
+      
+      _getData2(token);
+       print("NEW DATA "+_messageModel2.length.toString());
+      print("OLD DATA "+_messageModel!.length.toString());
+      yield _messageModel2;
+    }
+  }
+
   void _getData() async {
 
     final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
-    _messageModel = (await ApiMessageService().getMessages(token.toString()))!.cast<MessageModel>();
-    _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    String? _token = prefs.getString('token');
+    //Asigna el token a una variable para posteriormente enviarlo en la solicitud
+    if (_token != null || _token!.isNotEmpty) {
+      token = _token;
+
+      _messageModel = (await ApiMessageService().getMessages(_token.toString()))!.cast<MessageModel>();
+      _userlModel = (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
+      Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    }
+    
+  }
+
+   _getData2(token) async {
+   
+   if(token!=null || token !=""){
+      _messageModel2 = (await ApiMessageService().getMessages(token.toString()))!.cast<MessageModel>();
+        Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+   }else{
+      final prefs = await SharedPreferences.getInstance();
+      String? _token = prefs.getString('token');
+      _messageModel2 = (await ApiMessageService().getMessages(_token.toString()))!.cast<MessageModel>();
+      Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+   }
+    
   }
 
   @override
@@ -42,7 +75,32 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
         ? const ListviewCompanyPage()
         : Column(
             children: [
-                MessageChatBuilder(messageData: _messageModel!.reversed.toList(), userID: _userlModel![0].id)        
+
+              StreamBuilder(
+              stream: _conversationStream(),
+              builder:
+                  (context, AsyncSnapshot<List<MessageModel>> snapshot) {
+                /* Validación del status cada 5 seg */
+                /*  print(snapshot.connectionState); */
+
+                if (snapshot.hasData) {
+                  print("SNAPSHOT DATA " + snapshot.data!.length.toString()); 
+                    if (_messageModel2.length > _messageModel!.length) {
+                      _messageModel =_messageModel2;
+                      
+                    }else if(_messageModel2.length == _messageModel!.length){
+                       _messageModel =_messageModel2; 
+                    }
+                  }
+              
+                  return MessageChatBuilder(messageData: _messageModel!.reversed.toList(), userID: _userlModel![0].id)  ;      
+
+                }
+                /* return const Center(
+                  child: CircularProgressIndicator(),
+                ); */
+              )
+              
             ],
           );
   }
