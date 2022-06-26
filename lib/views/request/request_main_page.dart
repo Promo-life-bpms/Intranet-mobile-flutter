@@ -20,6 +20,7 @@ class RequestMainPage extends StatefulWidget {
 
 class _HomeState extends State<RequestMainPage> {
   late List<RequestModel>? _requestModel = [];
+  late String _token = "";
 
   @override
   void initState() {
@@ -30,6 +31,10 @@ class _HomeState extends State<RequestMainPage> {
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
+
+    if (token != null || token!.isNotEmpty) {
+      _token = token;
+    }
 
     _requestModel = (await ApiRequestService().getRequest(token.toString()))!
         .cast<RequestModel>();
@@ -90,7 +95,7 @@ class _HomeState extends State<RequestMainPage> {
           ),
           body: TabBarView(
             children: [
-              PendingRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Pendiente" && i.humanResourcesStatus=="Pendiente").toList()),
+              PendingRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Pendiente" && i.humanResourcesStatus=="Pendiente").toList(), token: _token),
               ProcessRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Aprobada" && i.humanResourcesStatus=="Pendiente").toList()),
               ApprovedRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Aprobada" && i.humanResourcesStatus=="Aprobada").toList()),
               RejectedRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Rechazada" || i.humanResourcesStatus=="Rechazada").toList()),

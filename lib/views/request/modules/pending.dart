@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/request.dart';
 import 'package:intranet_movil/views/request/modules/no_request.dart';
+import 'package:intranet_movil/views/request/widget/request_delete_alert_dialog.dart';
 import 'package:intranet_movil/views/request/widget/request_detail_alert_dialog.dart';
 
-void main() => runApp( PendingRequestPage(requestModel:const [],));
+void main() => runApp( const PendingRequestPage(requestModel:const [], token: "",));
 
-// ignore: must_be_immutable
 class PendingRequestPage extends StatelessWidget {
-   PendingRequestPage({Key? key, required this.requestModel}) : super(key: key);
-   late List<RequestModel>? requestModel = [];
- 
+  const PendingRequestPage({Key? key, required this.requestModel, required this.token}) : super(key: key);
+  final List<RequestModel>? requestModel;
+  final String token;
+
   @override
   Widget build(BuildContext context) {
     return  requestModel == null || requestModel!.isEmpty
@@ -48,15 +49,28 @@ class PendingRequestPage extends StatelessWidget {
                                         CrossAxisAlignment.start,
                                     children: [
                                       Padding(
-                                        padding: const EdgeInsets.all(16),
-                                        child: Text(
-                                          requestModel![index].typeRequest,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 16.00,
-                                            fontWeight: FontWeight.bold,
-                                          ),
+                                        padding: const EdgeInsets.only(left: 16, right:16 ),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              requestModel![index].typeRequest,
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style: const TextStyle(
+                                                fontSize: 16.00,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+
+                                            IconButton(
+                                              onPressed: (){
+                                                RequestDelete.showRequestDelete(context, token, requestModel![index].id.toString());
+/*                                                 postRequestDelete(token, requestModel![index].id.toString());
+ */                                              }, 
+                                              icon: const Icon(Icons.delete)
+                                              )
+                                          ],
                                         ),
                                       ),
                                       Padding(
@@ -108,4 +122,7 @@ class PendingRequestPage extends StatelessWidget {
             ],
           );
   }
+
+
+
 }

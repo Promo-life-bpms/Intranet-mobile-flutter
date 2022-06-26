@@ -34,8 +34,9 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
       await Future<void>.delayed(const Duration(seconds: 5));
       
       _getData2(token);
-       print("NEW DATA "+_messageModel2.length.toString());
-      print("OLD DATA "+_messageModel!.length.toString());
+/*       Indicadores de prueba para validar el funcionamiento del stream widget */
+/*        print("NEW DATA "+_messageModel2.length.toString());
+      print("OLD DATA "+_messageModel!.length.toString()); */
       yield _messageModel2;
     }
   }
@@ -84,7 +85,8 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
                 /*  print(snapshot.connectionState); */
 
                 if (snapshot.hasData) {
-                  print("SNAPSHOT DATA " + snapshot.data!.length.toString()); 
+                /*   Validador de datos obtenidos en el stream  */
+                 /*  print("SNAPSHOT DATA " + snapshot.data!.length.toString());  */
                     if (_messageModel2.length > _messageModel!.length) {
                       _messageModel =_messageModel2;
                       

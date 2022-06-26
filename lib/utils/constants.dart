@@ -24,8 +24,7 @@ class ApiIntranetConstans {
   static String getUserMessages = 'api/getUserMessages/';
   static String postUserMessages = 'api/postUserMessages';
   static String postConversation = 'api/postConversation';
-
-
+  static String postRequestDelete = 'api/postDeleteRequest';
 }
 
 class StringIntranetConstants{
