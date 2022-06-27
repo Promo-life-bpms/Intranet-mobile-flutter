@@ -20,6 +20,7 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
 
   late List<MessageModel>? _messageModel = [];
   late List<MessageModel> _messageModel2 = [];
+  late List<MessageModel> data = [];
   late List<UserModel>? _userlModel = [];
   late String token = "";
   
@@ -37,6 +38,7 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
 /*       Indicadores de prueba para validar el funcionamiento del stream widget */
 /*        print("NEW DATA "+_messageModel2.length.toString());
       print("OLD DATA "+_messageModel!.length.toString()); */
+
       yield _messageModel2;
     }
   }
@@ -49,7 +51,9 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
     if (_token != null || _token!.isNotEmpty) {
       token = _token;
 
-      _messageModel = (await ApiMessageService().getMessages(_token.toString()))!.cast<MessageModel>();
+      _messageModel = (await ApiMessageService().getMessages(_token.toString()))!.cast<MessageModel>(); 
+      _messageModel!.sort((a, b)=> a.createdAt.compareTo(b.createdAt));
+      
       _userlModel = (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
       Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
     }
@@ -85,19 +89,19 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
                 /*  print(snapshot.connectionState); */
 
                 if (snapshot.hasData) {
+                        _messageModel!.sort((a, b)=> a.createdAt.compareTo(b.createdAt));
 
-                 
-
-                
-
-                 
                 /*   Validador de datos obtenidos en el stream  */
                  /*  print("SNAPSHOT DATA " + snapshot.data!.length.toString());  */
                     if (_messageModel2.length > _messageModel!.length) {
+                      _messageModel2.sort((a, b)=> a.createdAt.compareTo(b.createdAt));
+
                       _messageModel =_messageModel2;
                       
                     }else if(_messageModel2.length == _messageModel!.length){
+                      _messageModel2.sort((a, b)=> a.createdAt.compareTo(b.createdAt));
                        _messageModel =_messageModel2; 
+
                     }
                   }
               
