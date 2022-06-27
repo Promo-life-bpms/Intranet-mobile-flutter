@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/conversation.dart';
-import 'package:intranet_movil/services/post_conversation.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/chat/widget/my_message.dart';
 import 'package:intranet_movil/views/chat/widget/other_message.dart';
@@ -303,5 +302,33 @@ class _ChatUserPageState extends State<ChatUserPage> {
         ],
       ),
     );
+  }
+
+  Future postConversation(String token, String receiverID, String message) async {
+    String url =
+        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postConversation;
+    final response = await http.post(Uri.parse(url), body: {
+      'token': token,
+      'receiverID': receiverID,
+      'message': message,
+    }, headers: {
+      'Accept': 'application/json',
+    });
+
+    /* print(response.statusCode);  */
+
+    if (response.statusCode == 200) {
+      return true;
+    }else{
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+      content: Text(StringIntranetConstants.postMessageError),
+      ));
+        _conversationModel.removeLast();
+    }
+    /* if (response.statusCode == 422) {
+      return false;
+    } */
+
+    return false;
   }
 }

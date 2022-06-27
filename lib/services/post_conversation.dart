@@ -1,8 +1,8 @@
   
-import 'package:intranet_movil/utils/constants.dart';
+/*import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
-Future postConversation(String token, String receiverID, String message) async {
+ Future postConversation(String token, String receiverID, String message) async {
     String url =
         ApiIntranetConstans.baseUrl + ApiIntranetConstans.postConversation;
     final response = await http.post(Uri.parse(url), body: {
@@ -21,4 +21,4 @@ Future postConversation(String token, String receiverID, String message) async {
     }
 
     return false;
-  }
+  } */

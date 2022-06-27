@@ -105,6 +105,8 @@ class StringIntranetConstants{
   static const chat = "Mensajes";
   static const chatUsers = "Usuarios";
   static const emptyChat = "Inicia una conversación con ";
+  static const postMessageError = "Mensaje no enviado, revise su conexion a internet ";
+
 
 } 
 
