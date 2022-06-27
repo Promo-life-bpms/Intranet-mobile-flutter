@@ -85,6 +85,12 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
                 /*  print(snapshot.connectionState); */
 
                 if (snapshot.hasData) {
+
+                 
+
+                
+
+                 
                 /*   Validador de datos obtenidos en el stream  */
                  /*  print("SNAPSHOT DATA " + snapshot.data!.length.toString());  */
                     if (_messageModel2.length > _messageModel!.length) {
@@ -95,7 +101,9 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
                     }
                   }
               
-                  return MessageChatBuilder(messageData: _messageModel!.reversed.toList(), userID: _userlModel![0].id)  ;      
+                  return MessageChatBuilder(
+                    messageData: _messageModel!.reversed.toList(),
+                   userID: _userlModel![0].id)  ;      
 
                 }
                 /* return const Center(

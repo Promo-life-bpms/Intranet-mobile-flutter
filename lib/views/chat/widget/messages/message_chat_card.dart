@@ -28,7 +28,7 @@ class _MessageChatCardState extends State<MessageChatCard> {
           conversationUserName: widget.conversationUserName)),
       );
       },
-      child: widget.messageData[0].conversation.last.created=="no data"?
+      child: widget.messageData[0].conversation=="no data"?
           const Padding(padding: EdgeInsets.zero)
           :
         Row(
@@ -69,12 +69,12 @@ class _MessageChatCardState extends State<MessageChatCard> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Text(widget.messageData[0].conversation.last.message,
+                    Text(widget.messageData[0].conversation,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 12.00,
                         )),
-                    Text(widget.messageData[0].conversation.last.created,
+                    Text(widget.messageData[0].createdAt,
                         overflow: TextOverflow.ellipsis,
                         style: const TextStyle(
                           fontSize: 12.00,

@@ -6,10 +6,6 @@ List<MessageModel> messageModelFromJson(String str) =>
 String messageModelToJson(List<MessageModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
-Conversation commentFromJson(String str) => Conversation.fromJson(json.decode(str));
-
-String commentToJson(Conversation data) => json.encode(data.toJson());
-
 class MessageModel {
   MessageModel({
     required this.id,
@@ -19,6 +15,7 @@ class MessageModel {
     required this.department,
     required this.position,
     required this.conversation,
+    required this.createdAt
   });
 
   int id;
@@ -27,7 +24,8 @@ class MessageModel {
   String photo;
   String department;
   String position;
-  List<Conversation> conversation;
+  String conversation;
+  String createdAt;
 
   factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
         id: json["id"],
@@ -36,7 +34,8 @@ class MessageModel {
         photo: json["photo"],
         department: json["department"],
         position: json["position"],
-        conversation: List<Conversation>.from(json["conversation"].map((x) => Conversation.fromJson(x))),
+        conversation: json["conversation"],
+        createdAt: json["createdAt"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -46,38 +45,9 @@ class MessageModel {
         "photo": photo,
         "department": department,
         "position": position,
-        "conversation":List<dynamic>.from(conversation.map((x) => x.toJson())),
+        "conversation":conversation,
+        "createdAt":createdAt,
       };
+
 }
 
-class Conversation {
-    int id;
-    int transmitterID;
-    int receiverID;
-    String message;
-    String created;
-
-    Conversation({
-        required this.id,
-        required this.transmitterID,
-        required this.receiverID,
-        required this.message,
-        required this.created,
-    });
-
-    factory Conversation.fromJson(Map<String, dynamic> json) => Conversation(
-        id: json["id"],
-        transmitterID: json["transmitterID"],
-        receiverID: json["receiverID"],
-        message: json["message"],
-        created: json["created"],
-    );
-
-    Map<String, dynamic> toJson() => {
-        "id": id,
-        "transmitterID": transmitterID,
-        "receiverID": receiverID,
-        "message": message,
-        "created_at":created,
-   };
-}

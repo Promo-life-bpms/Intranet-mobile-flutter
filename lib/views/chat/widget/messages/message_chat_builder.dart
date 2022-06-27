@@ -21,7 +21,15 @@ class _MessageChatBuilderState extends State<MessageChatBuilder> {
         padding: const EdgeInsets.only(left: 8, right: 16),
         itemCount: widget.messageData.length,
         itemBuilder: (context, index) {
-          return MessageChatCard(messageData: [MessageModel(id: widget.messageData[index].id, fullname: widget.messageData[index].fullname, email: widget.messageData[index].email, photo: widget.messageData[index].photo, department: widget.messageData[index].department, position: widget.messageData[index].position, conversation: widget.messageData[index].conversation)],
+          return MessageChatCard(messageData: [
+            MessageModel(id: widget.messageData[index].id, 
+            fullname: widget.messageData[index].fullname, 
+            email: widget.messageData[index].email, 
+            photo: widget.messageData[index].photo, 
+            department: widget.messageData[index].department, 
+            position: widget.messageData[index].position, 
+            conversation: widget.messageData[index].conversation,
+            createdAt: widget.messageData[index].createdAt)],
           userID: widget.userID ,
           conversationUserID: widget.messageData[index].id,
           conversationUserName:widget.messageData[index].fullname);
