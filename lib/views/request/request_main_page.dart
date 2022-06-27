@@ -95,7 +95,7 @@ class _HomeState extends State<RequestMainPage> {
           ),
           body: TabBarView(
             children: [
-              PendingRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Pendiente" && i.humanResourcesStatus=="Pendiente").toList(), token: _token),
+              PendingRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Pendiente" && i.humanResourcesStatus=="Pendiente").toList(), token: _token, contextMain: context,),
               ProcessRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Aprobada" && i.humanResourcesStatus=="Pendiente").toList()),
               ApprovedRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Aprobada" && i.humanResourcesStatus=="Aprobada").toList()),
               RejectedRequestPage(requestModel: _requestModel?.where((i) => i.directManagerStatus == "Rechazada" || i.humanResourcesStatus=="Rechazada").toList()),

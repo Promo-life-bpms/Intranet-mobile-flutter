@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/services/post_request_delete.dart';
+import 'package:intranet_movil/views/request/request_main_page.dart';
 
 class RequestDelete {
-  static showRequestDelete(
+   showRequestDelete(
     BuildContext contex,
     String token,
     String requestID,
@@ -17,6 +18,12 @@ class RequestDelete {
       child: const Text("Aceptar"),
       onPressed: () {
         postRequestDelete(token, requestID);
+        Navigator.pop(contex);
+        Navigator.pushAndRemoveUntil(
+            contex,
+            MaterialPageRoute(builder: (context) => const RequestMainPage()),
+            ModalRoute.withName("/RequestPage"));
+        
       },
     );
     AlertDialog alert = AlertDialog(

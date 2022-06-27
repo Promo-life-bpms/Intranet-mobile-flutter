@@ -4,12 +4,12 @@ import 'package:intranet_movil/views/request/modules/no_request.dart';
 import 'package:intranet_movil/views/request/widget/request_delete_alert_dialog.dart';
 import 'package:intranet_movil/views/request/widget/request_detail_alert_dialog.dart';
 
-void main() => runApp( const PendingRequestPage(requestModel:const [], token: "",));
 
 class PendingRequestPage extends StatelessWidget {
-  const PendingRequestPage({Key? key, required this.requestModel, required this.token}) : super(key: key);
+  const PendingRequestPage({Key? key, required this.requestModel, required this.token, required this.contextMain} ) : super(key: key);
   final List<RequestModel>? requestModel;
   final String token;
+  final BuildContext contextMain;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,7 @@ class PendingRequestPage extends StatelessWidget {
 
                                             IconButton(
                                               onPressed: (){
-                                                RequestDelete.showRequestDelete(context, token, requestModel![index].id.toString());
+                                                RequestDelete().showRequestDelete(contextMain, token, requestModel![index].id.toString());
 /*                                                 postRequestDelete(token, requestModel![index].id.toString());
  */                                              }, 
                                               icon: const Icon(Icons.delete)
