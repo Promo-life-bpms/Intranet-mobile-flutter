@@ -181,10 +181,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
                       options: CarouselOptions(
                         height: 350,
                         autoPlay: false,
-                        enlargeCenterPage: true,
-                        viewportFraction: 0.9,
                         aspectRatio: 2.0,
-                        initialPage: 2,
+                        enlargeCenterPage: true,
                       ),
                     ),
           Padding(
