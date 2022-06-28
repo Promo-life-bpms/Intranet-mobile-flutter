@@ -33,6 +33,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
   void initState() {
     isLike = widget.publicationData[0].isLike;
     super.initState();
+    print("TOKEEEEEEEEEEEEEEEEEEEEEEEN");
+    print(widget.token);
   }
 
   @override
@@ -180,7 +182,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                               )),
                       options: CarouselOptions(
                         height: 350,
-                        autoPlay: true,
+                        autoPlay: false,
                         enlargeCenterPage: true,
                         viewportFraction: 0.9,
                         aspectRatio: 2.0,
