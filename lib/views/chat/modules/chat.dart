@@ -42,7 +42,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
   //Widget Stream que se ejecuta cada 3 segundos
   Stream<List<ConversationModel>> _chat() async* {
     while (true) {
-      await Future<void>.delayed(const Duration(seconds: 3));
+      await Future<void>.delayed(const Duration(seconds: 2));
       postUserMessages2(token, widget.conversationUserID.toString());
       yield _conversationModel2;
     }

@@ -32,7 +32,7 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
 
   Stream<List<MessageModel>> _conversationStream() async* {
     while (true) {
-      await Future<void>.delayed(const Duration(seconds: 5));
+      await Future<void>.delayed(const Duration(seconds: 2));
       
       _getData2(token);
 /*       Indicadores de prueba para validar el funcionamiento del stream widget */
