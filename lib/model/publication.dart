@@ -12,6 +12,11 @@ Comments commentFromJson(String str) => Comments.fromJson(json.decode(str));
 String commentToJson(Comments data) => json.encode(data.toJson());
 
 
+PhotoPublication photoPublicationFromJson(String str) => PhotoPublication.fromJson(json.decode(str));
+
+String photoPublicationToJson(PhotoPublication data) => json.encode(data.toJson());
+
+
 class PublicationModel {
   PublicationModel({
     required this.id,
@@ -32,7 +37,7 @@ class PublicationModel {
   String userName;
   String created;
   String contentPublication;
-  String photoPublication;
+  List<PhotoPublication>photoPublication;
   int likes;
   bool isLike;
   List<Comments> comments;
@@ -44,8 +49,8 @@ class PublicationModel {
         photo: json["photo"],
         userName: json["userName"],
         created: json["created"],
-        contentPublication: json["contentPublication"],
-        photoPublication: json["photoPublication"],
+        contentPublication: json["contentPublication"],   
+        photoPublication: List<PhotoPublication>.from(json["photoPublication"].map((x) => PhotoPublication.fromJson(x))),
         likes: json["likes"],
         isLike: json["isLike"],
         comments: List<Comments>.from(json["comments"].map((x) => Comments.fromJson(x))),
@@ -58,11 +63,32 @@ class PublicationModel {
         "userName": userName,
         "created": created,
         "contentPublication": contentPublication,
-        "photoPublication": photoPublication,
+        "photoPublication": List<dynamic>.from(photoPublication.map((x) => x.toJson())),
         "likes": likes,
         "isLike":isLike,
         "comments":List<dynamic>.from(comments.map((x) => x.toJson())),
       };
+}
+
+
+class PhotoPublication {
+    String typeFile;
+    String resource;
+
+    PhotoPublication({
+        required this.typeFile,
+        required this.resource,
+    });
+
+    factory PhotoPublication.fromJson(Map<String, dynamic> json) => PhotoPublication(
+        typeFile: json["typeFile"],
+        resource: json["resource"],
+    );
+
+    Map<String, dynamic> toJson() => {
+        "typeFile": typeFile,
+        "content": resource ,
+   };
 }
 
 

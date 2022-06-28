@@ -105,7 +105,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
               ],
             ),
           ),
-          widget.publicationData[0].photoPublication == "sin foto" ||
+         /*  widget.publicationData[0].photoPublication == "sin foto" ||
                   widget.publicationData[0].photoPublication == "no photo"
               ? const Padding(padding: EdgeInsets.zero)
               : SizedBox(
@@ -129,7 +129,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                       "lib/assets/lost_connection.png")))));
                     },
                   ),
-                ),
+                ), */
           Padding(
               padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
               child: Container(
