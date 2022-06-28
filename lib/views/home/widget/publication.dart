@@ -1,5 +1,6 @@
 import 'package:badges/badges.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
@@ -30,9 +31,10 @@ class _PublicationContainerState extends State<PublicationContainer> {
   bool isLike = false;
   @override
   void initState() {
-    isLike= widget.publicationData[0].isLike;
+    isLike = widget.publicationData[0].isLike;
     super.initState();
   }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -48,40 +50,47 @@ class _PublicationContainerState extends State<PublicationContainer> {
                 Row(
                   children: [
                     InkWell(
-                      child:  SizedBox(
-                      width: 40,
-                      height: 40,
-                      child: CircleAvatar(
-                        backgroundImage: NetworkImage(
-                            ApiIntranetConstans.baseUrl + 
-                                widget.publicationData[0].photo),
+                      child: SizedBox(
+                        width: 40,
+                        height: 40,
+                        child: CircleAvatar(
+                          backgroundImage: NetworkImage(
+                              ApiIntranetConstans.baseUrl +
+                                  widget.publicationData[0].photo),
+                        ),
                       ),
-                      ),
-                      onTap: (){
-                        Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) =>  EmployeeProfilePage(employeeID: widget.publicationData[0].userId,employeeName: widget.publicationData[0].userName,)));
+                      onTap: () {
+                        Navigator.of(context).push(MaterialPageRoute(
+                            builder: (context) => EmployeeProfilePage(
+                                  employeeID: widget.publicationData[0].userId,
+                                  employeeName:
+                                      widget.publicationData[0].userName,
+                                )));
                       },
                     ),
-                   
                     const Padding(padding: EdgeInsets.only(left: 16)),
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         InkWell(
                           child: Text(
-                          widget.publicationData[0].userName,
-                          style: const TextStyle(
-                            fontSize: 12.00,
-                            fontWeight: FontWeight.bold,
+                            widget.publicationData[0].userName,
+                            style: const TextStyle(
+                              fontSize: 12.00,
+                              fontWeight: FontWeight.bold,
+                            ),
+                            textAlign: TextAlign.left,
                           ),
-                          textAlign: TextAlign.left,
-                        ),
-                          onTap: (){
-                            Navigator.of(context)
-                          .push(MaterialPageRoute(builder: (context) =>  EmployeeProfilePage(employeeID: widget.publicationData[0].userId,employeeName: widget.publicationData[0].userName,)));
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => EmployeeProfilePage(
+                                      employeeID:
+                                          widget.publicationData[0].userId,
+                                      employeeName:
+                                          widget.publicationData[0].userName,
+                                    )));
                           },
                         ),
-                        
                         Padding(
                           padding: const EdgeInsets.only(left: 0, top: 4),
                           child: Text(widget.publicationData[0].created,
@@ -105,31 +114,79 @@ class _PublicationContainerState extends State<PublicationContainer> {
               ],
             ),
           ),
-         /*  widget.publicationData[0].photoPublication == "sin foto" ||
-                  widget.publicationData[0].photoPublication == "no photo"
+          widget.publicationData[0].photoPublication.length == 1 &&
+                  widget.publicationData[0].photoPublication[0].typeFile ==
+                      "no data"
               ? const Padding(padding: EdgeInsets.zero)
-              : SizedBox(
-                  width: double.infinity,
-                  child: InkWell(
-                    child: CachedNetworkImage(
-                      imageUrl: ApiIntranetConstans.baseUrl + "storage/"+
-                          widget.publicationData[0].photoPublication,
-                      placeholder: (context, url) =>
-                          const Center(child: CircularProgressIndicator()),
-                      errorWidget: (context, url, error) => const Image(
-                          image: AssetImage("lib/assets/lost_connection.png")),
+              : widget.publicationData[0].photoPublication.length == 1
+                  ? SizedBox(
+                      width: double.infinity,
+                      child: InkWell(
+                        child: CachedNetworkImage(
+                          imageUrl: ApiIntranetConstans.baseUrl +
+                              widget.publicationData[0].photoPublication[0]
+                                  .resource,
+                          placeholder: (context, url) =>
+                              const Center(child: CircularProgressIndicator()),
+                          errorWidget: (context, url, error) => const Image(
+                              image:
+                                  AssetImage("lib/assets/lost_connection.png")),
+                        ),
+                        onDoubleTap: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => CachedNetworkImage(
+                                  imageUrl: ApiIntranetConstans.baseUrl +
+                                      widget.publicationData[0]
+                                          .photoPublication[0].resource,
+                                  errorWidget: (context, url, error) => const Image(
+                                      image: AssetImage(
+                                          "lib/assets/lost_connection.png")))));
+                        },
+                      ),
+                    )
+                  : CarouselSlider.builder(
+                      itemCount:
+                          widget.publicationData[0].photoPublication.length,
+                      itemBuilder: (BuildContext context, int index,
+                              int pageViewIndex) =>
+                          FittedBox(
+                              fit: BoxFit.scaleDown,
+                              child: InkWell(
+                                child: CachedNetworkImage(
+                                  imageUrl: ApiIntranetConstans.baseUrl +
+                                      widget.publicationData[0]
+                                          .photoPublication[index].resource,
+                                  placeholder: (context, url) => const Center(
+                                      child: CircularProgressIndicator()),
+                                  errorWidget: (context, url, error) =>
+                                      const Image(
+                                          image: AssetImage(
+                                              "lib/assets/lost_connection.png")),
+                                ),
+                                onDoubleTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => CachedNetworkImage(
+                                          imageUrl:
+                                              ApiIntranetConstans.baseUrl +
+                                                  widget
+                                                      .publicationData[0]
+                                                      .photoPublication[index]
+                                                      .resource,
+                                          errorWidget: (context, url, error) =>
+                                              const Image(
+                                                  image: AssetImage(
+                                                      "lib/assets/lost_connection.png")))));
+                                },
+                              )),
+                      options: CarouselOptions(
+                        height: 350,
+                        autoPlay: true,
+                        enlargeCenterPage: true,
+                        viewportFraction: 0.9,
+                        aspectRatio: 2.0,
+                        initialPage: 2,
+                      ),
                     ),
-                    onDoubleTap: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => CachedNetworkImage(
-                              imageUrl: ApiIntranetConstans.baseUrl + "storage/"+
-                                  widget.publicationData[0].photoPublication,
-                              errorWidget: (context, url, error) => const Image(
-                                  image: AssetImage(
-                                      "lib/assets/lost_connection.png")))));
-                    },
-                  ),
-                ), */
           Padding(
               padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
               child: Container(
@@ -149,14 +206,14 @@ class _PublicationContainerState extends State<PublicationContainer> {
                           widget.publicationToLikeData[0].likes =
                               widget.publicationToLikeData[0].likes + 1;
                           widget.publicationToLikeData[0].isLike = true;
-                          isLike=true;
+                          isLike = true;
                           postLike(widget.token,
                               widget.publicationData[0].id.toString());
                         } else {
                           widget.publicationToLikeData[0].likes =
                               widget.publicationToLikeData[0].likes - 1;
                           widget.publicationToLikeData[0].isLike = false;
-                          isLike=false;
+                          isLike = false;
                           postUnlike(widget.token,
                               widget.publicationData[0].id.toString());
                         }
@@ -164,29 +221,29 @@ class _PublicationContainerState extends State<PublicationContainer> {
                     },
                     child: widget.publicationToLikeData[0].likes ==
                                 widget.publicationData[0].likes &&
-                            widget.publicationToLikeData[0].isLike == false 
+                            widget.publicationToLikeData[0].isLike == false
                         ? Row(
                             children: [
                               Badge(
-                                  toAnimate: true,
-                                  position: BadgePosition.bottomEnd(),
-                                  badgeContent: Text(
-                                    widget.publicationToLikeData[0].likes
-                                        .toString(),
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                  child: 
-                                  isLike==false? const Icon(
-                                    Icons.favorite,
-                                    color: ColorIntranetConstants.redLight,
-                                    size: 24,
-                                  ):
-                                  const Icon(
-                                    Icons.favorite,
-                                    color: Colors.red,
-                                    size: 24,
-                                  ),
-                                  ),
+                                toAnimate: true,
+                                position: BadgePosition.bottomEnd(),
+                                badgeContent: Text(
+                                  widget.publicationToLikeData[0].likes
+                                      .toString(),
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                child: isLike == false
+                                    ? const Icon(
+                                        Icons.favorite,
+                                        color: ColorIntranetConstants.redLight,
+                                        size: 24,
+                                      )
+                                    : const Icon(
+                                        Icons.favorite,
+                                        color: Colors.red,
+                                        size: 24,
+                                      ),
+                              ),
                               const Padding(
                                 padding: EdgeInsets.only(left: 12),
                                 child: Text("Me gusta"),
@@ -196,23 +253,25 @@ class _PublicationContainerState extends State<PublicationContainer> {
                         : Row(
                             children: [
                               Badge(
-                                  toAnimate: true,
-                                  position: BadgePosition.bottomEnd(),
-                                  badgeContent: Text(
-                                    widget.publicationToLikeData[0].likes
-                                        .toString(),
-                                    style: const TextStyle(color: Colors.white),
-                                  ),
-                                  child:isLike==false? const Icon(
-                                    Icons.favorite,
-                                    color: ColorIntranetConstants.redLight,
-                                    size: 24,
-                                  ):
-                                  const Icon(
-                                    Icons.favorite,
-                                    color: Colors.red,
-                                    size: 24,
-                                  ),),
+                                toAnimate: true,
+                                position: BadgePosition.bottomEnd(),
+                                badgeContent: Text(
+                                  widget.publicationToLikeData[0].likes
+                                      .toString(),
+                                  style: const TextStyle(color: Colors.white),
+                                ),
+                                child: isLike == false
+                                    ? const Icon(
+                                        Icons.favorite,
+                                        color: ColorIntranetConstants.redLight,
+                                        size: 24,
+                                      )
+                                    : const Icon(
+                                        Icons.favorite,
+                                        color: Colors.red,
+                                        size: 24,
+                                      ),
+                              ),
                               const Padding(
                                 padding: EdgeInsets.only(left: 12),
                                 child: Text(
