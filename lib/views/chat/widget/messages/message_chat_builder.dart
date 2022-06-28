@@ -29,7 +29,8 @@ class _MessageChatBuilderState extends State<MessageChatBuilder> {
             department: widget.messageData[index].department, 
             position: widget.messageData[index].position, 
             conversation: widget.messageData[index].conversation,
-            createdAt: widget.messageData[index].createdAt)],
+            createdAt: widget.messageData[index].createdAt,
+            time:widget.messageData[index].time )],
           userID: widget.userID ,
           conversationUserID: widget.messageData[index].id,
           conversationUserName:widget.messageData[index].fullname);

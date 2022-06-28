@@ -33,8 +33,6 @@ class _PublicationContainerState extends State<PublicationContainer> {
   void initState() {
     isLike = widget.publicationData[0].isLike;
     super.initState();
-    print("TOKEEEEEEEEEEEEEEEEEEEEEEEN");
-    print(widget.token);
   }
 
   @override

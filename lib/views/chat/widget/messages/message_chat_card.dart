@@ -77,7 +77,7 @@ class _MessageChatCardState extends State<MessageChatCard> {
                           )),
                     ),
                     Flexible(
-                      child: Text(widget.messageData[0].createdAt,
+                      child: Text(widget.messageData[0].time,
                           overflow: TextOverflow.ellipsis,
                           style: const TextStyle(
                             fontSize: 12.00,

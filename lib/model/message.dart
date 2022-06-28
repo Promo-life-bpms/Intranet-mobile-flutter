@@ -15,7 +15,8 @@ class MessageModel {
     required this.department,
     required this.position,
     required this.conversation,
-    required this.createdAt
+    required this.createdAt,
+    required this.time,
   });
 
   int id;
@@ -26,6 +27,7 @@ class MessageModel {
   String position;
   String conversation;
   String createdAt;
+  String time;
 
   factory MessageModel.fromJson(Map<String, dynamic> json) => MessageModel(
         id: json["id"],
@@ -36,6 +38,7 @@ class MessageModel {
         position: json["position"],
         conversation: json["conversation"],
         createdAt: json["createdAt"],
+        time: json["time"],
       );
 
   Map<String, dynamic> toJson() => {
@@ -47,6 +50,7 @@ class MessageModel {
         "position": position,
         "conversation":conversation,
         "createdAt":createdAt,
+        "time":time,
       };
 
 }
