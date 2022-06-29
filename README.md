@@ -4,7 +4,10 @@
 
 <br>
 
+Versión: 1.0
+
 ## Requisitos
+
 
 ### Hardware
 
