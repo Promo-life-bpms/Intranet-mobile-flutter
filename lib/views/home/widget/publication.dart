@@ -444,7 +444,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                   itemBuilder: (context, index) {
                     return Row(
                       children: _publicationComment[index].content ==
-                              "sin datos"
+                              "no data"
                           ? []
                           : [
                               Padding(
