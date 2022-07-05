@@ -208,14 +208,20 @@ class _ChatUserPageState extends State<ChatUserPage> {
                       :                   
                       _conversationModel[index].transmitterID.toInt() ==
                               widget.userID
-                          ? MyMessageItem(
-                              conversation: _conversationModel[index].message,
-                              created: _conversationModel[index].created,
-                            )
-                          : OtherMessageItem(
-                              conversation: _conversationModel[index].message,
-                              created: _conversationModel[index].created,
-                            );
+                          ? Padding(
+                            padding: const EdgeInsets.only(left: 64, bottom: 16),
+                            child: MyMessageItem(
+                                conversation: _conversationModel[index].message,
+                                created: _conversationModel[index].created,
+                              ),
+                          )
+                          : Padding(
+                            padding: const EdgeInsets.only(right: 64, bottom: 16),
+                            child: OtherMessageItem(
+                                conversation: _conversationModel[index].message,
+                                created: _conversationModel[index].created,
+                              ),
+                          );
                     },
                   );
                 }

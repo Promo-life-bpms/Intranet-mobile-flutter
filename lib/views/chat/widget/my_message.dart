@@ -20,16 +20,18 @@ class _MyMessageItemState extends State<MyMessageItem> {
     Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        Container(
-            decoration: const BoxDecoration(
-              color: ColorIntranetConstants.primaryColorNormal,
-              borderRadius: BorderRadius.all(
-                Radius.circular(12.0),
+        Flexible(
+          child: Container(
+              decoration: const BoxDecoration(
+                color: ColorIntranetConstants.primaryColorNormal,
+                borderRadius: BorderRadius.all(
+                  Radius.circular(12.0),
+                ),
               ),
-            ),
-            padding: const EdgeInsets.all(12),
-            child: Text(widget.conversation,
-                style: const TextStyle(color: Colors.white)))
+              padding: const EdgeInsets.all(12),
+              child: Text(widget.conversation, textAlign: TextAlign.justify,
+                  style: const TextStyle(color: Colors.white))),
+        )
       ],
     );
   }
