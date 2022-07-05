@@ -19,6 +19,7 @@ class _ChatPageState extends State<ChatPage> {
 
   late List<DirectoryModel>? _directoryModel = [];
   late List<MessageModel>? _messageModel = [];
+  late String token = "";
 
   @override
   void initState() {
@@ -28,10 +29,13 @@ class _ChatPageState extends State<ChatPage> {
 
   void _getData() async {
      final prefs = await SharedPreferences.getInstance();
-    String? token = prefs.getString('token');
+    String? _token = prefs.getString('token');
+    if (_token != null || _token!.isNotEmpty) {
+      token = _token;
+    }
 
     _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
-    _messageModel = (await ApiMessageService().getMessages(token.toString()))!.cast<MessageModel>(); 
+    _messageModel = (await ApiMessageService().getMessages(_token.toString()))!.cast<MessageModel>(); 
     _messageModel!.sort((a, b)=> a.createdAt.compareTo(b.createdAt));
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
@@ -70,11 +74,8 @@ class _ChatPageState extends State<ChatPage> {
           ),
           body:  TabBarView(
             children: [
-              MessagesChatPage(),
-              _directoryModel != null?
+              const MessagesChatPage(),
               UserChatPage(directoryModel: _directoryModel!)
-              :
-              UserChatPage(directoryModel: [DirectoryModel(id: 1, fullname: "no data", email: "no data", photo: "no data", department: "no data", position: "no data", onlineStatus: false)])
             ],
           ),
         ),

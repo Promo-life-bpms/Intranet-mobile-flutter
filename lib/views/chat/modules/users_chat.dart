@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/model/user_model.dart';
+import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/views/chat/widget/user/user_chat_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
@@ -17,10 +18,9 @@ class UserChatPage extends StatefulWidget {
 }
 
 class _UserChatPageState extends State<UserChatPage> {
-  late List<DirectoryModel>? _directoryModel = widget.directoryModel;
+  late List<DirectoryModel>? _directoryModel = [];
   late List<DirectoryModel>? _directoryModelSearch = [];
   late List<UserModel>? _userlModel = [];
-
 
   final _debouncer = Debouncer();
 
@@ -28,24 +28,28 @@ class _UserChatPageState extends State<UserChatPage> {
   void initState() {
     super.initState();
     _getData();
-    print("SIZEEEEEEEEEEEEE");
-    print(widget.directoryModel.length);
     _directoryModelSearch =  widget.directoryModel;
   }
-
+  
   void _getData() async {
      final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
 
     _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
-/*     _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
- */    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+    if(widget.directoryModel.isNotEmpty){
+      setState(() {
+        _directoryModel = widget.directoryModel;
+      });
+    }else{
+      _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+    }
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
-    return  widget.directoryModel.isEmpty
-        ? const ListviewCompanyPage()
+    return  _directoryModel!.isEmpty || _directoryModel == [] ?
+        const ListviewCompanyPage()
         : Column(
             children: [
               //Widget de barra de busqueda
@@ -77,7 +81,7 @@ class _UserChatPageState extends State<UserChatPage> {
                       _debouncer.run(() {
                         setState(() {
                           //Filtrado de usuarios por nombre completo
-                          _directoryModelSearch = widget.directoryModel
+                          _directoryModelSearch = _directoryModel!
                               .where(
                                 (u) => (u.fullname.toLowerCase().contains(
                                       string.toLowerCase(),
@@ -92,15 +96,15 @@ class _UserChatPageState extends State<UserChatPage> {
                   //Builder del Directorio, que muestra todos los empleados cuando el usuario no realizó ninguna busqueda
                   ? UserChatBuilder(
                       directoryData: List<DirectoryModel>.generate(
-                          widget.directoryModel.length,
+                          _directoryModel!.length,
                           (index) => DirectoryModel(
-                              id: widget.directoryModel[index].id,
-                              fullname: widget.directoryModel[index].fullname,
-                              email: widget.directoryModel[index].email,
-                              photo: widget.directoryModel[index].photo,
-                              department: widget.directoryModel[index].department,
-                              position: widget.directoryModel[index].position,
-                              onlineStatus: widget.directoryModel[index].onlineStatus)),
+                              id: _directoryModel![index].id,
+                              fullname: _directoryModel![index].fullname,
+                              email: _directoryModel![index].email,
+                              photo: _directoryModel![index].photo,
+                              department: _directoryModel![index].department,
+                              position: _directoryModel![index].position,
+                              onlineStatus: _directoryModel![index].onlineStatus)),
                               userID: _userlModel![0].id,)
                   : UserChatBuilder(
                       directoryData: List<DirectoryModel>.generate(
