@@ -27,6 +27,10 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   late List<UserModel>? _userlModel = [];
   static var _selectedDrawerItem = 0;
 
+  static var username = "";
+  static var email = "";
+  static var photo = "";
+
   @override
   void initState() {
     super.initState();
@@ -38,6 +42,14 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
+    if(_userlModel!.isNotEmpty){
+      setState(() {
+        username= _userlModel![0].fullname.toString();
+        email =_userlModel![0].email.toString();
+        photo = _userlModel![0].photo.toString();
+      });
+      
+    }
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -48,7 +60,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       child: Material(
         child: ListView(
           children: <Widget>[
-            _userlModel == null || _userlModel!.isEmpty
+           /*  _userlModel == null || _userlModel!.isEmpty
             ? // Si la información del usuario no esta disponible, se muestra este widget hasta que la obtenga
             UserAccountsDrawerHeader(
               accountName: const Text("Obteniendo nombre ..."),
@@ -61,15 +73,15 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                 backgroundColor: ColorIntranetConstants.primaryColorLight,
               ),
             )
-            :UserAccountsDrawerHeader(
-              accountName: Text(_userlModel![0].fullname),
-              accountEmail: Text(_userlModel![0].email),
+            : */UserAccountsDrawerHeader(
+              accountName: Text(username),
+              accountEmail: Text(email),
               currentAccountPicture: CircleAvatar(
                 child: InkWell(
                   onTap: ()=>Navigator.of(context)
                    .push(MaterialPageRoute(builder: (context) => const UserProfilePage())),
                 ),
-                backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl+_userlModel![0].photo),
+                backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl+photo),
               ),
             ), 
             ListTile(

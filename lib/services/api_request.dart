@@ -9,6 +9,7 @@ class ApiRequestService {
     try {
       var url = Uri.parse(ApiIntranetConstans.baseUrl + ApiIntranetConstans.getRequest+data);
       var response = await http.get(url);
+
       if (response.statusCode == 200) {
         List<RequestModel> _model = requestModelFromJson(response.body);
         return _model;
