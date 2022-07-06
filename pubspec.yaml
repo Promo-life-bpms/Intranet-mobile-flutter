@@ -50,6 +50,7 @@ dependencies:
   badges: ^2.0.2
   flutter_native_splash: ^2.1.6
   just_audio: ^0.9.25
+  flutter_linkify: ^5.0.2
 
 
 

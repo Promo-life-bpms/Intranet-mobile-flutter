@@ -4,9 +4,12 @@ import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
+import 'package:intranet_movil/services/internet.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:intranet_movil/views/profile/employee_profile.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+
 
 class PublicationContainer extends StatefulWidget {
   const PublicationContainer(
@@ -103,13 +106,14 @@ class _PublicationContainerState extends State<PublicationContainer> {
                 ),
                 Padding(
                   padding: const EdgeInsets.only(left: 0, top: 10, bottom: 10),
-                  child: Text(
-                    widget.publicationData[0].contentPublication,
+                  child:SelectableLinkify(
+                    onOpen: (link) => LaunchToInternet.launchURL(link.url),
+                    text: widget.publicationData[0].contentPublication,
                     style: const TextStyle(
                       fontSize: 12.00,
                     ),
                     textAlign: TextAlign.justify,
-                  ),
+                  )
                 ),
               ],
             ),
