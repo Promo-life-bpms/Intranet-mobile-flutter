@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/manual.dart';
 import 'package:intranet_movil/services/internet.dart';
@@ -28,9 +29,10 @@ class _ManualCardState extends State<ManualCard> {
                 height: 160.0,
                 child: FittedBox(
                     fit: BoxFit.contain,
-                    child: Image(
-                      image: NetworkImage(
-                          ApiIntranetConstans.baseUrl + widget.manualData[0].img),
+                    child:  CachedNetworkImage(
+                      imageUrl: ApiIntranetConstans.baseUrl + widget.manualData[0].img,
+                      errorWidget: (context, url, error) => const Image(
+                          image: AssetImage("lib/assets/pdf.png")),
                     )),
               ),
               Text(
