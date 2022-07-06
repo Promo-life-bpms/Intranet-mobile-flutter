@@ -10,7 +10,8 @@ import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 
 class DirectoryPage extends StatefulWidget {
-  const DirectoryPage({Key? key}) : super(key: key);
+  const DirectoryPage({Key? key, required this.directoryData}) : super(key: key);
+  final List<DirectoryModel> directoryData;
 
   @override
   _HomeState createState() => _HomeState();
@@ -24,8 +25,15 @@ class _HomeState extends State<DirectoryPage> {
   @override
   void initState() {
     super.initState();
-    _getData();
-    _directoryModelSearch = _directoryModel;
+
+     if(widget.directoryData.isNotEmpty){
+        _directoryModel = widget.directoryData;
+        _directoryModelSearch = widget.directoryData;
+    }else{
+      _getData();
+      _directoryModelSearch = _directoryModel;
+    }
+   
   }
 
   void _getData() async {

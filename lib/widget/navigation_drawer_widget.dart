@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/communique.dart';
+import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/model/employee.dart';
 import 'package:intranet_movil/model/manual.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_communique.dart';
+import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/services/api_employee.dart';
 import 'package:intranet_movil/services/api_manual.dart';
 import 'package:intranet_movil/services/api_user.dart';
@@ -41,10 +43,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   late List<ManualModel>? _manualModel = [];
   late List<CommuniqueModel>? _communiqueModel = [];
   late List<MonthEmployeeModel>? _monthEmployeeModel = [];
+  late List<DirectoryModel>? _directoryModel = [];
 
   static List<ManualModel> manualData = [];
   static List<CommuniqueModel> communiqueData = [];
   static List<MonthEmployeeModel> monthEmployeeData = [];
+  static List<DirectoryModel> directoryData = [];
 
   @override
   void initState() {
@@ -75,10 +79,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     _manualModel = (await ApiManualService().getManual())!.cast<ManualModel>();
     _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
     _monthEmployeeModel = (await ApiMonthEmployeeService().getMonthEmployee())!.cast<MonthEmployeeModel>();
+    _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
       setState(() {
         manualData = _manualModel!;
         communiqueData = _communiqueModel!;
         monthEmployeeData = _monthEmployeeModel!;
+        directoryData = _directoryModel!;
       });    
      
   
@@ -238,7 +244,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(
-              builder: (context) =>  const OrganizationPage()
+              builder: (context) =>  OrganizationPage(directoryData: directoryData)
             ), 
           ModalRoute.withName("/OrganizationPage")
           );
@@ -258,7 +264,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
           Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(
-              builder: (context) =>  const DirectoryPage()
+              builder: (context) =>  DirectoryPage(directoryData: directoryData)
             ), 
           ModalRoute.withName("/DirectoryPage")
           );

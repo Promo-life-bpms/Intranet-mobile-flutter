@@ -21,7 +21,8 @@ import 'package:intranet_movil/views/organization/modules/technology.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 class OrganizationPage extends StatefulWidget {
-  const OrganizationPage({Key? key}) : super(key: key);
+  const OrganizationPage({Key? key, required this.directoryData}) : super(key: key);
+  final List<DirectoryModel> directoryData;
 
   @override
   _HomeState createState() => _HomeState();
@@ -33,7 +34,11 @@ class _HomeState extends State<OrganizationPage> {
   @override
   void initState() {
     super.initState();
-    _getData();
+     if(widget.directoryData.isNotEmpty){
+        _directoryModel = widget.directoryData;
+    }else{
+      _getData();
+    }
   }
 
   void _getData() async {
