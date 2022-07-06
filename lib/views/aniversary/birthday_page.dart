@@ -8,7 +8,8 @@ import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_aniversary.dart';
 
 class BrithdayPage extends StatefulWidget {
-  const BrithdayPage({Key? key}) : super(key: key);
+  const BrithdayPage({Key? key, required this.brithdayData}) : super(key: key);
+  final List<BirthdayModel> brithdayData;
 
   @override
   _HomeState createState() => _HomeState();
@@ -30,7 +31,12 @@ class _HomeState extends State<BrithdayPage> {
   @override
   void initState() {
     super.initState();
-    _getData();
+    if(widget.brithdayData.isNotEmpty){
+      _brithdayModel = widget.brithdayData;
+    }else{
+      _getData();
+    }
+    
   }
 
   void _getData() async {

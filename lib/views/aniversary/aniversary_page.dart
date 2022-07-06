@@ -8,7 +8,8 @@ import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_aniversary.dart';
 
 class AniversaryPage extends StatefulWidget {
-  const AniversaryPage({Key? key}) : super(key: key);
+  const AniversaryPage({Key? key, required this.aniversaryData}) : super(key: key);
+  final List<AniversaryModel> aniversaryData;
 
   @override
   _HomeState createState() => _HomeState();
@@ -29,7 +30,11 @@ class _HomeState extends State<AniversaryPage> {
   @override
   void initState() {
     super.initState();
-    _getData();
+    if(widget.aniversaryData.isNotEmpty){
+      _aniversaryModel = widget.aniversaryData;
+    }else{
+      _getData();
+    }
   }
 
   void _getData() async {

@@ -1,12 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/model/aniversary.dart';
+import 'package:intranet_movil/model/birthday.dart';
+import 'package:intranet_movil/services/api_aniversary.dart';
+import 'package:intranet_movil/services/api_birthday.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/aniversary/aniversary_page.dart';
 import 'package:intranet_movil/views/aniversary/birthday_page.dart';
 import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
-class AniversaryHomePage extends StatelessWidget {
-  const AniversaryHomePage({Key? key}) : super(key: key);
+
+class AniversaryHomePage extends StatefulWidget {
+  const AniversaryHomePage({Key? key }) : super(key: key);
+
+  @override
+  _AniversaryHomeState createState() => _AniversaryHomeState();
+}
+
+class _AniversaryHomeState extends State<AniversaryHomePage> {
+
+  late List<AniversaryModel>? _aniversaryModel = [];
+  late List<BirthdayModel>? _brithdayModel = [];
+
+  @override
+  void initState() {
+    super.initState();
+    _getData();
+  }
+
+   void _getData() async {
+    _aniversaryModel = (await ApiAniversaryService().getAniversary())!.cast<AniversaryModel>();
+    _brithdayModel = (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
 
   @override
   Widget build(BuildContext context) {
@@ -29,17 +56,7 @@ class AniversaryHomePage extends StatelessWidget {
         ],
         title: const Text(StringIntranetConstants.aniversaryBirthdayPage),
       ),
-      body: const AboutWidget(),
-    );
-  }
-}
-
-class AboutWidget extends StatelessWidget {
-  const AboutWidget({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return SingleChildScrollView(
+      body: SingleChildScrollView(
       scrollDirection: Axis.vertical,
       child: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -55,7 +72,7 @@ class AboutWidget extends StatelessWidget {
               child: InkWell(
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const BrithdayPage()));      
+                    builder: (context) => BrithdayPage(brithdayData: _brithdayModel!)));      
               },
                 child: Column(
                   children: <Widget>[
@@ -75,7 +92,7 @@ class AboutWidget extends StatelessWidget {
                     TextButton(
                       onPressed: () {
                         Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const BrithdayPage()));
+                            builder: (context) =>  BrithdayPage(brithdayData: _brithdayModel!)));
                       },
                       child: const Text('Cumpleaños'),
                     ),
@@ -95,7 +112,7 @@ class AboutWidget extends StatelessWidget {
               child: InkWell(
               onTap: (){
                 Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => const AniversaryPage()));      
+                  builder: (context) => AniversaryPage(aniversaryData: _aniversaryModel!)));      
               },
                 child: Column(
                 children: <Widget>[
@@ -114,7 +131,7 @@ class AboutWidget extends StatelessWidget {
                   TextButton(
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const AniversaryPage()));
+                          builder: (context) => AniversaryPage(aniversaryData: _aniversaryModel!)));
                     },
                     child: const Text('Aniversarios'),
                   ),
@@ -126,6 +143,7 @@ class AboutWidget extends StatelessWidget {
           ],
         ),
       ),
+    ),
     );
   }
 }

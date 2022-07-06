@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/model/communique.dart';
+import 'package:intranet_movil/model/employee.dart';
+import 'package:intranet_movil/model/manual.dart';
 import 'package:intranet_movil/model/user_model.dart';
+import 'package:intranet_movil/services/api_communique.dart';
+import 'package:intranet_movil/services/api_employee.dart';
+import 'package:intranet_movil/services/api_manual.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/about/about_main_page.dart';
@@ -24,17 +30,27 @@ class NavigationDrawerWidget extends StatefulWidget {
 }
 
 class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
-  late List<UserModel>? _userlModel = [];
+    
   static var _selectedDrawerItem = 0;
 
   static var username = "";
   static var email = "";
   static var photo = "";
 
+  late List<UserModel>? _userlModel = [];
+  late List<ManualModel>? _manualModel = [];
+  late List<CommuniqueModel>? _communiqueModel = [];
+  late List<MonthEmployeeModel>? _monthEmployeeModel = [];
+
+  static List<ManualModel> manualData = [];
+  static List<CommuniqueModel> communiqueData = [];
+  static List<MonthEmployeeModel> monthEmployeeData = [];
+
   @override
   void initState() {
     super.initState();
     _getData();
+    _getAppData();
   }
 
    void _getData() async {
@@ -50,6 +66,22 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       });
       
     }
+
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  void _getAppData() async {
+     
+    _manualModel = (await ApiManualService().getManual())!.cast<ManualModel>();
+    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    _monthEmployeeModel = (await ApiMonthEmployeeService().getMonthEmployee())!.cast<MonthEmployeeModel>();
+      setState(() {
+        manualData = _manualModel!;
+        communiqueData = _communiqueModel!;
+        monthEmployeeData = _monthEmployeeModel!;
+      });    
+     
+  
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -60,20 +92,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       child: Material(
         child: ListView(
           children: <Widget>[
-           /*  _userlModel == null || _userlModel!.isEmpty
-            ? // Si la información del usuario no esta disponible, se muestra este widget hasta que la obtenga
-            UserAccountsDrawerHeader(
-              accountName: const Text("Obteniendo nombre ..."),
-              accountEmail: const Text("Obteniendo email ..."),
-              currentAccountPicture: CircleAvatar(
-                child: InkWell(
-                  onTap: ()=>Navigator.of(context)
-                   .push(MaterialPageRoute(builder: (context) => const UserProfilePage())),
-                ),
-                backgroundColor: ColorIntranetConstants.primaryColorLight,
-              ),
-            )
-            : */UserAccountsDrawerHeader(
+           UserAccountsDrawerHeader(
               accountName: Text(username),
               accountEmail: Text(email),
               currentAccountPicture: CircleAvatar(
@@ -259,7 +278,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
          Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(
-              builder: (context) =>  const EmployeeMonthPage()
+              builder: (context) =>  EmployeeMonthPage( monthEmployeeData: monthEmployeeData)
             ), 
           ModalRoute.withName("/EmployeeMonthPage")
           );
@@ -269,7 +288,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
          Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(
-              builder: (context) =>  const CommunicatePage()
+              builder: (context) =>   CommunicatePage(communiqueData: communiqueData)
             ), 
           ModalRoute.withName("/CommuniquePage")
           );
@@ -279,7 +298,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
          Navigator.pushAndRemoveUntil(
             context, 
             MaterialPageRoute(
-              builder: (context) =>  const ManualPage()
+              builder: (context) =>   ManualPage(manualData: manualData)
             ), 
           ModalRoute.withName("/ManualPage")
           );

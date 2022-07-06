@@ -8,7 +8,8 @@ import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_employe.dart';
 
 class EmployeeMonthPage extends StatefulWidget {
-  const EmployeeMonthPage({Key? key}) : super(key: key);
+  const EmployeeMonthPage({Key? key, required this.monthEmployeeData }) : super(key: key);
+  final List<MonthEmployeeModel>? monthEmployeeData;
 
   @override
   _HomeState createState() => _HomeState();
@@ -20,7 +21,12 @@ class _HomeState extends State<EmployeeMonthPage> {
   @override
   void initState() {
     super.initState();
-    _getData();
+     if(widget.monthEmployeeData!.isNotEmpty){
+      _monthEmployeeModel = widget.monthEmployeeData;
+    }else{
+      _getData();
+    }
+    
   }
 
   void _getData() async {

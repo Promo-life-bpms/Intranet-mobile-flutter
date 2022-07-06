@@ -8,7 +8,9 @@ import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_cards.dart';
 
 class ManualPage extends StatefulWidget {
-  const ManualPage({Key? key}) : super(key: key);
+  const ManualPage({Key? key, required this.manualData}) : super(key: key);
+
+  final List<ManualModel> manualData;
 
   @override
   _HomeState createState() => _HomeState();
@@ -20,7 +22,12 @@ class _HomeState extends State<ManualPage> {
   @override
   void initState() {
     super.initState();
-    _getData();
+    if(widget.manualData.isNotEmpty){
+      _manualModel = widget.manualData;
+    }else{
+      _getData();
+    }
+    
   }
 
   void _getData() async {

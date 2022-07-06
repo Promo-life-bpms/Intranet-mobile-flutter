@@ -8,8 +8,8 @@ import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_cards.dart';
 
 class CommunicatePage extends StatefulWidget {
-  const CommunicatePage({Key? key}) : super(key: key);
-
+  const CommunicatePage({Key? key, required this.communiqueData}) : super(key: key);
+ final List<CommuniqueModel>? communiqueData;
   @override
   _HomeState createState() => _HomeState();
 }
@@ -20,7 +20,12 @@ class _HomeState extends State<CommunicatePage> {
   @override
   void initState() {
     super.initState();
-    _getData();
+    if(widget.communiqueData!.isNotEmpty){
+      _communiqueModel = widget.communiqueData;
+    }else{
+      _getData();
+    }
+
   }
 
   void _getData() async {
