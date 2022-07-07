@@ -44,7 +44,7 @@ class LoginFormState extends State<LoginForm> {
         .login(_email, _password);
     if (result == false) {
       setState(() {
-        _errorMessage = 'There was a problem with your credentials.';
+        _errorMessage = 'Usuario o contraseña no valida, verifique que los datos sean correctos';
       });
     }
   }

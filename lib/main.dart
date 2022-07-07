@@ -1,5 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/model/birthday.dart';
+import 'package:intranet_movil/model/communique.dart';
+import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
+import 'package:intranet_movil/services/api_birthday.dart';
+import 'package:intranet_movil/services/api_communique.dart';
+import 'package:intranet_movil/services/api_publications.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/services/api_auth.dart';
 import 'package:intranet_movil/utils/constants.dart';
@@ -24,6 +30,10 @@ class MyApp extends StatefulWidget {
 
 class _HomeState extends State<MyApp> {
   late List<UserModel>? _userModel = [];
+  late List<BirthdayModel>? _brithdayModel = [];
+  late List<CommuniqueModel>? _communiqueModel = [];
+  late List<PublicationModel>? _publicationModel = [];
+
   late String? _token = "";
 
   @override
@@ -37,44 +47,60 @@ class _HomeState extends State<MyApp> {
     _token = prefs.getString('token');
     _userModel =
         (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
+    _brithdayModel =
+        (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+    _communiqueModel =
+        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+
+    _publicationModel =  (await ApiPublicationService().getPublication(_token.toString()))!.cast<PublicationModel>();
+        
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   @override
   Widget build(BuildContext context) {
-    return 
-     MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Login',
-      //Tema custom de la aplicacion
-       theme: ThemeData(
-        primaryColor: ColorIntranetConstants.primaryColorLight, 
-        primaryColorLight: ColorIntranetConstants.primaryColorLight,
-        primaryColorDark: ColorIntranetConstants.primaryColorDark,
-        backgroundColor: ColorIntranetConstants.backgroundColorDark,
-        scaffoldBackgroundColor: ColorIntranetConstants.backgroundColorNormal,
-        hoverColor: ColorIntranetConstants.primaryColorLight,
-        appBarTheme: const AppBarTheme(backgroundColor: ColorIntranetConstants.primaryColorLight) 
-        ),
-      home:  Scaffold(
-        body:  
-        _userModel == null || _userModel!.isEmpty 
-        ?Center(
-          //Widget que valida si esta autenticado o no
-            child: Consumer<AuthProvider>(
-              builder: (context, auth, child) {
-                switch (auth.isAuthenticated) {
-                  case true:
-                    return  const HomePage();
-                  default:
-                    return  const LoginForm();
-                }
-              },
-            )
-        )
-        :
-         const HomePage()          
-      )
-    );
+    return MaterialApp(
+        debugShowCheckedModeBanner: false,
+        title: 'Login',
+        //Tema custom de la aplicacion
+        theme: ThemeData(
+            primaryColor: ColorIntranetConstants.primaryColorLight,
+            primaryColorLight: ColorIntranetConstants.primaryColorLight,
+            primaryColorDark: ColorIntranetConstants.primaryColorDark,
+            backgroundColor: ColorIntranetConstants.backgroundColorDark,
+            scaffoldBackgroundColor:
+                ColorIntranetConstants.backgroundColorNormal,
+            hoverColor: ColorIntranetConstants.primaryColorLight,
+            appBarTheme: const AppBarTheme(
+                backgroundColor: ColorIntranetConstants.primaryColorLight)),
+        home: Scaffold(
+            body: _userModel == null || _userModel!.isEmpty
+                ? Center(
+                    //Widget que valida si esta autenticado o no
+                    child: Consumer<AuthProvider>(
+                    builder: (context, auth, child) {
+                      switch (auth.isAuthenticated) {
+                        case true:
+                          if (_userModel != null || _userModel!.isNotEmpty) {
+                            return HomePage(
+                              userData: _userModel,
+                              birthdayData: _brithdayModel,
+                              communiqueData: _communiqueModel,
+                              publicationData: _publicationModel,
+                            );
+                          } else {
+                            return const HomePage();
+                          }
+                        default:
+                          return const LoginForm();
+                      }
+                    },
+                  ))
+                : HomePage(
+                    userData: _userModel,
+                    birthdayData: _brithdayModel,
+                    communiqueData: _communiqueModel,
+                    publicationData: _publicationModel,
+                  )));
   }
 }

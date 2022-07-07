@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/model/birthday.dart';
 import 'package:intranet_movil/model/communique.dart';
 import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/model/employee.dart';
 import 'package:intranet_movil/model/manual.dart';
 import 'package:intranet_movil/model/user_model.dart';
+import 'package:intranet_movil/services/api_birthday.dart';
 import 'package:intranet_movil/services/api_communique.dart';
 import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/services/api_employee.dart';
@@ -32,7 +34,6 @@ class NavigationDrawerWidget extends StatefulWidget {
 }
 
 class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
-    
   static var _selectedDrawerItem = 0;
 
   static var username = "";
@@ -44,52 +45,69 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   late List<CommuniqueModel>? _communiqueModel = [];
   late List<MonthEmployeeModel>? _monthEmployeeModel = [];
   late List<DirectoryModel>? _directoryModel = [];
+  late List<BirthdayModel>? _brithdayModel = [];
 
+  static List<UserModel> userData = [];
   static List<ManualModel> manualData = [];
   static List<CommuniqueModel> communiqueData = [];
   static List<MonthEmployeeModel> monthEmployeeData = [];
   static List<DirectoryModel> directoryData = [];
+  static List<BirthdayModel> birthdayData = [];
 
   @override
   void initState() {
     super.initState();
+
     _getData();
+
     _getAppData();
   }
 
-   void _getData() async {
-     //Obtiene el token (si existe) y lo valida enviando una peticion GET al servidor, devuelviendo la información del usuario
+  void _getData() async {
+    //Obtiene el token (si existe) y lo valida enviando una peticion GET al servidor, devuelviendo la información del usuario
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
-    
-    _manualModel = (await ApiManualService().getManual())!.cast<ManualModel>();
-    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
-    _monthEmployeeModel = (await ApiMonthEmployeeService().getMonthEmployee())!.cast<MonthEmployeeModel>();
-    
-    setState(() {
-        manualData = _manualModel!;
-        communiqueData = _communiqueModel!;
-        monthEmployeeData = _monthEmployeeModel!;
-      });  
-
-    if(_userlModel!.isNotEmpty){
+    if (_userlModel!.isNotEmpty) {
       setState(() {
-        username= _userlModel![0].fullname.toString();
-        email =_userlModel![0].email.toString();
+        username = _userlModel![0].fullname.toString();
+        email = _userlModel![0].email.toString();
         photo = _userlModel![0].photo.toString();
       });
-      
     }
 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   void _getAppData() async {
-     _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
-      setState(() {
-        directoryData = _directoryModel!;
-      }); 
+    _manualModel = (await ApiManualService().getManual())!.cast<ManualModel>();
+    _communiqueModel =
+        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    _monthEmployeeModel = (await ApiMonthEmployeeService().getMonthEmployee())!
+        .cast<MonthEmployeeModel>();
+    _brithdayModel =
+        (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+    _directoryModel =
+        (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+
+    setState(() {
+      userData = _userlModel!;
+      manualData = _manualModel!;
+      communiqueData = _communiqueModel!;
+      monthEmployeeData = _monthEmployeeModel!;
+      birthdayData = _brithdayModel!;
+      directoryData = _directoryModel!;
+    });
+
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  void _getHomeData() async {
+    _directoryModel =
+        (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+    setState(() {
+      directoryData = _directoryModel!;
+    });
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -100,17 +118,18 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       child: Material(
         child: ListView(
           children: <Widget>[
-           UserAccountsDrawerHeader(
+            UserAccountsDrawerHeader(
               accountName: Text(username),
               accountEmail: Text(email),
               currentAccountPicture: CircleAvatar(
                 child: InkWell(
-                  onTap: ()=>Navigator.of(context)
-                   .push(MaterialPageRoute(builder: (context) => const UserProfilePage())),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const UserProfilePage())),
                 ),
-                backgroundImage: NetworkImage(ApiIntranetConstans.baseUrl+photo),
+                backgroundImage:
+                    NetworkImage(ApiIntranetConstans.baseUrl + photo),
               ),
-            ), 
+            ),
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text(StringIntranetConstants.homePage),
@@ -214,9 +233,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         ),
       ),
     );
-     
-    
-}
+  }
 
   selectedItem(BuildContext context, int index) {
     Navigator.of(context).pop();
@@ -224,114 +241,95 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       case 0:
         _selectedDrawerItem = index;
         Navigator.pushAndRemoveUntil(
-            context, 
+            context,
             MaterialPageRoute(
-              builder: (context) => const HomePage()
-            ), 
-          ModalRoute.withName("/HomePage")
-          );
+                builder: (context) => HomePage(
+                      communiqueData: communiqueData,
+                      birthdayData: birthdayData,
+                      userData: userData,
+                    )),
+            ModalRoute.withName("/HomePage"));
         break;
       case 1:
         _selectedDrawerItem = index;
-          Navigator.pushAndRemoveUntil(
-            context, 
-            MaterialPageRoute(
-              builder: (context) =>  const AboutMainPage()
-            ), 
-          ModalRoute.withName("/AboutPage")
-          );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const AboutMainPage()),
+            ModalRoute.withName("/AboutPage"));
         break;
       case 2:
         _selectedDrawerItem = index;
         Navigator.pushAndRemoveUntil(
-            context, 
+            context,
             MaterialPageRoute(
-              builder: (context) =>  OrganizationPage(directoryData: directoryData)
-            ), 
-          ModalRoute.withName("/OrganizationPage")
-          );
+                builder: (context) =>
+                    OrganizationPage(directoryData: directoryData)),
+            ModalRoute.withName("/OrganizationPage"));
         break;
       case 3:
         _selectedDrawerItem = index;
-          Navigator.pushAndRemoveUntil(
-            context, 
-            MaterialPageRoute(
-              builder: (context) => const  RequestMainPage()
-            ), 
-          ModalRoute.withName("/RequestPage")
-          );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const RequestMainPage()),
+            ModalRoute.withName("/RequestPage"));
         break;
       case 4:
         _selectedDrawerItem = index;
-          Navigator.pushAndRemoveUntil(
-            context, 
+        Navigator.pushAndRemoveUntil(
+            context,
             MaterialPageRoute(
-              builder: (context) =>  DirectoryPage(directoryData: directoryData)
-            ), 
-          ModalRoute.withName("/DirectoryPage")
-          );
+                builder: (context) =>
+                    DirectoryPage(directoryData: directoryData)),
+            ModalRoute.withName("/DirectoryPage"));
         break;
       case 5:
         _selectedDrawerItem = index;
-         Navigator.pushAndRemoveUntil(
-            context, 
-            MaterialPageRoute(
-              builder: (context) => const AniversaryHomePage()
-            ), 
-          ModalRoute.withName("/AniversaryPage")
-          );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const AniversaryHomePage()),
+            ModalRoute.withName("/AniversaryPage"));
         break;
       case 6:
         _selectedDrawerItem = index;
-         Navigator.pushAndRemoveUntil(
-            context, 
+        Navigator.pushAndRemoveUntil(
+            context,
             MaterialPageRoute(
-              builder: (context) =>  EmployeeMonthPage( monthEmployeeData: monthEmployeeData)
-            ), 
-          ModalRoute.withName("/EmployeeMonthPage")
-          );
+                builder: (context) =>
+                    EmployeeMonthPage(monthEmployeeData: monthEmployeeData)),
+            ModalRoute.withName("/EmployeeMonthPage"));
         break;
       case 7:
         _selectedDrawerItem = index;
-         Navigator.pushAndRemoveUntil(
-            context, 
+        Navigator.pushAndRemoveUntil(
+            context,
             MaterialPageRoute(
-              builder: (context) =>   CommunicatePage(communiqueData: communiqueData)
-            ), 
-          ModalRoute.withName("/CommuniquePage")
-          );
+                builder: (context) =>
+                    CommunicatePage(communiqueData: communiqueData)),
+            ModalRoute.withName("/CommuniquePage"));
         break;
       case 8:
         _selectedDrawerItem = index;
-         Navigator.pushAndRemoveUntil(
-            context, 
+        Navigator.pushAndRemoveUntil(
+            context,
             MaterialPageRoute(
-              builder: (context) =>   ManualPage(manualData: manualData)
-            ), 
-          ModalRoute.withName("/ManualPage")
-          );
+                builder: (context) => ManualPage(manualData: manualData)),
+            ModalRoute.withName("/ManualPage"));
         break;
       case 9:
         _selectedDrawerItem = index;
-         Navigator.pushAndRemoveUntil(
-            context, 
-            MaterialPageRoute(
-              builder: (context) =>  const AccessPage()
-            ), 
-          ModalRoute.withName("/AccesPage")
-          );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const AccessPage()),
+            ModalRoute.withName("/AccesPage"));
         break;
       case 10:
         _selectedDrawerItem = index;
-         Navigator.pushAndRemoveUntil(
-            context, 
-            MaterialPageRoute(
-              builder: (context) =>  const LogoutPage()
-            ), 
-          ModalRoute.withName("/LogoutPage")
-          );
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const LogoutPage()),
+            ModalRoute.withName("/LogoutPage"));
 
-        break; 
+        break;
     }
   }
 }

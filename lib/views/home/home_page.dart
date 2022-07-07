@@ -19,7 +19,18 @@ import 'package:intranet_movil/widget/skeletons/list_view_publication.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
-  const HomePage({Key? key}) : super(key: key);
+  const HomePage(
+      {Key? key,
+      this.communiqueData,
+      this.birthdayData,
+      this.userData,
+      this.publicationData})
+      : super(key: key);
+
+  final List<CommuniqueModel>? communiqueData;
+  final List<BirthdayModel>? birthdayData;
+  final List<UserModel>? userData;
+  final List<PublicationModel>? publicationData;
 
   @override
   _HomeState createState() => _HomeState();
@@ -39,7 +50,41 @@ class _HomeState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    _getData();
+
+
+    if (widget.userData == [] ||
+        widget.userData == null ||
+        widget.userData!.length == 0) {
+      print("nooo dataaaaaaaaa");
+      _getData();
+    } else {
+      print("yess dataaaaaaaaa");
+      _userlModel = widget.userData;
+      if (widget.birthdayData != [] ||
+          widget.birthdayData != null ||
+          widget.birthdayData!.length != 0) {
+        _brithdayModel = widget.birthdayData;
+      } else {
+        _getBirthdayData();
+      }
+
+      if (widget.communiqueData != [] ||
+          widget.communiqueData != null ||
+          widget.communiqueData!.length != 0) {
+        _communiqueModel = widget.communiqueData;
+      } else {
+        _getCommuniqueData();
+      }
+
+      if (widget.publicationData == [] ||
+          widget.publicationData == null ||
+          widget.publicationData!.length == 0) {
+        _getPublicationData();
+      } else {
+        _publicationModel = widget.publicationData;
+        _publicationModelToLike = widget.publicationData;
+      }
+    }
   }
 
   void _getData() async {
@@ -62,6 +107,44 @@ class _HomeState extends State<HomePage> {
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
+  void _getBirthdayData() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? _token = prefs.getString('token');
+    if (_token != null || _token!.isNotEmpty) {
+      token = _token;
+    }
+    _brithdayModel =
+        (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  void _getCommuniqueData() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? _token = prefs.getString('token');
+    if (_token != null || _token!.isNotEmpty) {
+      token = _token;
+    }
+
+    _communiqueModel =
+        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  void _getPublicationData() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? _token = prefs.getString('token');
+    if (_token != null || _token!.isNotEmpty) {
+      token = _token;
+    }
+    _publicationModel =
+        (await ApiPublicationService().getPublication(token.toString()))!
+            .cast<PublicationModel>();
+    _publicationModelToLike = _publicationModel;
+
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,17 +153,17 @@ class _HomeState extends State<HomePage> {
         title: const Text(_title),
         actions: [
           Padding(
-              padding:const  EdgeInsets.only(right: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context)
-                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
-                },
-                child: const Image(
-                  image: AssetImage('lib/assets/chat.png'),
-                ),
+            padding: const EdgeInsets.only(right: 8.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const ChatPage()));
+              },
+              child: const Image(
+                image: AssetImage('lib/assets/chat.png'),
               ),
             ),
+          ),
         ],
       ),
       body: _userlModel == null || _userlModel!.isEmpty
@@ -118,7 +201,8 @@ class _HomeState extends State<HomePage> {
                             userData: _userlModel!,
                             isLike: isLike,
                             token: token,
-                            mainContext: context,)
+                            mainContext: context,
+                          )
                   ],
                 ),
               ),
