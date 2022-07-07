@@ -10,6 +10,7 @@ import 'package:http/http.dart' as http;
 import 'package:intranet_movil/views/home/widget/post_delete_alert_dialog.dart';
 import 'package:intranet_movil/views/profile/employee_profile.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:photo_view/photo_view.dart';
 
 class PublicationContainer extends StatefulWidget {
   const PublicationContainer(
@@ -108,14 +109,19 @@ class _PublicationContainerState extends State<PublicationContainer> {
                               ),
                             ],
                           ),
-                          widget.userlModelData[0].id == widget.publicationData[0].userId?
-                          IconButton(
-                              onPressed: () {
-                                /* postPublicationDelete(widget.token, widget.publicationData[0].id.toString()); */
-                                OpenBottonSheet().openBottomSheet(widget.mainContext, widget.token, widget.publicationData[0].id.toString()); 
-                              },
-                              icon: const Icon(Icons.more_vert_outlined))
-                          : const Padding(padding: EdgeInsets.zero)    
+                          widget.userlModelData[0].id ==
+                                  widget.publicationData[0].userId
+                              ? IconButton(
+                                  onPressed: () {
+                                    /* postPublicationDelete(widget.token, widget.publicationData[0].id.toString()); */
+                                    OpenBottonSheet().openBottomSheet(
+                                        widget.mainContext,
+                                        widget.token,
+                                        widget.publicationData[0].id
+                                            .toString());
+                                  },
+                                  icon: const Icon(Icons.more_vert_outlined))
+                              : const Padding(padding: EdgeInsets.zero)
                         ],
                       ),
                     )
@@ -154,14 +160,16 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                   AssetImage("lib/assets/lost_connection.png")),
                         ),
                         onDoubleTap: () {
-                          Navigator.of(context).push(MaterialPageRoute(
-                              builder: (context) => CachedNetworkImage(
-                                  imageUrl: ApiIntranetConstans.baseUrl +
-                                      widget.publicationData[0]
-                                          .photoPublication[0].resource,
-                                  errorWidget: (context, url, error) => const Image(
-                                      image: AssetImage(
-                                          "lib/assets/lost_connection.png")))));
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (context) => PhotoView(
+                                imageProvider: NetworkImage(
+                                    ApiIntranetConstans.baseUrl +
+                                        widget.publicationData[0]
+                                            .photoPublication[0].resource),
+                              ),
+                            ),
+                          );
                         },
                       ),
                     )
@@ -185,18 +193,18 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                               "lib/assets/lost_connection.png")),
                                 ),
                                 onDoubleTap: () {
-                                  Navigator.of(context).push(MaterialPageRoute(
-                                      builder: (context) => CachedNetworkImage(
-                                          imageUrl:
-                                              ApiIntranetConstans.baseUrl +
-                                                  widget
-                                                      .publicationData[0]
-                                                      .photoPublication[index]
-                                                      .resource,
-                                          errorWidget: (context, url, error) =>
-                                              const Image(
-                                                  image: AssetImage(
-                                                      "lib/assets/lost_connection.png")))));
+                                  Navigator.of(context).push(
+                                    MaterialPageRoute(
+                                      builder: (context) => PhotoView(
+                                        imageProvider: NetworkImage(
+                                            ApiIntranetConstans.baseUrl +
+                                                widget
+                                                    .publicationData[0]
+                                                    .photoPublication[index]
+                                                    .resource),
+                                      ),
+                                    ),
+                                  );
                                 },
                               )),
                       options: CarouselOptions(
