@@ -1,6 +1,10 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:intranet_movil/model/communique.dart';
+import 'package:intranet_movil/services/internet.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:photo_view/photo_view.dart';
 
 class CommuniqueCard extends StatefulWidget {
   const CommuniqueCard({Key? key, required this.commuiqueData})
@@ -23,19 +27,42 @@ class _CommuniqueCardState extends State<CommuniqueCard> {
           padding: const EdgeInsets.only(bottom: 20.0),
           child: Column(
             children: [
-              SizedBox(
-                  width: double.infinity,
-                  height: 320.0,
-                  child: widget.commuiqueData[0].image == "/img/communique.svg"
-                      ? const Image(
-                          image: AssetImage('lib/assets/communique.png'),
-                          fit: BoxFit.contain,
-                        )
-                      : Image(
-                          image: NetworkImage(ApiIntranetConstans.baseUrl +
-                              widget.commuiqueData[0].image),
-                          fit: BoxFit.contain,
-                        )),
+              InkWell(
+                onDoubleTap: () {
+                  if (widget.commuiqueData[0].image == "/img/communique.svg") {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => PhotoView(
+                                imageProvider: const AssetImage(
+                                    'lib/assets/communique.png'),
+                              )),
+                    );
+                  } else {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                          builder: (context) => PhotoView(
+                                imageProvider: NetworkImage(
+                                    ApiIntranetConstans.baseUrl +
+                                        widget.commuiqueData[0].image),
+                              )),
+                    );
+                  }
+                },
+                child: SizedBox(
+                    width: double.infinity,
+                    height: 320.0,
+                    child: widget.commuiqueData[0].image ==
+                            "/img/communique.svg"
+                        ? const Image(
+                            image: AssetImage('lib/assets/communique.png'),
+                            fit: BoxFit.contain,
+                          )
+                        : Image(
+                            image: NetworkImage(ApiIntranetConstans.baseUrl +
+                                widget.commuiqueData[0].image),
+                            fit: BoxFit.contain,
+                          )),
+              ),
               const Padding(
                 padding: EdgeInsets.only(bottom: 20.0),
               ),
@@ -47,10 +74,18 @@ class _CommuniqueCardState extends State<CommuniqueCard> {
                   fontWeight: FontWeight.bold,
                 ),
               ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 20.0),
-              ),
-              SizedBox(
+              Padding(
+                  padding: const EdgeInsets.only(left: 16, top: 8, right: 16),
+                  child: SelectableLinkify(
+                    onOpen: (link) => LaunchToInternet.launchURL(link.url),
+                    text: widget.commuiqueData[0].description,
+                    style: const TextStyle(
+                      fontSize: 16.00,
+                    ),
+                    textAlign: TextAlign.justify,
+                  )),
+
+              /* SizedBox(
                 width: 200,
                 height: 50,
                 child: ElevatedButton(
@@ -74,7 +109,7 @@ class _CommuniqueCardState extends State<CommuniqueCard> {
                   },
                   child: const Text(StringIntranetConstants.buttonViewMore),
                 ),
-              ),
+              ), */
             ],
           ),
         ),

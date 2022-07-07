@@ -62,6 +62,17 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     final prefs = await SharedPreferences.getInstance();
     String? token = prefs.getString('token');
     _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
+    
+    _manualModel = (await ApiManualService().getManual())!.cast<ManualModel>();
+    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    _monthEmployeeModel = (await ApiMonthEmployeeService().getMonthEmployee())!.cast<MonthEmployeeModel>();
+    
+    setState(() {
+        manualData = _manualModel!;
+        communiqueData = _communiqueModel!;
+        monthEmployeeData = _monthEmployeeModel!;
+      });  
+
     if(_userlModel!.isNotEmpty){
       setState(() {
         username= _userlModel![0].fullname.toString();
@@ -75,19 +86,10 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   }
 
   void _getAppData() async {
-     
-    _manualModel = (await ApiManualService().getManual())!.cast<ManualModel>();
-    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
-    _monthEmployeeModel = (await ApiMonthEmployeeService().getMonthEmployee())!.cast<MonthEmployeeModel>();
-    _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+     _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
       setState(() {
-        manualData = _manualModel!;
-        communiqueData = _communiqueModel!;
-        monthEmployeeData = _monthEmployeeModel!;
         directoryData = _directoryModel!;
-      });    
-     
-  
+      }); 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
