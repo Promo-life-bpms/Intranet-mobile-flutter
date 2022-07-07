@@ -5,10 +5,10 @@ class ApiIntranetConstans {
 
   //Servidores de pruebas
  /* static String baseUrl = 'https://intranet.kaths.com.mx/'; */
-  static String baseUrl = 'https://dev-intranet.promolife.lat/';
+  /* static String baseUrl = 'https://dev-intranet.promolife.lat/'; */
 
   //Servidor de produccion
-/*  static String baseUrl = 'https://dev-intranet.promolife.lat/';*/
+  static String baseUrl = 'https://intranet.promolife.lat/';
  
   static String loginEndpoint = 'api/login' ;
   static String getUser = 'api/getUser/' ;
@@ -120,15 +120,17 @@ class StringIntranetConstants{
 class ListIntranetConstants{
   final List<String> accessName = <String>[
     'Cursos',
+    'Task Manager',
     'Odoo',
     'Evaluación 360',
     'NOM 035',
-    'Cotizador',
+    'Catálogo',
     'Sistema de Tickets',
     'Power BI'
   ];
   final List<String> accessImage = <String>[
     'lib/assets/course.png',
+    'lib/assets/task.png',
     'lib/assets/odoo.png',
     'lib/assets/evaluacion.png',
     'lib/assets/nom.png',
@@ -139,10 +141,11 @@ class ListIntranetConstants{
 
   final List<String> accessLink = <String>[
     'https://dev-cursos.promolife.lat/loginEmail?email=admin@admin.com&password=password',
+    'https://taskmanagerplbh.promolife.lat/',
     'https://promolife.vde-suite.com:8030/web/login',
     'https://evaluacion.promolife.lat/login',
     'https://plataforma.nom-035.net/',
-    'https://promolife.lat/login/?redirect_to=https%3A%2F%2Fpromolife.lat%2F',
+    'https://catalogodeproductos.nextratgy.com/catalogo',
     'https://tdesign.promolife.lat/',
     'https://app.powerbi.com/singleSignOn?ru=https:%2f%2fapp.powerbi.com%2f%3fnoSignUpCheck%3d1'
   ];

@@ -159,7 +159,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                               image:
                                   AssetImage("lib/assets/lost_connection.png")),
                         ),
-                        onDoubleTap: () {
+                        onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
                               builder: (context) => PhotoView(
@@ -192,7 +192,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                           image: AssetImage(
                                               "lib/assets/lost_connection.png")),
                                 ),
-                                onDoubleTap: () {
+                                onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (context) => PhotoView(
