@@ -5,11 +5,12 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/internet.dart';
+import 'package:intranet_movil/services/post_publication_delete.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:intranet_movil/views/home/widget/post_delete_alert_dialog.dart';
 import 'package:intranet_movil/views/profile/employee_profile.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
-
 
 class PublicationContainer extends StatefulWidget {
   const PublicationContainer(
@@ -72,49 +73,64 @@ class _PublicationContainerState extends State<PublicationContainer> {
                       },
                     ),
                     const Padding(padding: EdgeInsets.only(left: 16)),
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        InkWell(
-                          child: Text(
-                            widget.publicationData[0].userName,
-                            style: const TextStyle(
-                              fontSize: 12.00,
-                              fontWeight: FontWeight.bold,
-                            ),
-                            textAlign: TextAlign.left,
+                    Flexible(
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              InkWell(
+                                child: Text(
+                                  widget.publicationData[0].userName,
+                                  style: const TextStyle(
+                                    fontSize: 12.00,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  textAlign: TextAlign.left,
+                                ),
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => EmployeeProfilePage(
+                                            employeeID: widget
+                                                .publicationData[0].userId,
+                                            employeeName: widget
+                                                .publicationData[0].userName,
+                                          )));
+                                },
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(left: 0, top: 0),
+                                child: Text(widget.publicationData[0].created,
+                                    style: const TextStyle(fontSize: 10.00),
+                                    textAlign: TextAlign.left),
+                              ),
+                            ],
                           ),
-                          onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => EmployeeProfilePage(
-                                      employeeID:
-                                          widget.publicationData[0].userId,
-                                      employeeName:
-                                          widget.publicationData[0].userName,
-                                    )));
-                          },
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 0, top: 4),
-                          child: Text(widget.publicationData[0].created,
-                              style: const TextStyle(fontSize: 10.00),
-                              textAlign: TextAlign.left),
-                        ),
-                      ],
-                    ),
+                          widget.userlModelData[0].id == widget.publicationData[0].userId?
+                          IconButton(
+                              onPressed: () {
+                                /* postPublicationDelete(widget.token, widget.publicationData[0].id.toString()); */
+                                OpenBottonSheet().openBottomSheet(context, widget.token, widget.publicationData[0].id.toString()); 
+                              },
+                              icon: const Icon(Icons.more_vert_outlined))
+                          : const Padding(padding: EdgeInsets.zero)    
+                        ],
+                      ),
+                    )
                   ],
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 0, top: 10, bottom: 10),
-                  child:SelectableLinkify(
-                    onOpen: (link) => LaunchToInternet.launchURL(link.url),
-                    text: widget.publicationData[0].contentPublication,
-                    style: const TextStyle(
-                      fontSize: 12.00,
-                    ),
-                    textAlign: TextAlign.justify,
-                  )
-                ),
+                    padding:
+                        const EdgeInsets.only(left: 0, top: 10, bottom: 10),
+                    child: SelectableLinkify(
+                      onOpen: (link) => LaunchToInternet.launchURL(link.url),
+                      text: widget.publicationData[0].contentPublication,
+                      style: const TextStyle(
+                        fontSize: 12.00,
+                      ),
+                      textAlign: TextAlign.justify,
+                    )),
               ],
             ),
           ),
@@ -447,8 +463,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                   itemCount: _publicationComment.length,
                   itemBuilder: (context, index) {
                     return Row(
-                      children: _publicationComment[index].content ==
-                              "no data"
+                      children: _publicationComment[index].content == "no data"
                           ? []
                           : [
                               Padding(

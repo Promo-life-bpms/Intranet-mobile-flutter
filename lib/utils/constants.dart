@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/about.dart';
 
 class ApiIntranetConstans {
-  static String baseUrl = 'https://dev-intranet.promolife.lat/';
+  static String baseUrl = 'https://intranet.kaths.com.mx/';
 
   static String loginEndpoint = 'api/login' ;
   static String getUser = 'api/getUser/' ;
@@ -25,6 +25,7 @@ class ApiIntranetConstans {
   static String postUserMessages = 'api/postUserMessages';
   static String postConversation = 'api/postConversation';
   static String postRequestDelete = 'api/postDeleteRequest';
+  static String postDeletePublication = 'api/postDeletePublication';
 }
 
 class StringIntranetConstants{
