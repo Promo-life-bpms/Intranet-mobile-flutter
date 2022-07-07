@@ -102,7 +102,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                 },
                               ),
                               Padding(
-                                padding: const EdgeInsets.only(left: 0, top: 0),
+                                padding: const EdgeInsets.only(left: 0, top: 6),
                                 child: Text(widget.publicationData[0].created,
                                     style: const TextStyle(fontSize: 10.00),
                                     textAlign: TextAlign.left),
@@ -111,7 +111,9 @@ class _PublicationContainerState extends State<PublicationContainer> {
                           ),
                           widget.userlModelData[0].id ==
                                   widget.publicationData[0].userId
-                              ? IconButton(
+                              ? 
+                              const Padding(padding: EdgeInsets.zero)
+                              /* IconButton(
                                   onPressed: () {
                                     /* postPublicationDelete(widget.token, widget.publicationData[0].id.toString()); */
                                     OpenBottonSheet().openBottomSheet(
@@ -120,7 +122,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                         widget.publicationData[0].id
                                             .toString());
                                   },
-                                  icon: const Icon(Icons.more_vert_outlined))
+                                  icon: const Icon(Icons.more_vert_outlined)) */
                               : const Padding(padding: EdgeInsets.zero)
                         ],
                       ),
