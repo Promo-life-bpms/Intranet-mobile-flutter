@@ -117,7 +117,8 @@ class _HomeState extends State<HomePage> {
                             publicationToLikeData: _publicationModelToLike!,
                             userData: _userlModel!,
                             isLike: isLike,
-                            token: token)
+                            token: token,
+                            mainContext: context,)
                   ],
                 ),
               ),

@@ -12,8 +12,6 @@ Future postPublicationDelete(String token, String publciationID) async {
     'Accept': 'application/json',
   });
 
-  print("statussssssss");
-  print(response.body);
   if (response.statusCode == 200) {
     return true;
   }

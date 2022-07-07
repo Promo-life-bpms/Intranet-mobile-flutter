@@ -10,14 +10,15 @@ class PublicationBuilder extends StatefulWidget {
       required this.publicationToLikeData,
       required this.userData,
       required this.isLike,
-      required this.token})
+      required this.token,
+      required this.mainContext})
       : super(key: key);
   final List<PublicationModel> publicationData;
   final List<PublicationModel> publicationToLikeData;
   final List<UserModel> userData;
   final bool isLike;
   final String token;
-
+  final BuildContext mainContext;
   @override
   State<PublicationBuilder> createState() => _PublicationBuilderState();
 }
@@ -46,7 +47,7 @@ class _PublicationBuilderState extends State<PublicationBuilder> {
                       widget.publicationData[index].photoPublication,
                   likes: widget.publicationData[index].likes,
                   isLike: widget.publicationData[index].isLike,
-                  comments: widget.publicationData[index].comments)
+                  comments: widget.publicationData[index].comments,)
             ], publicationToLikeData: [
               PublicationModel(
                   id: widget.publicationToLikeData[index].id,
@@ -61,7 +62,7 @@ class _PublicationBuilderState extends State<PublicationBuilder> {
                   likes: widget.publicationToLikeData[index].likes,
                   isLike: widget.publicationToLikeData[index].isLike,
                   comments: widget.publicationToLikeData[index].comments)
-            ], token: widget.token, userlModelData: widget.userData);
+            ], token: widget.token, userlModelData: widget.userData,mainContext: widget.mainContext,);
           },
         ),
       ],

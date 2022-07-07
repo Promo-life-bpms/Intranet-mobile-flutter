@@ -177,7 +177,8 @@ class _HomeState extends State<UserProfilePage> {
                           publicationToLikeData: _publicationModelToLike!.where((i) => i.userId ==_userModel![0].id).toList(),
                           userData: _userModel!,
                           isLike: isLike,
-                          token: token)
+                          token: token,
+                          mainContext: context,)
                 ],
               ),
             ),

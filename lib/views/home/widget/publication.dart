@@ -5,7 +5,6 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/internet.dart';
-import 'package:intranet_movil/services/post_publication_delete.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:intranet_movil/views/home/widget/post_delete_alert_dialog.dart';
@@ -18,13 +17,15 @@ class PublicationContainer extends StatefulWidget {
       required this.publicationData,
       required this.publicationToLikeData,
       required this.token,
-      required this.userlModelData})
+      required this.userlModelData,
+      required this.mainContext})
       : super(key: key);
 
   final List<PublicationModel> publicationData;
   final List<PublicationModel> publicationToLikeData;
   final String token;
   final List<UserModel> userlModelData;
+  final BuildContext mainContext;
 
   @override
   State<PublicationContainer> createState() => _PublicationContainerState();
@@ -111,7 +112,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                           IconButton(
                               onPressed: () {
                                 /* postPublicationDelete(widget.token, widget.publicationData[0].id.toString()); */
-                                OpenBottonSheet().openBottomSheet(context, widget.token, widget.publicationData[0].id.toString()); 
+                                OpenBottonSheet().openBottomSheet(widget.mainContext, widget.token, widget.publicationData[0].id.toString()); 
                               },
                               icon: const Icon(Icons.more_vert_outlined))
                           : const Padding(padding: EdgeInsets.zero)    

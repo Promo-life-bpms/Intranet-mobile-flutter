@@ -209,7 +209,8 @@ class _EmployeeProfileState extends State<EmployeeProfilePage> {
                           publicationToLikeData: _publicationModelToLike!,
                           userData: _userModel!,
                           isLike: isLike,
-                          token: token)
+                          token: token,
+                          mainContext: context,)
                 ],
               ),
             ),
