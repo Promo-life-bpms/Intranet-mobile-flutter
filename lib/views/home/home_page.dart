@@ -12,10 +12,13 @@ import 'package:intranet_movil/views/chat/chat_page.dart';
 import 'package:intranet_movil/views/home/widget/birthday_home_builder.dart';
 import 'package:intranet_movil/views/home/widget/birthday_title_card.dart';
 import 'package:intranet_movil/views/home/widget/carousel_home_builder.dart';
+import 'package:intranet_movil/views/home/widget/no_data_birthday_builder.dart';
+import 'package:intranet_movil/views/home/widget/no_data_post_publication.dart';
 import 'package:intranet_movil/views/home/widget/publication_builder.dart';
 import 'package:intranet_movil/views/home/widget/publication_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_publication.dart';
+import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class HomePage extends StatefulWidget {
@@ -69,12 +72,12 @@ class _HomeState extends State<HomePage> {
         _brithdayModel = widget.birthdayData;
       }
 
-      if (widget.communiqueData != [] ||
-          widget.communiqueData != null ||
-          widget.communiqueData!.length != 0) {
-        _communiqueModel = widget.communiqueData;
-      } else {
+      if (widget.communiqueData == [] ||
+          widget.communiqueData == null ||
+          widget.communiqueData!.length == 0) {
         _getCommuniqueData();
+      } else {
+        _communiqueModel = widget.communiqueData;
       }
 
       if (widget.publicationData == [] ||
@@ -121,12 +124,6 @@ class _HomeState extends State<HomePage> {
   }
 
   void _getCommuniqueData() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? _token = prefs.getString('token');
-    if (_token != null || _token!.isNotEmpty) {
-      token = _token;
-    }
-
     _communiqueModel =
         (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
@@ -167,55 +164,90 @@ class _HomeState extends State<HomePage> {
           ),
         ],
       ),
-      body: _userlModel == null || _userlModel!.isEmpty
+      body: /*  _userlModel == null || _userlModel!.isEmpty
           ? const ListviewPublication()
-          : SingleChildScrollView(
-              physics: const ScrollPhysics(),
-              child: Container(
-                color: ColorIntranetConstants.backgroundColorDark,
-                child: Column(
-                  children: [
-                    //Publicaciones
-                    PublicationCard(userData: _userlModel!),
-                    const Padding(padding: EdgeInsets.only(top: 8)),
+          :  */
+          SingleChildScrollView(
+        physics: const ScrollPhysics(),
+        child: Container(
+          color: ColorIntranetConstants.backgroundColorDark,
+          child: Column(
+            children: [
+              //Publicaciones
+              _userlModel == null || _userlModel!.isEmpty
+                  ? Column(
+                    children:const [
+                      NoDataPublicationCard(),
+                      Padding(padding: EdgeInsets.only(top: 8)),
+                      ],
+                  ) 
+                  : Column(
+                      children: [
+                        PublicationCard(userData: _userlModel!),
+                        const Padding(padding: EdgeInsets.only(top: 8)),
+                      ],
+                    ),
 
-                    //Cumpleanos del mes
-                    _brithdayModel == null ||
-                            _brithdayModel!.isEmpty ||
-                            _brithdayModel == []
-                        ? const Text("data")
-                        : Column(
-                            children: [
-                              const BirthdayTitleCard(),
-                              BirthdayHomeBuilder(
-                                  birthdayData: _brithdayModel!),
-                              
-                            ],
+              //Cumpleanos del mes
+              _brithdayModel == null ||
+                      _brithdayModel!.isEmpty ||
+                      _brithdayModel == []
+                  ? Column(
+                      children: const [
+                        BirthdayTitleCard(),
+                        NoDataBirthdayHomeBuilder(),
+                        Padding(padding: EdgeInsets.only(top: 8))
+                      ],
+                    )
+                  : Column(
+                      children: [
+                        const BirthdayTitleCard(),
+                        BirthdayHomeBuilder(birthdayData: _brithdayModel!),
+                        const Padding(padding: EdgeInsets.only(top: 8))
+                      ],
+                    ),
+              //Comunicados
+              _communiqueModel == null || _communiqueModel!.isEmpty
+                  ? const Padding(padding: EdgeInsets.zero)
+                  : Column(
+                      children: [
+                        CarouselHomeBuilder(communiqueData: _communiqueModel!),
+                        const Padding(padding: EdgeInsets.only(bottom: 8))
+                      ],
+                    ),
+              //Publicaciones
+              _publicationModel == null || _publicationModel!.isEmpty
+                  ? Container(
+                      color: Colors.white,
+                      child: Column(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(top: 16),
+                            child: Text(
+                              "Obteniendo publicaciones...",
+                              style: TextStyle(fontSize: 16),
+                            ),
                           ),
-                    //Comunicados
-                    _communiqueModel == null || _communiqueModel!.isEmpty
-                        ? const Padding(padding: EdgeInsets.zero)
-                        : CarouselHomeBuilder(
-                            communiqueData: _communiqueModel!),
-                    const Padding(padding: EdgeInsets.only(top: 8)),
-                    //Publicaciones
-                    _publicationModel == null || _publicationModel!.isEmpty
-                        ? const Text(
-                            StringIntranetConstants.homePublicationEmpty,
-                            textAlign: TextAlign.left,
-                          )
-                        : PublicationBuilder(
-                            publicationData: _publicationModel!,
-                            publicationToLikeData: _publicationModelToLike!,
-                            userData: _userlModel!,
-                            isLike: isLike,
-                            token: token,
-                            mainContext: context,
-                          )
-                  ],
-                ),
-              ),
-            ),
+                          Center(
+                            child: SizedBox(
+                                width: 300,
+                                child:
+                                    Lottie.asset("lib/assets/fech_data.json")),
+                          ),
+                        ],
+                      ))
+                  : PublicationBuilder(
+                      publicationData: _publicationModel!,
+                      publicationToLikeData: _publicationModelToLike!,
+                      userData: _userlModel!,
+                      isLike: isLike,
+                      token: token,
+                      mainContext: context,
+                    )
+            ],
+          ),
+        ),
+      ),
     );
   }
 }
