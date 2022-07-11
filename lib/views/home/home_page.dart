@@ -50,7 +50,7 @@ class _HomeState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-
+    print(widget.birthdayData);
 
     if (widget.userData == [] ||
         widget.userData == null ||
@@ -60,12 +60,13 @@ class _HomeState extends State<HomePage> {
     } else {
       print("yess dataaaaaaaaa");
       _userlModel = widget.userData;
-      if (widget.birthdayData != [] ||
-          widget.birthdayData != null ||
-          widget.birthdayData!.length != 0) {
-        _brithdayModel = widget.birthdayData;
-      } else {
+      if (widget.birthdayData == [] ||
+          widget.birthdayData == null ||
+          widget.birthdayData!.length == 0) {
+        print("no widget dataaaaaaaaa");
         _getBirthdayData();
+      } else {
+        _brithdayModel = widget.birthdayData;
       }
 
       if (widget.communiqueData != [] ||
@@ -177,12 +178,20 @@ class _HomeState extends State<HomePage> {
                     //Publicaciones
                     PublicationCard(userData: _userlModel!),
                     const Padding(padding: EdgeInsets.only(top: 8)),
-                    const BirthdayTitleCard(),
+
                     //Cumpleanos del mes
-                    _brithdayModel == null || _brithdayModel!.isEmpty
-                        ? const Padding(padding: EdgeInsets.zero)
-                        : BirthdayHomeBuilder(birthdayData: _brithdayModel!),
-                    const Padding(padding: EdgeInsets.only(top: 8)),
+                    _brithdayModel == null ||
+                            _brithdayModel!.isEmpty ||
+                            _brithdayModel == []
+                        ? const Text("data")
+                        : Column(
+                            children: [
+                              const BirthdayTitleCard(),
+                              BirthdayHomeBuilder(
+                                  birthdayData: _brithdayModel!),
+                              
+                            ],
+                          ),
                     //Comunicados
                     _communiqueModel == null || _communiqueModel!.isEmpty
                         ? const Padding(padding: EdgeInsets.zero)

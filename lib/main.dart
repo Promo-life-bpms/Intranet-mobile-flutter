@@ -36,6 +36,8 @@ class _HomeState extends State<MyApp> {
 
   late String? _token = "";
 
+  late String validate = "";
+
   @override
   void initState() {
     super.initState();
@@ -45,14 +47,18 @@ class _HomeState extends State<MyApp> {
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
     _token = prefs.getString('token');
-    _userModel =
-        (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
+    _userModel = (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
+
+    if(_userModel!.isNotEmpty){
+      final prefs = await SharedPreferences.getInstance();
+      await prefs.setString('fullname', _userModel![0].fullname);
+      await prefs.setString('email', _userModel![0].email);
+      await prefs.setString('photo', _userModel![0].photo);
+    }
     _brithdayModel =
         (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
     _communiqueModel =
         (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
-
-    _publicationModel =  (await ApiPublicationService().getPublication(_token.toString()))!.cast<PublicationModel>();
         
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
@@ -100,7 +106,6 @@ class _HomeState extends State<MyApp> {
                     userData: _userModel,
                     birthdayData: _brithdayModel,
                     communiqueData: _communiqueModel,
-                    publicationData: _publicationModel,
                   )));
   }
 }

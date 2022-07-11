@@ -73,6 +73,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         username = _userlModel![0].fullname.toString();
         email = _userlModel![0].email.toString();
         photo = _userlModel![0].photo.toString();
+        userData = _userlModel!;
       });
     }
 
@@ -81,17 +82,12 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
   void _getAppData() async {
     _manualModel = (await ApiManualService().getManual())!.cast<ManualModel>();
-    _communiqueModel =
-        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
-    _monthEmployeeModel = (await ApiMonthEmployeeService().getMonthEmployee())!
-        .cast<MonthEmployeeModel>();
-    _brithdayModel =
-        (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
-    _directoryModel =
-        (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    _monthEmployeeModel = (await ApiMonthEmployeeService().getMonthEmployee())!.cast<MonthEmployeeModel>();
+    _brithdayModel = (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+    _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
 
     setState(() {
-      userData = _userlModel!;
       manualData = _manualModel!;
       communiqueData = _communiqueModel!;
       monthEmployeeData = _monthEmployeeModel!;
@@ -99,15 +95,6 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
       directoryData = _directoryModel!;
     });
 
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
-
-  void _getHomeData() async {
-    _directoryModel =
-        (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
-    setState(() {
-      directoryData = _directoryModel!;
-    });
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
