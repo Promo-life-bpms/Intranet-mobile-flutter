@@ -261,7 +261,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                       .toString(),
                                   style: const TextStyle(color: Colors.white),
                                 ),
-                                child: isLike == false
+                                child: widget.publicationToLikeData[0].isLike == false
                                     ? const Icon(
                                         Icons.favorite,
                                         color: ColorIntranetConstants.redLight,
@@ -289,7 +289,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                       .toString(),
                                   style: const TextStyle(color: Colors.white),
                                 ),
-                                child: isLike == false
+                                child: widget.publicationToLikeData[0].isLike == false
                                     ? const Icon(
                                         Icons.favorite,
                                         color: ColorIntranetConstants.redLight,

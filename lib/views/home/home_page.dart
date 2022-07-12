@@ -50,6 +50,10 @@ class _HomeState extends State<HomePage> {
   static List<UserModel>? _userList = [];
   static List<CommuniqueModel>? _communiqueList = [];
 
+  static List<PublicationModel>? _publicationList = [];
+  static List<PublicationModel>? _publicationListToLike = [];
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   bool isLike = false;
   bool loadingComment = false;
@@ -95,6 +99,8 @@ class _HomeState extends State<HomePage> {
       _userList = _userlModel;
       _brithdayList = _brithdayModel;
       _communiqueList = _communiqueModel;
+      _publicationList = _publicationModel;
+      _publicationListToLike = _publicationModel;
     });
 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
@@ -141,10 +147,21 @@ class _HomeState extends State<HomePage> {
           ),
         ],
       ),
-      body: /*  _userlModel == null || _userlModel!.isEmpty
-          ? const ListviewPublication()
-          :  */
-          SingleChildScrollView(
+      body: RefreshIndicator(
+        key: _refreshIndicatorKey,
+        color: Colors.white,
+        backgroundColor: Colors.blue,
+        strokeWidth: 3.0,
+        onRefresh: () async {
+          setState(() {
+            _getData();
+
+          });
+
+         return Future<void>.delayed(const Duration(seconds: 3));
+
+        },
+        child: SingleChildScrollView(
         physics: const ScrollPhysics(),
         child: Container(
           color: ColorIntranetConstants.backgroundColorDark,
@@ -193,7 +210,7 @@ class _HomeState extends State<HomePage> {
                       ],
                     ),
               //Publicaciones
-              _publicationModel == null || _publicationModel!.isEmpty || _publicationModel == []
+              _publicationList == null || _publicationList!.isEmpty || _publicationList == []
                   ? Container(
                       color: Colors.white,
                       child: Column(
@@ -214,9 +231,9 @@ class _HomeState extends State<HomePage> {
                         ],
                       ))
                   : PublicationBuilder(
-                      publicationData: _publicationModel!,
-                      publicationToLikeData: _publicationModelToLike!,
-                      userData: _userlModel!,
+                      publicationData: _publicationList!,
+                      publicationToLikeData: _publicationListToLike!,
+                      userData: _userList!,
                       isLike: isLike,
                       token: token,
                       mainContext: context,
@@ -225,6 +242,12 @@ class _HomeState extends State<HomePage> {
           ),
         ),
       ),
-    );
+
+
+      )
+
+
+
+            );
   }
 }
