@@ -26,13 +26,13 @@ class _HomeState extends State<ManualPage> {
     print("dataaaaaaaaaaaaaaaaaaaaa");
     print(widget.manualData.length);
 
-    if(widget.manualData.length > 0 || widget.manualData.length !=  [] ){
+    if(widget.manualData.isNotEmpty ){
       _manualList = widget.manualData;
+      _getData();
     }else{
       _getData();
     }
    
-    
   }
 
   void _getData() async {
