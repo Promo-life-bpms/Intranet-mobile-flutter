@@ -27,7 +27,8 @@ import 'package:intranet_movil/views/request/request_main_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
-  const NavigationDrawerWidget({Key? key}) : super(key: key);
+  const NavigationDrawerWidget({Key? key, this.userData}) : super(key: key);
+  final List<UserModel>? userData;
 
   @override
   _NavigationDrawerWidgetState createState() => _NavigationDrawerWidgetState();
@@ -57,9 +58,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   @override
   void initState() {
     super.initState();
-
     _getData();
-
     _getAppData();
   }
 

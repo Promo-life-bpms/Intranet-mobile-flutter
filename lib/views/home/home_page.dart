@@ -123,7 +123,7 @@ class _HomeState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: const NavigationDrawerWidget(),
+      drawer: NavigationDrawerWidget(userData: _userList),
       appBar: AppBar(
         title: const Text(_title),
         actions: [

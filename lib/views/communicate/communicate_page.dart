@@ -59,18 +59,18 @@ class _HomeState extends State<CommunicatePage> {
         ],
         title: const Text(StringIntranetConstants.communiquePage),
       ),
-      body: _communiqueModel == null || _communiqueModel!.isEmpty
+      body: _communiqueList == null || _communiqueList!.isEmpty
           ? const ListviewCardsExamplePage() //Skeleton
           : ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: _communiqueModel!.length,
+              itemCount: _communiqueList!.length,
               itemBuilder: (context, index) {
                 return CommuniqueCard(commuiqueData: [
                   CommuniqueModel(
-                      id: _communiqueModel![index].id,
-                      title: _communiqueModel![index].title,
-                      image: _communiqueModel![index].image,
-                      description: _communiqueModel![index].description)
+                      id: _communiqueList![index].id,
+                      title: _communiqueList![index].title,
+                      image: _communiqueList![index].image,
+                      description: _communiqueList![index].description)
                 ]);
               },
             ),

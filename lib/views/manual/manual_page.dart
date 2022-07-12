@@ -23,17 +23,20 @@ class _HomeState extends State<ManualPage> {
   @override
   void initState() {
     super.initState();
-    if(widget.manualData.isNotEmpty){
+    print("dataaaaaaaaaaaaaaaaaaaaa");
+    print(widget.manualData.length);
+
+    if(widget.manualData.length > 0 || widget.manualData.length !=  [] ){
       _manualList = widget.manualData;
     }else{
       _getData();
     }
+   
     
   }
 
   void _getData() async {
     _manualModel = (await ApiManualService().getManual())!.cast<ManualModel>();
-    print(_manualList!.length);
     setState(() {
       _manualList = _manualModel!;
     });
@@ -65,7 +68,7 @@ class _HomeState extends State<ManualPage> {
           ? const ListviewCardsExamplePage()
           : ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: _manualModel!.length,
+              itemCount: _manualList!.length,
               itemBuilder: (context, index) {
                 return ManualCard(manualData: [
                   ManualModel(
