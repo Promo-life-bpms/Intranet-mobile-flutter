@@ -17,7 +17,6 @@ import 'package:intranet_movil/views/home/widget/no_data_post_publication.dart';
 import 'package:intranet_movil/views/home/widget/publication_builder.dart';
 import 'package:intranet_movil/views/home/widget/publication_card.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
-import 'package:intranet_movil/widget/skeletons/list_view_publication.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -46,6 +45,12 @@ class _HomeState extends State<HomePage> {
   late List<UserModel>? _userlModel = [];
   late List<PublicationModel>? _publicationModel = [];
   late List<PublicationModel>? _publicationModelToLike = [];
+
+  static List<BirthdayModel>? _brithdayList = [];
+  static List<UserModel>? _userList = [];
+  static List<CommuniqueModel>? _communiqueList = [];
+
+
   bool isLike = false;
   bool loadingComment = false;
   late String token = "";
@@ -53,42 +58,25 @@ class _HomeState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    print(widget.birthdayData);
-
-    if (widget.userData == [] ||
-        widget.userData == null ||
-        widget.userData!.length == 0) {
-      print("nooo dataaaaaaaaa");
+    if (widget.userData == [] || widget.userData == null || widget.userData!.length == 0) {
       _getData();
     } else {
-      print("yess dataaaaaaaaa");
-      _userlModel = widget.userData;
-      if (widget.birthdayData == [] ||
-          widget.birthdayData == null ||
-          widget.birthdayData!.length == 0) {
-        print("no widget dataaaaaaaaa");
-        _getBirthdayData();
-      } else {
-        _brithdayModel = widget.birthdayData;
-      }
-
-      if (widget.communiqueData == [] ||
-          widget.communiqueData == null ||
-          widget.communiqueData!.length == 0) {
-        _getCommuniqueData();
-      } else {
-        _communiqueModel = widget.communiqueData;
-      }
-
-      if (widget.publicationData == [] ||
-          widget.publicationData == null ||
-          widget.publicationData!.length == 0) {
-        _getPublicationData();
-      } else {
-        _publicationModel = widget.publicationData;
-        _publicationModelToLike = widget.publicationData;
-      }
+      _userList = widget.userData;
     }
+
+    if (widget.birthdayData == [] || widget.birthdayData == null || widget.birthdayData!.length == 0) {
+      _getBirthdayData();
+    } else {
+      _brithdayList = widget.birthdayData;
+    }
+
+    if (widget.communiqueData == [] || widget.communiqueData == null || widget.communiqueData!.length == 0) {
+      _getCommuniqueData();
+    } else {
+      _communiqueList = widget.communiqueData;
+    }
+
+    _getData();
   }
 
   void _getData() async {
@@ -97,52 +85,41 @@ class _HomeState extends State<HomePage> {
     if (_token != null || _token!.isNotEmpty) {
       token = _token;
     }
-    _userlModel =
-        (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
-    _brithdayModel =
-        (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
-    _communiqueModel =
-        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
-    _publicationModel =
-        (await ApiPublicationService().getPublication(token.toString()))!
-            .cast<PublicationModel>();
+    _userlModel = (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
+    _brithdayModel = (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    _publicationModel = (await ApiPublicationService().getPublication(token.toString()))!.cast<PublicationModel>();
     _publicationModelToLike = _publicationModel;
+
+    setState(() {
+      _userList = _userlModel;
+      _brithdayList = _brithdayModel;
+      _communiqueList = _communiqueModel;
+    });
 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   void _getBirthdayData() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? _token = prefs.getString('token');
-    if (_token != null || _token!.isNotEmpty) {
-      token = _token;
-    }
-    _brithdayModel =
-        (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+    _brithdayModel = (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+
+    setState(() {
+      _brithdayList = _brithdayModel;
+    });
 
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   void _getCommuniqueData() async {
-    _communiqueModel =
-        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+
+    setState(() {
+      _communiqueList = _communiqueModel;
+    });
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
-  void _getPublicationData() async {
-    final prefs = await SharedPreferences.getInstance();
-    String? _token = prefs.getString('token');
-    if (_token != null || _token!.isNotEmpty) {
-      token = _token;
-    }
-    _publicationModel =
-        (await ApiPublicationService().getPublication(token.toString()))!
-            .cast<PublicationModel>();
-    _publicationModelToLike = _publicationModel;
-
-    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
-  }
-
+ 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -174,24 +151,24 @@ class _HomeState extends State<HomePage> {
           child: Column(
             children: [
               //Publicaciones
-              _userlModel == null || _userlModel!.isEmpty
+              _userList == null || _userList!.isEmpty
                   ? Column(
-                    children:const [
-                      NoDataPublicationCard(),
-                      Padding(padding: EdgeInsets.only(top: 8)),
+                      children: const [
+                        NoDataPublicationCard(),
+                        Padding(padding: EdgeInsets.only(top: 8)),
                       ],
-                  ) 
+                    )
                   : Column(
                       children: [
-                        PublicationCard(userData: _userlModel!),
+                        PublicationCard(userData: _userList!),
                         const Padding(padding: EdgeInsets.only(top: 8)),
                       ],
                     ),
 
               //Cumpleanos del mes
-              _brithdayModel == null ||
-                      _brithdayModel!.isEmpty ||
-                      _brithdayModel == []
+              _brithdayList == null ||
+                      _brithdayList!.isEmpty ||
+                      _brithdayList == []
                   ? Column(
                       children: const [
                         BirthdayTitleCard(),
@@ -202,21 +179,21 @@ class _HomeState extends State<HomePage> {
                   : Column(
                       children: [
                         const BirthdayTitleCard(),
-                        BirthdayHomeBuilder(birthdayData: _brithdayModel!),
+                        BirthdayHomeBuilder(birthdayData: _brithdayList!),
                         const Padding(padding: EdgeInsets.only(top: 8))
                       ],
                     ),
               //Comunicados
-              _communiqueModel == null || _communiqueModel!.isEmpty
+              _communiqueList == null || _communiqueList!.isEmpty || _communiqueList!.length == 0
                   ? const Padding(padding: EdgeInsets.zero)
                   : Column(
                       children: [
-                        CarouselHomeBuilder(communiqueData: _communiqueModel!),
+                        CarouselHomeBuilder(communiqueData: _communiqueList!),
                         const Padding(padding: EdgeInsets.only(bottom: 8))
                       ],
                     ),
               //Publicaciones
-              _publicationModel == null || _publicationModel!.isEmpty
+              _publicationModel == null || _publicationModel!.isEmpty || _publicationModel == []
                   ? Container(
                       color: Colors.white,
                       child: Column(
@@ -224,7 +201,7 @@ class _HomeState extends State<HomePage> {
                           const Padding(
                             padding: EdgeInsets.only(top: 16),
                             child: Text(
-                              "Obteniendo publicaciones...",
+                              "Actualizando publicaciones...",
                               style: TextStyle(fontSize: 16),
                             ),
                           ),

@@ -16,12 +16,14 @@ class CommunicatePage extends StatefulWidget {
 
 class _HomeState extends State<CommunicatePage> {
   late List<CommuniqueModel>? _communiqueModel = [];
+  static List<CommuniqueModel>? _communiqueList = [];
+
 
   @override
   void initState() {
     super.initState();
     if(widget.communiqueData!.isNotEmpty){
-      _communiqueModel = widget.communiqueData;
+      _communiqueList = widget.communiqueData;
     }else{
       _getData();
     }
@@ -29,8 +31,10 @@ class _HomeState extends State<CommunicatePage> {
   }
 
   void _getData() async {
-    _communiqueModel =
-        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    setState(() {
+      _communiqueList = _communiqueModel;
+    });
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 

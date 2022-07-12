@@ -17,12 +17,13 @@ class EmployeeMonthPage extends StatefulWidget {
 
 class _HomeState extends State<EmployeeMonthPage> {
   late List<MonthEmployeeModel>? _monthEmployeeModel = [];
+  static List<MonthEmployeeModel>? _monthEmployeeList = [];
 
   @override
   void initState() {
     super.initState();
      if(widget.monthEmployeeData!.isNotEmpty){
-      _monthEmployeeModel = widget.monthEmployeeData;
+      _monthEmployeeList = widget.monthEmployeeData;
     }else{
       _getData();
     }
@@ -30,8 +31,10 @@ class _HomeState extends State<EmployeeMonthPage> {
   }
 
   void _getData() async {
-    _monthEmployeeModel = (await ApiMonthEmployeeService().getMonthEmployee())!
-        .cast<MonthEmployeeModel>();
+    _monthEmployeeModel = (await ApiMonthEmployeeService().getMonthEmployee())!.cast<MonthEmployeeModel>();
+    setState(() {
+      _monthEmployeeList = _monthEmployeeModel;
+    });
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -56,17 +59,17 @@ class _HomeState extends State<EmployeeMonthPage> {
         ],
         title: const Text(StringIntranetConstants.monthPage),
       ),
-      body: _monthEmployeeModel == null || _monthEmployeeModel!.isEmpty
+      body: _monthEmployeeList == null || _monthEmployeeList!.isEmpty
           ? const ListviewEmploye() //Skeleton 
           : EmployeeMonthBuilder(
               employeeMonthData: List<MonthEmployeeModel>.generate(
-                  _monthEmployeeModel!.length,
+                  _monthEmployeeList!.length,
                   (index) => MonthEmployeeModel(
-                      id: _monthEmployeeModel![index].id,
-                      name: _monthEmployeeModel![index].name,
-                      position: _monthEmployeeModel![index].position,
-                      star: _monthEmployeeModel![index].star,
-                      photo: _monthEmployeeModel![index].photo))),
+                      id: _monthEmployeeList![index].id,
+                      name: _monthEmployeeList![index].name,
+                      position: _monthEmployeeList![index].position,
+                      star: _monthEmployeeList![index].star,
+                      photo: _monthEmployeeList![index].photo))),
     );
   }
 }
