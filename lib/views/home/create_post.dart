@@ -25,7 +25,7 @@ class _HomeState extends State<CreatePostPage> {
 
   late String filePathString = "";
   late File filePath;
-  bool loadFuture =false;
+  bool loadFuture = false;
 
   @override
   void initState() {
@@ -34,20 +34,19 @@ class _HomeState extends State<CreatePostPage> {
   }
 
   Future<File?> _getImage() async {
-    if(loadFuture ==true){
-    ImagePicker _picker = ImagePicker();
-    // Pick an image
-    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
-    //TO convert Xfile into file
-    File file = File(image!.path);
-    filePath = file;
-   
-    filePathString = file.toString();
-    loadFuture =false;
+    if (loadFuture == true) {
+      ImagePicker _picker = ImagePicker();
+      // Pick an image
+      XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+      //TO convert Xfile into file
+      File file = File(image!.path);
+      filePath = file;
 
-        return file;
+      filePathString = file.toString();
+      loadFuture = false;
+
+      return file;
     }
-
   }
 
   void _getData() async {
@@ -86,6 +85,7 @@ class _HomeState extends State<CreatePostPage> {
                           return null;
                         },
                         decoration: InputDecoration(
+                          counterText: "",
                           enabledBorder: OutlineInputBorder(
                             borderRadius: BorderRadius.circular(4.0),
                             borderSide: const BorderSide(
@@ -107,34 +107,88 @@ class _HomeState extends State<CreatePostPage> {
                       ),
                     ),
                   ),
-                  
+
+                  const Padding(padding: EdgeInsets.only(top: 16)),
                   FutureBuilder(
                       future: _getImage(),
-                      builder:
-                          (BuildContext context, AsyncSnapshot<File?> snapshot) {
+                      builder: (BuildContext context,
+                          AsyncSnapshot<File?> snapshot) {
                         if (snapshot.data != null) {
-
                           return Column(
                             children: [
-                              Image.file(snapshot.data!),
-
-                              IconButton(
-                                onPressed: (){
-                                  setState(() {
-                                    snapshot.data!.delete();
-                                  });
+                             /*  Image.file(snapshot.data!), */
+                              Container(
+                                width: double.infinity,
+                                height: 300,
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                    image: FileImage(snapshot.data!),
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
+                                child: Align(
+                                  alignment: Alignment.topRight,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: IconButton(
+                                    onPressed: () {
+                                    setState(() {
+                                      snapshot.data!.delete();
+                                    });
+                                    },
+                                    icon: const Icon(Icons.close, color: Colors.white,)),
+                                  )
+                                ),
+                              ),  
+                          
+                              SizedBox(
+                                width: double.infinity,
+                                height: 40,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    if (loadFuture == false) {
+                                      loadFuture = true;
+                                    }
+                                    _getData();
+                                  },
+                                  icon: const Icon(
+                                    Icons.photo_camera,
+                                    size: 24.0,
+                                  ),
                                   
-                              }, 
-                              icon: Icon(Icons.delete))
+                                  label: const Text('Actualizar imagen'), // <-- Text
+                                ),
+                              ),
                             ],
                           );
                         } else {
-                          return Container();
+                          return Column(
+                            children: [
+                              SizedBox(
+                                width: double.infinity,
+                                height: 40,
+                                child: ElevatedButton.icon(
+                                  onPressed: () {
+                                    if (loadFuture == false) {
+                                      loadFuture = true;
+                                      print(loadFuture);
+                                    }
+                                    _getData();
+                                  },
+                                  icon: const Icon(
+                                    Icons.photo_camera,
+                                    size: 24.0,
+                                  ),
+
+                                  label: const Text('Subir imagen'), // <-- Text
+                                ),
+                              ),
+                            ],
+                          );
                         }
                       }),
-                   
 
-                  SizedBox(
+                  /* SizedBox(
                     width: double.infinity,
                     height: 40,
                     child: ElevatedButton.icon(
@@ -150,12 +204,13 @@ class _HomeState extends State<CreatePostPage> {
                         Icons.photo_camera,
                         size: 24.0,
                       ),
+                     
                       label: const Text('Subir imagen'), // <-- Text
                     ),
-                  ),
+                  ), */
                   //Wisget del ElevatedButton
                   Padding(
-                    padding: const EdgeInsets.only(top: 16),
+                    padding: const EdgeInsets.only(top: 32),
                     child: SizedBox(
                       width: double.infinity,
                       height: 60,
@@ -199,20 +254,19 @@ class _HomeState extends State<CreatePostPage> {
   }
 }
 
+_asyncFileUpload(String text, File file) async {
+  //create multipart request for POST or PATCH method
+  var request = http.MultipartRequest("POST", Uri.parse("<url>"));
+  //add text fields
+  request.fields["text_field"] = text;
+  //create multipart using filepath, string or bytes
+  var pic = await http.MultipartFile.fromPath("file_field", file.path);
+  //add multipart to request
+  request.files.add(pic);
+  var response = await request.send();
 
-_asyncFileUpload(String text, File file) async{
-   //create multipart request for POST or PATCH method
-   var request = http.MultipartRequest("POST", Uri.parse("<url>"));
-   //add text fields
-   request.fields["text_field"] = text;
-   //create multipart using filepath, string or bytes
-   var pic = await http.MultipartFile.fromPath("file_field", file.path);
-   //add multipart to request
-   request.files.add(pic);
-   var response = await request.send();
-
-   //Get the response from the server
-   var responseData = await response.stream.toBytes();
-   var responseString = String.fromCharCodes(responseData);
-   print(responseString);
+  //Get the response from the server
+  var responseData = await response.stream.toBytes();
+  var responseString = String.fromCharCodes(responseData);
+  print(responseString);
 }
