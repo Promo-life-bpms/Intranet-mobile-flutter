@@ -8,7 +8,6 @@ import 'package:intranet_movil/views/home/widget/publication_builder.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_profile.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class UserProfilePage extends StatefulWidget {
   const UserProfilePage({Key? key}) : super(key: key);
 
@@ -56,11 +55,9 @@ class _HomeState extends State<UserProfilePage> {
           : SingleChildScrollView(
               physics: const ScrollPhysics(),
               child: Column(
-                
                 children: [
-
                   ListView.builder(
-                     primary: false,
+                    primary: false,
                     shrinkWrap: true,
                     padding: const EdgeInsets.all(0),
                     itemCount: _userModel!.length,
@@ -72,8 +69,7 @@ class _HomeState extends State<UserProfilePage> {
                             height: 200.0,
                             decoration: const BoxDecoration(
                               image: DecorationImage(
-                                image: AssetImage(
-                                    "lib/assets/background.jpg"),
+                                image: AssetImage("lib/assets/background.jpg"),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -115,40 +111,37 @@ class _HomeState extends State<UserProfilePage> {
                                 padding: EdgeInsets.only(top: 36.0),
                               ),
                               Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 24.0),
+                                padding: const EdgeInsets.only(left: 24.0),
                                 child: Column(
                                   children: [
                                     Row(
                                       children: [
                                         const Icon(Icons.house),
                                         const Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 8.0)),
+                                            padding:
+                                                EdgeInsets.only(right: 8.0)),
                                         Text(_userModel![0].department)
                                       ],
                                     ),
                                     const Padding(
-                                        padding:
-                                            EdgeInsets.only(top: 12.0)),
+                                        padding: EdgeInsets.only(top: 12.0)),
                                     Row(
                                       children: [
                                         const Icon(Icons.work),
                                         const Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 8.0)),
+                                            padding:
+                                                EdgeInsets.only(right: 8.0)),
                                         Text(_userModel![0].position)
                                       ],
                                     ),
                                     const Padding(
-                                        padding:
-                                            EdgeInsets.only(top: 12.0)),
+                                        padding: EdgeInsets.only(top: 12.0)),
                                     Row(
                                       children: [
                                         const Icon(Icons.mail),
                                         const Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 8.0)),
+                                            padding:
+                                                EdgeInsets.only(right: 8.0)),
                                         Text(_userModel![0].email)
                                       ],
                                     ),
@@ -173,12 +166,17 @@ class _HomeState extends State<UserProfilePage> {
                           textAlign: TextAlign.left,
                         )
                       : PublicationBuilder(
-                          publicationData: _publicationModel!.where((i) => i.userId ==_userModel![0].id).toList(),
-                          publicationToLikeData: _publicationModelToLike!.where((i) => i.userId ==_userModel![0].id).toList(),
+                          publicationData: _publicationModel!
+                              .where((i) => i.userId == _userModel![0].id)
+                              .toList(),
+                          publicationToLikeData: _publicationModelToLike!
+                              .where((i) => i.userId == _userModel![0].id)
+                              .toList(),
                           userData: _userModel!,
                           isLike: isLike,
                           token: token,
-                          mainContext: context,)
+                          mainContext: context,
+                        )
                 ],
               ),
             ),

@@ -70,17 +70,17 @@ class _HomeState extends State<HomePage> {
         title: const Text(_title),
         actions: [
           Padding(
-              padding:const  EdgeInsets.only(right: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context)
-                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
-                },
-                child: const Image(
-                  image: AssetImage('lib/assets/chat.png'),
-                ),
+            padding: const EdgeInsets.only(right: 8.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const ChatPage()));
+              },
+              child: const Image(
+                image: AssetImage('lib/assets/chat.png'),
               ),
             ),
+          ),
         ],
       ),
       body: _userlModel == null || _userlModel!.isEmpty
@@ -118,7 +118,8 @@ class _HomeState extends State<HomePage> {
                             userData: _userlModel!,
                             isLike: isLike,
                             token: token,
-                            mainContext: context,)
+                            mainContext: context,
+                          )
                   ],
                 ),
               ),

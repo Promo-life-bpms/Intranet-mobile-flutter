@@ -18,6 +18,7 @@ class PublicationContainer extends StatefulWidget {
       required this.publicationToLikeData,
       required this.token,
       required this.userlModelData,
+      required this.contentPublication,
       required this.mainContext})
       : super(key: key);
 
@@ -26,6 +27,7 @@ class PublicationContainer extends StatefulWidget {
   final String token;
   final List<UserModel> userlModelData;
   final BuildContext mainContext;
+  final String contentPublication;
 
   @override
   State<PublicationContainer> createState() => _PublicationContainerState();
@@ -108,14 +110,20 @@ class _PublicationContainerState extends State<PublicationContainer> {
                               ),
                             ],
                           ),
-                          widget.userlModelData[0].id == widget.publicationData[0].userId?
-                          IconButton(
-                              onPressed: () {
-                                /* postPublicationDelete(widget.token, widget.publicationData[0].id.toString()); */
-                                OpenBottonSheet().openBottomSheet(widget.mainContext, widget.token, widget.publicationData[0].id.toString()); 
-                              },
-                              icon: const Icon(Icons.more_vert_outlined))
-                          : const Padding(padding: EdgeInsets.zero)    
+                          widget.userlModelData[0].id ==
+                                  widget.publicationData[0].userId
+                              ? IconButton(
+                                  onPressed: () {
+                                    /* postPublicationDelete(widget.token, widget.publicationData[0].id.toString()); */
+                                    OpenBottonSheet().openBottomSheet(
+                                        widget.mainContext,
+                                        widget.token,
+                                        widget.publicationData[0].id.toString(),
+                                        widget.publicationData[0]
+                                            .contentPublication);
+                                  },
+                                  icon: const Icon(Icons.more_vert_outlined))
+                              : const Padding(padding: EdgeInsets.zero)
                         ],
                       ),
                     )

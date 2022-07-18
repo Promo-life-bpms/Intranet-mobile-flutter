@@ -66,18 +66,18 @@ class _EmployeeProfileState extends State<EmployeeProfilePage> {
       appBar: AppBar(
         actions: [
           Padding(
-              padding:const  EdgeInsets.only(right: 20.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context)
-                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
-                },
-                child: const Icon(
-                  Icons.chat_rounded,
-                  size: 24.0,
-                ),
+            padding: const EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const ChatPage()));
+              },
+              child: const Icon(
+                Icons.chat_rounded,
+                size: 24.0,
               ),
             ),
+          ),
         ],
         title: Text(widget.employeeName),
         leading: IconButton(
@@ -210,7 +210,8 @@ class _EmployeeProfileState extends State<EmployeeProfilePage> {
                           userData: _userModel!,
                           isLike: isLike,
                           token: token,
-                          mainContext: context,)
+                          mainContext: context,
+                        )
                 ],
               ),
             ),
