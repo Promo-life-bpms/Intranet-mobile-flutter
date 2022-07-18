@@ -20,10 +20,10 @@ class PostDelete {
       onPressed: () {
         postPublicationDelete(token, publciationID);
         Navigator.pop(cont);
-        Navigator.pushAndRemoveUntil(
+      /*   Navigator.pushAndRemoveUntil(
             cont,
             MaterialPageRoute(builder: (context) => const HomePage()),
-            ModalRoute.withName("/PostPage"));
+            ModalRoute.withName("/PostPage")); */
       },
     );
     AlertDialog alert = AlertDialog(

@@ -17,10 +17,11 @@ class PostEdit {
         postPublicationEdit(token, publciationID);
 
         Navigator.pop(cont);
-        Navigator.pushAndRemoveUntil(
+        print(contPubli);
+       /*  Navigator.pushAndRemoveUntil(
             cont,
             MaterialPageRoute(builder: (context) => const HomePage()),
-            ModalRoute.withName("/PostPage"));
+            ModalRoute.withName("/PostPage")); */
       },
     );
     AlertDialog alert = AlertDialog(
