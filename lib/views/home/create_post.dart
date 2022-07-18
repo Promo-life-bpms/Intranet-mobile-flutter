@@ -214,59 +214,6 @@ class _HomeState extends State<CreatePostPage> {
                         }
                       }),
 
-                  /* SizedBox(
-                    width: double.infinity,
-                    height: 40,
-                    child: ElevatedButton.icon(
-                      onPressed: () {
-                        
-                        if(loadFuture ==false){
-                          loadFuture = true;
-                          print(loadFuture);
-                        }
-                        _getData();
-                      },
-                      icon: const Icon(
-                        Icons.photo_camera,
-                        size: 24.0,
-                      ),
-                     
-                      label: const Text('Subir imagen'), // <-- Text
-                    ),
-                  ), */
-                  //Wisget del ElevatedButton
-
-                  /* Container(
-                    width: double.infinity,
-                    height: 60,
-                    padding: const EdgeInsets.all(8),
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color:
-                            Colors.grey, //                   <--- border color
-                        width: 1.0,
-                      ),
-                    ),
-                    child: InkWell(
-                      child: Row(
-                        children: const [
-                          Icon(
-                            Icons.photo_camera,
-                            color: ColorIntranetConstants.primaryColorNormal,
-                          ),
-                          Padding(padding: EdgeInsets.only(left: 8)),
-                          Text("Subir imagen")
-                        ],
-                      ),
-                      onTap: () {
-                        if (loadFuture == false) {
-                          loadFuture = true;
-                        }
-                        _getData();
-                      },
-                    ),
-                  ), */
-
                   Padding(
                     padding: const EdgeInsets.only(top: 32),
                     child: SizedBox(
@@ -299,8 +246,7 @@ class _HomeState extends State<CreatePostPage> {
                                                 const HomePage()),
                                         ModalRoute.withName("/HomePost"))
                                   }
-                                else
-                                  {_formKey.currentState!.validate()}
+                                else {_formKey.currentState!.validate()}
                               },
                           child:
                               const Text(StringIntranetConstants.buttonPost)),
@@ -316,9 +262,9 @@ _asyncFileUpload(String text, File file) async {
   //create multipart request for POST or PATCH method
   var request = http.MultipartRequest("POST", Uri.parse("<url>"));
   //add text fields
-  request.fields["text_field"] = text;
+  request.fields["image"] = text;
   //create multipart using filepath, string or bytes
-  var pic = await http.MultipartFile.fromPath("file_field", file.path);
+  var pic = await http.MultipartFile.fromPath("image", file.path);
   //add multipart to request
   request.files.add(pic);
   var response = await request.send();
