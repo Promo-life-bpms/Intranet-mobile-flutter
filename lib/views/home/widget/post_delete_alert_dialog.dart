@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/services/post_publication_delete.dart';
 import 'package:intranet_movil/views/home/edit_post.dart';
-import 'package:intranet_movil/views/home/home_page.dart';
 
 class PostDelete {
   showPostDelete(

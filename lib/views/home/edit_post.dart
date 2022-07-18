@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/services/post_publication_edit.dart';
-import 'package:intranet_movil/views/home/home_page.dart';
 
 class PostEdit {
   showPostEdit(
@@ -17,7 +16,6 @@ class PostEdit {
         postPublicationEdit(token, publciationID, contPubli);
 
         Navigator.pop(cont);
-        print(contPubli);
        /*  Navigator.pushAndRemoveUntil(
             cont,
             MaterialPageRoute(builder: (context) => const HomePage()),

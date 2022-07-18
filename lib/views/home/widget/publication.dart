@@ -655,11 +655,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
           onPressed: () {
             if(_controller.text != ""){
               postPublicationEdit(token, publciationID, _controller.text);
-              print("PUBLICACION ACTUALIZADA");
             }
-            print(publciationID);
-            print(_controller.text);
-
             setState(() {
               widget.publicationData[0].contentPublication = _controller.text;
             });
