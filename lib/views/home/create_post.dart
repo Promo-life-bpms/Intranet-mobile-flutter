@@ -116,7 +116,7 @@ class _HomeState extends State<CreatePostPage> {
                         if (snapshot.data != null) {
                           return Column(
                             children: [
-                             /*  Image.file(snapshot.data!), */
+                              /*  Image.file(snapshot.data!), */
                               Container(
                                 width: double.infinity,
                                 height: 300,
@@ -127,36 +127,50 @@ class _HomeState extends State<CreatePostPage> {
                                   ),
                                 ),
                                 child: Align(
-                                  alignment: Alignment.topRight,
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(8.0),
-                                    child: IconButton(
-                                    onPressed: () {
-                                    setState(() {
-                                      snapshot.data!.delete();
-                                    });
-                                    },
-                                    icon: const Icon(Icons.close, color: Colors.white,)),
-                                  )
-                                ),
-                              ),  
-                          
-                              SizedBox(
+                                    alignment: Alignment.topRight,
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: IconButton(
+                                          onPressed: () {
+                                            setState(() {
+                                              snapshot.data!.delete();
+                                            });
+                                          },
+                                          icon: const Icon(
+                                            Icons.close,
+                                            color: Colors.white,
+                                          )),
+                                    )),
+                              ),
+                              Container(
                                 width: double.infinity,
-                                height: 40,
-                                child: ElevatedButton.icon(
-                                  onPressed: () {
+                                height: 60,
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color.fromARGB(255, 216, 216, 216),//                   <--- border color
+                                    width: 0.3,
+                                  ),
+                                ),
+                                child: InkWell(
+                                  child: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.photo_camera,
+                                        color: ColorIntranetConstants
+                                            .primaryColorNormal,
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.only(left: 8)),
+                                      Text("Cambiar imagen")
+                                    ],
+                                  ),
+                                  onTap: () {
                                     if (loadFuture == false) {
                                       loadFuture = true;
                                     }
                                     _getData();
                                   },
-                                  icon: const Icon(
-                                    Icons.photo_camera,
-                                    size: 24.0,
-                                  ),
-                                  
-                                  label: const Text('Actualizar imagen'), // <-- Text
                                 ),
                               ),
                             ],
@@ -164,23 +178,35 @@ class _HomeState extends State<CreatePostPage> {
                         } else {
                           return Column(
                             children: [
-                              SizedBox(
+                              Container(
                                 width: double.infinity,
-                                height: 40,
-                                child: ElevatedButton.icon(
-                                  onPressed: () {
+                                height: 60,
+                                padding: const EdgeInsets.all(8),
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: const Color.fromARGB(255, 216, 216, 216), //                   <--- border color
+                                    width: 0.3,
+                                  ),
+                                ),
+                                child: InkWell(
+                                  child: Row(
+                                    children: const [
+                                      Icon(
+                                        Icons.photo_camera,
+                                        color: ColorIntranetConstants
+                                            .primaryColorNormal,
+                                      ),
+                                      Padding(
+                                          padding: EdgeInsets.only(left: 8)),
+                                      Text("Subir imagen")
+                                    ],
+                                  ),
+                                  onTap: () {
                                     if (loadFuture == false) {
                                       loadFuture = true;
-                                      print(loadFuture);
                                     }
                                     _getData();
                                   },
-                                  icon: const Icon(
-                                    Icons.photo_camera,
-                                    size: 24.0,
-                                  ),
-
-                                  label: const Text('Subir imagen'), // <-- Text
                                 ),
                               ),
                             ],
@@ -209,6 +235,38 @@ class _HomeState extends State<CreatePostPage> {
                     ),
                   ), */
                   //Wisget del ElevatedButton
+
+                  /* Container(
+                    width: double.infinity,
+                    height: 60,
+                    padding: const EdgeInsets.all(8),
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color:
+                            Colors.grey, //                   <--- border color
+                        width: 1.0,
+                      ),
+                    ),
+                    child: InkWell(
+                      child: Row(
+                        children: const [
+                          Icon(
+                            Icons.photo_camera,
+                            color: ColorIntranetConstants.primaryColorNormal,
+                          ),
+                          Padding(padding: EdgeInsets.only(left: 8)),
+                          Text("Subir imagen")
+                        ],
+                      ),
+                      onTap: () {
+                        if (loadFuture == false) {
+                          loadFuture = true;
+                        }
+                        _getData();
+                      },
+                    ),
+                  ), */
+
                   Padding(
                     padding: const EdgeInsets.only(top: 32),
                     child: SizedBox(
