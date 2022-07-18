@@ -17,6 +17,7 @@ class ApiIntranetConstans {
   static String organizationEndpoint = '/api/organization/';
   static String postPublication = 'api/postPublications';
   static String getPublication = 'api/getPublications/';
+  static String postEditPublication = 'api/postUpdatePublication';
   static String postLike = 'api/postLike';
   static String postUnlike = 'api/postUnlike';
   static String postComment = 'api/postComment';
@@ -26,6 +27,8 @@ class ApiIntranetConstans {
   static String postConversation = 'api/postConversation';
   static String postRequestDelete = 'api/postDeleteRequest';
   static String postDeletePublication = 'api/postDeletePublication';
+
+  
 }
 
 class StringIntranetConstants {

@@ -653,8 +653,11 @@ class _PublicationContainerState extends State<PublicationContainer> {
         TextButton(
           child: const Text("Actualizar"),
           onPressed: () {
-            postPublicationEdit(token, publciationID);
-
+            if(_controller.text != ""){
+              postPublicationEdit(token, publciationID, _controller.text);
+              print("PUBLICACION ACTUALIZADA");
+            }
+            print(publciationID);
             print(_controller.text);
 
             setState(() {

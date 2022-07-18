@@ -14,7 +14,7 @@ class PostEdit {
     Widget continueButton = TextButton(
       child: const Text("Actualizar"),
       onPressed: () {
-        postPublicationEdit(token, publciationID);
+        postPublicationEdit(token, publciationID, contPubli);
 
         Navigator.pop(cont);
         print(contPubli);

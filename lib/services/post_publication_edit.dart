@@ -1,16 +1,19 @@
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
 
-Future postPublicationEdit(String token, String publciationID) async {
+Future postPublicationEdit(String token, String publicationID, String contentPublication ) async {
   String url =
-      ApiIntranetConstans.baseUrl + ApiIntranetConstans.postPublication;
+      ApiIntranetConstans.baseUrl + ApiIntranetConstans.postEditPublication;
   final response = await http.post(Uri.parse(url), body: {
     'token': token,
-    'publciationID': publciationID,
+    'publicationID': publicationID,
+    'contentPublication':contentPublication
   }, headers: {
     'Accept': 'application/json',
   });
 
+  print("RESPONSE STATUS");
+  print(response.statusCode);
   if (response.statusCode == 200) {
     return true;
   }
