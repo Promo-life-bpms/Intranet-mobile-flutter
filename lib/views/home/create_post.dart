@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:intranet_movil/services/post_publication.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'package:path/path.dart';
+import 'package:async/async.dart';
+import 'dart:io';
+import 'dart:convert';
 
 class CreatePostPage extends StatefulWidget {
   const CreatePostPage({Key? key}) : super(key: key);
@@ -17,10 +23,31 @@ class _HomeState extends State<CreatePostPage> {
   final _formKey = GlobalKey<FormState>();
   final _contentPublication = TextEditingController();
 
+  late String filePathString = "";
+  late File filePath;
+  bool loadFuture =false;
+
   @override
   void initState() {
     super.initState();
     _getData();
+  }
+
+  Future<File?> _getImage() async {
+    if(loadFuture ==true){
+    ImagePicker _picker = ImagePicker();
+    // Pick an image
+    XFile? image = await _picker.pickImage(source: ImageSource.gallery);
+    //TO convert Xfile into file
+    File file = File(image!.path);
+    filePath = file;
+   
+    filePathString = file.toString();
+    loadFuture =false;
+
+        return file;
+    }
+
   }
 
   void _getData() async {
@@ -80,7 +107,53 @@ class _HomeState extends State<CreatePostPage> {
                       ),
                     ),
                   ),
-                  //Wisget del ElevatedButton 
+                  
+                  FutureBuilder(
+                      future: _getImage(),
+                      builder:
+                          (BuildContext context, AsyncSnapshot<File?> snapshot) {
+                        if (snapshot.data != null) {
+
+                          return Column(
+                            children: [
+                              Image.file(snapshot.data!),
+
+                              IconButton(
+                                onPressed: (){
+                                  setState(() {
+                                    snapshot.data!.delete();
+                                  });
+                                  
+                              }, 
+                              icon: Icon(Icons.delete))
+                            ],
+                          );
+                        } else {
+                          return Container();
+                        }
+                      }),
+                   
+
+                  SizedBox(
+                    width: double.infinity,
+                    height: 40,
+                    child: ElevatedButton.icon(
+                      onPressed: () {
+                        
+                        if(loadFuture ==false){
+                          loadFuture = true;
+                          print(loadFuture);
+                        }
+                        _getData();
+                      },
+                      icon: const Icon(
+                        Icons.photo_camera,
+                        size: 24.0,
+                      ),
+                      label: const Text('Subir imagen'), // <-- Text
+                    ),
+                  ),
+                  //Wisget del ElevatedButton
                   Padding(
                     padding: const EdgeInsets.only(top: 16),
                     child: SizedBox(
@@ -93,14 +166,14 @@ class _HomeState extends State<CreatePostPage> {
                             onPrimary: Colors.white, // foreground
                           ),
                           onPressed: () => {
-                                //Al presionar el boton de la publicacion, valida si es contenido del TextFromField no se encuentra vacio. 
+                                //Al presionar el boton de la publicacion, valida si es contenido del TextFromField no se encuentra vacio.
                                 if (_contentPublication.text.isNotEmpty)
                                   {
                                     //Notifica al usuario que se envio el mensaje
                                     ScaffoldMessenger.of(context)
                                         .showSnackBar(const SnackBar(
-                                      content: Text(
-                                          StringIntranetConstants.homeSuccessfulPost),
+                                      content: Text(StringIntranetConstants
+                                          .homeSuccessfulPost),
                                     )),
                                     //Envia al servidor una peticion de tipo POST con la información del usuario.
                                     postPublication(token,
@@ -116,13 +189,30 @@ class _HomeState extends State<CreatePostPage> {
                                 else
                                   {_formKey.currentState!.validate()}
                               },
-                          child: const Text(StringIntranetConstants.buttonPost)),
+                          child:
+                              const Text(StringIntranetConstants.buttonPost)),
                     ),
                   )
                 ],
               ),
             )));
   }
+}
 
 
+_asyncFileUpload(String text, File file) async{
+   //create multipart request for POST or PATCH method
+   var request = http.MultipartRequest("POST", Uri.parse("<url>"));
+   //add text fields
+   request.fields["text_field"] = text;
+   //create multipart using filepath, string or bytes
+   var pic = await http.MultipartFile.fromPath("file_field", file.path);
+   //add multipart to request
+   request.files.add(pic);
+   var response = await request.send();
+
+   //Get the response from the server
+   var responseData = await response.stream.toBytes();
+   var responseString = String.fromCharCodes(responseData);
+   print(responseString);
 }
