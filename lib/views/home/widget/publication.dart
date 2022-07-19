@@ -9,6 +9,7 @@ import 'package:intranet_movil/services/post_publication_delete.dart';
 import 'package:intranet_movil/services/post_publication_edit.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
+import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/views/profile/employee_profile.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 
@@ -607,6 +608,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
       onPressed: () {
         postPublicationDelete(token, publciationID);
         Navigator.pop(cont);
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()));
+        
         /*   Navigator.pushAndRemoveUntil(
             cont,
             MaterialPageRoute(builder: (context) => const HomePage()),
