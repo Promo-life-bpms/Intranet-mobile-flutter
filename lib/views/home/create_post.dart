@@ -41,7 +41,7 @@ class _HomeState extends State<CreatePostPage> {
       //TO convert Xfile into file
       File file = File(image!.path);
       filePath = file;
-
+     
       filePathString = file.toString();
       loadFuture = false;
 
@@ -173,6 +173,53 @@ class _HomeState extends State<CreatePostPage> {
                                   },
                                 ),
                               ),
+
+
+                              
+
+
+
+
+                              Padding(
+                    padding: const EdgeInsets.only(top: 32),
+                    child: SizedBox(
+                      width: double.infinity,
+                      height: 60,
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            primary: ColorIntranetConstants
+                                .primaryColorNormal, // background
+                            onPrimary: Colors.white, // foreground
+                          ),
+                          onPressed: () => {
+
+                            _asyncFileUpload("test", snapshot.data)
+/*                                 //Al presionar el boton de la publicacion, valida si es contenido del TextFromField no se encuentra vacio.
+                                if (_contentPublication.text.isNotEmpty)
+                                  {
+                                    //Notifica al usuario que se envio el mensaje
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      content: Text(StringIntranetConstants
+                                          .homeSuccessfulPost),
+                                    )),
+                                    //Envia al servidor una peticion de tipo POST con la información del usuario.
+                                    postPublication(token,
+                                        _contentPublication.text.toString()),
+                                    //Retorna al usuario a la pagina principal, destruyendo la página de publicaciones
+                                    Navigator.pushAndRemoveUntil(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) =>
+                                                const HomePage()),
+                                        ModalRoute.withName("/HomePost"))
+                                  }
+                                else {_formKey.currentState!.validate()} */
+                              },
+                          child:
+                              const Text(StringIntranetConstants.buttonPost)),
+                    ),
+                  )
                             ],
                           );
                         } else {
@@ -209,12 +256,12 @@ class _HomeState extends State<CreatePostPage> {
                                   },
                                 ),
                               ),
-                            ],
-                          );
-                        }
-                      }),
 
-                  Padding(
+
+
+
+
+                              Padding(
                     padding: const EdgeInsets.only(top: 32),
                     child: SizedBox(
                       width: double.infinity,
@@ -226,7 +273,9 @@ class _HomeState extends State<CreatePostPage> {
                             onPrimary: Colors.white, // foreground
                           ),
                           onPressed: () => {
-                                //Al presionar el boton de la publicacion, valida si es contenido del TextFromField no se encuentra vacio.
+
+                            _asyncFileUpload("test", snapshot.data)
+/*                                 //Al presionar el boton de la publicacion, valida si es contenido del TextFromField no se encuentra vacio.
                                 if (_contentPublication.text.isNotEmpty)
                                   {
                                     //Notifica al usuario que se envio el mensaje
@@ -246,31 +295,42 @@ class _HomeState extends State<CreatePostPage> {
                                                 const HomePage()),
                                         ModalRoute.withName("/HomePost"))
                                   }
-                                else {_formKey.currentState!.validate()}
+                                else {_formKey.currentState!.validate()} */
                               },
                           child:
                               const Text(StringIntranetConstants.buttonPost)),
                     ),
                   )
+                            ],
+                          );
+                        }
+                      }),
+
+                  
                 ],
               ),
             )));
   }
 }
 
-_asyncFileUpload(String text, File file) async {
-  //create multipart request for POST or PATCH method
-  var request = http.MultipartRequest("POST", Uri.parse("<url>"));
-  //add text fields
-  request.fields["image"] = text;
-  //create multipart using filepath, string or bytes
-  var pic = await http.MultipartFile.fromPath("image", file.path);
-  //add multipart to request
-  request.files.add(pic);
-  var response = await request.send();
+_asyncFileUpload(String text, File? file) async {
 
-  //Get the response from the server
+  String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postImagePublication;
+
+  var request = http.MultipartRequest("POST", Uri.parse(url));
+  request.fields["name"] = text;
+  request.files.add(http.MultipartFile('image', file!.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split('/').last));
+
+  var response = await request.send();
+  print("RESPONSEEEEEEEEEEEEEE");
+  print(response.statusCode);
+
   var responseData = await response.stream.toBytes();
   var responseString = String.fromCharCodes(responseData);
+  print("RESPUESTAAAAAAAAAAAAAAAAAAAAAAA");
   print(responseString);
+
+  if(responseString != ""){
+    print("IMAGEN SALVADA");
+  }
 }
