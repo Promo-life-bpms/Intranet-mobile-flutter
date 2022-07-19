@@ -41,7 +41,7 @@ class _HomeState extends State<CreatePostPage> {
       //TO convert Xfile into file
       File file = File(image!.path);
       filePath = file;
-     
+
       filePathString = file.toString();
       loadFuture = false;
 
@@ -148,7 +148,8 @@ class _HomeState extends State<CreatePostPage> {
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: const Color.fromARGB(255, 216, 216, 216),//                   <--- border color
+                                    color: const Color.fromARGB(255, 216, 216,
+                                        216), //                   <--- border color
                                     width: 0.3,
                                   ),
                                 ),
@@ -173,53 +174,63 @@ class _HomeState extends State<CreatePostPage> {
                                   },
                                 ),
                               ),
-
-
-                              
-
-
-
-
                               Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 60,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: ColorIntranetConstants
-                                .primaryColorNormal, // background
-                            onPrimary: Colors.white, // foreground
-                          ),
-                          onPressed: () => {
+                                padding: const EdgeInsets.only(top: 32),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: 60,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: ColorIntranetConstants
+                                            .primaryColorNormal, // background
+                                        onPrimary: Colors.white, // foreground
+                                      ),
+                                      onPressed: () => {
+                                            //Al presionar el boton de la publicacion, valida si es contenido del TextFromField no se encuentra vacio.
+                                            if (_contentPublication
+                                                    .text.isNotEmpty ||
+                                                snapshot.data != null ||
+                                                snapshot.data != "")
+                                              {
+                                                //Notifica al usuario que se envio el mensaje
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                        const SnackBar(
+                                                  content: Text(
+                                                      StringIntranetConstants
+                                                          .homeSuccessfulPost),
+                                                )),
 
-                            _asyncFileUpload("test", snapshot.data)
-/*                                 //Al presionar el boton de la publicacion, valida si es contenido del TextFromField no se encuentra vacio.
-                                if (_contentPublication.text.isNotEmpty)
-                                  {
-                                    //Notifica al usuario que se envio el mensaje
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content: Text(StringIntranetConstants
-                                          .homeSuccessfulPost),
-                                    )),
-                                    //Envia al servidor una peticion de tipo POST con la información del usuario.
-                                    postPublication(token,
-                                        _contentPublication.text.toString()),
-                                    //Retorna al usuario a la pagina principal, destruyendo la página de publicaciones
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomePage()),
-                                        ModalRoute.withName("/HomePost"))
-                                  }
-                                else {_formKey.currentState!.validate()} */
-                              },
-                          child:
-                              const Text(StringIntranetConstants.buttonPost)),
-                    ),
-                  )
+                                                _asyncFileUpload(
+                                                    "test",
+                                                    snapshot.data,
+                                                    token,
+                                                    _contentPublication.text
+                                                        .toString()),
+
+                                                //Retorna al usuario a la pagina principal, destruyendo la página de publicaciones
+                                                Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const HomePage()),
+                                                    ModalRoute.withName(
+                                                        "/HomePost"))
+                                              }
+                                            else
+                                              {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                        const SnackBar(
+                                                  content: Text(
+                                                      "Sin datos por enviar"),
+                                                )),
+                                              }
+                                          },
+                                      child: const Text(
+                                          StringIntranetConstants.buttonPost)),
+                                ),
+                              )
                             ],
                           );
                         } else {
@@ -231,7 +242,8 @@ class _HomeState extends State<CreatePostPage> {
                                 padding: const EdgeInsets.all(8),
                                 decoration: BoxDecoration(
                                   border: Border.all(
-                                    color: const Color.fromARGB(255, 216, 216, 216), //                   <--- border color
+                                    color: const Color.fromARGB(255, 216, 216,
+                                        216), //                   <--- border color
                                     width: 0.3,
                                   ),
                                 ),
@@ -256,81 +268,104 @@ class _HomeState extends State<CreatePostPage> {
                                   },
                                 ),
                               ),
-
-
-
-
-
                               Padding(
-                    padding: const EdgeInsets.only(top: 32),
-                    child: SizedBox(
-                      width: double.infinity,
-                      height: 60,
-                      child: ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                            primary: ColorIntranetConstants
-                                .primaryColorNormal, // background
-                            onPrimary: Colors.white, // foreground
-                          ),
-                          onPressed: () => {
+                                padding: const EdgeInsets.only(top: 32),
+                                child: SizedBox(
+                                  width: double.infinity,
+                                  height: 60,
+                                  child: ElevatedButton(
+                                      style: ElevatedButton.styleFrom(
+                                        primary: ColorIntranetConstants
+                                            .primaryColorNormal, // background
+                                        onPrimary: Colors.white, // foreground
+                                      ),
+                                      onPressed: () => {
+                                            if (snapshot.data == null &&
+                                                _contentPublication.text
+                                                        .toString() ==
+                                                    "")
+                                              {
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                        const SnackBar(
+                                                  content: Text(
+                                                      "No se puede enviar una publicación vacia"),
+                                                )),
+                                              }
+                                            else
+                                              {
+                                                _asyncFileUpload(
+                                                    "test",
+                                                    null,
+                                                    token,
+                                                    _contentPublication.text
+                                                        .toString()),
 
-                            _asyncFileUpload("test", snapshot.data)
-/*                                 //Al presionar el boton de la publicacion, valida si es contenido del TextFromField no se encuentra vacio.
-                                if (_contentPublication.text.isNotEmpty)
-                                  {
-                                    //Notifica al usuario que se envio el mensaje
-                                    ScaffoldMessenger.of(context)
-                                        .showSnackBar(const SnackBar(
-                                      content: Text(StringIntranetConstants
-                                          .homeSuccessfulPost),
-                                    )),
-                                    //Envia al servidor una peticion de tipo POST con la información del usuario.
-                                    postPublication(token,
-                                        _contentPublication.text.toString()),
-                                    //Retorna al usuario a la pagina principal, destruyendo la página de publicaciones
-                                    Navigator.pushAndRemoveUntil(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                const HomePage()),
-                                        ModalRoute.withName("/HomePost"))
-                                  }
-                                else {_formKey.currentState!.validate()} */
-                              },
-                          child:
-                              const Text(StringIntranetConstants.buttonPost)),
-                    ),
-                  )
+                                                //Notifica al usuario que se envio el mensaje
+                                                ScaffoldMessenger.of(context)
+                                                    .showSnackBar(
+                                                        const SnackBar(
+                                                  content: Text(
+                                                      StringIntranetConstants
+                                                          .homeSuccessfulPost),
+                                                )),
+
+                                                //Retorna al usuario a la pagina principal, destruyendo la página de publicaciones
+                                                Navigator.pushAndRemoveUntil(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            const HomePage()),
+                                                    ModalRoute.withName(
+                                                        "/HomePost"))
+                                              }
+                                          },
+                                      child: const Text(
+                                          StringIntranetConstants.buttonPost)),
+                                ),
+                              )
                             ],
                           );
                         }
                       }),
-
-                  
                 ],
               ),
             )));
   }
 }
 
-_asyncFileUpload(String text, File? file) async {
+_asyncFileUpload(
+    String text, File? file, String token, String contentPublication) async {
+  String photoURL = "";
+  String url =
+      ApiIntranetConstans.baseUrl + ApiIntranetConstans.postImagePublication;
 
-  String url = ApiIntranetConstans.baseUrl + ApiIntranetConstans.postImagePublication;
+  print(contentPublication);
+  if (file == null) {
+    postPublication(token, contentPublication, "");
+  } else {
+    var request = http.MultipartRequest("POST", Uri.parse(url));
+    request.fields["name"] = text;
+    request.files.add(http.MultipartFile(
+        'image', file.readAsBytes().asStream(), file.lengthSync(),
+        filename: file.path.split('/').last));
 
-  var request = http.MultipartRequest("POST", Uri.parse(url));
-  request.fields["name"] = text;
-  request.files.add(http.MultipartFile('image', file!.readAsBytes().asStream(), file.lengthSync(), filename: file.path.split('/').last));
+    var response = await request.send();
+    print("RESPONSEEEEEEEEEEEEEE");
+    print(response.statusCode);
 
-  var response = await request.send();
-  print("RESPONSEEEEEEEEEEEEEE");
-  print(response.statusCode);
+    if (response.statusCode == 200) {
+      var responseData = await response.stream.toBytes();
+      var responseString = String.fromCharCodes(responseData);
+      print("RESPUESTAAAAAAAAAAAAAAAAAAAAAAA");
+      print(responseString);
 
-  var responseData = await response.stream.toBytes();
-  var responseString = String.fromCharCodes(responseData);
-  print("RESPUESTAAAAAAAAAAAAAAAAAAAAAAA");
-  print(responseString);
+      photoURL = responseString;
+      String photoURLtoSend = (photoURL.replaceAll("storage/posts/", ""));
 
-  if(responseString != ""){
-    print("IMAGEN SALVADA");
+      postPublication(token, contentPublication, photoURLtoSend);
+    } else {
+      postPublication(token, contentPublication, "");
+    }
   }
 }
