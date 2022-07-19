@@ -23,9 +23,7 @@ class _HomeState extends State<ManualPage> {
   @override
   void initState() {
     super.initState();
-    print("dataaaaaaaaaaaaaaaaaaaaa");
-    print(widget.manualData.length);
-
+ 
     if(widget.manualData.isNotEmpty ){
       _manualList = widget.manualData;
       _getData();

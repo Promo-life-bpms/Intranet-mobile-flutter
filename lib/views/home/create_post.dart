@@ -5,10 +5,7 @@ import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
-import 'package:path/path.dart';
-import 'package:async/async.dart';
 import 'dart:io';
-import 'dart:convert';
 
 class CreatePostPage extends StatefulWidget {
   const CreatePostPage({Key? key}) : super(key: key);
@@ -340,7 +337,6 @@ _asyncFileUpload(
   String url =
       ApiIntranetConstans.baseUrl + ApiIntranetConstans.postImagePublication;
 
-  print(contentPublication);
   if (file == null) {
     postPublication(token, contentPublication, "");
   } else {
@@ -351,15 +347,11 @@ _asyncFileUpload(
         filename: file.path.split('/').last));
 
     var response = await request.send();
-    print("RESPONSEEEEEEEEEEEEEE");
-    print(response.statusCode);
 
     if (response.statusCode == 200) {
       var responseData = await response.stream.toBytes();
       var responseString = String.fromCharCodes(responseData);
-      print("RESPUESTAAAAAAAAAAAAAAAAAAAAAAA");
-      print(responseString);
-
+  
       photoURL = responseString;
       String photoURLtoSend = (photoURL.replaceAll("storage/posts/", ""));
 

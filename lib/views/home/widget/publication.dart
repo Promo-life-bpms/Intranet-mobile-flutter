@@ -7,7 +7,6 @@ import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/internet.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
-import 'package:intranet_movil/views/home/widget/post_delete_alert_dialog.dart';
 import 'package:intranet_movil/views/profile/employee_profile.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:photo_view/photo_view.dart';

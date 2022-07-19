@@ -12,9 +12,7 @@ Future postPublication(String token, String data, String photo) async {
     }, headers: {
       'Accept': 'application/json',
     });
-    print(response.statusCode);
     if (response.statusCode == 200) {
-      print("PUBLICACION STATUS");
       
       return true;
     }
