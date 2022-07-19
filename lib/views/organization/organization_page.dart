@@ -30,20 +30,23 @@ class OrganizationPage extends StatefulWidget {
 
 class _HomeState extends State<OrganizationPage> {
   late List<DirectoryModel>? _directoryModel = [];
+  static List<DirectoryModel>? _directoryList = [];
 
   @override
   void initState() {
     super.initState();
      if(widget.directoryData.isNotEmpty){
-        _directoryModel = widget.directoryData;
+        _directoryList = widget.directoryData;
     }else{
       _getData();
     }
   }
 
   void _getData() async {
-    _directoryModel =
-        (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+    _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+    setState(() {
+      _directoryList = _directoryModel;
+    });
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -144,63 +147,63 @@ class _HomeState extends State<OrganizationPage> {
           body: TabBarView(
             children: [
               OrganizationDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Direccion")
                       .toList()),
               RHDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Recursos Humanos")
                       .toList()),
               ManagementDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Administracion")
                       .toList()),
               SalesBHDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Ventas BH")
                       .toList()),
               SalesPLDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Ventas PL")
                       .toList()),
               ImportsDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Importaciones")
                       .toList()),
               DesignDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Diseno")
                       .toList()),
               SystemsDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Sistemas")
                       .toList()),
               OperationsDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Operaciones")
                       .toList()),
               TechnologyDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Tecnologia e Innovacion")
                       .toList()),
               CancunDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Cancun")
                       .toList()),
               MarketingDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Marketing")
                       .toList()),
               CommunicationDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Comunicacion")
                       .toList()),
               LogisticsDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Logistica")
                       .toList()),
               StoreDirectoryPage(
-                  directoryModel: _directoryModel!
+                  directoryModel: _directoryList!
                       .where((i) => i.department == "Almacen")
                       .toList()),
             ],

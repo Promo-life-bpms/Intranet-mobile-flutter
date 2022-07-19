@@ -18,20 +18,26 @@ class ManualPage extends StatefulWidget {
 
 class _HomeState extends State<ManualPage> {
   late List<ManualModel>? _manualModel = [];
+  static List<ManualModel>? _manualList = [];
 
   @override
   void initState() {
     super.initState();
-    if(widget.manualData.isNotEmpty){
-      _manualModel = widget.manualData;
+ 
+    if(widget.manualData.isNotEmpty ){
+      _manualList = widget.manualData;
+      _getData();
     }else{
       _getData();
     }
-    
+   
   }
 
   void _getData() async {
     _manualModel = (await ApiManualService().getManual())!.cast<ManualModel>();
+    setState(() {
+      _manualList = _manualModel!;
+    });
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -56,18 +62,18 @@ class _HomeState extends State<ManualPage> {
         ],
         title: const Text(StringIntranetConstants.manualPage),
       ),
-      body: _manualModel == null || _manualModel!.isEmpty
+      body: _manualList == null || _manualList!.isEmpty 
           ? const ListviewCardsExamplePage()
           : ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: _manualModel!.length,
+              itemCount: _manualList!.length,
               itemBuilder: (context, index) {
                 return ManualCard(manualData: [
                   ManualModel(
-                      id: _manualModel![index].id,
-                      name: _manualModel![index].name,
-                      file: _manualModel![index].file,
-                      img: _manualModel![index].img)
+                      id: _manualList![index].id,
+                      name: _manualList![index].name,
+                      file: _manualList![index].file,
+                      img: _manualList![index].img)
                 ]);
               },
             ),

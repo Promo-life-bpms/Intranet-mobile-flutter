@@ -16,12 +16,14 @@ class CommunicatePage extends StatefulWidget {
 
 class _HomeState extends State<CommunicatePage> {
   late List<CommuniqueModel>? _communiqueModel = [];
+  static List<CommuniqueModel>? _communiqueList = [];
+
 
   @override
   void initState() {
     super.initState();
     if(widget.communiqueData!.isNotEmpty){
-      _communiqueModel = widget.communiqueData;
+      _communiqueList = widget.communiqueData;
     }else{
       _getData();
     }
@@ -29,8 +31,10 @@ class _HomeState extends State<CommunicatePage> {
   }
 
   void _getData() async {
-    _communiqueModel =
-        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    setState(() {
+      _communiqueList = _communiqueModel;
+    });
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -55,18 +59,18 @@ class _HomeState extends State<CommunicatePage> {
         ],
         title: const Text(StringIntranetConstants.communiquePage),
       ),
-      body: _communiqueModel == null || _communiqueModel!.isEmpty
+      body: _communiqueList == null || _communiqueList!.isEmpty
           ? const ListviewCardsExamplePage() //Skeleton
           : ListView.builder(
               padding: const EdgeInsets.all(8),
-              itemCount: _communiqueModel!.length,
+              itemCount: _communiqueList!.length,
               itemBuilder: (context, index) {
                 return CommuniqueCard(commuiqueData: [
                   CommuniqueModel(
-                      id: _communiqueModel![index].id,
-                      title: _communiqueModel![index].title,
-                      image: _communiqueModel![index].image,
-                      description: _communiqueModel![index].description)
+                      id: _communiqueList![index].id,
+                      title: _communiqueList![index].title,
+                      image: _communiqueList![index].image,
+                      description: _communiqueList![index].description)
                 ]);
               },
             ),

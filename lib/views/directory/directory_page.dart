@@ -19,7 +19,10 @@ class DirectoryPage extends StatefulWidget {
 
 class _HomeState extends State<DirectoryPage> {
   late List<DirectoryModel>? _directoryModel = [];
-  late List<DirectoryModel>? _directoryModelSearch = [];
+
+
+  static List<DirectoryModel>? _directoryList = [];
+  static List<DirectoryModel>? _directoryListSearch = [];
   final _debouncer = Debouncer();
 
   @override
@@ -27,18 +30,20 @@ class _HomeState extends State<DirectoryPage> {
     super.initState();
 
      if(widget.directoryData.isNotEmpty){
-        _directoryModel = widget.directoryData;
-        _directoryModelSearch = widget.directoryData;
+        _directoryList = widget.directoryData;
+        _directoryListSearch = widget.directoryData;
     }else{
       _getData();
-      _directoryModelSearch = _directoryModel;
     }
    
   }
 
   void _getData() async {
-    _directoryModel =
-        (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+    _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
+    setState(() {
+      _directoryList = _directoryModel;
+      _directoryListSearch = _directoryModel;
+    });
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -63,7 +68,7 @@ class _HomeState extends State<DirectoryPage> {
         ],
           title: const Text(StringIntranetConstants.directoryPage),
         ),
-        body: _directoryModel == null || _directoryModel!.isEmpty
+        body: _directoryList == null || _directoryList!.isEmpty
             ? const ListviewCompanyPage()
             : Column(
                 children: [
@@ -96,7 +101,7 @@ class _HomeState extends State<DirectoryPage> {
                           _debouncer.run(() {
                             setState(() {
                               //Filtrado de usuarios por nombre completo
-                              _directoryModelSearch = _directoryModel
+                              _directoryListSearch = _directoryList
                                   ?.where(
                                     (u) => (u.fullname.toLowerCase().contains(
                                           string.toLowerCase(),
@@ -107,30 +112,30 @@ class _HomeState extends State<DirectoryPage> {
                           });
                         },
                       )),
-                  _directoryModelSearch!.isEmpty
+                  _directoryListSearch!.isEmpty
                       //Builder del Directorio, que muestra todos los empleados cuando el usuario no realizó ninguna busqueda
                       ? DirectoryBuilder(
                           directoryData: List<DirectoryModel>.generate(
-                              _directoryModel!.length,
+                              _directoryList!.length,
                               (index) => DirectoryModel(
-                                  id: _directoryModel![index].id,
-                                  fullname: _directoryModel![index].fullname,
-                                  email: _directoryModel![index].email,
-                                  photo: _directoryModel![index].photo,
-                                  department:_directoryModel![index].department,
-                                  position: _directoryModel![index].position,
-                                  onlineStatus: _directoryModel![index].onlineStatus)))
+                                  id: _directoryList![index].id,
+                                  fullname: _directoryList![index].fullname,
+                                  email: _directoryList![index].email,
+                                  photo: _directoryList![index].photo,
+                                  department:_directoryList![index].department,
+                                  position: _directoryList![index].position,
+                                  onlineStatus: _directoryList![index].onlineStatus)))
                       : DirectoryBuilder(
                           directoryData: List<DirectoryModel>.generate(
-                              _directoryModelSearch!.length,
+                              _directoryListSearch!.length,
                               (index) => DirectoryModel(
-                                  id: _directoryModelSearch![index].id,
-                                  fullname:_directoryModelSearch![index].fullname,
-                                  email: _directoryModelSearch![index].email,
-                                  photo: _directoryModelSearch![index].photo,
-                                  department: _directoryModelSearch![index].department,
-                                  position: _directoryModelSearch![index].position,
-                                  onlineStatus: _directoryModel![index].onlineStatus)))
+                                  id: _directoryListSearch![index].id,
+                                  fullname:_directoryListSearch![index].fullname,
+                                  email: _directoryListSearch![index].email,
+                                  photo: _directoryListSearch![index].photo,
+                                  department: _directoryListSearch![index].department,
+                                  position: _directoryListSearch![index].position,
+                                  onlineStatus: _directoryListSearch![index].onlineStatus)))
                 ],
               ));
   }
