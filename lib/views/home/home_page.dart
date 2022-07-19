@@ -55,10 +55,10 @@ class _HomeState extends State<HomePage> {
     if (widget.userData == [] ||
         widget.userData == null ||
         widget.userData!.length == 0) {
-      print("nooo dataaaaaaaaa");
+      
       _getData();
     } else {
-      print("yess dataaaaaaaaa");
+   
       _userlModel = widget.userData;
       if (widget.birthdayData != [] ||
           widget.birthdayData != null ||

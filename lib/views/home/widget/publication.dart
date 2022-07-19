@@ -5,9 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/internet.dart';
+import 'package:intranet_movil/services/post_publication_delete.dart';
+import 'package:intranet_movil/services/post_publication_edit.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
-import 'package:intranet_movil/views/home/widget/post_delete_alert_dialog.dart';
+import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/views/profile/employee_profile.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:photo_view/photo_view.dart';
@@ -19,6 +21,7 @@ class PublicationContainer extends StatefulWidget {
       required this.publicationToLikeData,
       required this.token,
       required this.userlModelData,
+      required this.contentPublication,
       required this.mainContext})
       : super(key: key);
 
@@ -27,6 +30,7 @@ class PublicationContainer extends StatefulWidget {
   final String token;
   final List<UserModel> userlModelData;
   final BuildContext mainContext;
+  final String contentPublication;
 
   @override
   State<PublicationContainer> createState() => _PublicationContainerState();
@@ -34,10 +38,12 @@ class PublicationContainer extends StatefulWidget {
 
 class _PublicationContainerState extends State<PublicationContainer> {
   late List<PublicationModel> publicationToLikeData = widget.publicationData;
+  final _formKey = GlobalKey<FormState>();
+
   bool isLike = false;
   @override
   void initState() {
-    isLike = widget.publicationData[0].isLike;
+    isLike = widget.publicationData[0].isLike; 
     super.initState();
   }
 
@@ -111,18 +117,17 @@ class _PublicationContainerState extends State<PublicationContainer> {
                           ),
                           widget.userlModelData[0].id ==
                                   widget.publicationData[0].userId
-                              ? 
-                              const Padding(padding: EdgeInsets.zero)
-                              /* IconButton(
+                              ? IconButton(
                                   onPressed: () {
                                     /* postPublicationDelete(widget.token, widget.publicationData[0].id.toString()); */
-                                    OpenBottonSheet().openBottomSheet(
+                                    openBottomSheet(
                                         widget.mainContext,
                                         widget.token,
-                                        widget.publicationData[0].id
-                                            .toString());
+                                        widget.publicationData[0].id.toString(),
+                                        widget.publicationData[0]
+                                            .contentPublication, );
                                   },
-                                  icon: const Icon(Icons.more_vert_outlined)) */
+                                  icon: const Icon(Icons.more_vert_outlined))
                               : const Padding(padding: EdgeInsets.zero)
                         ],
                       ),
@@ -553,5 +558,130 @@ class _PublicationContainerState extends State<PublicationContainer> {
     }
 
     return false;
+  }
+
+  openBottomSheet(
+      BuildContext cont, String token, String publciationID, String contPubli) {
+    showModalBottomSheet(
+        context: cont,
+        builder: (BuildContext context) {
+          return Column(
+            mainAxisSize: MainAxisSize.min,
+            children: <Widget>[
+              ListTile(
+                leading: const Icon(Icons.edit),
+                title: const Text("Editar"),
+                onTap: () {
+                  Navigator.pop(context);
+
+                  showPostEdit(cont, token, publciationID, contPubli);
+                },
+              ),
+              /*ListTile(
+                leading: const Icon(Icons.save),
+                title: const Text("Guardar"),
+                onTap: () {},
+              ), */
+              ListTile(
+                leading: const Icon(Icons.delete),
+                title: const Text("Eliminar"),
+                onTap: () {
+                  Navigator.pop(context);
+                  showPostDelete(cont, token, publciationID);
+                },
+              ),
+            ],
+          );
+        });
+  }
+
+  showPostDelete(
+    BuildContext cont,
+    String token,
+    String publciationID,
+  ) {
+    Widget cancelButton = TextButton(
+      child: const Text("Cancelar"),
+      onPressed: () {
+        Navigator.pop(cont);
+      },
+    );
+    Widget continueButton = TextButton(
+      child: const Text("Aceptar"),
+      onPressed: () {
+        postPublicationDelete(token, publciationID);
+        Navigator.pop(cont);
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()));
+        
+        /*   Navigator.pushAndRemoveUntil(
+            cont,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+            ModalRoute.withName("/PostPage")); */
+      },
+    );
+    AlertDialog alert = AlertDialog(
+      title: const Text("¿Eliminar Publicación?"),
+      content: const Text(
+          "No podrá recuperar la publicación después de ser eliminada"),
+      actions: [
+        cancelButton,
+        continueButton,
+      ],
+    );
+    showDialog(
+      context: cont,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
+  }
+
+  showPostEdit(
+      BuildContext cont, String token, String publciationID, String contPubli) {
+    final _controller = TextEditingController(text: contPubli);
+
+    AlertDialog alert = AlertDialog(
+      content: Form(
+        key: _formKey,
+        child: TextFormField(
+          maxLines: 3,
+          autofocus: true,
+          controller: _controller,
+        ),
+      ),
+      actions: [
+        TextButton(
+          child: const Text("Cancelar"),
+          onPressed: () {
+            Navigator.pop(cont);
+          },
+        ),
+        TextButton(
+          child: const Text("Actualizar"),
+          onPressed: () {
+            if(_controller.text != ""){
+              postPublicationEdit(token, publciationID, _controller.text);
+            }
+            setState(() {
+              widget.publicationData[0].contentPublication = _controller.text;
+            });
+            _controller.clear();
+            
+            Navigator.pop(cont);
+          
+            /*  Navigator.pushAndRemoveUntil(
+            cont,
+            MaterialPageRoute(builder: (context) => const HomePage()),
+            ModalRoute.withName("/PostPage")); */
+          },
+        )
+      ],
+    );
+    showDialog(
+      context: cont,
+      builder: (BuildContext context) {
+        return alert;
+      },
+    );
   }
 }
