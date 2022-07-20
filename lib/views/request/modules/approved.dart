@@ -37,6 +37,7 @@ class ApprovedRequestPage extends StatelessWidget {
                                     RequestDetailAlertDialog.showFullDialog(
                                     context, 
                                     requestModel![index].typeRequest,
+                                    requestModel![index].revealName,
                                     requestModel![index].payment,
                                     requestModel![index].start,
                                     requestModel![index].end,

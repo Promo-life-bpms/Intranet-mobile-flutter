@@ -11,6 +11,7 @@ class RequestModel {
     required this.id,
     required this.employeeID,
     required this.typeRequest, 
+    required this.revealName,
     required this.payment,
     required this.start,
     required this.end,
@@ -26,6 +27,7 @@ class RequestModel {
   int id;
   int employeeID;
   String typeRequest;
+  String revealName;
   String payment;
   String start;
   String end;
@@ -42,6 +44,7 @@ class RequestModel {
         id: json["id"],
         employeeID: json["employeeID"],
         typeRequest: json["typeRequest"],
+        revealName: json["revealName"],
         payment: json["payment"],
         start: json["start"],
         end: json["end"],
@@ -58,6 +61,7 @@ class RequestModel {
         "id": id,
         "employeeID": employeeID,
         "typeRequest": typeRequest,
+        "revealName":revealName,
         "payment": payment,
         "start": start,
         "end": end,

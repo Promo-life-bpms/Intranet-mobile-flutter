@@ -5,6 +5,7 @@ class RequestDetailAlertDialog {
   static showFullDialog(
       BuildContext context,
       String typeRequest,
+      String revealName,
       String payment,
       String start,
       String end,
@@ -160,7 +161,32 @@ class RequestDetailAlertDialog {
                           ],
                         ),
                         const Padding(padding: EdgeInsets.only(top: 12)),
-
+                        revealName == "no data"?
+                        const Padding(padding: EdgeInsets.zero)
+                        :
+                        Column(
+                          children: [
+                            Row(
+                              children: [
+                                const Text(
+                                  "Responsable durante ausencia: ",
+                                  style: TextStyle(
+                                      fontSize: 16.00,
+                                      fontWeight: FontWeight.bold, color: ColorIntranetConstants.primaryColorDark),
+                                ),
+                                Expanded(
+                                  child: Text(
+                                  revealName,
+                                  overflow: TextOverflow.ellipsis,
+                                  style: const TextStyle(fontSize: 16.00),
+                                  ),
+                                ),
+                              ],
+                            ),
+                            const Padding(padding: EdgeInsets.only(top: 12)),
+                          ],
+                        ),
+                        
                         const Text(
                           "Motivo: ",
                           style: TextStyle(fontSize: 16.00,fontWeight: FontWeight.bold, color: ColorIntranetConstants.primaryColorDark),
