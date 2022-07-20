@@ -31,7 +31,7 @@ class _MyHomePageState extends State<RequestPage> {
   //Lista de dias para enviar con formato ddMMyyyy
   List<String> daysToSend = [];
   String dropdownvalue = 'Salir durante la jornada';
-  String teamMembersValue = '';
+  String teamMembersValue = 'Seleccionar responsable';
   late String payment = "Descontar Tiempo/Dia";
   TimeOfDay selectedTime = TimeOfDay.now();
   DateTime selectedDate = DateTime.now();
@@ -46,7 +46,7 @@ class _MyHomePageState extends State<RequestPage> {
     'Solicitar vacaciones',
   ];
 
-  var allMembers = [""];
+  late var allMembers = ["Seleccionar responsable"];
   
 
   late List<UserModel>? _userlModel = [];
@@ -287,14 +287,6 @@ class _MyHomePageState extends State<RequestPage> {
                                       fontWeight: FontWeight.bold),
                                 ),
                                 DropdownButton(
-                                  hint: Container(
-                                    color: Colors.white,
-                                    child: Text(
-                                      "Seleccionar responsable",
-                                      style: TextStyle(color: Colors.black),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                  ),
                                   value: teamMembersValue,
                                   icon: const Icon(Icons.keyboard_arrow_down),
                                   underline: const SizedBox(),
@@ -323,14 +315,6 @@ class _MyHomePageState extends State<RequestPage> {
                                 ),
                                 DropdownButton(
                                   elevation: 8,
-                                  hint: Container(
-                                    color: Colors.white,
-                                    child: Text(
-                                      "Seleccionar responsable",
-                                      style: TextStyle(color: Colors.black),
-                                      textAlign: TextAlign.start,
-                                    ),
-                                  ),
                                   value: teamMembersValue,
                                   icon: const Icon(Icons.keyboard_arrow_down),
                                   underline: const SizedBox(),
@@ -343,7 +327,6 @@ class _MyHomePageState extends State<RequestPage> {
                                   onChanged: (String? newValue) {
                                     setState(() {
                                       teamMembersValue = newValue!;
-                                      print(teamMembersValue);
                                     });
                                   },
                                 ),
@@ -390,6 +373,12 @@ class _MyHomePageState extends State<RequestPage> {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               if (daysToSend.isNotEmpty) {
+                                String idMember = "";
+                                if(teamMembersValue != "Seleccionar responsable"){
+                                  List<TeamMembers> memberSelected =  _teamMembers.where((element) => (element.fullname  == teamMembersValue)).toList();
+                                    idMember = memberSelected[0].id.toString();
+                                }
+                              
                                 postRequest(
                                     token,
                                     dropdownvalue,
@@ -398,7 +387,8 @@ class _MyHomePageState extends State<RequestPage> {
                                     daysToSend.toString(),
                                     reason.text,
                                     (maxDays - days.length).toString(),
-                                    context);
+                                    idMember,
+                                    context); 
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(

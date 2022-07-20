@@ -10,8 +10,6 @@ class ApiTeamMembers {
     try {
       var url = Uri.parse(ApiIntranetConstans.baseUrl + ApiIntranetConstans.getTeamMembers+data);
       var response = await http.get(url);
-      print("MEMBERS RESPONSEEEE");
-      print(response.statusCode);
       if (response.statusCode == 200) {
         List<TeamMembers> _model = teamMembersFromJson(response.body);
         return _model;

@@ -13,6 +13,7 @@ import 'package:intranet_movil/views/request/widget/wrong_alert_dialog.dart';
       String daysToSend,
       String reason,
       String daysAvailables,
+      String revealID,
       BuildContext context) async {
     String url =
         ApiIntranetConstans.baseUrl + ApiIntranetConstans.postRequestEndpoint;
@@ -23,6 +24,7 @@ import 'package:intranet_movil/views/request/widget/wrong_alert_dialog.dart';
       'start': start,
       'days': daysToSend,
       'reason': reason,
+      'revealID': revealID,
       'daysAvailables': daysAvailables,
     }, headers: {
       'Accept': 'application/json',
