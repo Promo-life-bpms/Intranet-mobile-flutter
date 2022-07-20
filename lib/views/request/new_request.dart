@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intranet_movil/model/team_members.dart';
 import 'package:intranet_movil/model/user_model.dart';
+import 'package:intranet_movil/services/api_department_members.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/services/post_request.dart';
 import 'package:intranet_movil/utils/constants.dart';
@@ -14,14 +16,13 @@ class RequestPage extends StatefulWidget {
   }
 }
 
-//El usuario puede crear una solicitud de 3 diferentes tipos, la primera denominada "Salir durante la jornada" muestra un widget extra para colocar la fecha de salida. 
-//La segunda "Faltar a sus labores"  al igual que  "Solicitar vacaciones", remueve dicho widget. 
+//El usuario puede crear una solicitud de 3 diferentes tipos, la primera denominada "Salir durante la jornada" muestra un widget extra para colocar la fecha de salida.
+//La segunda "Faltar a sus labores"  al igual que  "Solicitar vacaciones", remueve dicho widget.
 //La tercer tipo de solicitud cambia el texto del botón para seleccionar dias, mostrando al usuario la cantidad de dias disponibles que tiene para solicitar vacaciones, las otras 2  (Salir durante la jornada,Faltar a sus labores) no lo muestra.
 //Cuando el usuario alcanza el maximo de dias disponibles de vacaciones en el tipo de solicitud "Solicitar vacaciones", no se le permite agregar mas dias.
 //El usuario puede agregar y eliminar los dias del calendario.
 
 class _MyHomePageState extends State<RequestPage> {
-
   String date = "";
   int maxDays = 0;
   int daysToShow = 0;
@@ -30,10 +31,11 @@ class _MyHomePageState extends State<RequestPage> {
   //Lista de dias para enviar con formato ddMMyyyy
   List<String> daysToSend = [];
   String dropdownvalue = 'Salir durante la jornada';
+  String teamMembersValue = '';
   late String payment = "Descontar Tiempo/Dia";
   TimeOfDay selectedTime = TimeOfDay.now();
   DateTime selectedDate = DateTime.now();
-  
+
   final reason = TextEditingController();
   late String token = "";
   final _formKey = GlobalKey<FormState>();
@@ -44,7 +46,11 @@ class _MyHomePageState extends State<RequestPage> {
     'Solicitar vacaciones',
   ];
 
+  var allMembers = [""];
+  
+
   late List<UserModel>? _userlModel = [];
+  late List<TeamMembers> _teamMembers = [];
 
   @override
   void initState() {
@@ -59,7 +65,15 @@ class _MyHomePageState extends State<RequestPage> {
     if (_token != null || _token!.isNotEmpty) {
       token = _token;
     }
-    _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
+    _userlModel =
+        (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
+    _teamMembers = (await ApiTeamMembers().getTeamMembers(token.toString()))!
+        .cast<TeamMembers>();
+
+    if(_teamMembers.isNotEmpty || _teamMembers != null){
+      _teamMembers.forEach((element) {allMembers.add(element.fullname.toString());});
+    }
+    
     //Obtiene el total de dias disponibles del endpoint y lo asigna  a la variable maxDays, mismo que sera utilizado en la variable daysToShow
     maxDays = _userlModel![0].daysAvailables;
     daysToShow = maxDays;
@@ -134,6 +148,7 @@ class _MyHomePageState extends State<RequestPage> {
                           ),
                         ],
                       ),
+                     
                       dropdownvalue == "Salir durante la jornada"
                           ? Column(
                               children: [
@@ -168,8 +183,10 @@ class _MyHomePageState extends State<RequestPage> {
                               ],
                             )
                           : const Padding(padding: EdgeInsets.only(top: 8)),
+
                       const Padding(padding: EdgeInsets.only(top: 24)),
-                      days.length >= maxDays && dropdownvalue == 'Solicitar vacaciones'
+                      days.length >= maxDays &&
+                              dropdownvalue == 'Solicitar vacaciones'
                           ? const Center(
                               child: Text(
                                 "No puedes seleccionar mas dias",
@@ -189,9 +206,10 @@ class _MyHomePageState extends State<RequestPage> {
                                 onPressed: () {
                                   _selectDate(context);
                                 },
-                                child: dropdownvalue != 'Solicitar vacaciones'?
-                                const Text("SELECCIONAR DÍA ")
-                                  : Text("SELECCIONAR DIAS ($daysToShow) DISPONIBLES "),
+                                child: dropdownvalue != 'Solicitar vacaciones'
+                                    ? const Text("SELECCIONAR DÍA ")
+                                    : Text(
+                                        "SELECCIONAR DIAS ($daysToShow) DISPONIBLES "),
                               ),
                             ),
                       ListView.builder(
@@ -205,7 +223,7 @@ class _MyHomePageState extends State<RequestPage> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Padding(
-                                    padding:const EdgeInsets.only(left: 16),
+                                    padding: const EdgeInsets.only(left: 16),
                                     child: Text(days[index]),
                                   ),
                                   IconButton(
@@ -223,35 +241,117 @@ class _MyHomePageState extends State<RequestPage> {
                             );
                           }),
 
-                          //Dias de expiracion
-                          dropdownvalue == 'Solicitar vacaciones' 
-                           ?
-                          ListView.builder(
-                          padding: const  EdgeInsets.only(top: 8),
-                          physics: const NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: _userlModel![0].expiration.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Padding(
-                              padding: const EdgeInsets.all(4.0),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.start,
-                                children: [
-                                  const Text( "Tienes "),
-                                  Text( _userlModel![0].expiration[index].daysAvailables, style:const  TextStyle(fontWeight: FontWeight.bold),),
-                                  const Text( " dias disponibles hasta el "),
-                                  Text(_userlModel![0].expiration[index].cutoffDate, style:const  TextStyle(fontWeight: FontWeight.bold)),
-                                ],
-                              ),
-                            );
-                          })
-
-                           :
-                           const Padding(padding: EdgeInsets.zero),
-                         
+                      //Dias de expiracion
+                      dropdownvalue == 'Solicitar vacaciones'
+                          ? ListView.builder(
+                              padding: const EdgeInsets.only(top: 8),
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: _userlModel![0].expiration.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Padding(
+                                  padding: const EdgeInsets.all(4.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      const Text("Tienes "),
+                                      Text(
+                                        _userlModel![0]
+                                            .expiration[index]
+                                            .daysAvailables,
+                                        style: const TextStyle(
+                                            fontWeight: FontWeight.bold),
+                                      ),
+                                      const Text(" dias disponibles hasta el "),
+                                      Text(
+                                          _userlModel![0]
+                                              .expiration[index]
+                                              .cutoffDate,
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.bold)),
+                                    ],
+                                  ),
+                                );
+                              })
+                          : const Padding(padding: EdgeInsets.zero),
 
                       const Padding(padding: EdgeInsets.only(top: 24)),
+                       _teamMembers == null || _teamMembers.isEmpty || _teamMembers == []
+                          ? Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Asignar responsable durante ausencia (opcional):   ",
+                                  style: TextStyle(
+                                      fontSize: 16.00,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                DropdownButton(
+                                  hint: Container(
+                                    color: Colors.white,
+                                    child: Text(
+                                      "Seleccionar responsable",
+                                      style: TextStyle(color: Colors.black),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                  value: teamMembersValue,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  underline: const SizedBox(),
+                                  items: allMembers.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items, overflow: TextOverflow.ellipsis ),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      teamMembersValue = newValue!;
+                                    });
+                                  },
+                                ),
+                              ],
+                            )
+                          : Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Text(
+                                  "Asignar responsable durante ausencia (opcional):  ",
+                                  style: TextStyle(
+                                      fontSize: 16.00,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                                DropdownButton(
+                                  elevation: 8,
+                                  hint: Container(
+                                    color: Colors.white,
+                                    child: Text(
+                                      "Seleccionar responsable",
+                                      style: TextStyle(color: Colors.black),
+                                      textAlign: TextAlign.start,
+                                    ),
+                                  ),
+                                  value: teamMembersValue,
+                                  icon: const Icon(Icons.keyboard_arrow_down),
+                                  underline: const SizedBox(),
+                                  items: allMembers.map((String items) {
+                                    return DropdownMenuItem(
+                                      value: items,
+                                      child: Text(items, overflow: TextOverflow.ellipsis),
+                                    );
+                                  }).toList(),
+                                  onChanged: (String? newValue) {
+                                    setState(() {
+                                      teamMembersValue = newValue!;
+                                      print(teamMembersValue);
+                                    });
+                                  },
+                                ),
+                              ],
+                            ),
+
+                      const Padding(padding: EdgeInsets.only(top: 24)),
+
                       const Text(
                         "Motivo",
                         style: TextStyle(
@@ -332,7 +432,7 @@ class _MyHomePageState extends State<RequestPage> {
         String formattedDate2 = DateFormat('ddMMyyyy').format(selected);
         daysToSend.add(formattedDate2);
         //resta la cantidad de dias dis´ponibles
-        daysToShow = daysToShow -1;
+        daysToShow = daysToShow - 1;
       });
     }
   }
@@ -342,8 +442,7 @@ class _MyHomePageState extends State<RequestPage> {
       //remueve el valor mostrado al usuario de ambas listas
       days.remove(selected);
       daysToSend.remove(selectedToSend);
-      daysToShow = daysToShow +1;
-
+      daysToShow = daysToShow + 1;
     });
   }
 
@@ -360,8 +459,6 @@ class _MyHomePageState extends State<RequestPage> {
       });
     }
   }
-
- 
 }
 
 class DaysTo {

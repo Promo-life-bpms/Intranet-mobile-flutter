@@ -34,7 +34,8 @@ class ApiIntranetConstans {
   static String postRequestDelete = 'api/postDeleteRequest';
   static String postDeletePublication = 'api/postDeletePublication';
   static String postImagePublication = 'api/postImageRequest';
-  
+  static String getTeamMembers = 'api/getTeamMembers/';
+
 }
 
 class StringIntranetConstants {
