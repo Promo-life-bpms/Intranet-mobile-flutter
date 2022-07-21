@@ -35,10 +35,7 @@ class LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: widget.validator == ""?
-        const Center(child: CircularProgressIndicator(),)
-      :
-      Form(
+      body: Form(
           key: _formKey,
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,

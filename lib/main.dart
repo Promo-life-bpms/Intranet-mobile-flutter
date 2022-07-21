@@ -90,21 +90,16 @@ class _HomeState extends State<MyApp> {
                     builder: (context, auth, child) {
                       switch (auth.isAuthenticated) {
                         case true:
-                          if (_userModel != null || _userModel!.isNotEmpty) {
                             return HomePage(
                               userData: _userModel,
                               birthdayData: _brithdayModel,
                               communiqueData: _communiqueModel,
                               publicationData: _publicationModel,
                             );
-                          } else {
-                            return const HomePage();
-                          }
+                          
                         default:
-                          return   validator == ""?
-                            LoginForm()
-                          : 
-                          LoginForm(validator: validator,);
+                          return LoginForm();
+                         
                       }
                     },
                   ))
