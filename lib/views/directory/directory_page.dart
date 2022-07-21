@@ -124,7 +124,8 @@ class _HomeState extends State<DirectoryPage> {
                                   photo: _directoryList![index].photo,
                                   department:_directoryList![index].department,
                                   position: _directoryList![index].position,
-                                  onlineStatus: _directoryList![index].onlineStatus)))
+                                  onlineStatus: _directoryList![index].onlineStatus,
+                                  data: _directoryList![index].data)))
                       : DirectoryBuilder(
                           directoryData: List<DirectoryModel>.generate(
                               _directoryListSearch!.length,
@@ -135,7 +136,8 @@ class _HomeState extends State<DirectoryPage> {
                                   photo: _directoryListSearch![index].photo,
                                   department: _directoryListSearch![index].department,
                                   position: _directoryListSearch![index].position,
-                                  onlineStatus: _directoryListSearch![index].onlineStatus)))
+                                  onlineStatus: _directoryListSearch![index].onlineStatus,
+                                  data: _directoryList![index].data)))
                 ],
               ));
   }

@@ -27,7 +27,8 @@ class _EmployeeMonthBuilderBuilderState extends State<DirectoryBuilder> {
                 photo: widget.directoryData[index].photo,
                 department: widget.directoryData[index].department,
                 position: widget.directoryData[index].position,
-                onlineStatus: widget.directoryData[index].onlineStatus)
+                onlineStatus: widget.directoryData[index].onlineStatus,
+                data: widget.directoryData[index].data)
           ]);
         },
       ),

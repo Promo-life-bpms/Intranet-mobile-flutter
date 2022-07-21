@@ -29,7 +29,8 @@ class _UserInfoCardCardState extends State<UserInfoCard> {
               widget.userData[0].email,
               ApiIntranetConstans.baseUrl + widget.userData[0].photo,
               widget.userData[0].department,
-              widget.userData[0].position);
+              widget.userData[0].position,
+              widget.userData[0].data);
         },
         child: Row(
           children: [

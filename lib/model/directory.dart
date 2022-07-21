@@ -6,6 +6,10 @@ List<DirectoryModel> directoryModelFromJson(String str) =>
 String directoryModelToJson(List<DirectoryModel> data) =>
     json.encode(List<dynamic>.from(data.map((x) => x.toJson())));
 
+Data dataFromJson(String str) => Data.fromJson(json.decode(str));
+
+String dataToJson(Data data) => json.encode(data.toJson());
+
 class DirectoryModel {
   DirectoryModel({
       required this.id,
@@ -14,7 +18,8 @@ class DirectoryModel {
       required this.photo, 
       required this.department,
       required this.position,
-      required this.onlineStatus
+      required this.onlineStatus,
+      required this.data
   });
 
   int id;
@@ -24,6 +29,7 @@ class DirectoryModel {
   String department;
   String position;
   bool onlineStatus;
+  List<Data> data;
 
   factory DirectoryModel.fromJson(Map<String, dynamic> json) => DirectoryModel(
         id: json["id"],
@@ -33,6 +39,8 @@ class DirectoryModel {
         department: json["department"],
         position: json["position"],
         onlineStatus: json["onlineStatus"],
+        data: List<Data>.from(json["data"].map((x) => Data.fromJson(x))),
+
       );
 
   Map<String, dynamic> toJson() => {
@@ -43,6 +51,7 @@ class DirectoryModel {
         "department": department,
         "position": position,
         "onlineStatus":onlineStatus,
+        "data": List<dynamic>.from(data.map((x) => x.toJson())),
       };
 }
 

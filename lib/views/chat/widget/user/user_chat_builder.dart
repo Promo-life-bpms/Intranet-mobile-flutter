@@ -30,7 +30,8 @@ class _UserChatBuilderState extends State<UserChatBuilder> {
                 photo: widget.directoryData[index].photo,
                 department: widget.directoryData[index].department,
                 position: widget.directoryData[index].position,
-                onlineStatus: widget.directoryData[index].onlineStatus)
+                onlineStatus: widget.directoryData[index].onlineStatus,
+                data:widget.directoryData[index].data )
           ],userID: widget.userID,
           conversationUserID:  widget.directoryData[index].id);
         },

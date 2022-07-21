@@ -104,7 +104,8 @@ class _UserChatPageState extends State<UserChatPage> {
                               photo: _directoryModel![index].photo,
                               department: _directoryModel![index].department,
                               position: _directoryModel![index].position,
-                              onlineStatus: _directoryModel![index].onlineStatus)),
+                              onlineStatus: _directoryModel![index].onlineStatus,
+                              data: _directoryModel![index].data)),
                               userID: _userlModel![0].id,)
                   : UserChatBuilder(
                       directoryData: List<DirectoryModel>.generate(
@@ -116,7 +117,8 @@ class _UserChatPageState extends State<UserChatPage> {
                               photo: _directoryModelSearch![index].photo,
                               department: _directoryModelSearch![index].department,
                               position:_directoryModelSearch![index].position,
-                              onlineStatus: _directoryModel![index].onlineStatus)),
+                              onlineStatus: _directoryModel![index].onlineStatus,
+                              data: _directoryModel![index].data)),
                               userID: _userlModel![0].id,)                    
             ],
           );

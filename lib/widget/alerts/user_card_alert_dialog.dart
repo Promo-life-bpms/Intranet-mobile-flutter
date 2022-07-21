@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_linkify/flutter_linkify.dart';
+import 'package:intranet_movil/model/directory.dart';
+import 'package:intranet_movil/services/internet.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class UserCardAlertDialog {
   static showFullDialog(
@@ -8,6 +12,8 @@ class UserCardAlertDialog {
     String photo,
     String department,
     String position,
+    List<Data> data,
+
   ) {
     showGeneralDialog(
         context: context,
@@ -75,6 +81,7 @@ class UserCardAlertDialog {
                         Padding(
                           padding: const EdgeInsets.only(left: 24.0),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
@@ -94,16 +101,95 @@ class UserCardAlertDialog {
                                   Text(position)
                                 ],
                               ),
-                              const Padding(
-                                  padding: EdgeInsets.only(top: 12.0)),
-                              Row(
+                              const Padding( padding: EdgeInsets.only(top: 12.0)),
+
+                              const Text("Información de contacto: ", style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold), textAlign: TextAlign.start,),
+                              
+                              const Padding( padding: EdgeInsets.only(top: 12.0)),
+
+                              data.isNotEmpty ?
+                              Column(
                                 children: [
-                                  const Icon(Icons.mail),
-                                  const Padding(
-                                      padding: EdgeInsets.only(right: 8.0)),
-                                  Text(email)
+                                  ListView.builder(
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  shrinkWrap: true,
+                                  padding: const EdgeInsets.all(0),
+                                  itemCount: data.length,
+                                  itemBuilder: (context, index) {
+                                    return 
+                                    data[index].type == "Email"?
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 8),
+                                      child: Row(                            
+                                        children: [
+                                          InkWell(
+                                            child: const Icon(Icons.mail),
+                                            onTap: (){
+                                              launch("mailto://${data[index].data}");
+                                            },
+                                          ),
+                                          const Padding(padding: EdgeInsets.only(right: 8.0)),
+                                          SelectableLinkify(
+                                            onOpen: (link) => launch("mailto://${data[index].data}"),
+                                            text: data[index].data,
+                                            style: const TextStyle(
+                                              fontSize: 12.00,
+                                            ),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+                                    : data[index].type == "Celular"? 
+                                    Padding(
+                                      padding: const EdgeInsets.only(bottom: 8),
+                                      child: Row(                            
+                                        children: [
+                                          InkWell(
+                                            child: const Icon(Icons.phone),
+                                            onTap: (){
+                                              launch("tel://${data[index].data}");
+                                            },
+                                            ),
+                                          const Padding(padding: EdgeInsets.only(right: 8.0)),
+                                          SelectableLinkify(
+                                            onOpen: (link) => launch("tel://${data[index].data}"),
+                                            text: data[index].data,
+                                            style: const TextStyle(
+                                              fontSize: 12.00,
+                                            ),
+                                            textAlign: TextAlign.justify,
+                                          ),
+                                        ],
+                                      ),
+                                    )
+
+                                    : const Padding(padding: EdgeInsets.zero);
+                                  },
+                                ),
                                 ],
-                              ),
+                                
+                              )
+                              :
+                               Row(
+                                children: [
+                                  InkWell(
+                                    child: const Icon(Icons.mail),
+                                      onTap: (){
+                                        launch("mailto://$email");
+                                        },
+                                    ),
+                                  const Padding(padding: EdgeInsets.only(right: 8.0)),
+                                  SelectableLinkify(
+                                          onOpen: (link) => launch("mailto://$email"),
+                                          text: email,
+                                          style: const TextStyle(
+                                            fontSize: 12.00,
+                                          ),
+                                          textAlign: TextAlign.justify,
+                                        ),
+                                ],
+                              ), 
                             ],
                           ),
                         ),
