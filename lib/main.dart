@@ -35,31 +35,35 @@ class _HomeState extends State<MyApp> {
 
   late String? _token = "";
 
-  late String validate = "";
+  late String validator = "";
 
   @override
   void initState() {
     super.initState();
     _getData();
+    _getHomeData();
   }
 
   void _getData() async {
     final prefs = await SharedPreferences.getInstance();
     _token = prefs.getString('token');
     _userModel = (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
-
+    
     if(_userModel!.isNotEmpty){
-      final prefs = await SharedPreferences.getInstance();
-      await prefs.setString('fullname', _userModel![0].fullname);
-      await prefs.setString('email', _userModel![0].email);
-      await prefs.setString('photo', _userModel![0].photo);
+      setState(() {
+        validator = "hasData";
+      });
     }
-    _brithdayModel =
-        (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
-    _communiqueModel =
-        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
         
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+  }
+
+  void _getHomeData()async{
+    _brithdayModel = (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+        
+    Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
+
   }
 
   @override
@@ -97,7 +101,10 @@ class _HomeState extends State<MyApp> {
                             return const HomePage();
                           }
                         default:
-                          return const LoginForm();
+                          return   validator == ""?
+                            LoginForm()
+                          : 
+                          LoginForm(validator: validator,);
                       }
                     },
                   ))

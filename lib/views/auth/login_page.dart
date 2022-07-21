@@ -3,28 +3,10 @@ import 'package:intranet_movil/services/api_auth.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:provider/provider.dart';
 
-void main() => runApp(const Login());
-
-class Login extends StatelessWidget {
-  const Login({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    return const MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: StringIntranetConstants.loginPage,
-      home: Scaffold(
-        body: LoginForm(),
-      ),
-    );
-  }
-}
 
 class LoginForm extends StatefulWidget {
-  const LoginForm({
-    Key? key,
-  }) : super(key: key);
+  LoginForm({ Key? key,this.validator}) : super(key: key);
+  String? validator;
 
   @override
   LoginFormState createState() => LoginFormState();
@@ -53,7 +35,10 @@ class LoginFormState extends State<LoginForm> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Form(
+      body: widget.validator == ""?
+        const Center(child: CircularProgressIndicator(),)
+      :
+      Form(
           key: _formKey,
           child: SingleChildScrollView(
             scrollDirection: Axis.vertical,
