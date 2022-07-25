@@ -28,8 +28,6 @@ class _MyHomePageState extends State<RequestPage> {
   int daysToShow = 0;
   //Lista  de dias  para mostrar localmente con formato yyyy-MM-dd
   List<String> days = [];
-  //Lista de dias para enviar con formato ddMMyyyy
-  List<String> daysToSend = [];
   String dropdownvalue = 'Salir durante la jornada';
   String teamMembersValue = 'Seleccionar responsable';
   late String payment = "Descontar Tiempo/Dia";
@@ -228,8 +226,7 @@ class _MyHomePageState extends State<RequestPage> {
                                   ),
                                   IconButton(
                                       onPressed: () {
-                                        _delete(days, days[index],
-                                            daysToSend[index]);
+                                        _delete(days, days[index],);
                                       },
                                       icon: const Icon(
                                         Icons.delete,
@@ -372,7 +369,7 @@ class _MyHomePageState extends State<RequestPage> {
                           ),
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
-                              if (daysToSend.isNotEmpty) {
+                              if (days.isNotEmpty) {
                                 String idMember = "";
                                 if(teamMembersValue != "Seleccionar responsable"){
                                   List<TeamMembers> memberSelected =  _teamMembers.where((element) => (element.fullname  == teamMembersValue)).toList();
@@ -419,19 +416,16 @@ class _MyHomePageState extends State<RequestPage> {
       setState(() {
         String formattedDate = DateFormat('yyyy-MM-dd').format(selected);
         days.add(formattedDate);
-        String formattedDate2 = DateFormat('ddMMyyyy').format(selected);
-        daysToSend.add(formattedDate2);
         //resta la cantidad de dias dis´ponibles
         daysToShow = daysToShow - 1;
       });
     }
   }
 
-  _delete(days, selected, selectedToSend) async {
+  _delete(days, selected) async {
     setState(() {
       //remueve el valor mostrado al usuario de ambas listas
       days.remove(selected);
-      daysToSend.remove(selectedToSend);
       daysToShow = daysToShow + 1;
     });
   }

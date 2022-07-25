@@ -659,7 +659,6 @@ class _PublicationContainerState extends State<PublicationContainer> {
         TextButton(
           child: const Text("Actualizar"),
           onPressed: () { 
-            print(_controller.text);
             
             if(_controller.text != ""){
               postPublicationEdit(token, publciationID, _controller.text);
@@ -669,7 +668,6 @@ class _PublicationContainerState extends State<PublicationContainer> {
               Navigator.pop(cont);
             }else{
               _formKey.currentState!.validate();
-              /* postPublicationEdit(token, publciationID, ""); */
             }
             
           },
