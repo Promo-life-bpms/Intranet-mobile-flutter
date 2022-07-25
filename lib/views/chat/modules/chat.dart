@@ -238,7 +238,7 @@ class _ChatUserPageState extends State<ChatUserPage> {
                   padding: const EdgeInsets.all(8.0),
                   child: TextFormField(
                     maxLength: 250,
-                    maxLines: 1,
+                    maxLines: null,
                     decoration: InputDecoration(
                         counterText: "",
                         border: const OutlineInputBorder(
