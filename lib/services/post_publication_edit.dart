@@ -11,7 +11,10 @@ Future postPublicationEdit(String token, String publicationID, String contentPub
   }, headers: {
     'Accept': 'application/json',
   });
+  print("REQUEST STATUS");
+  print(response.statusCode);
 
+  print(response.body);
   if (response.statusCode == 200) {
     return true;
   }

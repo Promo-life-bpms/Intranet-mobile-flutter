@@ -612,11 +612,6 @@ class _PublicationContainerState extends State<PublicationContainer> {
         postPublicationDelete(token, publciationID);
         Navigator.pop(cont);
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()));
-        
-        /*   Navigator.pushAndRemoveUntil(
-            cont,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-            ModalRoute.withName("/PostPage")); */
       },
     );
     AlertDialog alert = AlertDialog(
@@ -644,9 +639,14 @@ class _PublicationContainerState extends State<PublicationContainer> {
       content: Form(
         key: _formKey,
         child: TextFormField(
-          maxLines: 3,
+           decoration: const  InputDecoration( counterText: ""), 
+          validator: (value) => value!.isEmpty
+                            ? 'Este campo no puede estar vacio'
+                            : null,
+          maxLines: null,
           autofocus: true,
           controller: _controller,
+          maxLength: 250,
         ),
       ),
       actions: [
@@ -658,21 +658,20 @@ class _PublicationContainerState extends State<PublicationContainer> {
         ),
         TextButton(
           child: const Text("Actualizar"),
-          onPressed: () {
+          onPressed: () { 
+            print(_controller.text);
+            
             if(_controller.text != ""){
               postPublicationEdit(token, publciationID, _controller.text);
-            }
-            setState(() {
+              setState(() {
               widget.publicationData[0].contentPublication = _controller.text;
-            });
-            _controller.clear();
+              });
+              Navigator.pop(cont);
+            }else{
+              _formKey.currentState!.validate();
+              /* postPublicationEdit(token, publciationID, ""); */
+            }
             
-            Navigator.pop(cont);
-          
-            /*  Navigator.pushAndRemoveUntil(
-            cont,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-            ModalRoute.withName("/PostPage")); */
           },
         )
       ],
