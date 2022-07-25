@@ -378,17 +378,17 @@ class _MyHomePageState extends State<RequestPage> {
                                   List<TeamMembers> memberSelected =  _teamMembers.where((element) => (element.fullname  == teamMembersValue)).toList();
                                     idMember = memberSelected[0].id.toString();
                                 }
-                              
+                        
                                 postRequest(
                                     token,
                                     dropdownvalue,
                                     payment,
                                     selectedTime.format(context),
-                                    daysToSend.toString(),
+                                    days.join(','),
                                     reason.text,
                                     (maxDays - days.length).toString(),
                                     idMember,
-                                    context); 
+                                    context);   
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(

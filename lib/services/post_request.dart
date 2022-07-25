@@ -30,9 +30,6 @@ import 'package:intranet_movil/views/request/widget/wrong_alert_dialog.dart';
       'Accept': 'application/json',
     });
 
-    print("RESPONSEEEEEE");
-    print(response.body);
-
     if (response.statusCode == 200) {
       SuccessfulAlertDialog.showAlertDialog(context);
      
