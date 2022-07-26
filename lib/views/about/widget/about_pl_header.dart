@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/utils/constants.dart';
 
 class AboutPLHeaderWidget extends StatefulWidget {
   const AboutPLHeaderWidget({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _AboutPLHeaderState extends State<AboutPLHeaderWidget> {
       decoration: const BoxDecoration(
         image: DecorationImage(
           colorFilter: ColorFilter.mode(
-            Colors.blue,
+            ColorIntranetConstants.primaryColorLight,
             BlendMode.softLight,
           ),
           image: NetworkImage(

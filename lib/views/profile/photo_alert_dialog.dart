@@ -21,13 +21,13 @@ class ChangeImage {
                       MaterialPageRoute(builder: (context) => Makeover()));
                 },
               ),
-              ListTile(
+              /*  ListTile(
                 leading: const Icon(Icons.camera_alt),
                 title: const Text("Tomar foto"),
                 onTap: () {
                   Navigator.pop(context);
                 },
-              ),
+              ),*/
             ],
           );
         });

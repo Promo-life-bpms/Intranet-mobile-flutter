@@ -19,7 +19,10 @@ class _ManualCardState extends State<ManualCard> {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
-        elevation: 8,
+        elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20.0),
           child: Column(
@@ -29,10 +32,11 @@ class _ManualCardState extends State<ManualCard> {
                 height: 160.0,
                 child: FittedBox(
                     fit: BoxFit.contain,
-                    child:  CachedNetworkImage(
-                      imageUrl: ApiIntranetConstans.baseUrl + widget.manualData[0].img,
-                      errorWidget: (context, url, error) => const Image(
-                          image: AssetImage("lib/assets/pdf.png")),
+                    child: CachedNetworkImage(
+                      imageUrl: ApiIntranetConstans.baseUrl +
+                          widget.manualData[0].img,
+                      errorWidget: (context, url, error) =>
+                          const Image(image: AssetImage("lib/assets/pdf.png")),
                     )),
               ),
               Text(
@@ -51,8 +55,8 @@ class _ManualCardState extends State<ManualCard> {
                 height: 50,
                 child: ElevatedButton(
                   onPressed: () {
-                    LaunchToInternet.launchURL(
-                        ApiIntranetConstans.baseUrl + widget.manualData[0].file);
+                    LaunchToInternet.launchURL(ApiIntranetConstans.baseUrl +
+                        widget.manualData[0].file);
                   },
                   child: const Text('ABRIR'),
                 ),

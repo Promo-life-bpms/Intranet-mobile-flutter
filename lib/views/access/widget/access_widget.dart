@@ -3,8 +3,7 @@ import 'package:intranet_movil/model/access.dart';
 import 'package:intranet_movil/services/internet.dart';
 
 class AccessCard extends StatefulWidget {
-  const AccessCard({Key? key,required this.accessData})
-      : super(key: key);
+  const AccessCard({Key? key, required this.accessData}) : super(key: key);
 
   final List<AccessData> accessData;
 
@@ -13,13 +12,15 @@ class AccessCard extends StatefulWidget {
 }
 
 class _AccessCardState extends State<AccessCard> {
-
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: Card(
           elevation: 4,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(10.0),
+          ),
           child: Padding(
             padding: const EdgeInsets.only(bottom: 20.0),
             child: Column(
@@ -58,4 +59,3 @@ class _AccessCardState extends State<AccessCard> {
     );
   }
 }
-

@@ -17,10 +17,6 @@ class PostEdit {
         (value) => value!.isEmpty ? 'Este campo no puede estar vacio' : null;
 
         Navigator.pop(cont);
-        /*  Navigator.pushAndRemoveUntil(
-            cont,
-            MaterialPageRoute(builder: (context) => const HomePage()),
-            ModalRoute.withName("/PostPage")); */
       },
     );
     AlertDialog alert = AlertDialog(
