@@ -408,6 +408,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                               EdgeInsets.symmetric(horizontal: 8, vertical: 8)),
                       Expanded(
                         child: TextFormField(
+                          maxLength: 250,
                           validator: (value) {
                             if (value == null || value.isEmpty) {
                               return 'Este campo no puede estar vacío';
@@ -430,7 +431,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                             contentPadding: const EdgeInsets.all(15.0),
                             hintText: 'Comentar',
                           ),
-                          maxLines: 1,
+                          maxLines: null,
                           controller: _contentComments,
                         ),
                       ),
@@ -472,8 +473,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
               const Padding(padding: EdgeInsets.only(top: 16)),
               Expanded(
                 child: ListView.builder(
-                  keyboardDismissBehavior:
-                      ScrollViewKeyboardDismissBehavior.onDrag,
+                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.only(left: 16, right: 16),
                   itemCount: _publicationComment.length,
@@ -483,8 +483,7 @@ class _PublicationContainerState extends State<PublicationContainer> {
                           ? []
                           : [
                               Padding(
-                                  padding: const EdgeInsets.symmetric(
-                                      vertical: 16.0, horizontal: 0.0),
+                                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 0.0),
                                   child: SizedBox(
                                     width: 50,
                                     height: 50,
@@ -499,18 +498,14 @@ class _PublicationContainerState extends State<PublicationContainer> {
                               const Padding(padding: EdgeInsets.only(left: 16)),
                               Container(
                                 decoration: const BoxDecoration(
-                                    color: ColorIntranetConstants
-                                        .backgroundColorNormal,
-                                    borderRadius:
-                                        BorderRadius.all(Radius.circular(16))),
+                                    color: ColorIntranetConstants.backgroundColorNormal,
+                                    borderRadius: BorderRadius.all(Radius.circular(16))),
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
-                                      Text(
-                                        _publicationComment[index].userName,
+                                      Text( _publicationComment[index].userName,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
@@ -518,14 +513,17 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      const Padding(
-                                          padding: EdgeInsets.only(top: 8)),
-                                      Text(_publicationComment[index].content,
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(
-                                            fontSize: 12.00,
-                                          )),
+                                      const Padding(padding: EdgeInsets.only(top: 8)),
+
+                                      SizedBox(
+                                        width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width /3) ,
+                                        child: Text(_publicationComment[index].content,
+                                            maxLines: 100,
+                                            textAlign: TextAlign.justify,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: const TextStyle(fontSize: 12.00,)
+                                            ),
+                                      ),
                                     ],
                                   ),
                                 ),
