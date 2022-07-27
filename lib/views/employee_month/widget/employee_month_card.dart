@@ -20,6 +20,9 @@ class _EmployeeMonthCardState extends State<EmployeeMonthCard> {
       padding: const EdgeInsets.only(top: 8.0),
       child: Card(
         elevation: 4,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10.0),
+        ),
         child: Padding(
           padding: const EdgeInsets.only(bottom: 20.0),
           child: Column(

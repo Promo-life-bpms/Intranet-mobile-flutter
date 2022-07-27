@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:intranet_movil/utils/constants.dart';
 
 class AboutBHHeaderWidget extends StatefulWidget {
   const AboutBHHeaderWidget({Key? key}) : super(key: key);
@@ -16,7 +17,7 @@ class _AboutBHHeaderState extends State<AboutBHHeaderWidget> {
       decoration: const BoxDecoration(
         image: DecorationImage(
           colorFilter: ColorFilter.mode(
-            Colors.blue,
+            ColorIntranetConstants.primaryColorLight,
             BlendMode.softLight,
           ),
           image: NetworkImage(

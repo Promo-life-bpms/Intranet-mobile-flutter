@@ -56,7 +56,8 @@ class SuccessfulAlertDialog {
                             padding: EdgeInsets.all(16),
                             child: Center(
                               child: Text(
-                                StringIntranetConstants.successfulAlertDescription,
+                                StringIntranetConstants
+                                    .successfulAlertDescription,
                                 style: TextStyle(fontSize: 16),
                               ),
                             ),

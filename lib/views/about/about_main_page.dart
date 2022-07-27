@@ -17,17 +17,17 @@ class AboutMainPage extends StatelessWidget {
       appBar: AppBar(
         actions: [
           Padding(
-              padding:const  EdgeInsets.only(right: 8.0),
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.of(context)
-                   .push(MaterialPageRoute(builder: (context) => const ChatPage()));
-                },
-                child: const Image(
-                  image: AssetImage('lib/assets/chat.png'),
-                ),
+            padding: const EdgeInsets.only(right: 8.0),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => const ChatPage()));
+              },
+              child: const Image(
+                image: AssetImage('lib/assets/chat.png'),
               ),
             ),
+          ),
         ],
         title: const Text(StringIntranetConstants.aboutPage),
       ),
@@ -42,77 +42,93 @@ class AboutWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      scrollDirection: Axis.vertical,
-      child: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: Column(
-          children: <Widget>[
-            // Card perteneciente a PL
-            Card(
-              elevation: 4,
-              child: InkWell(
-                child: Column(
-                  children: <Widget>[
-                    const SizedBox(
-                      width: double.infinity,
-                      height: 160.0,
-                      child: Padding(
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 80, vertical: 20),
-                        child: FittedBox(
-                            fit: BoxFit.contain,
-                            child: Image(
-                              image: AssetImage('lib/assets/promolife.png'),
-                            )),
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (context) => const PromolifePage()));
-                      },
-                      child: const Text('Ver mas'),
-                    ),
-                  ],
+        scrollDirection: Axis.vertical,
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: <Widget>[
+              // Card perteneciente a PL
+              Card(
+                elevation: 4,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10.0),
                 ),
-                onTap: () => Navigator.of(context).push(MaterialPageRoute(
-                    builder: (context) => const PromolifePage())),
-              ),
-            ),
-            const Padding(padding: EdgeInsets.only(top: 8)),
-            //Segunda  card
-            Card(
-              elevation: 4,
-              child: InkWell(
-              child: Column(
-                children: <Widget>[
-                  const SizedBox(
-                    width: double.infinity,
-                    height: 160.0,
-                    child: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 80, vertical: 20),
-                      child: FittedBox(
-                          fit: BoxFit.contain,
-                          child: Image(
-                            image: AssetImage('lib/assets/bhtrade.png'),
-                          )),
-                    ),
+                child: InkWell(
+                  child: Column(
+                    children: <Widget>[
+                      const SizedBox(
+                        width: double.infinity,
+                        height: 160.0,
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 50, vertical: 20),
+                          child: FittedBox(
+                              fit: BoxFit.contain,
+                              child: Image(
+                                image: AssetImage('lib/assets/promolife.png'),
+                              )),
+                        ),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const PromolifePage()));
+                        },
+                        child: const Text(
+                          'Ver más',
+                          style: TextStyle(
+                              color: ColorIntranetConstants.primaryColorNormal,
+                              fontSize: 15),
+                        ),
+                      ),
+                    ],
                   ),
-                  TextButton(
-                    onPressed: () {
-                      Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const BHPage()));
-                    },
-                    child: const Text('Ver más'),
-                  ),
-                ],
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const PromolifePage())),
+                ),
               ),
-              onTap: ()=>Navigator.of(context).push(MaterialPageRoute(
-                          builder: (context) => const BHPage()))
-            )),
-          ],
-        ),
-      )
-    );
+              const Padding(padding: EdgeInsets.only(top: 8)),
+              //Segunda  card
+              Card(
+                  elevation: 4,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: InkWell(
+                      child: Column(
+                        children: <Widget>[
+                          const SizedBox(
+                            width: double.infinity,
+                            height: 160.0,
+                            child: Padding(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 80, vertical: 20),
+                              child: FittedBox(
+                                  fit: BoxFit.contain,
+                                  child: Image(
+                                    image: AssetImage('lib/assets/bhtrade.png'),
+                                  )),
+                            ),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const BHPage()));
+                            },
+                            child: const Text(
+                              'Ver más',
+                              style: TextStyle(
+                                  color:
+                                      ColorIntranetConstants.primaryColorNormal,
+                                  fontSize: 15),
+                            ),
+                          ),
+                        ],
+                      ),
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const BHPage())))),
+            ],
+          ),
+        ));
   }
 }
