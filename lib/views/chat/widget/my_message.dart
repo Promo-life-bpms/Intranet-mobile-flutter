@@ -18,7 +18,7 @@ class MyMessageItem extends StatefulWidget {
 class _MyMessageItemState extends State<MyMessageItem> {
   @override
   Widget build(BuildContext context) {
-    return widget.created == "no data"
+    return widget.created == ""
         ? const Padding(padding: EdgeInsets.zero)
         : Row(
             mainAxisAlignment: MainAxisAlignment.end,
@@ -33,7 +33,8 @@ class _MyMessageItemState extends State<MyMessageItem> {
                   ),
                   padding: const EdgeInsets.all(12),
                   child: SelectableLinkify(
-                    onOpen: (link) =>  LaunchToInternet.launchURL(widget.conversation),
+                    onOpen: (link) =>
+                        LaunchToInternet.launchURL(widget.conversation),
                     text: widget.conversation,
                     style: const TextStyle(color: Colors.white),
                     textAlign: TextAlign.justify,

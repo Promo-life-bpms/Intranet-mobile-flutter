@@ -28,9 +28,10 @@ class _UserChatCardState extends State<UserChatCard> {
           context,
           MaterialPageRoute(
               builder: (context) => ChatUserPage(
-                  conversationUserID: widget.conversationUserID,
-                  userID: widget.userID,
-                  conversationUserName:widget.userData[0].fullname ,)),
+                    conversationUserID: widget.conversationUserID,
+                    userID: widget.userID,
+                    conversationUserName: widget.userData[0].fullname,
+                  )),
         );
       },
       child: Row(
@@ -44,7 +45,7 @@ class _UserChatCardState extends State<UserChatCard> {
                 child: widget.userData[0].photo == "img/default_user.png"
                     ? Badge(
                         toAnimate: true,
-                        position: BadgePosition.bottomEnd(),
+                        position: BadgePosition.topEnd(top: 38, end: 8),
                         badgeColor: widget.userData[0].onlineStatus == true
                             ? Colors.green
                             : Colors.red,
@@ -55,7 +56,7 @@ class _UserChatCardState extends State<UserChatCard> {
                       )
                     : Badge(
                         toAnimate: true,
-                        position: BadgePosition.bottomEnd(),
+                        position: BadgePosition.topEnd(top: 38, end: 8),
                         badgeColor: widget.userData[0].onlineStatus == true
                             ? Colors.green
                             : Colors.red,
