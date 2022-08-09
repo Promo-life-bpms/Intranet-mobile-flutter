@@ -77,7 +77,7 @@ class _CommuniqueCardState extends State<CommuniqueCard> {
                 ),
               ),
               Padding(
-                  padding: const EdgeInsets.only(left: 16, top: 8, right: 16),
+                  padding: const EdgeInsets.only(left: 16, top: 16, right: 16),
                   child: SelectableLinkify(
                     onOpen: (link) => LaunchToInternet.launchURL(link.url),
                     text: widget.commuiqueData[0].description,
