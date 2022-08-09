@@ -18,7 +18,7 @@ class OtherMessageItem extends StatefulWidget {
 class _OtherMessageItemState extends State<OtherMessageItem> {
   @override
   Widget build(BuildContext context) {
-    return widget.created == "no data"
+    return widget.created == "no data" || widget.created == "no data"
         ? const Padding(padding: EdgeInsets.zero)
         : Row(
             mainAxisAlignment: MainAxisAlignment.start,

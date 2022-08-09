@@ -86,68 +86,59 @@ class _MessagesChatPageState extends State<MessagesChatPage> {
         ? const ListviewCompanyPage()
         : Column(
             children: [
-              // ignore: unnecessary_null_comparison
-              _messageModel2 == null || _messageModel2.isEmpty
-                  ? SingleChildScrollView(
-                      scrollDirection: Axis.vertical,
-                      child: Column(
-                        children: [
-                          Container(
-                              padding: const EdgeInsets.only(top: 10),
-                              child: Column(
-                                children: [
-                                  SizedBox(
-                                      width: 550,
-                                      child: Lottie.asset(
-                                        "lib/assets/noMessage.json",
-                                      )),
-                                  const Text(
-                                    "No hay mensajes",
-                                    style: TextStyle(
-                                      fontSize: 20.0,
-                                      color: Color.fromARGB(255, 64, 96, 112),
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                    textAlign: TextAlign.center,
-                                  )
-                                ],
-                              ))
-                        ],
-                      ))
-                  : StreamBuilder(
-                      stream: _conversationStream(),
-                      builder: (context,
-                          AsyncSnapshot<List<MessageModel>> snapshot) {
-                        /* Validación del status cada 5 seg 
+              StreamBuilder(
+                  stream: _conversationStream(),
+                  builder:
+                      (context, AsyncSnapshot<List<MessageModel>> snapshot) {
+                    /* Validación del status cada 5 seg 
                           print(snapshot.connectionState); */
 
-                        if (snapshot.hasData) {
-                          _messageModel!.sort(
-                              (a, b) => a.createdAt.compareTo(b.createdAt));
+                    if (snapshot.hasData) {
+                      _messageModel!.sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
-                          /*   Validador de datos obtenidos en el stream  
+                      /*   Validador de datos obtenidos en el stream  
                           print("SNAPSHOT DATA " + snapshot.data!.length.toString());  */
-                          if (_messageModel2.length > _messageModel!.length) {
-                            _messageModel2.sort(
-                                (a, b) => a.createdAt.compareTo(b.createdAt));
+                      if (_messageModel2.length > _messageModel!.length) {
+                        _messageModel2.sort((a, b) => a.createdAt.compareTo(b.createdAt));
 
-                            _messageModel = _messageModel2;
-                          } else if (_messageModel2.length ==
-                              _messageModel!.length) {
-                            _messageModel2.sort(
-                                (a, b) => a.createdAt.compareTo(b.createdAt));
-                            _messageModel = _messageModel2;
-                          }
-                        }
-
-                        return MessageChatBuilder(
-                            messageData: _messageModel!.reversed.toList(),
-                            userID: _userlModel![0].id);
+                        _messageModel = _messageModel2;
+                      } else if (_messageModel2.length == _messageModel!.length) {
+                        _messageModel2.sort((a, b) => a.createdAt.compareTo(b.createdAt));
+                        _messageModel = _messageModel2;
                       }
-                      /* return const Center(
+                    } else {
+                      return SingleChildScrollView(
+                          scrollDirection: Axis.vertical,
+                          child: Column(
+                            children: [
+                              Container(
+                                  padding: const EdgeInsets.only(top: 10),
+                                  child: Column(
+                                    children: [
+                                      SizedBox(
+                                          width: 550,
+                                          child: Lottie.asset("lib/assets/noMessage.json"),
+                                          ),
+                                      const Text( "No hay mensajes",
+                                          style: TextStyle( fontSize: 20.0, color: Color.fromARGB(255, 64, 96, 112),
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                        textAlign: TextAlign.center,
+                                      )
+                                    ],
+                                  ))
+                            ],
+                          ));
+                    }
+
+                    return MessageChatBuilder(
+                        messageData: _messageModel!.reversed.toList(),
+                        userID: _userlModel![0].id);
+                  }
+                  /* return const Center(
                   child: CircularProgressIndicator(),
                 ); */
-                      )
+                  )
             ],
           );
   }
