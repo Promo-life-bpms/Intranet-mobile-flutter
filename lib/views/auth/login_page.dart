@@ -4,6 +4,7 @@ import 'package:intranet_movil/utils/constants.dart';
 import 'package:provider/provider.dart';
 
 
+// ignore: must_be_immutable
 class LoginForm extends StatefulWidget {
   LoginForm({ Key? key,this.validator}) : super(key: key);
   String? validator;

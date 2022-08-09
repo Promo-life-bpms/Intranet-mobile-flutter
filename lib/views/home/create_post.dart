@@ -44,6 +44,7 @@ class _HomeState extends State<CreatePostPage> {
 
       return file;
     }
+    return null;
   }
 
   void _getData() async {
@@ -187,6 +188,7 @@ class _HomeState extends State<CreatePostPage> {
                                             if (_contentPublication
                                                     .text.isNotEmpty ||
                                                 snapshot.data != null ||
+                                                // ignore: unrelated_type_equality_checks
                                                 snapshot.data != "")
                                               {
                                                 //Notifica al usuario que se envio el mensaje

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/birthday.dart';
 import 'package:intranet_movil/model/communique.dart';
-import 'package:intranet_movil/model/publication.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_birthday.dart';
 import 'package:intranet_movil/services/api_communique.dart';
@@ -31,7 +30,6 @@ class _HomeState extends State<MyApp> {
   late List<UserModel>? _userModel = [];
   late List<BirthdayModel>? _brithdayModel = [];
   late List<CommuniqueModel>? _communiqueModel = [];
-  late List<PublicationModel>? _publicationModel = [];
 
   late String? _token = "";
 
@@ -94,7 +92,6 @@ class _HomeState extends State<MyApp> {
                               userData: _userModel,
                               birthdayData: _brithdayModel,
                               communiqueData: _communiqueModel,
-                              publicationData: _publicationModel,
                             );
                           
                         default:

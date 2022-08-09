@@ -14,7 +14,7 @@ class ApiIntranetConstans {
   static String loginEndpoint = 'api/login' ;
   static String getUser = 'api/getUser/' ;
   static String getRequest = 'api/getRequest/' ;
-  static String postRequestEndpoint = 'api/postRequest' ;
+  static String postRequestEndpoint = 'api/postRequestV11/' ;
   static String manualEndpoint = 'api/manuals' ;
   static String monthEmployeeEndpoint = 'api/month-employees/';
   static String monthAniveraryEndpoint = 'api/month-anniversaries/';

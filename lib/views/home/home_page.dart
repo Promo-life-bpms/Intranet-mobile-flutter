@@ -62,18 +62,21 @@ class _HomeState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
+    // ignore: prefer_is_empty
     if (widget.userData == [] || widget.userData == null || widget.userData!.length == 0) {
       _getData();
     } else {
       _userList = widget.userData;
     }
 
+    // ignore: prefer_is_empty
     if (widget.birthdayData == [] || widget.birthdayData == null || widget.birthdayData!.length == 0) {
       _getBirthdayData();
     } else {
       _brithdayList = widget.birthdayData;
     }
 
+    // ignore: prefer_is_empty
     if (widget.communiqueData == [] || widget.communiqueData == null || widget.communiqueData!.length == 0) {
       _getCommuniqueData();
     } else {
@@ -201,6 +204,7 @@ class _HomeState extends State<HomePage> {
                       ],
                     ),
               //Comunicados
+              // ignore: prefer_is_empty
               _communiqueList == null || _communiqueList!.isEmpty || _communiqueList!.length == 0
                   ? const Padding(padding: EdgeInsets.zero)
                   : Column(

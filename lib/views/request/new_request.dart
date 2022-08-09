@@ -68,6 +68,7 @@ class _MyHomePageState extends State<RequestPage> {
     _teamMembers = (await ApiTeamMembers().getTeamMembers(token.toString()))!
         .cast<TeamMembers>();
 
+    // ignore: unnecessary_null_comparison
     if(_teamMembers.isNotEmpty || _teamMembers != null){
       _teamMembers.forEach((element) {allMembers.add(element.fullname.toString());});
     }
@@ -269,6 +270,7 @@ class _MyHomePageState extends State<RequestPage> {
                           : const Padding(padding: EdgeInsets.zero),
 
                       const Padding(padding: EdgeInsets.only(top: 24)),
+                       // ignore: unnecessary_null_comparison
                        _teamMembers == null || _teamMembers.isEmpty || _teamMembers == []
                           ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
