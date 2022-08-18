@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:intranet_movil/model/directory.dart';
-import 'package:intranet_movil/model/team_members.dart';
 import 'package:intranet_movil/model/user_model.dart';
-import 'package:intranet_movil/services/api_department_members.dart';
 import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/services/post_request.dart';
