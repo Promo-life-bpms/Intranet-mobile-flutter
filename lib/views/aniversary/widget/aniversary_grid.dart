@@ -15,7 +15,11 @@ class AniversaryGrid extends StatefulWidget {
 class _AniversaryGridState extends State<AniversaryGrid> {
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return 
+    widget.aniversaryData[0].date == 0?
+    const Padding(padding: EdgeInsets.zero)
+    :
+    Column(
       children: [
         SizedBox(
           width: 80,

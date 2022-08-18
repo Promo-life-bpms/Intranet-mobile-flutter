@@ -6,12 +6,13 @@ class AniversaryBuilder extends StatefulWidget {
   const AniversaryBuilder({Key? key, required this.aniversaryData})
       : super(key: key);
   final List<AniversaryModel> aniversaryData;
-
+  
   @override
   State<AniversaryBuilder> createState() => _AniversaryBuilderState();
 }
 
 class _AniversaryBuilderState extends State<AniversaryBuilder> {
+  
   @override
   Widget build(BuildContext context) {
     return Column(
