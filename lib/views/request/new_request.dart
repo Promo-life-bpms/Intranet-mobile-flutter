@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/model/team_members.dart';
 import 'package:intranet_movil/model/user_model.dart';
 import 'package:intranet_movil/services/api_department_members.dart';
+import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/services/api_user.dart';
 import 'package:intranet_movil/services/post_request.dart';
 import 'package:intranet_movil/utils/constants.dart';
@@ -48,7 +50,8 @@ class _MyHomePageState extends State<RequestPage> {
   
 
   late List<UserModel>? _userlModel = [];
-  late List<TeamMembers> _teamMembers = [];
+  late List<DirectoryModel> _directoryModel = [];
+
 
   @override
   void initState() {
@@ -63,15 +66,18 @@ class _MyHomePageState extends State<RequestPage> {
     if (_token != null || _token!.isNotEmpty) {
       token = _token;
     }
-    _userlModel =
-        (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
-    _teamMembers = (await ApiTeamMembers().getTeamMembers(token.toString()))!
-        .cast<TeamMembers>();
+    _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
+    _directoryModel = (await ApiDirectoryService().getDirectory())!.cast<DirectoryModel>();
 
     // ignore: unnecessary_null_comparison
-    if(_teamMembers.isNotEmpty || _teamMembers != null){
-      _teamMembers.forEach((element) {allMembers.add(element.fullname.toString());});
-    }
+     if(_directoryModel.isNotEmpty || _directoryModel != null){
+      _directoryModel.forEach((element) { 
+        if( element.department == _userlModel![0].department){
+          allMembers.add(element.fullname.toString());
+        } 
+      });
+      /* _directoryModel.forEach((element) {allMembers.add(element.fullname.toString());}); */
+    } 
     
     //Obtiene el total de dias disponibles del endpoint y lo asigna  a la variable maxDays, mismo que sera utilizado en la variable daysToShow
     maxDays = _userlModel![0].daysAvailables;
@@ -271,7 +277,7 @@ class _MyHomePageState extends State<RequestPage> {
 
                       const Padding(padding: EdgeInsets.only(top: 24)),
                        // ignore: unnecessary_null_comparison
-                       _teamMembers == null || _teamMembers.isEmpty || _teamMembers == []
+                       _directoryModel == null || _directoryModel.isEmpty || _directoryModel == []
                           ? Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -370,10 +376,10 @@ class _MyHomePageState extends State<RequestPage> {
                               if (days.isNotEmpty) {
                                 String idMember = "";
                                 if(teamMembersValue != "Seleccionar responsable"){
-                                  List<TeamMembers> memberSelected =  _teamMembers.where((element) => (element.fullname  == teamMembersValue)).toList();
+                                  List<DirectoryModel> memberSelected =  _directoryModel.where((element) => (element.fullname  == teamMembersValue)).toList();
                                     idMember = memberSelected[0].id.toString();
                                 }
-                        
+                                  
                                 postRequest(
                                     token,
                                     dropdownvalue,
@@ -383,7 +389,8 @@ class _MyHomePageState extends State<RequestPage> {
                                     reason.text,
                                     (maxDays - days.length).toString(),
                                     idMember,
-                                    context);   
+                                    context);  
+                                     
                               } else {
                                 ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
