@@ -37,9 +37,14 @@ class ApiIntranetConstans {
   static String postImagePublication = 'api/postImageRequest';
   static String getTeamMembers = 'api/getTeamMembers/';
 
+  static String getManagerRequest = 'api/getManagerRequest/';
+  static String getRhRequest = 'api/getRhRequest';
+
 }
 
 class StringIntranetConstants {
+
+  /* General */
   static const homePage = "Inicio";
   static const aboutPage = "Acerca de";
   static const organizationPage = "Organigrama";
@@ -54,6 +59,21 @@ class StringIntranetConstants {
   static const profilePage = "Mi cuenta";
   static const loginPage = "Iniciar sesión";
 
+  /*  Manager */
+  static const managerApproveRequest = "Autorizar solicitudes";
+  static const requestReceived = "Solicitudes recibidas";
+
+
+  /* RH */
+  static const rhApproveRequest = "Autorizar solicitudes";
+
+
+  /* Admin */
+  static const adminOrganization = "Organización";
+  static const adminUsers = "Managers";
+  static const adminManagers = "Usuarios";
+  
+  
   static const requestCreatePage = "Crear solicitud";
   static const requestApprovedPage = "Aprobadas";
   static const requestPendingPage = "Pendientes";

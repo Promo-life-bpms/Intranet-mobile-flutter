@@ -20,6 +20,7 @@ import 'package:intranet_movil/views/communicate/communicate_page.dart';
 import 'package:intranet_movil/views/directory/directory_page.dart';
 import 'package:intranet_movil/views/employee_month/employee_month_page.dart';
 import 'package:intranet_movil/views/home/home_page.dart';
+import 'package:intranet_movil/views/manager/request_page.dart';
 import 'package:intranet_movil/views/manual/manual_page.dart';
 import 'package:intranet_movil/views/organization/organization_page.dart';
 import 'package:intranet_movil/views/profile/user.dart';
@@ -129,9 +130,9 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Divider(),
+                  const Divider(),
                   ListTile(title: Text(role)),
-                  Divider(),
+                  const Divider(),
                 ],
               )
             
@@ -140,9 +141,9 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Divider(),
+                  const Divider(),
                   ListTile(title: Text(role)),
-                  Divider(),
+                  const Divider(),
                 ],
               )
             : role == "Manager"?
@@ -150,9 +151,20 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
-                  Divider(),
+                  const Divider(),
                   ListTile(title: Text(role)),
-                  Divider(),
+
+                  ListTile(
+                    leading: const Icon(Icons.task),
+                    title: const Text(StringIntranetConstants.managerApproveRequest),
+                    selected: (_selectedDrawerItem == 40),
+                    selectedColor: ColorIntranetConstants.primaryColorLight,
+                    onTap: () {
+                      selectedItem(context, 40);
+                    },
+                  ),
+
+                  const Divider(),
                   
                 ],
               )
@@ -359,6 +371,16 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const LogoutPage()),
+            ModalRoute.withName("/LogoutPage"));
+
+        break;
+
+
+      case 40:
+        _selectedDrawerItem = index;
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const ManagerRequestPage()),
             ModalRoute.withName("/LogoutPage"));
 
         break;
