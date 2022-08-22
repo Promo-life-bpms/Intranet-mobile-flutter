@@ -40,6 +40,8 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   static var username = "";
   static var email = "";
   static var photo = "";
+  static String role = "";
+
 
   late List<UserModel>? _userlModel = [];
   late List<ManualModel>? _manualModel = [];
@@ -54,6 +56,8 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   static List<MonthEmployeeModel> monthEmployeeData = [];
   static List<DirectoryModel> directoryData = [];
   static List<BirthdayModel> birthdayData = [];
+  
+
 
   @override
   void initState() {
@@ -68,7 +72,9 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
     String? token = prefs.getString('token');
     _userlModel = (await ApiUserService().getUsers(token.toString()))!.cast<UserModel>();
     if (_userlModel!.isNotEmpty) {
+      
       setState(() {
+        getRole(_userlModel![0].roles);
         username = _userlModel![0].fullname.toString();
         email = _userlModel![0].email.toString();
         photo = _userlModel![0].photo.toString();
@@ -116,6 +122,46 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                     NetworkImage(ApiIntranetConstans.baseUrl + photo),
               ),
             ),
+
+            
+            role == "Administrador"?
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Divider(),
+                  ListTile(title: Text(role)),
+                  Divider(),
+                ],
+              )
+            
+            : role == "Recursos Humanos"?
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Divider(),
+                  ListTile(title: Text(role)),
+                  Divider(),
+                ],
+              )
+            : role == "Manager"?
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Divider(),
+                  ListTile(title: Text(role)),
+                  Divider(),
+                  
+                ],
+              )
+            : const Padding(padding: EdgeInsets.zero),
+
+
+
+
+
             ListTile(
               leading: const Icon(Icons.home),
               title: const Text(StringIntranetConstants.homePage),
@@ -317,5 +363,21 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
         break;
     }
+  }
+
+  getRole(List<Roles> roles)async{
+    roles.forEach((element) { 
+      if(element.role == "Administrador"){
+        role = element.role;        
+        }else{
+          if(element.role == "Recursos Humanos"){
+            role = element.role;
+            }else{
+              if(element.role == "Manager"){
+                role = element.role;
+              }
+            }  
+        }        
+    }); 
   }
 }
