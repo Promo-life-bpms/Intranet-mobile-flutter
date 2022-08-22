@@ -20,11 +20,12 @@ import 'package:intranet_movil/views/communicate/communicate_page.dart';
 import 'package:intranet_movil/views/directory/directory_page.dart';
 import 'package:intranet_movil/views/employee_month/employee_month_page.dart';
 import 'package:intranet_movil/views/home/home_page.dart';
-import 'package:intranet_movil/views/manager/request_page.dart';
+import 'package:intranet_movil/views/manager/manager_request_page.dart';
 import 'package:intranet_movil/views/manual/manual_page.dart';
 import 'package:intranet_movil/views/organization/organization_page.dart';
 import 'package:intranet_movil/views/profile/user.dart';
 import 'package:intranet_movil/views/request/request_main_page.dart';
+import 'package:intranet_movil/views/rh/rh_request_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class NavigationDrawerWidget extends StatefulWidget {
@@ -143,9 +144,19 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                 children: [
                   const Divider(),
                   ListTile(title: Text(role)),
+                   ListTile(
+                    leading: const Icon(Icons.task),
+                    title: const Text(StringIntranetConstants.managerApproveRequest),
+                    selected: (_selectedDrawerItem == 30),
+                    selectedColor: ColorIntranetConstants.primaryColorLight,
+                    onTap: () {
+                      selectedItem(context, 30);
+                    },
+                  ),
                   const Divider(),
                 ],
               )
+
             : role == "Manager"?
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -376,12 +387,23 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         break;
 
 
-      case 40:
+
+      case 30:
         _selectedDrawerItem = index;
         Navigator.pushAndRemoveUntil(
             context,
             MaterialPageRoute(builder: (context) => const ManagerRequestPage()),
-            ModalRoute.withName("/LogoutPage"));
+            ModalRoute.withName("/RhRequest"));
+
+      break;
+
+
+      case 40:
+        _selectedDrawerItem = index;
+        Navigator.pushAndRemoveUntil(
+            context,
+            MaterialPageRoute(builder: (context) => const RHRequestPage()),
+            ModalRoute.withName("/ManagerRequest"));
 
         break;
     }
