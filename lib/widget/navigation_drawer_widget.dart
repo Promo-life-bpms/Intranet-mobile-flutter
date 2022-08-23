@@ -392,7 +392,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         _selectedDrawerItem = index;
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const ManagerRequestPage()),
+            MaterialPageRoute(builder: (context) => const RHRequestPage()),
             ModalRoute.withName("/RhRequest"));
 
       break;
@@ -402,7 +402,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
         _selectedDrawerItem = index;
         Navigator.pushAndRemoveUntil(
             context,
-            MaterialPageRoute(builder: (context) => const RHRequestPage()),
+            MaterialPageRoute(builder: (context) => const ManagerRequestPage()),
             ModalRoute.withName("/ManagerRequest"));
 
         break;

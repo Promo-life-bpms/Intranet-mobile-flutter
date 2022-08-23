@@ -3,9 +3,6 @@ import 'package:intranet_movil/model/approve_request.dart';
 import 'package:intranet_movil/services/api_rh_request.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/chat/chat_page.dart';
-import 'package:intranet_movil/views/manager/module/approved_manager_request.dart';
-import 'package:intranet_movil/views/manager/module/pending_manager_request.dart';
-import 'package:intranet_movil/views/manager/module/rejected_manager_request.dart';
 import 'package:intranet_movil/views/rh/module/approved_rh_request.dart';
 import 'package:intranet_movil/views/rh/module/pending_rh_request.dart';
 import 'package:intranet_movil/views/rh/module/rejected_rh_request.dart';
@@ -33,7 +30,7 @@ class _RHRequestPage extends State<RHRequestPage> {
   void _getData() async {
 
     _approvedRequestModel = (await ApiRhRequestService().getRhRequest())!.cast<ApprovedRequestModel>();
-    
+   
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -91,9 +88,9 @@ class _RHRequestPage extends State<RHRequestPage> {
           ),
           body: TabBarView(
             children: [
-              PendingRhRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.directManagerStatus == "Pendiente").toList()),
-              ApprovedRhRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.directManagerStatus == "Aprobada").toList()),
-              RejectedRhRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.directManagerStatus == "Rechazada").toList())   
+              PendingRhRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.humanResourcesStatus == "Pendiente").toList()),
+              ApprovedRhRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.humanResourcesStatus == "Aprobada").toList()),
+              RejectedRhRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.humanResourcesStatus == "Rechazada" ).toList())   
               ] 
             ),
           ),

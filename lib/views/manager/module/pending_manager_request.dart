@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/approve_request.dart';
+import 'package:intranet_movil/views/manager/module/approved_request_detail.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 
 class PendingManagerRequestPage extends StatefulWidget {
@@ -34,7 +35,25 @@ class _PendingManagerRequestState extends State<PendingManagerRequestPage> {
                                 ),
                                 child: InkWell(
                                   onTap: () {
-                                  
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) =>
+                                      ApprovedRequestDetail(approvedRequestData: [
+                                        ApprovedRequestModel(
+                                            id: widget.approvedModel[index].id,
+                                            employeeID: widget.approvedModel[index].employeeID,
+                                            fullname: widget.approvedModel[index].fullname,
+                                            typeRequest: widget.approvedModel[index].typeRequest,
+                                            revealName: widget.approvedModel[index].revealName,
+                                            payment: widget.approvedModel[index].payment,
+                                            start: widget.approvedModel[index].start,
+                                            end:widget.approvedModel[index].end,
+                                            reason: widget.approvedModel[index].reason,
+                                            directManagerId: widget.approvedModel[index].directManagerId,
+                                            directManagerStatus: widget.approvedModel[index].directManagerStatus,
+                                            humanResourcesStatus: widget.approvedModel[index].humanResourcesStatus,
+                                            visible: widget.approvedModel[index].visible,
+                                            days: widget.approvedModel[index].days)
+                                      ])));
                                   },
                                   child: Column(
                                     crossAxisAlignment:

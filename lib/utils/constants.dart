@@ -62,7 +62,7 @@ class StringIntranetConstants {
   /*  Manager */
   static const managerApproveRequest = "Autorizar solicitudes";
   static const requestReceived = "Solicitudes recibidas";
-
+  static const requestDetail = "Detalles de la solicitud";
 
   /* RH */
   static const rhApproveRequest = "Autorizar solicitudes";
