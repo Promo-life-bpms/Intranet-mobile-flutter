@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/approve_request.dart';
+import 'package:intranet_movil/services/post_approved_request.dart';
 import 'package:intranet_movil/utils/constants.dart';
 
 class ApprovedRequestDetail extends StatefulWidget {
@@ -135,7 +136,7 @@ class _ApprovedRequestDetailState extends State<ApprovedRequestDetail> {
                   ),
                   child:  const Text("APROBAR SOLICITUD"),
                   onPressed: (){
-                    showAcceptAlertDialog(context);
+                    showManagerAlertDialog(context,widget.approvedRequestData[0].id.toString(), "Aprobada");
                   },
                 ),
               ),
@@ -150,7 +151,7 @@ class _ApprovedRequestDetailState extends State<ApprovedRequestDetail> {
                   ),
                   child:  const Text("RECHAZAR SOLICITUD"),
                   onPressed: (){
-                    showCancelAlertDialog(context);
+                    showManagerAlertDialog(context,widget.approvedRequestData[0].id.toString(), "Rechazada");
                   },
                 ),),
           
@@ -159,7 +160,7 @@ class _ApprovedRequestDetailState extends State<ApprovedRequestDetail> {
         ));
   }
 
-  showAcceptAlertDialog(BuildContext context) {
+  showManagerAlertDialog(BuildContext context, String requestID, String responseRequest) {
     Widget cancelButton = TextButton(
       child: const Text("Cancelar"),
       onPressed:  () {
@@ -169,6 +170,7 @@ class _ApprovedRequestDetailState extends State<ApprovedRequestDetail> {
     Widget continueButton = TextButton(
       child: const Text("Aceptar"),
       onPressed:  () {
+        postApprovedRequest(requestID, responseRequest, context);
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
@@ -190,34 +192,4 @@ class _ApprovedRequestDetailState extends State<ApprovedRequestDetail> {
     );
   }
 
-  showCancelAlertDialog(BuildContext context) {
-    Widget cancelButton = TextButton(
-      child: const Text("Cancelar"),
-      onPressed:  () {
-        Navigator.of(context, rootNavigator: true).pop();
-      },
-    );
-    Widget continueButton = TextButton(
-      child: const Text("Aceptar"),
-      onPressed:  () {
-         Navigator.of(context, rootNavigator: true).pop();
-      },
-    );
-
-    AlertDialog alert = AlertDialog(
-      title: const Text("Rechazar"),
-      content: const Text("¿Deseas rechazar esta solicitud?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
   }
-}

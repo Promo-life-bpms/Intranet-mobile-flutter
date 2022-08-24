@@ -39,7 +39,9 @@ class ApiIntranetConstans {
 
   static String getManagerRequest = 'api/getManagerRequest/';
   static String getRhRequest = 'api/getRhRequest';
-
+  static String postManagerRequest = 'api/postManagerRequest';
+  static String postRhRequest = 'api/postRhRequest';
+  
 }
 
 class StringIntranetConstants {

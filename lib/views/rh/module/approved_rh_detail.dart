@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/approve_request.dart';
+import 'package:intranet_movil/services/post_rh_approved_request.dart';
 import 'package:intranet_movil/utils/constants.dart';
 
 class ApprovedRhRequestDetail extends StatefulWidget {
@@ -135,7 +136,7 @@ class _ApprovedRhRequestDetailState extends State<ApprovedRhRequestDetail> {
                   ),
                   child:  const Text("APROBAR SOLICITUD"),
                   onPressed: (){
-                    showRhAcceptAlertDialog(context);
+                      showRhAcceptAlertDialog(context,widget.approvedRequestData[0].id.toString(), "Aprobada");
                   },
                 ),
               ),
@@ -145,12 +146,13 @@ class _ApprovedRhRequestDetailState extends State<ApprovedRhRequestDetail> {
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 202, 20, 7), // background
+                    primary: const Color.fromARGB(255, 202, 20, 7), // background
                     onPrimary: Colors.white, // foreground
                   ),
                   child:  const Text("RECHAZAR SOLICITUD"),
                   onPressed: (){
-                    showRhCancelAlertDialog(context);
+                    showRhAcceptAlertDialog(context,widget.approvedRequestData[0].id.toString(), "Rechazada");
+
                   },
                 ),),
           
@@ -159,16 +161,18 @@ class _ApprovedRhRequestDetailState extends State<ApprovedRhRequestDetail> {
         ));
   }
 
-  showRhAcceptAlertDialog(BuildContext context) {
+  showRhAcceptAlertDialog(BuildContext context, String requestID, String responseRequest) {
     Widget cancelButton = TextButton(
       child: const Text("Cancelar"),
       onPressed:  () {
+        postRhApprovedRequest(requestID, responseRequest, context);
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
     Widget continueButton = TextButton(
       child: const Text("Aceptar"),
       onPressed:  () {
+        postRhApprovedRequest(requestID, responseRequest, context);
         Navigator.of(context, rootNavigator: true).pop();
       },
     );
@@ -189,35 +193,5 @@ class _ApprovedRhRequestDetailState extends State<ApprovedRhRequestDetail> {
       },
     );
   }
-
-  showRhCancelAlertDialog(BuildContext context) {
-    Widget cancelButton = TextButton(
-      child: const Text("Cancelar"),
-      onPressed:  () {
-        Navigator.of(context, rootNavigator: true).pop();
-      },
-    );
-    Widget continueButton = TextButton(
-      child: const Text("Aceptar"),
-      onPressed:  () {
-         Navigator.of(context, rootNavigator: true).pop();
-      },
-    );
-
-    AlertDialog alert = AlertDialog(
-      title: const Text("Rechazar"),
-      content: const Text("¿Deseas rechazar esta solicitud?"),
-      actions: [
-        cancelButton,
-        continueButton,
-      ],
-    );
-
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return alert;
-      },
-    );
-  }
+  
 }
