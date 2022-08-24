@@ -10,11 +10,6 @@ import 'package:http/http.dart' as http;
     }, headers: {
       'Accept': 'application/json',
     });
-
-    print("RESPONSEEEEE");
-    print(response.statusCode);
-    print(response.body);
-
     
     if (response.statusCode == 200) {
         ScaffoldMessenger.of(context)

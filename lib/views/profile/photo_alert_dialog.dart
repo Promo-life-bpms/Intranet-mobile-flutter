@@ -18,7 +18,7 @@ class ChangeImage {
                 onTap: () {
                   Navigator.pop(context);
                   Navigator.of(context).push(
-                      MaterialPageRoute(builder: (context) => Makeover()));
+                      MaterialPageRoute(builder: (context) =>const Makeover()));
                 },
               ),
               /*  ListTile(

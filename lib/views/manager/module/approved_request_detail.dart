@@ -147,7 +147,7 @@ class _ApprovedRequestDetailState extends State<ApprovedRequestDetail> {
                 height: 50,
                 child: ElevatedButton(
                   style: ElevatedButton.styleFrom(
-                    primary: Color.fromARGB(255, 202, 20, 7), // background
+                    primary: const Color.fromARGB(255, 202, 20, 7), // background
                     onPrimary: Colors.white, // foreground
                   ),
                   child:  const Text("RECHAZAR SOLICITUD"),
