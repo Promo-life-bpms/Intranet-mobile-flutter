@@ -79,12 +79,7 @@ class _MyHomePageState extends State<RequestPage> {
     
     //Obtiene el total de dias disponibles del endpoint y lo asigna  a la variable maxDays, mismo que sera utilizado en la variable daysToShow
 
-    if(_userlModel![0].expiration.length == 2){
-      maxDays = int.parse(_userlModel![0].expiration[0].daysAvailables) + int.parse(_userlModel![0].expiration[1].daysAvailables);
-    }else if(_userlModel![0].expiration.length == 1){
-      maxDays = int.parse(_userlModel![0].expiration[0].daysAvailables); 
-    }
-    
+    maxDays = _userlModel![0].daysAvailables;
     daysToShow = maxDays;
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
