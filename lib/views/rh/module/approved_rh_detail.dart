@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/approve_request.dart';
 import 'package:intranet_movil/services/post_rh_approved_request.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:intranet_movil/views/manager/manager_request_page.dart';
+import 'package:intranet_movil/views/rh/rh_request_page.dart';
 
 class ApprovedRhRequestDetail extends StatefulWidget {
   const ApprovedRhRequestDetail({Key? key, required this.approvedRequestData})
@@ -174,6 +176,9 @@ class _ApprovedRhRequestDetailState extends State<ApprovedRhRequestDetail> {
       onPressed:  () {
         postRhApprovedRequest(requestID, responseRequest, context);
         Navigator.of(context, rootNavigator: true).pop();
+        Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (context) => const RHRequestPage()),
+            ModalRoute.withName("/RHRequestPage"));
       },
     );
 
