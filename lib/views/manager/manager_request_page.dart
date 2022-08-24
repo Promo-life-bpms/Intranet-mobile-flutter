@@ -91,9 +91,9 @@ class _ManagerRequestPage extends State<ManagerRequestPage> {
           ),
           body: TabBarView(
             children: [
-              PendingManagerRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.directManagerStatus == "Pendiente").toList()),
-              ApprovedManagerRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.directManagerStatus == "Aprobada").toList()),
-              RejectedManagerRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.directManagerStatus == "Rechazada").toList())   
+              PendingManagerRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.directManagerStatus == "Pendiente").toList()),
+              ApprovedManagerRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.directManagerStatus == "Aprobada").toList()),
+              RejectedManagerRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.directManagerStatus == "Rechazada").toList())   
               ] 
             ),
           ),

@@ -88,9 +88,9 @@ class _RHRequestPage extends State<RHRequestPage> {
           ),
           body: TabBarView(
             children: [
-              PendingRhRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.humanResourcesStatus == "Pendiente").toList()),
-              ApprovedRhRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.humanResourcesStatus == "Aprobada").toList()),
-              RejectedRhRequestPage(approvedModel: _approvedRequestModel!.where((element) => element.humanResourcesStatus == "Rechazada" ).toList())   
+              PendingRhRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.humanResourcesStatus == "Pendiente").toList()),
+              ApprovedRhRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.humanResourcesStatus == "Aprobada").toList()),
+              RejectedRhRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.humanResourcesStatus == "Rechazada" ).toList())   
               ] 
             ),
           ),
