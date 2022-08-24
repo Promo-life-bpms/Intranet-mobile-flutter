@@ -16,7 +16,7 @@ import 'package:intranet_movil/views/request/widget/wrong_alert_dialog.dart';
       String revealID,
       BuildContext context) async {
     String url =
-        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postRequestEndpoint;
+        ApiIntranetConstans.baseUrl + ApiIntranetConstans.postCreateRequest;
     final response = await http.post(Uri.parse(url), body: {
       'token': token,
       'typeRequest': typeRequest,

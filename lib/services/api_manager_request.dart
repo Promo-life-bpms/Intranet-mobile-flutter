@@ -10,10 +10,6 @@ class ApiManagerRequestService {
       var url = Uri.parse(ApiIntranetConstans.baseUrl + ApiIntranetConstans.getManagerRequest+data);
       var response = await http.get(url);
 
-      print("MANAGER REQUESTTTTTTTT");
-      print(response.statusCode);
-      print(response.body);
-
       if (response.statusCode == 200) {
         List<ApprovedRequestModel> _model = approveRequestModelFromJson(response.body);
         return _model;

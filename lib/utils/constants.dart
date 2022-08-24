@@ -37,6 +37,7 @@ class ApiIntranetConstans {
   static String postImagePublication = 'api/postImageRequest';
   static String getTeamMembers = 'api/getTeamMembers/';
 
+  static String postCreateRequest = 'api/postCreateRequest';
   static String getManagerRequest = 'api/getManagerRequest/';
   static String getRhRequest = 'api/getRhRequest';
   static String postManagerRequest = 'api/postManagerRequest';
