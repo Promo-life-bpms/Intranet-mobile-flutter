@@ -19,6 +19,8 @@ class _RHRequestPage extends State<RHRequestPage> {
   
   
   late List<ApprovedRequestModel>? _approvedRequestModel = [];
+  late List<ApprovedRequestModel>? _approvedRequestModel2 = [];
+
 
 
   @override
@@ -34,6 +36,14 @@ class _RHRequestPage extends State<RHRequestPage> {
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
+   Stream<List<ApprovedRequestModel>?> _request() async* {
+    while (true) {
+      await Future<void>.delayed(const Duration(seconds: 2));
+      _approvedRequestModel2 = (await ApiRhRequestService().getRhRequest())!.cast<ApprovedRequestModel>();
+      yield _approvedRequestModel2;
+    }
+  }
+  
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -86,15 +96,33 @@ class _RHRequestPage extends State<RHRequestPage> {
                 ]),
             title: const Text(StringIntranetConstants.managerApproveRequest),
           ),
-          body: TabBarView(
+          body: 
+          StreamBuilder(
+                  stream: _request(),
+                  builder:
+                      (context, AsyncSnapshot<List<ApprovedRequestModel>?> snapshot) {
+                    
+                    if (snapshot.hasData) {
+                      _approvedRequestModel = _approvedRequestModel2;
+                      TabBarView(
             children: [
               PendingRhRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.humanResourcesStatus == "Pendiente").toList()),
               ApprovedRhRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.humanResourcesStatus == "Aprobada").toList()),
               RejectedRhRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.humanResourcesStatus == "Rechazada" ).toList())   
               ] 
-            ),
-          ),
+            );
+                    }
+                    return TabBarView(
+            children: [
+              PendingRhRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.humanResourcesStatus == "Pendiente").toList()),
+              ApprovedRhRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.humanResourcesStatus == "Aprobada").toList()),
+              RejectedRhRequestPage(approvedModel: _approvedRequestModel!.reversed.where((element) => element.humanResourcesStatus == "Rechazada" ).toList())   
+              ] 
+            );
+            }
+          )
         ),
-      );
+      ),
+    );
   }
 }

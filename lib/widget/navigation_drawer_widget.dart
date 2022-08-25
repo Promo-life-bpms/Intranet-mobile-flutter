@@ -411,17 +411,15 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
   getRole(List<Roles> roles)async{
     roles.forEach((element) { 
-      if(element.role == "Administrador"){
-        role = element.role;        
+      
+      if(element.role == "Recursos Humanos"){
+        role = element.role;
         }else{
-          if(element.role == "Recursos Humanos"){
+          if(element.role == "Manager"){
             role = element.role;
-            }else{
-              if(element.role == "Manager"){
-                role = element.role;
-              }
-            }  
-        }        
+          }
+        }  
+                
     }); 
   }
 }
