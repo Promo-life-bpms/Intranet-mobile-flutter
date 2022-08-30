@@ -42,9 +42,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   static var username = "";
   static var email = "";
   static var photo = "";
-  static String role = "";
-
-
+ 
   late List<UserModel>? _userlModel = [];
   late List<ManualModel>? _manualModel = [];
   late List<CommuniqueModel>? _communiqueModel = [];
@@ -58,6 +56,8 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
   static List<MonthEmployeeModel> monthEmployeeData = [];
   static List<DirectoryModel> directoryData = [];
   static List<BirthdayModel> birthdayData = [];
+
+  static List<String> userRole = [];
   
 
 
@@ -126,24 +126,13 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
             ),
 
             
-            role == "Administrador"?
+          userRole.contains("Recursos Humanos")?
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Divider(),
-                  ListTile(title: Text(role)),
-                  const Divider(),
-                ],
-              )
-            
-            : role == "Recursos Humanos"?
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                children: [
-                  const Divider(),
-                  ListTile(title: Text(role)),
+                   const ListTile(title: Text("Recursos Humanos")),
                    ListTile(
                     leading: const Icon(Icons.task),
                     title: const Text(StringIntranetConstants.managerApproveRequest),
@@ -156,15 +145,15 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                   const Divider(),
                 ],
               )
+            : const Padding(padding: EdgeInsets.zero),
 
-            : role == "Manager"?
+            userRole.contains("Manager")?
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: [
                   const Divider(),
-                  ListTile(title: Text(role)),
-
+                  const ListTile(title: Text("Jefe directo")),
                   ListTile(
                     leading: const Icon(Icons.task),
                     title: const Text(StringIntranetConstants.managerApproveRequest),
@@ -180,10 +169,6 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
                 ],
               )
             : const Padding(padding: EdgeInsets.zero),
-
-
-
-
 
             ListTile(
               leading: const Icon(Icons.home),
@@ -411,15 +396,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
 
   getRole(List<Roles> roles)async{
     roles.forEach((element) { 
-      
-      if(element.role == "Recursos Humanos"){
-        role = element.role;
-        }else{
-          if(element.role == "Manager"){
-            role = element.role;
-          }
-        }  
-                
+      userRole.add(element.role);
     }); 
   }
 }
