@@ -108,6 +108,9 @@ class _HomeState extends State<DirectoryPage> {
                                         )),
                                   )
                                   .toList();
+                               if(_directoryListSearch!.isEmpty){
+                                _directoryListSearch = _directoryList; 
+                               }   
                             });
                           });
                         },
@@ -116,16 +119,16 @@ class _HomeState extends State<DirectoryPage> {
                       //Builder del Directorio, que muestra todos los empleados cuando el usuario no realizó ninguna busqueda
                       ? DirectoryBuilder(
                           directoryData: List<DirectoryModel>.generate(
-                              _directoryList!.length,
+                              _directoryListSearch!.length,
                               (index) => DirectoryModel(
-                                  id: _directoryList![index].id,
-                                  fullname: _directoryList![index].fullname,
-                                  email: _directoryList![index].email,
-                                  photo: _directoryList![index].photo,
-                                  department:_directoryList![index].department,
-                                  position: _directoryList![index].position,
-                                  onlineStatus: _directoryList![index].onlineStatus,
-                                  data: _directoryList![index].data)))
+                                  id: _directoryListSearch![index].id,
+                                  fullname: _directoryListSearch![index].fullname,
+                                  email: _directoryListSearch![index].email,
+                                  photo: _directoryListSearch![index].photo,
+                                  department:_directoryListSearch![index].department,
+                                  position: _directoryListSearch![index].position,
+                                  onlineStatus: _directoryListSearch![index].onlineStatus,
+                                  data: _directoryListSearch![index].data)))
                       : DirectoryBuilder(
                           directoryData: List<DirectoryModel>.generate(
                               _directoryListSearch!.length,
@@ -137,7 +140,7 @@ class _HomeState extends State<DirectoryPage> {
                                   department: _directoryListSearch![index].department,
                                   position: _directoryListSearch![index].position,
                                   onlineStatus: _directoryListSearch![index].onlineStatus,
-                                  data: _directoryList![index].data)))
+                                  data: _directoryListSearch![index].data)))
                 ],
               ));
   }
