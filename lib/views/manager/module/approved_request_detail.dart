@@ -162,6 +162,12 @@ class _ApprovedRequestDetailState extends State<ApprovedRequestDetail> {
   }
 
   showManagerAlertDialog(BuildContext context, String requestID, String responseRequest) {
+    String details =  "";
+    if(responseRequest =="Aprobada"){
+      details = "aprobar";
+    }else{
+       details = "rechazar";
+    }
     Widget cancelButton = TextButton(
       child: const Text("Cancelar"),
       onPressed:  () {
@@ -180,8 +186,8 @@ class _ApprovedRequestDetailState extends State<ApprovedRequestDetail> {
     );
 
     AlertDialog alert = AlertDialog(
-      title: const Text("Aprobar"),
-      content: const Text("¿Deseas aprobar esta solicitud?"),
+      title:  Text(responseRequest),
+      content: Text("¿Deseas $details esta solicitud?"),
       actions: [
         cancelButton,
         continueButton,

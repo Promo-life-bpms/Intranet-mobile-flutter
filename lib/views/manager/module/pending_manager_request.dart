@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/approve_request.dart';
 import 'package:intranet_movil/views/manager/module/approved_request_detail.dart';
+import 'package:intranet_movil/views/request/modules/no_request.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 
 class PendingManagerRequestPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _PendingManagerRequestState extends State<PendingManagerRequestPage> {
   @override
   Widget build(BuildContext context) {
     return widget.approvedModel.isEmpty
-        ? const ListviewCompanyPage()
+        ? const NoRequest()
         : Column(
             children: [
               Expanded(

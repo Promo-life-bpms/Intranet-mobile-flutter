@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/approve_request.dart';
 import 'package:intranet_movil/views/manager/module/request_details.dart';
+import 'package:intranet_movil/views/request/modules/no_request.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 
 class RejectedManagerRequestPage extends StatefulWidget {
@@ -16,7 +17,7 @@ class _RejectedManagerRequestState extends State<RejectedManagerRequestPage> {
   @override
   Widget build(BuildContext context) {
     return widget.approvedModel.isEmpty
-        ? const ListviewCompanyPage()
+        ? const NoRequest()
         : Column(
             children: [
               Expanded(

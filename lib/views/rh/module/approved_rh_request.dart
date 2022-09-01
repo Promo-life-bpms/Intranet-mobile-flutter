@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/approve_request.dart';
+import 'package:intranet_movil/views/request/modules/no_request.dart';
 import 'package:intranet_movil/views/rh/module/request_rh_detail.dart';
 import 'package:intranet_movil/widget/skeletons/list_view_company.dart';
 
@@ -16,7 +17,7 @@ class _ApprovedRhRequestState extends State<ApprovedRhRequestPage> {
   @override
   Widget build(BuildContext context) {
     return widget.approvedModel.isEmpty
-        ? const ListviewCompanyPage()
+        ? const NoRequest()
         : Column(
             children: [
               Expanded(
