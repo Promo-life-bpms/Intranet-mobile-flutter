@@ -13,6 +13,7 @@ import 'package:intranet_movil/views/home/home_page.dart';
 import 'package:intranet_movil/views/profile/employee_profile.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:photo_view/photo_view.dart';
+import 'package:video_player/video_player.dart';
 
 class PublicationContainer extends StatefulWidget {
   const PublicationContainer(
@@ -39,11 +40,12 @@ class PublicationContainer extends StatefulWidget {
 class _PublicationContainerState extends State<PublicationContainer> {
   late List<PublicationModel> publicationToLikeData = widget.publicationData;
   final _formKey = GlobalKey<FormState>();
+  late VideoPlayerController _controller;
 
   bool isLike = false;
   @override
   void initState() {
-    isLike = widget.publicationData[0].isLike; 
+    isLike = widget.publicationData[0].isLike;
     super.initState();
   }
 
@@ -121,11 +123,12 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                   onPressed: () {
                                     /* postPublicationDelete(widget.token, widget.publicationData[0].id.toString()); */
                                     openBottomSheet(
-                                        widget.mainContext,
-                                        widget.token,
-                                        widget.publicationData[0].id.toString(),
-                                        widget.publicationData[0]
-                                            .contentPublication, );
+                                      widget.mainContext,
+                                      widget.token,
+                                      widget.publicationData[0].id.toString(),
+                                      widget.publicationData[0]
+                                          .contentPublication,
+                                    );
                                   },
                                   icon: const Icon(Icons.more_vert_outlined))
                               : const Padding(padding: EdgeInsets.zero)
@@ -150,77 +153,83 @@ class _PublicationContainerState extends State<PublicationContainer> {
           ),
           widget.publicationData[0].photoPublication.length == 1 &&
                   widget.publicationData[0].photoPublication[0].typeFile ==
-                      "no data"
-              ? const Padding(padding: EdgeInsets.zero)
-              : widget.publicationData[0].photoPublication.length == 1
-                  ? SizedBox(
-                      width: double.infinity,
-                      child: InkWell(
-                        child: CachedNetworkImage(
-                          imageUrl: ApiIntranetConstans.baseUrl +
-                              widget.publicationData[0].photoPublication[0]
-                                  .resource,
-                          placeholder: (context, url) =>
-                              const Center(child: CircularProgressIndicator()),
-                          errorWidget: (context, url, error) => const Image(
-                              image:
-                                  AssetImage("lib/assets/lost_connection.png")),
-                        ),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (context) => PhotoView(
-                                imageProvider: NetworkImage(
-                                    ApiIntranetConstans.baseUrl +
-                                        widget.publicationData[0]
-                                            .photoPublication[0].resource),
-                              ),
+                      "video"
+              ? Text("Aqui va el video")
+              : widget.publicationData[0].photoPublication.length == 1 &&
+                      widget.publicationData[0].photoPublication[0].typeFile ==
+                          "no data"
+                  ? const Padding(padding: EdgeInsets.zero)
+                  : widget.publicationData[0].photoPublication.length == 1
+                      ? SizedBox(
+                          width: double.infinity,
+                          child: InkWell(
+                            child: CachedNetworkImage(
+                              imageUrl: ApiIntranetConstans.baseUrl +
+                                  widget.publicationData[0].photoPublication[0]
+                                      .resource,
+                              placeholder: (context, url) => const Center(
+                                  child: CircularProgressIndicator()),
+                              errorWidget: (context, url, error) => const Image(
+                                  image: AssetImage(
+                                      "lib/assets/lost_connection.png")),
                             ),
-                          );
-                        },
-                      ),
-                    )
-                  : CarouselSlider.builder(
-                      itemCount:
-                          widget.publicationData[0].photoPublication.length,
-                      itemBuilder: (BuildContext context, int index,
-                              int pageViewIndex) =>
-                          FittedBox(
-                              fit: BoxFit.scaleDown,
-                              child: InkWell(
-                                child: CachedNetworkImage(
-                                  imageUrl: ApiIntranetConstans.baseUrl +
-                                      widget.publicationData[0]
-                                          .photoPublication[index].resource,
-                                  placeholder: (context, url) => const Center(
-                                      child: CircularProgressIndicator()),
-                                  errorWidget: (context, url, error) =>
-                                      const Image(
-                                          image: AssetImage(
-                                              "lib/assets/lost_connection.png")),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (context) => PhotoView(
+                                    imageProvider: NetworkImage(
+                                        ApiIntranetConstans.baseUrl +
+                                            widget.publicationData[0]
+                                                .photoPublication[0].resource),
+                                  ),
                                 ),
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (context) => PhotoView(
-                                        imageProvider: NetworkImage(
-                                            ApiIntranetConstans.baseUrl +
-                                                widget
-                                                    .publicationData[0]
-                                                    .photoPublication[index]
-                                                    .resource),
-                                      ),
+                              );
+                            },
+                          ),
+                        )
+                      : CarouselSlider.builder(
+                          itemCount:
+                              widget.publicationData[0].photoPublication.length,
+                          itemBuilder: (BuildContext context, int index,
+                                  int pageViewIndex) =>
+                              FittedBox(
+                                  fit: BoxFit.scaleDown,
+                                  child: InkWell(
+                                    child: CachedNetworkImage(
+                                      imageUrl: ApiIntranetConstans.baseUrl +
+                                          widget.publicationData[0]
+                                              .photoPublication[index].resource,
+                                      placeholder: (context, url) =>
+                                          const Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          const Image(
+                                              image: AssetImage(
+                                                  "lib/assets/lost_connection.png")),
                                     ),
-                                  );
-                                },
-                              )),
-                      options: CarouselOptions(
-                        height: 350,
-                        autoPlay: false,
-                        aspectRatio: 2.0,
-                        enlargeCenterPage: true,
-                      ),
-                    ),
+                                    onTap: () {
+                                      Navigator.of(context).push(
+                                        MaterialPageRoute(
+                                          builder: (context) => PhotoView(
+                                            imageProvider: NetworkImage(
+                                                ApiIntranetConstans.baseUrl +
+                                                    widget
+                                                        .publicationData[0]
+                                                        .photoPublication[index]
+                                                        .resource),
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  )),
+                          options: CarouselOptions(
+                            height: 350,
+                            autoPlay: false,
+                            aspectRatio: 2.0,
+                            enlargeCenterPage: true,
+                          ),
+                        ),
           Padding(
               padding: const EdgeInsets.only(top: 12, left: 16, right: 16),
               child: Container(
@@ -266,7 +275,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                       .toString(),
                                   style: const TextStyle(color: Colors.white),
                                 ),
-                                child: widget.publicationToLikeData[0].isLike == false
+                                child: widget.publicationToLikeData[0].isLike ==
+                                        false
                                     ? const Icon(
                                         Icons.favorite,
                                         color: ColorIntranetConstants.redLight,
@@ -294,7 +304,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                       .toString(),
                                   style: const TextStyle(color: Colors.white),
                                 ),
-                                child: widget.publicationToLikeData[0].isLike == false
+                                child: widget.publicationToLikeData[0].isLike ==
+                                        false
                                     ? const Icon(
                                         Icons.favorite,
                                         color: ColorIntranetConstants.redLight,
@@ -473,7 +484,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
               const Padding(padding: EdgeInsets.only(top: 16)),
               Expanded(
                 child: ListView.builder(
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  keyboardDismissBehavior:
+                      ScrollViewKeyboardDismissBehavior.onDrag,
                   physics: const AlwaysScrollableScrollPhysics(),
                   padding: const EdgeInsets.only(left: 16, right: 16),
                   itemCount: _publicationComment.length,
@@ -483,7 +495,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
                           ? []
                           : [
                               Padding(
-                                  padding: const EdgeInsets.symmetric(vertical: 16.0, horizontal: 0.0),
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 16.0, horizontal: 0.0),
                                   child: SizedBox(
                                     width: 50,
                                     height: 50,
@@ -498,14 +511,18 @@ class _PublicationContainerState extends State<PublicationContainer> {
                               const Padding(padding: EdgeInsets.only(left: 16)),
                               Container(
                                 decoration: const BoxDecoration(
-                                    color: ColorIntranetConstants.backgroundColorNormal,
-                                    borderRadius: BorderRadius.all(Radius.circular(16))),
+                                    color: ColorIntranetConstants
+                                        .backgroundColorNormal,
+                                    borderRadius:
+                                        BorderRadius.all(Radius.circular(16))),
                                 child: Padding(
                                   padding: const EdgeInsets.all(12.0),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
-                                      Text( _publicationComment[index].userName,
+                                      Text(
+                                        _publicationComment[index].userName,
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: const TextStyle(
@@ -513,16 +530,22 @@ class _PublicationContainerState extends State<PublicationContainer> {
                                           fontWeight: FontWeight.bold,
                                         ),
                                       ),
-                                      const Padding(padding: EdgeInsets.only(top: 8)),
-
+                                      const Padding(
+                                          padding: EdgeInsets.only(top: 8)),
                                       SizedBox(
-                                        width: MediaQuery.of(context).size.width - (MediaQuery.of(context).size.width /3) ,
-                                        child: Text(_publicationComment[index].content,
+                                        width: MediaQuery.of(context)
+                                                .size
+                                                .width -
+                                            (MediaQuery.of(context).size.width /
+                                                3),
+                                        child: Text(
+                                            _publicationComment[index].content,
                                             maxLines: 100,
                                             textAlign: TextAlign.justify,
                                             overflow: TextOverflow.ellipsis,
-                                            style: const TextStyle(fontSize: 12.00,)
-                                            ),
+                                            style: const TextStyle(
+                                              fontSize: 12.00,
+                                            )),
                                       ),
                                     ],
                                   ),
@@ -609,7 +632,8 @@ class _PublicationContainerState extends State<PublicationContainer> {
       onPressed: () {
         postPublicationDelete(token, publciationID);
         Navigator.pop(cont);
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const HomePage()));
+        Navigator.of(context)
+            .push(MaterialPageRoute(builder: (context) => const HomePage()));
       },
     );
     AlertDialog alert = AlertDialog(
@@ -637,10 +661,9 @@ class _PublicationContainerState extends State<PublicationContainer> {
       content: Form(
         key: _formKey,
         child: TextFormField(
-           decoration: const  InputDecoration( counterText: ""), 
-          validator: (value) => value!.isEmpty
-                            ? 'Este campo no puede estar vacio'
-                            : null,
+          decoration: const InputDecoration(counterText: ""),
+          validator: (value) =>
+              value!.isEmpty ? 'Este campo no puede estar vacio' : null,
           maxLines: null,
           autofocus: true,
           controller: _controller,
@@ -656,18 +679,16 @@ class _PublicationContainerState extends State<PublicationContainer> {
         ),
         TextButton(
           child: const Text("Actualizar"),
-          onPressed: () { 
-            
-            if(_controller.text != ""){
+          onPressed: () {
+            if (_controller.text != "") {
               postPublicationEdit(token, publciationID, _controller.text);
               setState(() {
-              widget.publicationData[0].contentPublication = _controller.text;
+                widget.publicationData[0].contentPublication = _controller.text;
               });
               Navigator.pop(cont);
-            }else{
+            } else {
               _formKey.currentState!.validate();
             }
-            
           },
         )
       ],

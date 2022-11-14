@@ -53,7 +53,8 @@ class _HomeState extends State<HomePage> {
   static List<PublicationModel>? _publicationList = [];
   static List<PublicationModel>? _publicationListToLike = [];
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   bool isLike = false;
   bool loadingComment = false;
@@ -63,21 +64,27 @@ class _HomeState extends State<HomePage> {
   void initState() {
     super.initState();
     // ignore: prefer_is_empty
-    if (widget.userData == [] || widget.userData == null || widget.userData!.length == 0) {
+    if (widget.userData == [] ||
+        widget.userData == null ||
+        widget.userData!.length == 0) {
       _getData();
     } else {
       _userList = widget.userData;
     }
 
     // ignore: prefer_is_empty
-    if (widget.birthdayData == [] || widget.birthdayData == null || widget.birthdayData!.length == 0) {
+    if (widget.birthdayData == [] ||
+        widget.birthdayData == null ||
+        widget.birthdayData!.length == 0) {
       _getBirthdayData();
     } else {
       _brithdayList = widget.birthdayData;
     }
 
     // ignore: prefer_is_empty
-    if (widget.communiqueData == [] || widget.communiqueData == null || widget.communiqueData!.length == 0) {
+    if (widget.communiqueData == [] ||
+        widget.communiqueData == null ||
+        widget.communiqueData!.length == 0) {
       _getCommuniqueData();
     } else {
       _communiqueList = widget.communiqueData;
@@ -92,10 +99,15 @@ class _HomeState extends State<HomePage> {
     if (_token != null || _token!.isNotEmpty) {
       token = _token;
     }
-    _userlModel = (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
-    _brithdayModel = (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
-    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
-    _publicationModel = (await ApiPublicationService().getPublication(token.toString()))!.cast<PublicationModel>();
+    _userlModel =
+        (await ApiUserService().getUsers(_token.toString()))!.cast<UserModel>();
+    _brithdayModel =
+        (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+    _communiqueModel =
+        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    _publicationModel =
+        (await ApiPublicationService().getPublication(token.toString()))!
+            .cast<PublicationModel>();
     _publicationModelToLike = _publicationModel;
 
     setState(() {
@@ -105,12 +117,14 @@ class _HomeState extends State<HomePage> {
       _publicationList = _publicationModel;
       _publicationListToLike = _publicationModel;
     });
-
+    print("TOKEEEENNNNNNNN");
+    print(token);
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
   void _getBirthdayData() async {
-    _brithdayModel = (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
+    _brithdayModel =
+        (await ApiBrithdayService().getBrithday())!.cast<BirthdayModel>();
 
     setState(() {
       _brithdayList = _brithdayModel;
@@ -120,7 +134,8 @@ class _HomeState extends State<HomePage> {
   }
 
   void _getCommuniqueData() async {
-    _communiqueModel = (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
+    _communiqueModel =
+        (await ApiCommuniqueService().getCommunique())!.cast<CommuniqueModel>();
 
     setState(() {
       _communiqueList = _communiqueModel;
@@ -128,130 +143,126 @@ class _HomeState extends State<HomePage> {
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
- 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      drawer: NavigationDrawerWidget(userData: _userList),
-      appBar: AppBar(
-        title: const Text(_title),
-        actions: [
-          Padding(
-            padding: const EdgeInsets.only(right: 8.0),
-            child: GestureDetector(
-              onTap: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => const ChatPage()));
-              },
-              child: const Image(
-                image: AssetImage('lib/assets/chat.png'),
+        drawer: NavigationDrawerWidget(userData: _userList),
+        appBar: AppBar(
+          title: const Text(_title),
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => const ChatPage()));
+                },
+                child: const Image(
+                  image: AssetImage('lib/assets/chat.png'),
+                ),
+              ),
+            ),
+          ],
+        ),
+        body: RefreshIndicator(
+          key: _refreshIndicatorKey,
+          color: Colors.white,
+          backgroundColor: Colors.blue,
+          strokeWidth: 3.0,
+          onRefresh: () async {
+            setState(() {
+              _getData();
+            });
+
+            return Future<void>.delayed(const Duration(seconds: 3));
+          },
+          child: SingleChildScrollView(
+            physics: const ScrollPhysics(),
+            child: Container(
+              color: ColorIntranetConstants.backgroundColorDark,
+              child: Column(
+                children: [
+                  //Publicaciones
+                  _userList == null || _userList!.isEmpty
+                      ? Column(
+                          children: const [
+                            NoDataPublicationCard(),
+                            Padding(padding: EdgeInsets.only(top: 8)),
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            PublicationCard(userData: _userList!),
+                            const Padding(padding: EdgeInsets.only(top: 8)),
+                          ],
+                        ),
+
+                  //Cumpleanos del mes
+                  _brithdayList == null ||
+                          _brithdayList!.isEmpty ||
+                          _brithdayList == []
+                      ? Column(
+                          children: const [
+                            BirthdayTitleCard(),
+                            NoDataBirthdayHomeBuilder(),
+                            Padding(padding: EdgeInsets.only(top: 8))
+                          ],
+                        )
+                      : Column(
+                          children: [
+                            const BirthdayTitleCard(),
+                            BirthdayHomeBuilder(birthdayData: _brithdayList!),
+                            const Padding(padding: EdgeInsets.only(top: 8))
+                          ],
+                        ),
+                  //Comunicados
+                  // ignore: prefer_is_empty
+                  _communiqueList == null ||
+                          _communiqueList!.isEmpty ||
+                          _communiqueList!.length == 0
+                      ? const Padding(padding: EdgeInsets.zero)
+                      : Column(
+                          children: [
+                            CarouselHomeBuilder(
+                                communiqueData: _communiqueList!),
+                            const Padding(padding: EdgeInsets.only(bottom: 8))
+                          ],
+                        ),
+                  //Publicaciones
+                  _publicationList == null ||
+                          _publicationList!.isEmpty ||
+                          _publicationList == []
+                      ? Container(
+                          color: Colors.white,
+                          child: Column(
+                            children: [
+                              const Padding(
+                                padding: EdgeInsets.only(top: 16),
+                                child: Text(
+                                  "Actualizando publicaciones...",
+                                  style: TextStyle(fontSize: 16),
+                                ),
+                              ),
+                              Center(
+                                child: SizedBox(
+                                    width: 300,
+                                    child: Lottie.asset(
+                                        "lib/assets/fech_data.json")),
+                              ),
+                            ],
+                          ))
+                      : PublicationBuilder(
+                          publicationData: _publicationList!,
+                          publicationToLikeData: _publicationListToLike!,
+                          userData: _userList!,
+                          isLike: isLike,
+                          token: token,
+                          mainContext: context,
+                        )
+                ],
               ),
             ),
           ),
-        ],
-      ),
-      body: RefreshIndicator(
-        key: _refreshIndicatorKey,
-        color: Colors.white,
-        backgroundColor: Colors.blue,
-        strokeWidth: 3.0,
-        onRefresh: () async {
-          setState(() {
-            _getData();
-
-          });
-
-         return Future<void>.delayed(const Duration(seconds: 3));
-
-        },
-        child: SingleChildScrollView(
-        physics: const ScrollPhysics(),
-        child: Container(
-          color: ColorIntranetConstants.backgroundColorDark,
-          child: Column(
-            children: [
-              //Publicaciones
-              _userList == null || _userList!.isEmpty
-                  ? Column(
-                      children: const [
-                        NoDataPublicationCard(),
-                        Padding(padding: EdgeInsets.only(top: 8)),
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        PublicationCard(userData: _userList!),
-                        const Padding(padding: EdgeInsets.only(top: 8)),
-                      ],
-                    ),
-
-              //Cumpleanos del mes
-              _brithdayList == null ||
-                      _brithdayList!.isEmpty ||
-                      _brithdayList == []
-                  ? Column(
-                      children: const [
-                        BirthdayTitleCard(),
-                        NoDataBirthdayHomeBuilder(),
-                        Padding(padding: EdgeInsets.only(top: 8))
-                      ],
-                    )
-                  : Column(
-                      children: [
-                        const BirthdayTitleCard(),
-                        BirthdayHomeBuilder(birthdayData: _brithdayList!),
-                        const Padding(padding: EdgeInsets.only(top: 8))
-                      ],
-                    ),
-              //Comunicados
-              // ignore: prefer_is_empty
-              _communiqueList == null || _communiqueList!.isEmpty || _communiqueList!.length == 0
-                  ? const Padding(padding: EdgeInsets.zero)
-                  : Column(
-                      children: [
-                        CarouselHomeBuilder(communiqueData: _communiqueList!),
-                        const Padding(padding: EdgeInsets.only(bottom: 8))
-                      ],
-                    ),
-              //Publicaciones
-              _publicationList == null || _publicationList!.isEmpty || _publicationList == []
-                  ? Container(
-                      color: Colors.white,
-                      child: Column(
-                        children: [
-                          const Padding(
-                            padding: EdgeInsets.only(top: 16),
-                            child: Text(
-                              "Actualizando publicaciones...",
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ),
-                          Center(
-                            child: SizedBox(
-                                width: 300,
-                                child:
-                                    Lottie.asset("lib/assets/fech_data.json")),
-                          ),
-                        ],
-                      ))
-                  : PublicationBuilder(
-                      publicationData: _publicationList!,
-                      publicationToLikeData: _publicationListToLike!,
-                      userData: _userList!,
-                      isLike: isLike,
-                      token: token,
-                      mainContext: context,
-                    )
-            ],
-          ),
-        ),
-      ),
-
-
-      )
-
-
-
-            );
+        ));
   }
 }
