@@ -30,14 +30,28 @@ class _VideoState extends State<VideoCard> {
     return Column(
       children: [
         InkWell(
-          child: Center(
-            child: _controller.value.isInitialized
-                ? AspectRatio(
-                    aspectRatio: _controller.value.aspectRatio,
-                    child: VideoPlayer(_controller),
-                  )
-                : Container(),
-          ),
+          child: _controller.value.isInitialized
+              ? Column(
+                  children: [
+                    Center(
+                        child: AspectRatio(
+                      aspectRatio: _controller.value.aspectRatio,
+                      child: VideoPlayer(_controller),
+                    )),
+                    VideoProgressIndicator(
+                      _controller,
+                      allowScrubbing: true,
+                      colors: const VideoProgressColors(
+                          backgroundColor:
+                              ColorIntranetConstants.backgroundColorLight,
+                          bufferedColor:
+                              ColorIntranetConstants.backgroundColorDark,
+                          playedColor:
+                              ColorIntranetConstants.primaryColorNormal),
+                    )
+                  ],
+                )
+              : Container(),
           onTap: () => {
             setState(() {
               _controller.value.isPlaying
