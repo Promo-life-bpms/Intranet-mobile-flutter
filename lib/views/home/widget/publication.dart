@@ -10,10 +10,10 @@ import 'package:intranet_movil/services/post_publication_edit.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:http/http.dart' as http;
 import 'package:intranet_movil/views/home/home_page.dart';
+import 'package:intranet_movil/views/home/widget/video_card.dart';
 import 'package:intranet_movil/views/profile/employee_profile.dart';
 import 'package:flutter_linkify/flutter_linkify.dart';
 import 'package:photo_view/photo_view.dart';
-import 'package:video_player/video_player.dart';
 
 class PublicationContainer extends StatefulWidget {
   const PublicationContainer(
@@ -40,7 +40,6 @@ class PublicationContainer extends StatefulWidget {
 class _PublicationContainerState extends State<PublicationContainer> {
   late List<PublicationModel> publicationToLikeData = widget.publicationData;
   final _formKey = GlobalKey<FormState>();
-  late VideoPlayerController _controller;
 
   bool isLike = false;
   @override
@@ -154,7 +153,9 @@ class _PublicationContainerState extends State<PublicationContainer> {
           widget.publicationData[0].photoPublication.length == 1 &&
                   widget.publicationData[0].photoPublication[0].typeFile ==
                       "video"
-              ? Text("Aqui va el video")
+              ? VideoCard(
+                  videoLink:
+                      widget.publicationData[0].photoPublication[0].resource)
               : widget.publicationData[0].photoPublication.length == 1 &&
                       widget.publicationData[0].photoPublication[0].typeFile ==
                           "no data"
