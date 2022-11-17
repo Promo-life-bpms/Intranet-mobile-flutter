@@ -28,7 +28,7 @@ class _PublicationBuilderState extends State<PublicationBuilder> {
   final ScrollController _controller = ScrollController();
 
   bool _isLoading = false;
-  int range = 4;
+  int range = 8;
 
   Future incrementData() async {
     setState(() {
