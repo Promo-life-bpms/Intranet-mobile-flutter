@@ -78,7 +78,20 @@ class _VideoState extends State<VideoCard> {
                     ),
                   ],
                 )
-              : Container(),
+              : Container(
+                  width: double.infinity,
+                  height: 200,
+                  color: ColorIntranetConstants.backgroundColorNormal,
+                  child: const Align(
+                    alignment: Alignment(0, 0),
+                    child: Center(
+                      child: Text(
+                        "Cargando video ...",
+                        style: TextStyle(fontSize: 12),
+                      ),
+                    ),
+                  ),
+                ),
           onTap: () => {
             setState(() {
               _controller.value.isPlaying
