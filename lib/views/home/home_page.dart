@@ -60,6 +60,9 @@ class _HomeState extends State<HomePage> {
   bool loadingComment = false;
   late String token = "";
 
+  int initRange = 0;
+  int limitRange = 8;
+
   @override
   void initState() {
     super.initState();
@@ -117,8 +120,7 @@ class _HomeState extends State<HomePage> {
       _publicationList = _publicationModel;
       _publicationListToLike = _publicationModel;
     });
-    print("TOKEEEENNNNNNNN");
-    print(token);
+
     Future.delayed(const Duration(seconds: 1)).then((value) => setState(() {}));
   }
 
@@ -252,17 +254,59 @@ class _HomeState extends State<HomePage> {
                             ],
                           ))
                       : PublicationBuilder(
-                          publicationData: _publicationList!,
-                          publicationToLikeData: _publicationListToLike!,
+                          publicationData: _publicationList!
+                              .getRange(0, limitRange)
+                              .toList(),
+                          publicationToLikeData: _publicationListToLike!
+                              .getRange(0, limitRange)
+                              .toList(),
                           userData: _userList!,
                           isLike: isLike,
                           token: token,
                           mainContext: context,
-                        )
+                        ),
+
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.only(
+                        top: 8, bottom: 8, left: 16, right: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        limitRange <= _publicationList!.length
+                            ? ElevatedButton(
+                                onPressed: ((() => paginatorNext())),
+                                child: const Text("VER MAS"),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor:
+                                        ColorIntranetConstants.primaryColorDark,
+                                    foregroundColor: Colors.white),
+                              )
+                            : ElevatedButton(
+                                onPressed: (() {}),
+                                child: const Text("VER MAS"),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: ColorIntranetConstants
+                                        .backgroundColorDark,
+                                    foregroundColor: Colors.black),
+                              )
+                      ],
+                    ),
+                  )
                 ],
               ),
             ),
           ),
         ));
+  }
+
+  paginatorNext() {
+    setState(() {
+      if ((limitRange + 8) >= _publicationList!.length) {
+        limitRange = _publicationList!.length - 1;
+      } else {
+        limitRange = limitRange + 8;
+      }
+    });
   }
 }

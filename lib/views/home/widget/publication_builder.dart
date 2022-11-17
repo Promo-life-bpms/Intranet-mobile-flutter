@@ -60,7 +60,7 @@ class _PublicationBuilderState extends State<PublicationBuilder> {
             primary: false,
             shrinkWrap: true,
             padding: const EdgeInsets.all(0),
-            itemCount: widget.publicationData.getRange(0, range).length,
+            itemCount: widget.publicationData.length,
             itemBuilder: (context, index) {
               return PublicationContainer(
                 publicationData: [
