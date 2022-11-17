@@ -13,6 +13,7 @@ class VideoCard extends StatefulWidget {
 
 class _VideoState extends State<VideoCard> {
   late VideoPlayerController _controller;
+  bool isPLaying = false;
 
   @override
   void initState() {
@@ -21,7 +22,9 @@ class _VideoState extends State<VideoCard> {
         ApiIntranetConstans.baseUrl + widget.videoLink)
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even before the play button has been pressed.
-        setState(() {});
+        setState(() {
+          _controller.setPlaybackSpeed(0);
+        });
       });
   }
 
@@ -48,7 +51,31 @@ class _VideoState extends State<VideoCard> {
                               ColorIntranetConstants.backgroundColorDark,
                           playedColor:
                               ColorIntranetConstants.primaryColorNormal),
-                    )
+                    ),
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: (() {
+                              setState(() {
+                                _controller.value.isPlaying
+                                    ? _controller.pause()
+                                    : _controller.play();
+                              });
+                            }),
+                            icon: _controller.value.isPlaying
+                                ? const Icon(Icons.pause)
+                                : const Icon(Icons.play_arrow)),
+                        IconButton(
+                            onPressed: (() {
+                              setState(() {
+                                isPLaying = false;
+                                _controller.pause();
+                                _controller.seekTo(const Duration(seconds: 0));
+                              });
+                            }),
+                            icon: const Icon(Icons.stop))
+                      ],
+                    ),
                   ],
                 )
               : Container(),
