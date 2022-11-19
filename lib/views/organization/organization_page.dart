@@ -3,21 +3,7 @@ import 'package:intranet_movil/model/directory.dart';
 import 'package:intranet_movil/services/api_directory.dart';
 import 'package:intranet_movil/utils/constants.dart';
 import 'package:intranet_movil/views/chat/chat_page.dart';
-import 'package:intranet_movil/views/organization/modules/cancun.dart';
-import 'package:intranet_movil/views/organization/modules/communication.dart';
-import 'package:intranet_movil/views/organization/modules/desing.dart';
-import 'package:intranet_movil/views/organization/modules/directory.dart';
-import 'package:intranet_movil/views/organization/modules/imports.dart';
-import 'package:intranet_movil/views/organization/modules/logistics.dart';
-import 'package:intranet_movil/views/organization/modules/management.dart';
-import 'package:intranet_movil/views/organization/modules/marketing.dart';
-import 'package:intranet_movil/views/organization/modules/operations.dart';
-import 'package:intranet_movil/views/organization/modules/rh.dart';
-import 'package:intranet_movil/views/organization/modules/sales_bh.dart';
-import 'package:intranet_movil/views/organization/modules/sales_pl.dart';
-import 'package:intranet_movil/views/organization/modules/store.dart';
-import 'package:intranet_movil/views/organization/modules/systems.dart';
-import 'package:intranet_movil/views/organization/modules/technology.dart';
+import 'package:intranet_movil/views/organization/modules/organization.dart';
 import 'package:intranet_movil/widget/navigation_drawer_widget.dart';
 
 class OrganizationPage extends StatefulWidget {
@@ -64,7 +50,7 @@ class _HomeState extends State<OrganizationPage> {
           appBarTheme: const AppBarTheme(
               backgroundColor: ColorIntranetConstants.primaryColorLight)),
       home: DefaultTabController(
-        length: 15,
+        length: 13,
         child: Scaffold(
           drawer: const NavigationDrawerWidget(),
           appBar: AppBar(
@@ -107,40 +93,34 @@ class _HomeState extends State<OrganizationPage> {
                         Text(StringIntranetConstants.organizationSalesPLPage),
                   ),
                   Tab(
-                    child: Text(StringIntranetConstants.organizationImportPage),
+                    child: Text(StringIntranetConstants.organizationDesingPage),
                   ),
                   Tab(
-                    child: Text(StringIntranetConstants.organizationDesingPage),
+                    child: Text(StringIntranetConstants.organizationTechnologyPage),
                   ),
                   Tab(
                     child: Text(StringIntranetConstants.organizationSystemPage),
                   ),
                   Tab(
                     child:
-                        Text(StringIntranetConstants.organizationOperationPage),
+                        Text(StringIntranetConstants.organizationImportPage),
                   ),
                   Tab(
                     child: Text(
-                        StringIntranetConstants.organizationTechnologyPage),
+                        StringIntranetConstants.organizationCancunPage),
                   ),
                   Tab(
-                    child: Text(StringIntranetConstants.organizationCancunPage),
+                    child: Text(StringIntranetConstants.organizationOperationPage),
                   ),
                   Tab(
                     child:
-                        Text(StringIntranetConstants.organizationMarketingPage),
+                        Text(StringIntranetConstants.organizationStorePage),
                   ),
                   Tab(
                     child: Text(
-                        StringIntranetConstants.organizationCommunicationPage),
+                        StringIntranetConstants.organizationLogisticPage),
                   ),
-                  Tab(
-                    child:
-                        Text(StringIntranetConstants.organizationLogisticPage),
-                  ),
-                  Tab(
-                    child: Text(StringIntranetConstants.organizationStorePage),
-                  ),
+                  
                 ]),
             title: const Text(StringIntranetConstants.organizationPage),
           ),
@@ -150,62 +130,55 @@ class _HomeState extends State<OrganizationPage> {
                   directoryModel: _directoryList!
                       .where((i) => i.department == "Direccion")
                       .toList()),
-              RHDirectoryPage(
+              OrganizationDirectoryPage(
                   directoryModel: _directoryList!
                       .where((i) => i.department == "Recursos Humanos")
                       .toList()),
-              ManagementDirectoryPage(
+              OrganizationDirectoryPage(
                   directoryModel: _directoryList!
                       .where((i) => i.department == "Administracion")
                       .toList()),
-              SalesBHDirectoryPage(
+              OrganizationDirectoryPage(
                   directoryModel: _directoryList!
                       .where((i) => i.department == "Ventas BH")
                       .toList()),
-              SalesPLDirectoryPage(
+              OrganizationDirectoryPage(
                   directoryModel: _directoryList!
                       .where((i) => i.department == "Ventas PL")
                       .toList()),
-              ImportsDirectoryPage(
-                  directoryModel: _directoryList!
-                      .where((i) => i.department == "Importaciones")
-                      .toList()),
-              DesignDirectoryPage(
+              OrganizationDirectoryPage(
                   directoryModel: _directoryList!
                       .where((i) => i.department == "Diseno")
                       .toList()),
-              SystemsDirectoryPage(
-                  directoryModel: _directoryList!
-                      .where((i) => i.department == "Sistemas")
-                      .toList()),
-              OperationsDirectoryPage(
-                  directoryModel: _directoryList!
-                      .where((i) => i.department == "Operaciones")
-                      .toList()),
-              TechnologyDirectoryPage(
+              OrganizationDirectoryPage(
                   directoryModel: _directoryList!
                       .where((i) => i.department == "Tecnologia e Innovacion")
                       .toList()),
-              CancunDirectoryPage(
+              OrganizationDirectoryPage(
+                  directoryModel: _directoryList!
+                      .where((i) => i.department == "Sistemas")
+                      .toList()),
+              OrganizationDirectoryPage(
+                  directoryModel: _directoryList!
+                      .where((i) => i.department == "Importaciones")
+                      .toList()),
+              OrganizationDirectoryPage(
                   directoryModel: _directoryList!
                       .where((i) => i.department == "Cancun")
                       .toList()),
-              MarketingDirectoryPage(
+              OrganizationDirectoryPage(
                   directoryModel: _directoryList!
-                      .where((i) => i.department == "Marketing")
+                      .where((i) => i.department == "Operaciones")
                       .toList()),
-              CommunicationDirectoryPage(
-                  directoryModel: _directoryList!
-                      .where((i) => i.department == "Comunicacion")
-                      .toList()),
-              LogisticsDirectoryPage(
-                  directoryModel: _directoryList!
-                      .where((i) => i.department == "Logistica")
-                      .toList()),
-              StoreDirectoryPage(
+              OrganizationDirectoryPage(
                   directoryModel: _directoryList!
                       .where((i) => i.department == "Almacen")
                       .toList()),
+              OrganizationDirectoryPage(
+                  directoryModel: _directoryList!
+                      .where((i) => i.department == "Logistica")
+                      .toList()),
+              
             ],
           ),
         ),

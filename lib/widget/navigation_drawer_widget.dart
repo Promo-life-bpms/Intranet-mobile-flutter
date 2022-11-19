@@ -189,7 +189,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget> {
               },
             ),
             ListTile(
-              leading: const Icon(Icons.chat_rounded),
+              leading: const Icon(Icons.group),
               title: const Text(StringIntranetConstants.organizationPage),
               selectedColor: ColorIntranetConstants.primaryColorLight,
               selected: (_selectedDrawerItem == 2),
