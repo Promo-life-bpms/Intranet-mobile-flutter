@@ -1,7 +1,7 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:intranet_movil/model/employee.dart';
 import 'package:intranet_movil/utils/constants.dart';
+import 'package:lottie/lottie.dart';
 
 class EmployeeMonthCard extends StatefulWidget {
   const EmployeeMonthCard({Key? key, required this.employeeMonthData})
@@ -48,20 +48,31 @@ class _EmployeeMonthCardState extends State<EmployeeMonthCard> {
               const Padding(
                 padding: EdgeInsets.only(bottom: 20.0),
               ),
-              SizedBox(
-                width: double.infinity,
-                height: 320.0,
-                child: FittedBox(
-                    fit: BoxFit.contain,
-                    child: CachedNetworkImage(
-                      imageUrl: ApiIntranetConstans.baseUrl +
-                          widget.employeeMonthData[0].photo,
-                      errorWidget: (context, url, error) => const Image(
-                          image: AssetImage("lib/assets/default_user.png")),
-                    )),
-              ),
-              const Padding(
-                padding: EdgeInsets.only(bottom: 20.0),
+              Padding(
+                padding: const EdgeInsets.only(left: 24, right: 24, bottom: 8),
+                child: Container(
+                  width: double.infinity,
+                  height: 400.0,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(8),
+                    image: DecorationImage(
+                      image: NetworkImage(ApiIntranetConstans.baseUrl +
+                          widget.employeeMonthData[0].photo),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  child: Align(
+                    alignment: const Alignment(1.8, -1.3),
+                    child: SizedBox(
+                      width: 150.0,
+                      child: SizedBox(
+                        width: 120,
+                        height: 120,
+                        child: Lottie.asset("lib/assets/star_badge.json"),
+                      ),
+                    ),
+                  ),
+                ),
               ),
               Text(
                 widget.employeeMonthData[0].name,
@@ -71,7 +82,7 @@ class _EmployeeMonthCardState extends State<EmployeeMonthCard> {
                 ),
               ),
               const Padding(
-                padding: EdgeInsets.only(bottom: 20.0),
+                padding: EdgeInsets.only(bottom: 8.0),
               ),
               Text(
                 widget.employeeMonthData[0].position,
@@ -82,17 +93,6 @@ class _EmployeeMonthCardState extends State<EmployeeMonthCard> {
               const Padding(
                 padding: EdgeInsets.only(bottom: 20.0),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: const <Widget>[
-                  Icon(
-                    Icons.star,
-                    color: Color.fromARGB(255, 28, 47, 56),
-                    size: 24,
-                  ),
-                ],
-              ),
-              Text(widget.employeeMonthData[0].star),
             ],
           ),
         ),

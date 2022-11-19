@@ -8,23 +8,21 @@ class BirthdayHomeBuilder extends StatefulWidget {
   final List<BirthdayModel> birthdayData;
 
   @override
-  State<BirthdayHomeBuilder> createState() =>
-      _BirthdayHomeBuilderState();
+  State<BirthdayHomeBuilder> createState() => _BirthdayHomeBuilderState();
 }
 
 class _BirthdayHomeBuilderState extends State<BirthdayHomeBuilder> {
-  
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.only(top: 16, bottom: 16),
+      padding: const EdgeInsets.only(top: 16, bottom: 0),
       color: Colors.white,
       child: Row(
         children: [
           Expanded(
               child: SizedBox(
             width: double.infinity,
-            height: 120,
+            height: 140,
             child: ListView.builder(
               shrinkWrap: true,
               scrollDirection: Axis.horizontal,
