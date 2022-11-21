@@ -76,32 +76,34 @@ class _VideoState extends State<VideoCard> {
             })
           },
         ),
-        Row(
-          children: [
-            IconButton(
-                padding: EdgeInsets.zero,
-                onPressed: (() {
-                  setState(() {
-                    _controller.value.isPlaying
-                        ? _controller.pause()
-                        : _controller.play();
-                  });
-                }),
-                icon: _controller.value.isPlaying
-                    ? const Icon(Icons.pause)
-                    : const Icon(Icons.play_arrow)),
-            IconButton(
-                padding: EdgeInsets.zero,
-                onPressed: (() {
-                  setState(() {
-                    isPLaying = false;
-                    _controller.pause();
-                    _controller.seekTo(const Duration(seconds: 0));
-                  });
-                }),
-                icon: const Icon(Icons.stop))
-          ],
-        ),
+        _controller.value.isInitialized
+            ? Row(
+                children: [
+                  IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: (() {
+                        setState(() {
+                          _controller.value.isPlaying
+                              ? _controller.pause()
+                              : _controller.play();
+                        });
+                      }),
+                      icon: _controller.value.isPlaying
+                          ? const Icon(Icons.pause)
+                          : const Icon(Icons.play_arrow)),
+                  IconButton(
+                      padding: EdgeInsets.zero,
+                      onPressed: (() {
+                        setState(() {
+                          isPLaying = false;
+                          _controller.pause();
+                          _controller.seekTo(const Duration(seconds: 0));
+                        });
+                      }),
+                      icon: const Icon(Icons.stop))
+                ],
+              )
+            : Container()
       ],
     );
   }
